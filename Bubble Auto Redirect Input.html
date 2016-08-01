@@ -1,0 +1,103 @@
+<html>   <head>
+      <script type="text/javascript">
+ var someSaveBttn=function(){};
+     var scribe={
+  status: 0,
+  autoRun: function() {start();},
+  baseArray: [],
+  changesMade: false,
+  Evaluation: function() {
+    var a=[];
+    for(var i=0; i &lt; scribe.fields4History.length; i++) {
+      var b=document.getElementsByName(scribe.fields4History[i][0]);
+      for(var k=0; k &lt; b.length; k++) {
+        var result=[];
+        if(b[k].tagName==="SELECT") {
+          result.push(scribe.fields4History[i][1]);
+          result.push(b[k].options[b[k].selectedIndex].text);
+        } else if (b[k].type==="radio" || b[k].type==="checkbox") {
+          result.push(scribe.fields4History[i][1]);
+          if(b[k].checked===true) {
+            result.push('Yes');
+          } else {
+            result.push('No');
+          }
+        } else {
+          result.push(scribe.fields4History[i][1]);
+          result.push(b[k].value);
+        }
+        a.push(result);
+      }
+    }
+    return a;
+    
+  },
+  inicialReview: function(){scribe.baseArray=scribe.Evaluation();},
+  postReview: function() {
+    var p=[];
+    var f=scribe.Evaluation();
+    for(var i=0; i &lt; f.length; i++) {
+      if(f[i][1] !== scribe.baseArray[i][1]) {
+        p.push(f[i][0] + ': ' + f[i][1]);
+      }
+    }
+    p=p.join('\r\n');
+    if(p.length &gt; 0) {
+      scribe.changesMade=true;
+    }
+    return p;
+  }
+};
+    function start(){
+     // alert('start');
+    proxySaveFunction();
+    //alert('after start');
+      someSaveBttn=function(){/*alert('ready2save');*/document.getElementsByName('cmdSave')[0].click();};
+    //alert('aftersave');
+    //  document.getElementsByName('cmdSave')[0].click();
+    //all good //alert("start runs on Auto Redirect. Calls proxySaveFun, someSaveBttn as well");
+    }
+  
+  function proxySaveFunction() { //alert('proxy save');
+  var a=document.getElementById('historyEmbedView');
+  if(a.contentWindow) {
+
+    a.contentWindow.document.getElementById('frameBody').contentWindow.frames.injectHistory(document.getElementsByName('dataid')[0].value,document.getElementById("dateTimeUpdate").value,
+      '<value-of select="/data/@currentUser"/>',
+      document.getElementById("currentChangeLog").value);
+    //alert("proxySaveFun runs on Auto Redirect");
+    
+  } else {
+    a.contentDocument.document.getElementById('frameBody').contentDocument.frames.injectHistory(document.getElementsByName('dataid')[0].value,
+      document.getElementById("dateTimeUpdate").value,
+      '<value-of select="/data/@currentUser"/>',
+      document.getElementById("currentChangeLog").value);
+   // alert("ELSE proxySaveFun runs on Auto Redirect");
+   
+  }
+};
+    
+    
+   // window.onload=start;
+  
+  
+  </script>
+      <style type="text/css">
+  body{
+    display: none;
+  }
+</style>
+   </head>   <body>
+      <div class="container agencytemplate_boardbackground">
+         <form>
+            <div class="content">
+               <input type="text" id="dateTimeUpdate" name="dateTimeUpdate" style="display:none"/>
+               <span style="display: none;">
+                  <textarea name="currentChangeLog" id="currentChangeLog"/>
+                  <embedview id="historyEmbedView" view="Bubble Audit Input (DO NOT ASSIGN)" name="historyEmbedView"/>
+               </span>
+            </div>
+         </form>
+      </div>
+   </body>
+</html>

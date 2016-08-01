@@ -1,0 +1,541 @@
+<html>   <head>
+      <title>Local Estimates</title>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/jquery.js"/>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/bootstrap.min.js"/>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/etn/etn.js"/>
+      <script type="text/javascript" src="../boards/board_lib.js"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
+      <script type="text/javascript">
+    /*add new row, builds the table, inserts rows.  rowClass is added in PA file in to below like this (table,position,data,rowClass - '<td>'+comma(data[number])+'</td>' goes to 21 here and 17 in PA File) 17 table data spots below*/
+
+
+
+//window.onload=start;
+
+</script>
+      <style type="text/css">
+  body{background-color:#d1d2d4;color:#000;font:normal 0.9em arial;margin:1.0em;}
+  div.container{border:solid 1px #0069aa; width:100%;}
+  div.content{margin:1em; width:99%;}
+  table.heading{border:solid 1px;border-collapse:collapse;empty-cells:show;margin:0;padding:3px;width:100%;}      table.heading td, table.heading th{padding:0.1em 0.5em 0.1em 0.5em;}
+  table.heading th{text-align:center;}
+  #tdFilter{text-align:right;}
+  #tdBoard{text-align:center;}
+  table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
+  table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
+  table.display td{border-top:solid 1px;border-color:#ccc;}
+  .rowYellow {background-color:#F5FF79;}
+  .rowBlue {background-color:#ccebff;}
+  .rowRed {background-color:#FF1100;}
+  .rowOrange {background-color: #FFA600;}
+  .rowGray {background-color: #b7bfc8;}
+.rowReg {}
+.data {
+  text-align:center;
+}
+</style>
+   </head>   <body>
+      <div class="container agencytemplate_boardbackground">
+         <table class="table heading agencytemplate_boardheader">
+            <tbody>
+               <tr>
+                  <td id="tdIncident">
+                     <span id="incidentNameSpan">
+                        <incidentname/>
+                     </span>
+                     
+                  </td>
+                  <td id="tdFilter">
+                     <filter/>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="tdBoard" colSpan="2" selected="false" align="center">Local Estimates
+                     
+                     <br/>
+                     <h4>(Housing / IA)</h4>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+         <div class="content">
+           <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink><space/><space/><space/><space/><space/><space/>
+            <viewlink class="btn btn-primary" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink><space/><space/>
+            <viewlink class="btn btn-warning" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink><space/><space/>
+            <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/><space/><space/><space/><space/>
+            <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>
+            <br/>
+            <br/>
+            <div class="form-inline" id="resourceFilters" style="display: inline-block;">
+               <filterlistdropdown field="county" list="Counties - Texas" defaulttext="All Counties" class="form-control"/>
+               
+               <space/>
+               <space/>
+               <space/>
+               <space/>
+               <space/>
+               <space/>
+              
+               <div class="form-inline" id="resourceFilters" style="display: inline-block;">
+                  <label for="webeocIncident" class="">
+                     <h4>
+                        <sub>Incidents:</sub>
+                     </h4>
+                  </label>
+                  <space/>
+                  <select name="webeocIncident" id="webeocIncident" class="form-control" onchange="filterByIncident.incidentListActionOnChange();"/>
+               </div>
+               <space/>
+               <space/>
+               <space/>
+               <space/>
+               <space/>
+               <space/>
+               <span id="searchDIV">
+                  <search exact="false" range="false" rangetext="false">
+                     <field name="county"/>
+                     <field name="city"/>
+                  </search>
+                  <clearsearchbutton/>
+                  <span style="display: none;" id="incidentNameSearchSPAN">
+                     <search field="webeocIncident" clearsearch="true"/>
+                  </span>
+               </span>
+            </div>
+            <div/>
+            <br/>
+            <table id="mainTable" class="table display">
+               <tbody>
+                  <tr class="agencytemplate_tableheader">
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Total Jursidictions</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">
+                        <br/>County / City
+                        <br/>(Click to Edit DSO)
+                     </td>
+                     <td selected="false" colSpan="4" width="" rowSpan="1" align="center">Single Family Homes</td>
+                     <td selected="false" colSpan="4" width="" rowSpan="1" align="center">Mobile Homes</td>
+                     <td selected="false" colSpan="4" width="" rowSpan="1" align="center">Multi-Family Homes</td>
+                     <td selected="false" colSpan="4" width="" rowSpan="1" align="center">Totals</td>
+                     <td selected="false" colSpan="2" width="" rowSpan="1" align="center">Business Loss / Economic Impact</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">
+                        <br/>DSO Audit Log
+                     </td>
+                  </tr>
+                  <tr class="agencytemplate_tableheader">
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing2">sum(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0.00') or (numberMajorDamage!='' and numberMajorDamage!='0.00') then 1 else 0 end)</expression>)
+                     
+                     </td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Aff</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Minor</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Major</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Destroyed</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Aff</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Minor</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Major</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Destroyed</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Aff</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Minor</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Major</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Destroyed</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Aff</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Minor</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Major</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Destroyed</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Minor</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Major</td>
+                  </tr>
+               </tbody>
+            </table>
+            <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
+               <if test="1=0">
+                  <eocfield name="sortCountyOrder"/>
+                  <eocfield name="sortCityOrder"/>
+                  <eocfield name="jurisdictionType"/>
+                  <eocfield name="county"/>
+                  <eocfield name="city"/>
+                  <eocfield name="sfhAffected"/>
+                  <eocfield name="mhAffected"/>
+                  <eocfield name="mfuAffected"/>
+                  <eocfield name="sfhMinorDamage"/>
+                  <eocfield name="mhMinorDamage"/>
+                  <eocfield name="mfuMinorDamage"/>
+                  <eocfield name="sfhMajorDamage"/>
+                  <eocfield name="mhMajorDamage"/>
+                  <eocfield name="mfuMajorDamage"/>
+                  <eocfield name="sfhDestroyed"/>
+                  <eocfield name="mhDestroyed"/>
+                  <eocfield name="mfuDestroyed"/>
+                  <eocfield name="totalsAffected"/>
+                  <eocfield name="totalsMinorDamage"/>
+                  <eocfield name="totalsMajorDamage"/>
+                  <eocfield name="totalsDestroyed"/>
+                  <eocfield name="numberMinorDamage"/>
+                  <eocfield name="numberMajorDamage"/>
+               </if>
+               <span style="display:none" class="data" name="data">
+                  <value-of select="@sortCountyOrder"/>|
+          
+                  <value-of select="@sortCityOrder"/>|
+            
+                  
+                  <span>(<expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing">(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0.00') or (numberMajorDamage!='' and numberMajorDamage!='0.00') then 1 else 0 end)</expression>)
+                  
+                  </span>|
+            
+                  
+                  <value-of select="@jurisdictionType"/>|
+            
+                  
+                  <viewlink name="Input (DO NOT ASSIGN)">
+                     <if test="@jurisdictionType='County'">
+                        <b>
+                           <value-of select="@county"/>
+                        </b> /
+                        <value-of select="@city"/>
+                     </if>
+                     <if test="@jurisdictionType='City'">
+                        <value-of select="@county"/> /
+                        <b>
+                           <value-of select="@city"/>
+                        </b>
+                     </if>
+                  </viewlink>|
+            
+                  
+                  <value-of select="@county"/>|
+            
+                  
+                  <value-of select="@city"/>|
+            
+                  
+                  <value-of select="@sfhAffected"/>|
+            
+                  
+                  <value-of select="@sfhMinorDamage"/>|
+            
+                  
+                  <value-of select="@sfhMajorDamage"/>|
+            
+                  
+                  <value-of select="@sfhDestroyed"/>|
+            
+                  
+                  <value-of select="@mhAffected"/>|
+            
+                  
+                  <value-of select="@mhMinorDamage"/>|
+            
+                  
+                  <value-of select="@mhMajorDamage"/>|
+            
+                  
+                  <value-of select="@mhDestroyed"/>|
+            
+                  
+                  <value-of select="@mfuAffected"/>|
+            
+                  
+                  <value-of select="@mfuMinorDamage"/>|
+            
+                  
+                  <value-of select="@mfuMajorDamage"/>|
+            
+                  
+                  <value-of select="@mfuDestroyed"/>|
+            
+                  
+                  <value-of select="@totalsAffected"/>|
+            
+                  
+                  <value-of select="@totalsMinorDamage"/>|
+            
+                  
+                  <value-of select="@totalsMajorDamage"/>|
+            
+                  
+                  <value-of select="@totalsDestroyed"/>|
+            
+                  
+                  <value-of select="@numberMinorDamage"/>|
+            
+                  
+                  <value-of select="@numberMajorDamage"/>|
+            
+                  
+                  <viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)">
+                     <button class="btn btn-warning btn-xs">DSO History</button>
+                  </viewlink>|
+                  <relatedexpression name="femaTest" table="Supplemental">sum(case when femaCheckbox='Yes' then 1 else 0 end)</relatedexpression>|END
+               </span>
+            </eocrepeatallrecords>
+         </div>
+      </div>
+   </body>   <script type="text/javascript">
+  var newRow = function(table,position,data,rowClass){
+  var row = table.insertRow(position);
+  var align='left';
+    if(trim(data[3])==="City"){
+align='right'
+  }
+  
+  //row.className('agencytemplate_tableentry');
+    row.innerHTML = '<td>'+data[2]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td>'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'+'<td>'+comma(data[19])+'</td>'+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'+'<td>'+comma(data[22])+'</td>'+'<td>'+comma(data[23])+'</td>'+'<td>'+comma(data[24])+'</td>'+'<td>'+comma(data[25])+'</td>';
+    //adds color to new total rows - PA file says +rowClass below instead of +rowColorClass at end of this block
+    console.log(rowClass);
+    var rowColorClass =''
+    if (((position/2) - Math.floor(position/2)) === 0) {rowColorClass='agencytemplate_tableroweven'} else {rowColorClass='agencytemplate_tablerowodd'};
+
+    table.rows[position].className='agencytemplate_tableentry '+rowClass;
+    //agencytemplate_tableroweven
+}
+
+//array that loops through everything - this code does not run yet on this view
+var masterData =[];
+/*function setBubbleData(a){
+ 
+ populateMasterData();
+
+for(var k=0; k&lt;a.length;k++
+  var match = false;
+  for(var i=0; i&lt;masterData.length;i++){
+    if(a[k].type==masterData[i][2] &amp;&amp;a[k].county==masterData[i][4]&amp;&amp;a[k].city==masterData[i][5]){ //if there is a match from bubble input and DSO
+     masterData[i][16]=a[k].letter;
+    masterData[i][17]='DSO+';
+    match=true;
+    }
+  }
+ if(match===false){ //if not associated with a DSO
+masterData.push([a[k].sortCounty,a[k].sortCity,a[k].type,a[k].label,a[k].county,a[k].city,"","","","","","","","",a[k].localDec,a[k].letter,"No DSO"]);}
+}
+
+
+masterData = masterData.sort(function(a,b){
+  if(parseInt(a[0]) &gt; parseInt(b[0])){
+    return 1;
+  }else if(parseInt(a[0]) &lt; parseInt(b[0])){
+    return -1;
+  } else if(parseInt(a[1]) &gt; parseInt(b[1])){
+    return 1;
+  } else if(parseInt(a[0]) &gt; parseInt(b[0])){
+    return -1;
+  }
+
+});
+  popluateTable();
+  alert("Hello");
+}*/
+
+
+
+
+function start(){
+//next two lines are commented out in PA (working file)
+  //populateMasterData();
+  //popluateTable();
+
+}
+
+//populates the data, maybe holding area before the table - SAME as PA file
+function populateMasterData(){
+var a = document.getElementsByName('data');
+  for(var i =0; i&lt;a.length;i++){
+    var b =[];
+    var c = a[i].innerHTML.split('|');
+    for(var k=0; k&lt;c.length;k++){
+      b.push(c[k]);
+    }
+    masterData.push(b);
+  }
+}
+//uses regEx to place commas where they need to go
+  function comma(x) {
+if(isNaN(x)===true || x=="" || x==0){
+  x==undefined?x='':x=x;
+  return x;
+}
+x=parseFloat(x).toFixed(2);
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+//return x;
+}
+function trim(a) {
+  return a.replace(/^\s+|\s+$|\&amp;nbsp;+$/g, '');
+}
+/*populates the actual table [4] is county spot. Looks at td cells and determines if county matches the next county, add togeether andcreate  anew line. If counties does not match, do not add or create yellow row - add extra quotes and comma to add column at beginning*/
+//this function will break if only one county is recorded, with two or more it will work. Jaime says put a clause in it to make sure it runs in that case
+function popluateTable(){
+var t = document.getElementById('mainTable');
+var totalRowVar=function(i){
+   var a = getTotalsFor(masterData[i][5]);
+   var b = masterData[i][26]&gt;0?"rowRed":"rowYellow";
+      //alert("yellow rows");
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],""],b);
+};
+  for(var i=0; i &lt; masterData.length;i++){//alert("won!");
+      
+    newRow(t,(t.rows.length),masterData[i]);//alert("new row");
+    if(i==masterData.length-1){//alert();
+ totalRowVar(i)
+    }
+
+    else if(((i!=0)&amp;&amp; ((masterData[i][5]===masterData[i-1][5]) &amp;&amp;(masterData[i+1][5]!=masterData[i][5])||(masterData[i][5]!=masterData[i-1][5])&amp;&amp;(masterData[i+1][5]!=masterData[i][5]) )))
+      { //Add Totals Row, This should be the yellow lines
+      totalRowVar(i);
+    }
+  }
+  
+  /*Bottom Total row Grand total label and table data cells that have total of each column. PA file stops at [7], 22 total table data spots below - NEED to add 1 blank set of quotes to begining to get extra columnn and add another couple a[]'s to make wotk at end'*/
+  var a = getTotalsForAll();
+      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18]],"rowGray");//alert("TANK");
+}
+//16 0's Single Family Aff totals through Totals Destroyed plus 2
+function getTotalsFor(c){
+  var a =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var isNull = function(b){
+    if(b==''||b==' '||b==0){return 0;}
+    else return b;
+  };
+  //parseFloat cuts off the first character if a number, otherwise NaN is returned - 16 spots below - creates into decimal integer
+for(var i=0; i&lt;masterData.length;i++){
+  if(masterData[i][5]==c){
+    a[0]+=parseFloat(isNull(masterData[i][6]));
+    a[1]+=parseFloat(isNull(masterData[i][7]));
+    a[2]+=parseFloat(isNull(masterData[i][8]));
+    a[3]+=parseFloat(isNull(masterData[i][9]));
+    a[4]+=parseFloat(isNull(masterData[i][10]));
+    a[5]+=parseFloat(isNull(masterData[i][11]));
+    a[6]+=parseFloat(isNull(masterData[i][12]));
+    a[7]+=parseFloat(isNull(masterData[i][13]));
+    a[8]+=parseFloat(isNull(masterData[i][14]));
+    a[9]+=parseFloat(isNull(masterData[i][15]));
+    a[10]+=parseFloat(isNull(masterData[i][16]));
+    a[11]+=parseFloat(isNull(masterData[i][17]));
+    a[12]+=parseFloat(isNull(masterData[i][18]));
+    a[13]+=parseFloat(isNull(masterData[i][19]));
+    a[14]+=parseFloat(isNull(masterData[i][20]));
+    a[15]+=parseFloat(isNull(masterData[i][21]));
+    a[16]+=parseFloat(isNull(masterData[i][22]));
+    a[17]+=parseFloat(isNull(masterData[i][23]));
+    a[18]+=parseFloat(isNull(masterData[i][24]));
+    a[19]+=parseFloat(isNull(masterData[i][26]));
+  }
+}
+console.log(a);
+return a;
+
+}
+//Same as PA file except for 16 0's Zeros define as interger - only 8 in second part after for - just like PA file
+function getTotalsForAll(){
+  var a =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var isNull = function(b){
+    if(b==''||b==' '||b==0){return 0;}
+    else return b;
+  };
+for(var i=0; i&lt;masterData.length;i++){
+    a[0]+=parseFloat(isNull(masterData[i][6]));
+    a[1]+=parseFloat(isNull(masterData[i][7]));
+    a[2]+=parseFloat(isNull(masterData[i][8]));
+    a[3]+=parseFloat(isNull(masterData[i][9]));
+    a[4]+=parseFloat(isNull(masterData[i][10]));
+    a[5]+=parseFloat(isNull(masterData[i][11]));
+    a[6]+=parseFloat(isNull(masterData[i][12]));
+    a[7]+=parseFloat(isNull(masterData[i][13]));
+    a[8]+=parseFloat(isNull(masterData[i][14]));
+    a[9]+=parseFloat(isNull(masterData[i][15]));
+    a[10]+=parseFloat(isNull(masterData[i][16]));
+    a[11]+=parseFloat(isNull(masterData[i][17]));
+    a[12]+=parseFloat(isNull(masterData[i][18]));
+    a[13]+=parseFloat(isNull(masterData[i][19]));
+    a[14]+=parseFloat(isNull(masterData[i][20]));
+    a[15]+=parseFloat(isNull(masterData[i][21]));
+    a[16]+=parseFloat(isNull(masterData[i][22]));
+    a[17]+=parseFloat(isNull(masterData[i][23]));
+    a[18]+=parseFloat(isNull(masterData[i][24]));
+}
+return a;
+
+}
+  var etnPageHelper={
+
+    
+
+    //startOf: identifying what filter is on
+    filterSet: function(arg1,arg2) {
+      if($(arg1).html()==='on'){$(arg2).css('font-weight', 'Bold').css('text-decoration', 'underline');}
+    },
+    
+    /*showFilterButtonSelected: function() {
+      
+    },*/
+    //startOf: styling search field
+      styleSearchField: function() {
+         var searchFld=document.getElementById('searchDIV').getElementsByTagName('input');
+         for(var j=0; j &lt; searchFld.length; j++) {
+            if($(searchFld[j]).val()=='Search' || $(searchFld[j]).val()=='Clear Search'){$(searchFld[j]).addClass('btn btn-default');}
+          if(searchFld[j].id.search('searchfield')&gt;=0){$(searchFld[j]).addClass('form-control').prop('placeholder', 'Search');}
+        }     
+      }
+  };
+   
+/*function totalJurisdictionsSum() {
+  
+  
+    alert("HEEEELO");
+  
+}*/
+var incSelList=document.getElementById('webeocIncident');
+var loopAllInputs=document.getElementsByTagName('input');
+var incVar;
+
+//startOf: filter by incident process method
+var filterByIncident={
+ clearIncidentListSelection: function() {
+   var incSearch=document.getElementById('incidentNameSearchSPAN').getElementsByTagName('input');
+   for(var i=0; i &lt; incSearch.length; i++) {
+     if(incSearch[i].value==='') {
+       window.parent.window.parent.selectedIncident='';
+     } else {
+       $('#webeocIncident').val(window.parent.window.parent.selectedIncident);
+     //  console.log(window.parent.window.parent.selectedIncident);
+     }      
+   }
+ },
+ searchFieldVariableSet: function() {
+   for(var i=0; i &lt; loopAllInputs.length; i++) {
+     if(loopAllInputs[i].id &amp;&amp; loopAllInputs[i].getAttribute('id').indexOf('searchfield')&gt; -1){incVar=loopAllInputs[i];}
+   }
+ },
+ incidentListOptionsBuild: function() {
+   <for-each select="/data/allincidentlist/incidents">
+     incSelList.options[incSelList.options.length]=new Option('<value-of select="@name"/>','<value-of select="@name"/>',false,false);
+   </for-each>
+   incSelList.options.selectedIndex=0;
+ },
+ incidentListActionOnChange: function() {
+   incSelList.options[incSelList.options.length]=new Option('','',false,false);
+   incVar.value=incSelList.options[incSelList.options.selectedIndex].text;
+   for(var i=0; i &lt; loopAllInputs.length; i++) {
+     if(loopAllInputs[i].getAttribute('value')=='Search'){$(loopAllInputs[i]).click();}
+   }
+   window.parent.window.parent.selectedIncident=(incSelList.options[incSelList.options.selectedIndex]).text;
+ }
+};
+
+$(document).ready(function(){
+    
+    etnPageHelper.styleSearchField();
+    //var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
+    //$(countyFilter).addClass('form-control');
+    filterByIncident.incidentListOptionsBuild();
+    filterByIncident.searchFieldVariableSet();
+    filterByIncident.clearIncidentListSelection();
+    populateMasterData();
+    popluateTable();
+    //filterByIncident.incidentListActionOnChange();
+   /* var ddcFilter=document.getElementById('ddcFilter').getElementsByTagName('select')[0];
+    $(ddcFilter).addClass('form-control');*/
+  });
+  </script>
+</html>
