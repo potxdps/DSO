@@ -1,0 +1,117 @@
+<html>   <head>
+      <title>DSO List</title>
+<meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap-dialog.min.css" rel="stylesheet"/>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/jquery.js"/>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/bootstrap.min.js"/>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/etn/etn.js"/>
+      <script type="text/javascript" src="../boards/board_lib.js"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/>
+      <script type="text/javascript">
+    
+    function linkOutside(a){
+var b = a.parentNode.childNodes[4].innerHTML;
+    window.open("https://olympus.soc.texas.gov/services/DSO/?key="+b,"_blank");
+}
+</script>
+      <style type="text/css">
+  body{background-color:#d1d2d4;color:#000;font:normal 0.9em arial;margin:1.0em;}
+  div.container{border:solid 1px #0069aa;}
+  div.content{margin:1em;}
+  table.heading{border:solid 1px;border-collapse:collapse;empty-cells:show;margin:0;padding:3px;width:100%;}      table.heading td, table.heading th{padding:0.1em 0.5em 0.1em 0.5em;}
+  table.heading th{text-align:center;}
+  #tdFilter{text-align:right;}
+  #tdBoard{text-align:center;}
+  table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
+  table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
+  table.display td{border-top:solid 1px;border-color:#ccc;}
+</style>
+   </head>   <body>
+      <div class="container agencytemplate_boardbackground">
+         <table class="heading agencytemplate_boardheader">
+            <tbody>
+               <tr>
+                  <td id="tdIncident" colSpan="2">
+                     <incidentname/>
+                  </td>
+                  <td id="tdFilter" selected="false" align="right">
+                     <input type="button" class="btn btn-success" onclick="window.open('https://olympus.soc.texas.gov/services/dso/','_blank')" value="New DSO"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="tdBoard" colSpan="3" selected="false" align="center">DSO List</td>
+               </tr>
+               <tr>
+                  <td id="tdBoard" colSpan="1" selected="false" align="left" rowSpan="1"/>
+                  <td id="tdBoard" colSpan="1" selected="" align="center" rowSpan="1" width=""> </td>
+                  <td id="tdBoard" colSpan="1" selected="" align="center" rowSpan="1" width=""> </td>
+               </tr>
+            </tbody>
+         </table>
+         <div class="content">
+         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink><space/><space/>
+            <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink><space/><space/>
+            <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink><space/><space/>
+            <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/><space/><space/><space/><space/>
+            <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink><space/><space/>
+            <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>
+            <br/>
+            <br/>
+            <table class="display">
+               <tbody>
+                  <tr class="agencytemplate_tableheader">
+                     <td selected="false">Number</td>
+                     <td selected="false" colSpan="1" width="">Type</td>
+                     <td selected="false" colSpan="1" width="">County/City</td>
+                     <td selected="false" colSpan="1" width="">Incident</td>
+                     <td selected="false" colSpan="1" width="">SOC Status</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1">Update Date</td>
+                     <td selected="false" colSpan="1" width="">Action</td>
+                  </tr>
+                  <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
+                     <tr class="agencytemplate_tableentry">
+                        <td selected="false" colSpan="1">
+                           <eocfield name="editKey"/>
+                           <a name="amount" style="display:none">
+                              <eocfield name="repairCostTotals"/>| 
+
+                              <eocfield name="repairCostTotal"/>
+                              <eocfield name="entryType"/>
+                           </a>
+                        </td>
+                        <td selected="false" colSpan="1" width="">
+                           <eocfield name="jurisdictionType"/>
+                        </td>
+                        <td selected="false" colSpan="1" width="">
+                           <eocfield name="county"/>/
+                           <eocfield name="city"/>
+                        </td>
+                        <td selected="false" colSpan="1" width="">
+                           <eocfield name="webeocIncident"/>
+                        </td>
+                        <td selected="false" colSpan="1" width="">
+                           <eocfield name="socProcessed"/>
+                        </td>
+                        <td selected="false" colSpan="1" width="" rowSpan="1">
+                           <eocfield name="entrydate"/>
+                        </td>
+                        <td selected="true" colSpan="1" width="">
+                           <viewlink name="DSO Details (DO NOT ASSIGN)" type="button">View DSO</viewlink>
+                           <viewlink name="Input (DO NOT ASSIGN)" type="button">Edit (WebEOC)</viewlink>
+                           <input type="button" onclick="linkOutside(this)" value="Edit Online"/>
+                           <viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)" type="button">Log</viewlink>
+                           <a style="display:none">
+                              <value-of select="@editKey"/>
+                           </a>
+                           <!--<viewlink name="AutoHide" type="button">Hide</viewlink>-->
+                        </td>
+                     </tr>
+                  </eocrepeatallrecords>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </body>
+</html>
