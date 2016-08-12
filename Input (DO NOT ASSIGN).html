@@ -602,7 +602,15 @@ function popDdcEmailAgain(){
 eighth.value = seventh.value;
 }
 
-
+function ddcEmailHideReveal() {
+  if (document.getElementById('jurisdictionType2').checked ==true) {
+      document.getElementById('ddcEmailHide').style.display="";
+ } else {
+  
+      document.getElementById('ddcEmailHide').style.display="none";
+    
+ }
+}
         window.onload = start;
     </script>
    </head>   <body>
@@ -670,12 +678,12 @@ eighth.value = seventh.value;
                      
                      
                      
-                     <input id="jurisdictionType1" type="radio" style="form-control input-sm" name="jurisdictionType" value="City"/>
+                     <input id="jurisdictionType1" type="radio" style="form-control input-sm" name="jurisdictionType" value="City" onclick="ddcEmailHideReveal()"/>
         County 
                      
                      
                      
-                     <input id="jurisdictionType2" type="radio" style="form-control input-sm" name="jurisdictionType" checked="true" value="County"/>
+                     <input id="jurisdictionType2" type="radio" style="form-control input-sm" name="jurisdictionType" checked="true" value="County" onclick="ddcEmailHideReveal()"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="county">County:</label>
@@ -3157,7 +3165,7 @@ This form is for damage assessment reporting purposes only.  In accordance with 
                      <space/>
                      <input name="countyEmailHidden" id="countyEmailHidden" type="text" style="width:300px"/>
                   </div>
-                  <div class="form-group form-inline">
+                  <div style="display:none" id="ddcEmailHide" class="form-group form-inline">
                      <label class="control-label" for="ddcEmail">DDC Email:</label>
                      <space/>
                      <input name="ddcEmail" id="ddcEmail" type="email" style="width:300px" onBlur="clearMailTo();popDdcEmail()"/>
