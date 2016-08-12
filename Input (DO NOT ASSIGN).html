@@ -158,22 +158,86 @@
                 }
             }
         }
+function consolidateEmails() {
+  var a = [document.getElementsByName('submitterEmail')[0], document.getElementsByName('additionalEmails')[0], document.getElementsByName('countyEmail')[0], document.getElementsByName('ddcEmail')[0]];
+  var b = [];
+  for (var e =0; e&lt;a.length;e++) {
+    if (a[e].value != "") {
+      var f = a[e].value.split(',');
+      for (var i = 0; i &lt; f.length; i++) {
+        b.push(f[i]);
+      }
+    }
+  }
+  return b.join(',');
+  
+
+}
+        function sendEmails(){
+          var c = document.getElementsByName('city')[0];
+          var cr=[];
+          for(var i = 0; i&lt;c.options.length;i++){
+            if(c.options[i].selected===true){
+              cr.push(c.options[i].text)
+            }
+          }
+          document.getElementsByName('emailSubject')[0].value='DSO for ' + document.getElementById('county').value + " / " + cr.join(', ') + " (" + document.getElementById('webeocIncident').value + ")";
+
+          var body = "An Updated DSO # " + document.getElementById('editKey').value + " for " + document.getElementById('county').value + " / " + cr.join(', ') + " (" + document.getElementById('webeocIncident').value + ")" + " has been submitted to the SOC. \n\n" + "To update this request, go to https://olympus.soc.texas.gov/services/dso/default.aspx?key=" + document.getElementById('editKey').value + "\n\n" + 
+                     "Please email soc@dps.texas.gov if you have any questions. \n\n" + " DO NOT REPLY";
+        
+document.getElementsByName('emailBody')[0].value=body;
+        document.getElementsByName('emailTo')[0].value=consolidateEmails();
+
+
+        };
+
+
+
+/*function validateEmailFields(a) {
+  $(a).blur(function() {
+  var validateEmailField=/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/g;
+    if(!validateEmailField.test($(a).val())) {
+      alert('Please enter a valid email address');
+      return false;
+      //$(a).val('');
+    }
+ });
+}*/
 
         function start() {
+if (document.getElementsByName('datalinkid')[0]){
+    document.getElementsByName('datalinkid')[0].checked=true;
+} else {
+  alert('The data links are not configured correctly. Please contact your local WebEOC Admin.');
+}
+document.getElementById("additionalEmails").multiple = true;
+popSubmitterEmailAgain();
+popAdditionalEmailsAgain();
+popCountyEmailAgain();
+popDdcEmailAgain();
+ /*validateEmailFields('#submitterEmail');
+ validateEmailFields('#additionalEmails');
+ validateEmailFields('#countyEmail');
+ validateEmailFields('#ddcEmail');*/
+        
+          $('#notRealSave').click(function(){
+          
+          sendEmails();
+          fakeSubmit();
+          });
+
+          //sendMail();
+           document.getElementById('editKey').value = document.getElementById('dataidSpan').getElementsByTagName('u')[0].innerHTML;
            popIncidentName();
            document.getElementById('jurisdictionType1').onchange=TypeJurisdiciton;
         document.getElementById('jurisdictionType2').onchange=TypeJurisdiciton;
-            //document.forms[0].onsubmit = submit;
+            
             autoSum();
             var counties = window.parent.window.parent.counties;
         var countieslist= document.getElementById('county');
-        /*for(var i=0; i&lt; countieslist.options.length; i++){
-            for(var k =0; k &lt; counties.length; k++){
-                if(countieslist.options[i].text==counties[k]&amp;&amp;countieslist.options[i]!=countieslist.options[countieslist.selectedIndex]){
-                    countieslist.options[i].disabled=true;
-                }
-            }
-        }*/
+        
+        
        document.getElementById('city').onchange = function () {
                 sortOrderCity(this.options[this.selectedIndex].text);
                 var coList = document.getElementById("county");
@@ -229,77 +293,9 @@
                 }
             }
           
-           /* document.getElementById('city').onchange = function () {
-                sortOrderCity(this.options[this.selectedIndex].text);
-                var coList = document.getElementById("county");
-                var coSelected = coList.options[coList.selectedIndex].text;
-                if (this.options[this.selectedIndex].text == 'Select One') {
-                    removeOptions(coList);
-                    addOption(coList, 'Select One', true);
-                    for (var k = 0; k &lt; countyList.length; k++) {
-                        addOption(coList, countyList[k], false);
-                    }
-                    // sortSelect(this);
-                } else {
-                    removeOptions(coList);
-                    addOption(coList, 'Select One', false);
-                    for (var k = 0; k &lt; cityMatrix.length; k++) {
-                        if (cityMatrix[k][1] === this.options[this.selectedIndex].text) {
-                            var selected = false;
-                            if (cityMatrix[k][0] == coSelected) { selected = true; }
-                            addOption(coList, cityMatrix[k][0], selected);
-                        }
-                    }
-                }
-
-
-            }
-
-            document.getElementById('county').onchange = function () {
-                sortOrderCounty(this.options[this.selectedIndex].text);
-                var cityList = document.getElementById("city");
-                if (this.options[this.selectedIndex].text == 'Select One') {
-                    removeOptions(cityList);
-                    addOption(cityList, "Select One", true);
-
-                    for (var k = 0; k &lt; cityMatrix.length; k++) {
-                        addOption(cityList, cityMatrix[k][1], false);
-                    }
-                    // sortSelect(this);
-                }
-                else {
-                    removeOptions(cityList);
-                    addOption(cityList, "Select One", true);
-                    for (var k = 0; k &lt; cityMatrix.length; k++) {
-
-                        if (cityMatrix[k][0] === this.options[this.selectedIndex].text) {
-                            addOption(cityList, cityMatrix[k][1], false);
-                        }
-                    }
-                }
-            }*/
+           
             $('.datepicker').datepicker();
-          /*  var jType = document.getElementsByName('jurisdictionType');
-            console.log(1);
-            var jTypeFunction = function () {
-                console.log(2);
-                var a = document.getElementsByName('jurisdictionType');
-                var b = document.getElementById('city');
-                for (var i = 0; i &lt; a.length; i++) {
-                    if (a[i].checked === true) {
-                        if (a[i].id === 'jurisdictionType1') {//If City
-                            b.multiple = false;
-                            return;
-                        }
-                        if (a[i].id === 'jurisdictionType2') {//if county
-                            b.multiple = true;
-                            return;
-                        }
-                    }
-                }
-            };
-            jType[0].onclick = jTypeFunction; jType[1].onclick = jTypeFunction;
-*/
+
 
             commandInfoWindow('affectedSpan', 'Affected', '<div><b>Structure is habitable.  Some minor damage may be eligible for assistance.  Look for the following:</b><ul><li>A few missing shingles;</li><li>Some broken windows;</li><li>Damage to cars;</li><li>Damage to Air Conditioner Compressor only;</li><li>Single Family/Multi Family Residences - 0” - 6” of water</li><li>Mobile Homes- Ground level to within 12” of bottom board.</li></ul></div>');
             commandInfoWindow('minorDamageSpan', 'Minor Damage', '<div><b>Structure is habitable with minor repairs.  Look for the following:</b><ul><li>Many missing shingles, broken windows and doors;</li><li>Siding loose, missing or damaged;</li><li>Minor shifting or settling of foundation;</li><li>Damaged septic systems (flood);</li><li>Single Family/Multi-Family Residences – 6” to 18” of water,</li><li>Mobile Homes- Within 12” of bottom board to 3” above floor level.</li></ul></div>');
@@ -486,8 +482,23 @@
 
 
         }
+
+        function clearMailTo() {
+        document.getElementsByName('emailTo')[0].value='';
+        document.getElementsByName('emailSubject')[0].value='';
+        document.getElementsByName('emailBody')[0].value='';
+        }
+
         function fakeSubmit() {
-            
+
+          var validateEmailField=/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/g;
+    if(!validateEmailField.test(document.getElementsByName('emailTo')[0].value)) {
+      alert('Please enter a valid email address');
+      
+      return false;
+
+    }
+    
            // testSum("#sfhCovByInsurance", "#mhCovByInsurance", "#mfuCovByInsurance", "#totalsCovByInsurance");
            // testSum("#sfhAffected", "#mhAffected", "#mfuAffected", "#totalsAffected")
             //alert("HI");
@@ -512,7 +523,7 @@
     $(d).val(total1 + total2 + total3);
 }*/
 function TypeJurisdiciton(){
-  alert('TEST');
+  //alert('TEST');
 var a = document.getElementById('jurisdictionType1');
 
 if(a.checked==true){ //City
@@ -533,6 +544,65 @@ function popIncidentName(){
 
 second.value = first.value;
 }
+//ddcEmailHidden
+function popSubmitterEmail(){
+    var first = document.getElementById('submitterEmail'),
+    second = document.getElementById('submitterEmailHidden');
+    
+second.value = first.value;
+}
+
+function popAdditionalEmails(){
+    var third = document.getElementById('additionalEmails'),
+    fourth = document.getElementById('additionalEmailsHidden');
+    
+fourth.value = third.value;
+}
+
+function popCountyEmail(){
+    var fifth = document.getElementById('countyEmail'),
+    sixth = document.getElementById('countyEmailHidden');
+
+sixth.value = fifth.value;
+}
+
+function popDdcEmail(){
+    
+    var seventh = document.getElementById('ddcEmail'),
+    eighth = document.getElementById('ddcEmailHidden');
+
+eighth.value = seventh.value;
+}
+
+function popSubmitterEmailAgain(){
+    var first = document.getElementById('submitterEmailHidden'),
+    second = document.getElementById('submitterEmail');
+    
+second.value = first.value;
+}
+
+function popAdditionalEmailsAgain(){
+    var third = document.getElementById('additionalEmailsHidden'),
+    fourth = document.getElementById('additionalEmails');
+
+fourth.value = third.value;
+}
+
+function popCountyEmailAgain(){
+    var fifth = document.getElementById('countyEmailHidden'),
+    sixth = document.getElementById('countyEmail');
+
+sixth.value = fifth.value;
+}
+
+function popDdcEmailAgain(){
+    var seventh = document.getElementById('ddcEmailHidden'),
+    eighth = document.getElementById('ddcEmail');
+
+eighth.value = seventh.value;
+}
+
+
         window.onload = start;
     </script>
    </head>   <body>
@@ -560,10 +630,17 @@ second.value = first.value;
                      <label class="control-label" for="incidentName">Incident Name:</label>
                      <input name="incidentName" id="incidentName" type="text" style="form-control input-sm"/>
                   </div>
-                  <div class="form-group form-inline">
+                  <!--<div class="form-group form-inline">
                      <label class="control-label" for="additionalEmails"> Additional Emails:</label>
                      <input name="additionalEmails" id="additionalEmails" type="text" style="form-control input-sm"/>
+                  </div>-->
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="editKey">editKey:</label>
+                     <input name="editKey" id="editKey" type="text" style="form-control input-sm"/>
                   </div>
+                  <span id="dataidSpan">
+                  <dataid />
+                  </span>
                </div>
                <div id="container">
                   <h1>
@@ -577,12 +654,16 @@ second.value = first.value;
             </input>-->
                   <div class="form-group form-inline">
                      <label class="control-label" for="webeocIncident">Incident:</label>
+                     <br/>
                      <space/>
                      <input type="text" name="webeocIncident" id="webeocIncident" style="form-control input-sm"/>
                   </div>
+                  <br/>
+                  
                   <h1>
                      <span class="label label-default">General</span>
                   </h1>
+                  <br/>
                   <div class="form-group required form-inline">
                      <label class="control-label" for="jurisdictionType">Jurisdiction Type:</label>
         City 
@@ -2174,6 +2255,8 @@ second.value = first.value;
                      <space/>
                      <input name="dutyPhone" id="dutyPhone" type="text" style="form-control input-sm"/>
                   </div>
+                  <br/>
+                  
                   <h1>
                      <span class="label label-default">Individual Assistance</span>
                   </h1>
@@ -2209,6 +2292,7 @@ second.value = first.value;
                   <h3>
                      <span class="label label-default">Residential Losses - Primary Residence Only</span>
                   </h3>
+                  <br/>
                   <table class="table table-bordered">
                      <tr>
                         <td>Type of Homes</td>
@@ -2321,6 +2405,8 @@ second.value = first.value;
                      <space/>
                      <input name="homesIsolated" id="homesIsolated" type="text" placeholder="0" style="form-control input-sm"/>
                   </div>
+                  <br/>
+                  
                   <!--
 <div class="form-group form-inline">
       <label class="control-label" for="numNotSatisfiedByVolunteers">Estimated number of persons whose situation will not be satisfied by volunteer organizations (Contact local volunteer organizations):</label>
@@ -2342,6 +2428,7 @@ second.value = first.value;
                   <h1>
                      <span class="label label-default">Business Losses/Impacts:</span>
                   </h1>
+                  <br/>
                   <table class="table table-bordered">
                      <tr>
                         <td/>
@@ -2374,7 +2461,7 @@ second.value = first.value;
                         </td>
                      </tr>
                      <tr>
-                        <td>Total</td>
+                        <td>Totals</td>
                         <td>
                            <input name="numberTotal" id="numberTotal" type="text" placeholder="0" style="form-control input-sm"/>
                         </td>
@@ -2408,15 +2495,18 @@ second.value = first.value;
                      <space/>
                      <i>(Contact affected businesses and the local Texas Workforce Commission Office)</i>
                   </div>
+                  <br/>
+                  
                   <h1>
                      <span class="label label-default">PUBLIC ASSISTANCE</span>
                   </h1>
+                  <br/>
                   <table class="table table-bordered">
                      <tr>
                         <td>Category</td>
                         <td>No of Sites</td>
                         <td>Estimated Repair Costs</td>
-                        <td>Anticipated Insurance.*</td>
+                        <td>Anticipated Insurance*</td>
                      </tr>
                      <tr>
                         <td>
@@ -2567,13 +2657,15 @@ second.value = first.value;
                            <input name="repairCostTotals" id="repairCostTotals" type="text" placeholder="0" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <input name="insuranceTotals" id="insuranceTotals" type="text" placeholder="$ or %" style="form-control input-sm"/>
+                           <input name="insuranceTotals" id="insuranceTotals" type="text" placeholder="0" style="form-control input-sm"/>
                         </td>
                      </tr>
                   </table>
                   <i>* Anticipated insurance is normally calculated by subtracting any deductible, depreciation or 
      uncoverable loss from the estimated repair cost.
 </i>
+                  <div class="form-group form-inline"/>
+
                   <div class="form-group form-inline">
                      <label class="control-label" for="annualMaintenanceBudget">Total annual maintenance budget (i.e. Public Works, Road &amp; Bridge):</label>
                      <space/>
@@ -2584,10 +2676,14 @@ second.value = first.value;
                      <space/>
                      <input name="startOfFiscalYear" id="startOfFiscalYear" type="text" style="form-control input-sm"/>
                   </div>
+                  <br/>
+                 
                   <h1>
                      <span class="label label-default">Other Eligible Entities</span>
                   </h1>
+                  <br/>
                   <i>(Contact non-profit or governmental, medical, emergency, utility, educational, custodial care facilities, etc.)</i>
+                  <div class="form-group form-inline"/>
                   <table class="table table-bordered">
                      <tr>
                         <td>Organization/ Facility</td>
@@ -3000,34 +3096,92 @@ second.value = first.value;
                         </td>
                      </tr>
                   </table>
-                  <br/>
+                  
                   <div>
 This form is for damage assessment reporting purposes only.  In accordance with the State Emergency Management Plan, if a Mayor/County Judge determines that a situation is of such severity and magnitude that an effective response is beyond the affected jurisdiction’s capability to recover, a letter outlining the disaster impact and the need for supplemental State and/or Federal assistance must accompany this DSO.
 </div>
+<br/>
+
                   <h1>
                      <span class="label label-default">General Notes</span>
                   </h1>
+                  <br/>
                   <div class="form-group form-inline">
                      <label class="control-label" for="notes">Notes:</label>
                      <space/>
                      <textarea name="notes" id="notes" style="form-control"/>
                      <!--<input name="notes" id="notes" type="text" style="form-control" Rows="5" TextMode="MultiLine"/>-->
                   </div>
+                  <br/>
+                  
                   <h1>
                      <span class="label label-default">Submitter Information</span>
                   </h1>
+                  <br/>
                   <div class="form-group form-inline">
                      <label class="control-label" for="submitterName">Name:</label>
                      <space/>
-                     <input name="submitterName" id="submitterName" type="text" style="form-control input-sm"/>
+                     <input name="submitterName" id="submitterName" type="text" style="width:300px"/>
                   </div>
+                  <div/>
+                  <i> If you include your email, a confirmation email will be sent to you.</i>
+                  <div class="form-group form-inline"/>
                   <div class="form-group form-inline">
                      <label class="control-label" for="submitterEmail">Email:</label>
                      <space/>
-                     <input name="submitterEmail" id="submitterEmail" type="text" style="form-control input-sm"/>
+                     <input name="submitterEmail" id="submitterEmail" type="email" style="width:300px" onBlur="clearMailTo();popSubmitterEmail()"/>
                   </div>
-                  <i> If you include your email, a confirmation email will be sent to you.</i>
-               </div>
+                  <div class="form-group form-inline" style="display:none">
+                     <label class="control-label" for="submitterEmailHidden">Copies Email:</label>
+                     <space/>
+                     <input name="submitterEmailHidden" id="submitterEmailHidden" type="text" style="width:300px"/>
+                  </div>
+                 
+               <div class="form-group form-inline">
+                     <label class="control-label" for="additionalEmails">Additional Emails:</label>
+                     <space/>
+                     <input name="additionalEmails" id="additionalEmails" type="email" style="width:300px" placeholder="Separate multiple emails with a comma (,)" onBlur="clearMailTo();popAdditionalEmails()"/>
+                  </div>
+                  <div class="form-group form-inline" style="display:none">
+                     <label class="control-label" for="additionalEmailsHidden">Copies Additional Emails:</label>
+                     <space/>
+                     <input name="additionalEmailsHidden" id="additionalEmailsHidden" type="text" style="width:300px"/>
+                  </div>
+               <div class="form-group form-inline">
+                     <label class="control-label" for="countyEmail">County Email:</label>
+                     <space/>
+                     <input name="countyEmail" id="countyEmail" type="email" style="width:300px" onBlur="clearMailTo();popCountyEmail()"/>
+                  </div>
+                  <div class="form-group form-inline" style="display:none">
+                     <label class="control-label" for="countyEmailHidden">Copies County Email:</label>
+                     <space/>
+                     <input name="countyEmailHidden" id="countyEmailHidden" type="text" style="width:300px"/>
+                  </div>
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="ddcEmail">DDC Email:</label>
+                     <space/>
+                     <input name="ddcEmail" id="ddcEmail" type="email" style="width:300px" onBlur="clearMailTo();popDdcEmail()"/>
+                  </div>
+                  <div class="form-group form-inline" style="display:none">
+                     <label class="control-label" for="ddcEmailHidden">Copies DDC Email:</label>
+                     <space/>
+                     <input name="ddcEmailHidden" id="ddcEmailHidden" type="text" style="width:300px"/>
+                  </div>
+                  <!--added-->
+                  <!--*email -->
+                  </div><!--added-->
+                  <div name="emailSection" class="form-group form-inline" style="display:none">
+                  <span id="emailCheckbox">
+                  <datalink name="Email links"/>
+                  </span>
+                  <!--<input type="checkbox" name="fakeDataLink" value="Yes"/>-->
+                    To<input type="text" name="emailTo" size="40" value="" recipient="true" subject="false" message="false" receiver="false" notification="false"/>
+                    <br/>
+                    Subject<input type="text" name="emailSubject" size="40" value="" recipient="false" subject="true" message="false" receiver="false" notification="false"/>
+                    <br/>
+                    Body<textarea name="emailBody" rows="4" cols="40" recipient="false" subject="false" message="true" receiver="false" notification="false"/>
+                  </div>
+               <div style="display:none">
                <h1>
                   <span class="label label-default">WebEOC DSO Admin Features</span>
                </h1>
@@ -3048,9 +3202,9 @@ This form is for damage assessment reporting purposes only.  In accordance with 
                   <label class="control-label" for="hidden">Cancel:</label>
                   <space/>
                   <input name="hidden" id="hidden" type="checkbox" style="form-control input-sm" value="Yes"/>
-               </div>
+               </div></div>
             </div>
-            <input type="button" class="btn btn-info" value="Save" onclick="fakeSubmit();"/>
+            <input type="button" class="btn btn-info" id="notRealSave" value="Save"/>
             <space/>
             <cancelbutton class="btn btn-danger"/>
             <space/>
