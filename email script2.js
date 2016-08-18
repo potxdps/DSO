@@ -5,7 +5,7 @@ function validateEmail(email) {
         }
 
 
-
+//submitterEmail
 function finalEmailCheck() {
             var checkEmail = function (a) {
                 for (var i = 0; i &lt; a.length; i++) {
@@ -14,9 +14,10 @@ function finalEmailCheck() {
                     }
                 }
             };
-            if(validateEmail(document.getElementById('submitterEmail').value) == false){
-                return false;
-            }
+            var e = document.getElementById('submitterEmail').value.split(/[ ,;]+/);
+            if(checkEmail(e) != false){
+                document.getElementById('submitterEmail').value=e.join(',');
+            };
             var b = document.getElementById('additionalEmails').value.split(/[ ,;]+/);
             if(checkEmail(b) != false){
                 document.getElementById('additionalEmails').value=b.join(',');

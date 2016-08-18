@@ -28,12 +28,15 @@
     for(var i=0; i &lt; scribe.fields4History.length; i++) {
       var b=document.getElementsByName(scribe.fields4History[i][0]);
       for(var k=0; k &lt; b.length; k++) {
+        console.log(b[k]);
         var result=[];
         if(b[k].tagName==="SELECT") {
             var ms = b[k].selectedOptions;
             var msr =[];
+            //console.log("ms below");
+            //console.log(ms);
             for(var msi=0; msi &lt; ms.length; ms++){
-               msr.push(ms[msi].text); 
+               msr.push(ms[msi].text);
             }
              result.push(scribe.fields4History[i][1]);
              result.push(msr.join(','));   
@@ -76,24 +79,73 @@
             obj.options.length = 0;
         }
 
-       /* function averageIA(){
-          var a1=document.getElementById("sfhCovByInsurance").value; 
-          var a2=document.getElementById("mhCovByInsurance").value; 
-          var a3=document.getElementById("mfuCovByInsurance").value; 
-          var num=0;
-          var avg = (a1 + a2 + a3)/num;
-            if (a1!=""){num+=1};
-              if (a2!=""){num+=1};
-                if (a3!=""){num+=1};
-                  if (num==0){event.value="";
-              } else {
-                document.getElementById("totalsCovByInsurance").value=avg;
+        function iaAverage() {
+   var a1 = document.getElementById("sfhCovByInsurance").value;
+   var a2 = document.getElementById("mhCovByInsurance").value;
+   var a3 = document.getElementById("mfuCovByInsurance").value;
+   var num = 0;
+   if (a1 != ("" || 0)) {
+       num += 1
+   } else {
+       a1 = 0;
+   };
+   if (a2 != ("" || 0)) {
+       num += 1
+   } else {
+       a2 = 0;
+   };
+   if (a3 != ("" || 0)) {
+       num += 1
+   } else {
+       a3 = 0;
+   };
+   var avg = (parseFloat(a1) + parseFloat(a2) + parseFloat(a3)) / num;
+   if (num === 0) {
+    document.getElementById("totalsCovByInsurance").value = '';
+       return false;
 
-        }
-      }*/
+   } else {
+       document.getElementById("totalsCovByInsurance").value = avg;
+   }
+}
+
+/*function clearZeros(){
+
+   //var b1 = document.getElementById("sfhCovByInsurance").value;
+   //var b2 = document.getElementById("mhCovByInsurance").value;
+   //var b3 = document.getElementById("mfuCovByInsurance").value;
+  //if (b1 === '0'){
+    document.getElementById("sfhCovByInsurance").value = "";
+  //};
+  //if (b2 === '0'){
+    document.getElementById("mhCovByInsurance").value = "";
+ // };
+  //if (b3 === '0'){
+    document.getElementById("mfuCovByInsurance").value = "";
+    document.getElementById("totalsCovByInsurance").value = "";
+
+ // };
+}*/
+      /*function iaAverage() {
+  var fields = ["sfhCovByInsurance","mhCovByInsurance","mfuCovByInsurance"];
+  var average = [];
+  var count = 0;
+  for (a = 0; a &lt; fields.length; a++) {
+    if (document.getElementById(fields[a]).value != "") {
+      average[count] = Number(document.getElementById(fields[a]).value);
+      count++;
+    }
+  }
+  var temp = 0;
+  for (a = 0; a &lt; average.length; a++) {
+    temp+=average[a];
+  }
+  alert(temp/average.length);
+  //document.getElementById('totalsCovByInsurance2').value = (temp/average.length);
+}*/
 
         function autoSum() {
-            var fields = ["totalsAffected", "totalsMinorDamage", "totalsMajorDamage", "totalsDestroyed", "totalsCovByInsurance", "numberTotal", "coveredTotal", "totalTotal", "sitesTotals", "repairCostTotals", "insuranceTotals", "sitesOtherTotal", "repairCostTotal", "insuranceCostTotal"];
+            var fields = ["totalsAffected", "totalsMinorDamage", "totalsMajorDamage", "totalsDestroyed", "numberTotal", "coveredTotal", "totalTotal", "sitesTotals", "repairCostTotals", "insuranceTotals", "sitesOtherTotal", "repairCostTotal", "insuranceCostTotal"];
             for (var i = 0; i &lt; fields.length; i++) {
                 var objs = document.getElementsByClassName(fields[i]);
                 for (var h = 0; h &lt; objs.length; h++) {
@@ -722,6 +774,26 @@ function ddcEmailHideReveal() {
     
  }
 }
+Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
+    get: (function() {
+        try {
+            document.querySelector(":checked");
+            return function() {
+                return this.querySelectorAll(":checked");
+            };
+        } catch (e) {
+            return function() {
+                if (!this.multiple) {
+                    return this.selectedIndex &gt;= 0
+                            ? [this.options[this.selectedIndex]] : [];
+                }
+                for (var i = 0, a = []; i &lt; this.options.length; i++)
+                    if (this.options[i].selected) a.push(this.options[i]);
+                return a;
+            };
+        }
+    })()
+});
         window.onload = start;
     </script>
    </head>   <body>
@@ -758,7 +830,7 @@ function ddcEmailHideReveal() {
                      <input name="editKey" id="editKey" type="text" style="form-control input-sm"/>
                   </div>
                   <span id="dataidSpan">
-                  <dataid />
+                     <dataid/>
                   </span>
                </div>
                <div id="container">
@@ -778,7 +850,6 @@ function ddcEmailHideReveal() {
                      <input type="text" name="webeocIncident" id="webeocIncident" style="form-control input-sm"/>
                   </div>
                   <br/>
-                  
                   <h1>
                      <span class="label label-default">General</span>
                   </h1>
@@ -789,8 +860,12 @@ function ddcEmailHideReveal() {
                      
                      
                      
+                     
+                     
                      <input id="jurisdictionType1" type="radio" style="form-control input-sm" name="jurisdictionType" value="City" onclick="ddcEmailHideReveal()"/>
         County 
+                     
+                     
                      
                      
                      
@@ -2299,8 +2374,12 @@ function ddcEmailHideReveal() {
                      
                      
                      
+                     
+                     
                      <input id="nfip1" type="radio" style="form-control input-sm" name="nfip" value="Yes"/>
         No 
+                     
+                     
                      
                      
                      
@@ -2310,6 +2389,8 @@ function ddcEmailHideReveal() {
                      <label class="control-label" for="dateOfDisaster">Inclusive dates of the disaster:</label>
                      <space/>
                      <input name="dateOfDisaster1" id="dateOfDisaster1" type="text" placeholder="Start Date" data-provide="datepicker" style="form-control input-sm datepicker"/> - 
+                     
+                     
                      
                      
                      
@@ -2327,8 +2408,12 @@ function ddcEmailHideReveal() {
                      
                      
                      
+                     
+                     
                      <input id="declarationIssued1" type="radio" style="form-control input-sm" name="declarationIssued" value="Yes"/>
        No 
+                     
+                     
                      
                      
                      
@@ -2375,7 +2460,6 @@ function ddcEmailHideReveal() {
                      <input name="dutyPhone" id="dutyPhone" type="text" style="form-control input-sm"/>
                   </div>
                   <br/>
-                  
                   <h1>
                      <span class="label label-default">Individual Assistance</span>
                   </h1>
@@ -2419,9 +2503,13 @@ function ddcEmailHideReveal() {
                            
                            
                            
+                           
+                           
                            <span id="affectedSpan" class="label label-info">i</span>
                         </td>
                         <td>Minor Damage 
+                           
+                           
                            
                            
                            
@@ -2431,15 +2519,21 @@ function ddcEmailHideReveal() {
                            
                            
                            
+                           
+                           
                            <span id="majorDamageSpan" class="label label-info">i</span>
                         </td>
                         <td>Destroyed 
                            
                            
                            
+                           
+                           
                            <span id="destroyedSpan" class="label label-info">i</span>
                         </td>
                         <td>% Covered by Insurance 
+                           
+                           
                            
                            
                            
@@ -2461,8 +2555,9 @@ function ddcEmailHideReveal() {
                            <input name="sfhDestroyed" id="sfhDestroyed" type="text" placeholder="0" class="totalsDestroyed" style="form-control input-sm totalsDestroyed"/>
                         </td>
                         <td>
-                           <input name="sfhCovByInsurance" id="sfhCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance"/>
+                           <input name="sfhCovByInsurance" id="sfhCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()"/>
                         </td>
+                        <td>%</td>
                      </tr>
                      <tr>
                         <td>Mobile Homes</td>
@@ -2479,8 +2574,9 @@ function ddcEmailHideReveal() {
                            <input name="mhDestroyed" id="mhDestroyed" type="text" placeholder="0" class="totalsDestroyed" style="form-control input-sm totalsDestroyed"/>
                         </td>
                         <td>
-                           <input name="mhCovByInsurance" id="mhCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance"/>
+                           <input name="mhCovByInsurance" id="mhCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()"/>
                         </td>
+                        <td>%</td>
                      </tr>
                      <tr>
                         <td>Multi-Family Units</td>
@@ -2497,8 +2593,9 @@ function ddcEmailHideReveal() {
                            <input name="mfuDestroyed" id="mfuDestroyed" type="text" placeholder="0" class="totalsDestroyed" style="form-control input-sm totalsDestroyed"/>
                         </td>
                         <td>
-                           <input name="mfuCovByInsurance" id="mfuCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance"/>
+                           <input name="mfuCovByInsurance" id="mfuCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()"/>
                         </td>
+                        <td>%</td>
                      </tr>
                      <tr>
                         <td>Totals</td>
@@ -2515,8 +2612,13 @@ function ddcEmailHideReveal() {
                            <input name="totalsDestroyed" id="totalsDestroyed" type="text" placeholder="0" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <input name="totalsCovByInsurance" id="totalsCovByInsurance" type="text" placeholder="Average" style="form-control input-sm"/>
+                           <input name="totalsCovByInsurance" id="totalsCovByInsurance" type="text" placeholder="0" style="form-control input-sm"/>
                         </td>
+                        <td>%</td>
+                        <!--<td>
+                           <input name="totalsCovByInsurance2" id="totalsCovByInsurance2" type="text" placeholder="Average" style="form-control input-sm"/>
+                        </td>
+                        <td><button onclick="clearZeros()">GO</button></td>-->
                      </tr>
                   </table>
                   <div class="form-group form-inline">
@@ -2525,7 +2627,6 @@ function ddcEmailHideReveal() {
                      <input name="homesIsolated" id="homesIsolated" type="text" placeholder="0" style="form-control input-sm"/>
                   </div>
                   <br/>
-                  
                   <!--
 <div class="form-group form-inline">
       <label class="control-label" for="numNotSatisfiedByVolunteers">Estimated number of persons whose situation will not be satisfied by volunteer organizations (Contact local volunteer organizations):</label>
@@ -2602,6 +2703,8 @@ function ddcEmailHideReveal() {
                         
                         
                         
+                        
+                        
                         <span id="businessesEconomicInjuryInfo" class="label label-info">i</span>
                      </label>
                      <space/>
@@ -2615,7 +2718,6 @@ function ddcEmailHideReveal() {
                      <i>(Contact affected businesses and the local Texas Workforce Commission Office)</i>
                   </div>
                   <br/>
-                  
                   <h1>
                      <span class="label label-default">PUBLIC ASSISTANCE</span>
                   </h1>
@@ -2633,6 +2735,8 @@ function ddcEmailHideReveal() {
                         
                         
                         
+                        
+                        
                         </td>
                         <td>
                            <input name="sitesDebrisClearance" id="sitesDebrisClearance" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
@@ -2647,6 +2751,8 @@ function ddcEmailHideReveal() {
                      <tr>
                         <td>
                            <span class="label label-default" id="catBInfo">B</span> Emergency Protective Measures 
+                           
+                           
                            
                            
                            
@@ -2668,6 +2774,8 @@ function ddcEmailHideReveal() {
                         
                         
                         
+                        
+                        
                         </td>
                         <td>
                            <input name="sitesRoadPaved" id="sitesRoadPaved" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
@@ -2685,8 +2793,12 @@ function ddcEmailHideReveal() {
                            
                            
                            
+                           
+                           
                            <br/>(Dams, levees, dikes)
 
+                        
+                        
                         
                         
                         
@@ -2704,6 +2816,8 @@ function ddcEmailHideReveal() {
                      <tr>
                         <td>
                            <span class="label label-default" id="catEInfo">E</span> Buildings &amp; Equipment 
+                           
+                           
                            
                            
                            
@@ -2725,9 +2839,13 @@ function ddcEmailHideReveal() {
                            
                            
                            
+                           
+                           
                            <br/>
 (Gas, Electric, Sewer, Water)
 
+                        
+                        
                         
                         
                         
@@ -2749,9 +2867,13 @@ function ddcEmailHideReveal() {
                            
                            
                            
+                           
+                           
                            <br/>
 (Recreational Facilities, Airports, etc.)
 
+                        
+                        
                         
                         
                         
@@ -2784,7 +2906,6 @@ function ddcEmailHideReveal() {
      uncoverable loss from the estimated repair cost.
 </i>
                   <div class="form-group form-inline"/>
-
                   <div class="form-group form-inline">
                      <label class="control-label" for="annualMaintenanceBudget">Total annual maintenance budget (i.e. Public Works, Road &amp; Bridge):</label>
                      <space/>
@@ -2796,7 +2917,6 @@ function ddcEmailHideReveal() {
                      <input name="startOfFiscalYear" id="startOfFiscalYear" type="text" style="form-control input-sm"/>
                   </div>
                   <br/>
-                 
                   <h1>
                      <span class="label label-default">Other Eligible Entities</span>
                   </h1>
@@ -3215,12 +3335,10 @@ function ddcEmailHideReveal() {
                         </td>
                      </tr>
                   </table>
-                  
                   <div>
 This form is for damage assessment reporting purposes only.  In accordance with the State Emergency Management Plan, if a Mayor/County Judge determines that a situation is of such severity and magnitude that an effective response is beyond the affected jurisdiction’s capability to recover, a letter outlining the disaster impact and the need for supplemental State and/or Federal assistance must accompany this DSO.
 </div>
-<br/>
-
+                  <br/>
                   <h1>
                      <span class="label label-default">General Notes</span>
                   </h1>
@@ -3232,7 +3350,6 @@ This form is for damage assessment reporting purposes only.  In accordance with 
                      <!--<input name="notes" id="notes" type="text" style="form-control" Rows="5" TextMode="MultiLine"/>-->
                   </div>
                   <br/>
-                  
                   <h1>
                      <span class="label label-default">Submitter Information</span>
                   </h1>
@@ -3253,10 +3370,9 @@ This form is for damage assessment reporting purposes only.  In accordance with 
                   <div class="form-group form-inline" style="display:none">
                      <label class="control-label" for="submitterEmailHidden">Copies Email:</label>
                      <space/>
-                     <input name="submitterEmailHidden" id="submitterEmailHidden" type="text" style="width:300px" />
+                     <input name="submitterEmailHidden" id="submitterEmailHidden" type="text" style="width:300px"/>
                   </div>
-                 
-               <div class="form-group form-inline">
+                  <div class="form-group form-inline">
                      <label class="control-label" for="additionalEmails">Additional Emails:</label>
                      <space/>
                      <input name="additionalEmails" id="additionalEmails" type="text" style="width:300px" placeholder="Separate multiple emails with a comma (,)" onBlur="finalEmailCheck()"/>
@@ -3266,7 +3382,7 @@ This form is for damage assessment reporting purposes only.  In accordance with 
                      <space/>
                      <input name="additionalEmailsHidden" id="additionalEmailsHidden" type="text" style="width:300px"/>
                   </div>
-               <div class="form-group form-inline">
+                  <div class="form-group form-inline">
                      <label class="control-label" for="countyEmail">County Email:</label>
                      <space/>
                      <input name="countyEmail" id="countyEmail" type="text" style="width:300px" onBlur="finalEmailCheck()"/>
@@ -3288,46 +3404,54 @@ This form is for damage assessment reporting purposes only.  In accordance with 
                   </div>
                   <!--added-->
                   <!--*email -->
-                  </div><!--added-->
-                  <div name="emailSection" class="form-group form-inline" style="display:nonea">
+               </div>
+               <!--added-->
+               <div name="emailSection" class="form-group form-inline" style="display:nonea">
                   <span id="emailCheckbox">
-                  <datalink name="Email links"/>
+                     <datalink name="Email links"/>
                   </span>
                   <!--<input type="checkbox" name="fakeDataLink" value="Yes"/>-->
-                    To<input type="text" name="emailTo" size="40" value="" recipient="true" subject="false" message="false" receiver="false" notification="false"/>
-                    <br/>
-                    Subject<input type="text" name="emailSubject" size="40" value="" recipient="false" subject="true" message="false" receiver="false" notification="false"/>
-                    <br/>
-                    Body<textarea name="emailBody" rows="4" cols="40" recipient="false" subject="false" message="true" receiver="false" notification="false"/>
-                  </div>
+                    To
+                  
+                  <input type="text" name="emailTo" size="40" value="" recipient="true" subject="false" message="false" receiver="false" notification="false"/>
+                  <br/>
+                    Subject
+                  
+                  <input type="text" name="emailSubject" size="40" value="" recipient="false" subject="true" message="false" receiver="false" notification="false"/>
+                  <br/>
+                    Body
+                  
+                  <textarea name="emailBody" rows="4" cols="40" recipient="false" subject="false" message="true" receiver="false" notification="false"/>
+               </div>
                <div style="display:none">
-               <h1>
-                  <span class="label label-default">WebEOC DSO Admin Features</span>
-               </h1>
-               <div class="form-group form-inline">
-                  <label for="socProcessed">Soc Processing Options:</label>
-                  <space/>
-                  <select name="socProcessed" class="form-control" id="socProcessed">
-                     <option>Not Processed</option>
-                     <option>Processed</option>
-                  </select>
+                  <h1>
+                     <span class="label label-default">WebEOC DSO Admin Features</span>
+                  </h1>
+                  <div class="form-group form-inline">
+                     <label for="socProcessed">Soc Processing Options:</label>
+                     <space/>
+                     <select name="socProcessed" class="form-control" id="socProcessed">
+                        <option>Not Processed</option>
+                        <option>Processed</option>
+                     </select>
+                  </div>
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="hidden">Disable Online Editing:</label>
+                     <space/>
+                     <input name="dsoDisable" id="dsoDisable" type="checkbox" style="form-control input-sm" value="Yes"/>
+                  </div>
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="hidden">Cancel:</label>
+                     <space/>
+                     <input name="hidden" id="hidden" type="checkbox" style="form-control input-sm" value="Yes"/>
+                  </div>
                </div>
-               <div class="form-group form-inline">
-                  <label class="control-label" for="hidden">Disable Online Editing:</label>
-                  <space/>
-                  <input name="dsoDisable" id="dsoDisable" type="checkbox" style="form-control input-sm" value="Yes"/>
-               </div>
-               <div class="form-group form-inline">
-                  <label class="control-label" for="hidden">Cancel:</label>
-                  <space/>
-                  <input name="hidden" id="hidden" type="checkbox" style="form-control input-sm" value="Yes"/>
-               </div></div>
             </div>
             <input type="button" class="btn btn-info" id="notRealSave" value="Save"/>
             <space/>
             <cancelbutton class="btn btn-danger"/>
             <space/>
-            <input type="button" class="btn btn-warning" id="NOTnotRealSave" onClick="submit2()"/>
+            <!--<input type="button" class="btn btn-warning" id="NOTnotRealSave" onClick="submit2()"/>-->
             <div style="display:none" id="saveButton">
                <savebutton/>
             </div>
