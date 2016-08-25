@@ -65,7 +65,7 @@
            <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink><space/><space/>
             <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink><space/><space/>
             <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/><space/><space/><space/><space/>
+            <!--<viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>--><button type="button" class="btn active">View Housing / IA</button><space/><space/><space/><space/><space/><space/>
            <!-- <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink><space/><space/>
             <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>-->
             <br/>
@@ -268,8 +268,7 @@
                   
                   <viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)">
                      <button class="btn btn-warning btn-xs">DSO History</button>
-                  </viewlink>|
-                  <relatedexpression name="femaTest" table="Supplemental">sum(case when femaCheckbox='Yes' then 1 else 0 end)</relatedexpression>|END
+                  </viewlink>|<relatedexpression name="femaTest" table="Supplemental">sum(case when femaCheckbox='Yes' then 1 else 0 end)</relatedexpression>|END27
                </span>
             </eocrepeatallrecords>
          </div>
@@ -283,7 +282,7 @@ align='right'
   }
   
   //row.className('agencytemplate_tableentry');
-    row.innerHTML = '<td>'+data[2]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td>'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'+'<td>'+comma(data[19])+'</td>'+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'+'<td>'+comma(data[22])+'</td>'+'<td>'+comma(data[23])+'</td>'+'<td>'+comma(data[24])+'</td>'+'<td>'+comma(data[25])+'</td>';
+    row.innerHTML = '<td>'+data[2]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td>'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'+'<td>'+comma(data[19])+'</td>'+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'+'<td>'+comma(data[22])+'</td>'+'<td>'+comma(data[23])+'</td>'+'<td>'+comma(data[24])+'</td>'+'<td>'+comma(data[25])+'</td>'/*+'<td>'+comma(data[26])+'</td>'*/;//[26]is where the femaCheck totals are stored, uncomment if wish to see them
     //adds color to new total rows - PA file says +rowClass below instead of +rowColorClass at end of this block
     console.log(rowClass);
     var rowColorClass =''
@@ -370,9 +369,9 @@ function popluateTable(){
 var t = document.getElementById('mainTable');
 var totalRowVar=function(i){
    var a = getTotalsFor(masterData[i][5]);
-   var b = masterData[i][26]&gt;0?"rowRed":"rowYellow";
+   var b = a[19]&gt;0?"rowRed":"rowYellow";//[19] is hidden and contains the femaCheck totals for the county
       //alert("yellow rows");
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],""],b);
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],"",a[19]],b);//[19] is hidden and contains the femaCheck totals for the county
 };
   for(var i=0; i &lt; masterData.length;i++){//alert("won!");
       
@@ -392,6 +391,7 @@ var totalRowVar=function(i){
       newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18]],"rowGray");//alert("TANK");
 }
 //16 0's Single Family Aff totals through Totals Destroyed plus 2
+
 function getTotalsFor(c){
   var a =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   var isNull = function(b){
@@ -401,7 +401,7 @@ function getTotalsFor(c){
   //parseFloat cuts off the first character if a number, otherwise NaN is returned - 16 spots below - creates into decimal integer
 for(var i=0; i&lt;masterData.length;i++){
   if(masterData[i][5]==c){
-    a[0]+=parseFloat(isNull(masterData[i][6]));
+    //a[0]+=parseFloat(isNull(masterData[i][6]));
     a[1]+=parseFloat(isNull(masterData[i][7]));
     a[2]+=parseFloat(isNull(masterData[i][8]));
     a[3]+=parseFloat(isNull(masterData[i][9]));

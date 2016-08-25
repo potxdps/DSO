@@ -57,7 +57,8 @@
          <div class="content">
              <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink><space/><space/>
             <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink><space/><space/>
+            <!--<viewlink class="btn active" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>-->
+            <button type="button" class="btn active">View Infrastructure / PA</button><space/><space/>
             <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/><space/><space/><space/><space/>
             <!--<viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink><space/><space/>
             <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>-->
@@ -412,7 +413,7 @@
       (case when cat15 = 'G' then isNull(cast(repairCost15 as money),0) else 0 end)+
       cast(repairCostOther as money)
       </expression>|
-      <value-of select="@declarationIssued"/>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|<relatedexpression name="femaTest" table="Supplemental">sum(case when femaCheckbox='Yes' then 1 else 0 end)</relatedexpression>|Monster19xxxxx</span>
+      <value-of select="@declarationIssued"/>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckbox='Yes' then 1 else 0 end)</relatedexpression>|END20|</span>
             </eocrepeatallrecords>
          </div>
       </div>
@@ -427,7 +428,7 @@
 align='right'
   }
   //row.className('agencytemplate_tableentry');
-    row.innerHTML = '<td>'+data[2]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td>'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>';
+    row.innerHTML = '<td>'+data[2]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td>'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'/*+'<td>'+comma(data[19])+'</td>'*/;//view femaCheck total cell[19]
     var rowColorClass =''
     if (((position/2) - Math.floor(position/2)) === 0) {rowColorClass='agencytemplate_tableroweven'} else {rowColorClass='agencytemplate_tablerowodd'};
 
@@ -487,13 +488,13 @@ function popluateTable(){
 var t = document.getElementById('mainTable');
 var totalRowVar=function(i){
    var a = getTotalsFor(masterData[i][5]);
-   var b = masterData[i][18]&gt;0?"rowRed":"rowYellow";//is the value of 18 (the totals of that counties femaCheckboxes) greater than 0, if so turn row red, if not turn yellow
+   var b = a[9]&gt;0?"rowRed":"rowYellow";//is the totals of 9 (the totals of that counties femaCheckboxes) greater than 0, if so turn row red, if not turn yellow
       var thresholdResult = threshold(masterData[i][5]);
       var a = getTotalsFor(masterData[i][5]);
       threshold.TotalOnPage+=parseInt(thresholdResult);
       var Mets = parseFloat(a[8]) &gt;= parseFloat(thresholdResult)?'Yes':'No';
       //yellow or red total rows
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],thresholdResult,Mets,a[15],""],b);
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],thresholdResult,Mets,a[15],"",a[9]],b);//[9] is hidden and contains the femaCheck totals for the county
 };
   for(var i=0; i &lt; masterData.length;i++){
     //adds regular row
@@ -520,8 +521,8 @@ function getTotalsFor(c){
   };
 for(var i=0; i&lt;masterData.length;i++){
   if(masterData[i][5]==c){
-//parseFloat cuts off the first character if a number, otherwise NaN is returned ------------ the [18] spot is where the total is stored from femaCheckboxes
-    a[0]+=parseFloat(isNull(masterData[i][6]));
+//parseFloat cuts off the first character if a number, otherwise NaN is returned ------------ the [19] spot is where the total is stored from femaCheckboxes
+    //a[0]+=parseFloat(isNull(masterData[i][6]));
     a[1]+=parseFloat(isNull(masterData[i][7]));
     a[2]+=parseFloat(isNull(masterData[i][8]));
     a[3]+=parseFloat(isNull(masterData[i][9]));
@@ -530,10 +531,11 @@ for(var i=0; i&lt;masterData.length;i++){
     a[6]+=parseFloat(isNull(masterData[i][12]));
     a[7]+=parseFloat(isNull(masterData[i][13]));
     a[8]+=parseFloat(isNull(masterData[i][14]));
-    a[9]+=parseFloat(isNull(masterData[i][18]));
-    
+    a[9]+=parseFloat(isNull(masterData[i][19]));
+    //a[10]+=parseFloat(isNull(masterData[i][19]));
   }
 }
+console.log(a);
 return a;
 
 }
@@ -545,7 +547,7 @@ function getTotalsForAll(){
     else return b;
   };
 for(var i=0; i&lt;masterData.length;i++){
-    a[0]+=parseFloat(isNull(masterData[i][6]));
+    //a[0]+=parseFloat(isNull(masterData[i][6]));
     a[1]+=parseFloat(isNull(masterData[i][7]));
     a[2]+=parseFloat(isNull(masterData[i][8]));
     a[3]+=parseFloat(isNull(masterData[i][9]));
@@ -557,7 +559,7 @@ for(var i=0; i&lt;masterData.length;i++){
    
 }
  a[9]=parseFloat(threshold.TotalOnPage);
-
+console.log(a);
 return a;
 
 }
