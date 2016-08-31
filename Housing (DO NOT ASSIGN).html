@@ -367,9 +367,14 @@ function trim(a) {
 //this function will break if only one county is recorded, with two or more it will work. Jaime says put a clause in it to make sure it runs in that case
 function popluateTable(){
 var t = document.getElementById('mainTable');
+
+var firstGrandTotal = getTotalsForAll();
+      newRow(t,t.rows.length,["","","","","Grand Totals","",firstGrandTotal[0],firstGrandTotal[1],firstGrandTotal[2],firstGrandTotal[3],firstGrandTotal[4],firstGrandTotal[5],firstGrandTotal[6],firstGrandTotal[7],firstGrandTotal[8],firstGrandTotal[9],firstGrandTotal[10],firstGrandTotal[11],firstGrandTotal[12],firstGrandTotal[13],firstGrandTotal[14],firstGrandTotal[15],firstGrandTotal[16],firstGrandTotal[17],firstGrandTotal[18]],"rowGray");
+
 var totalRowVar=function(i){
    var a = getTotalsFor(masterData[i][5]);
-   var b = a[19]&gt;0?"rowRed":"rowYellow";//[19] is hidden and contains the femaCheck totals for the county
+   var b = a[20]===true?"rowRed":"rowYellow";
+   //var b = a[19]&gt;0?"rowRed":"rowYellow";//[19] is hidden and contains the femaCheck totals for the county
       //alert("yellow rows");
       newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],"",a[19]],b);//[19] is hidden and contains the femaCheck totals for the county
 };
@@ -393,7 +398,7 @@ var totalRowVar=function(i){
 //16 0's Single Family Aff totals through Totals Destroyed plus 2
 
 function getTotalsFor(c){
-  var a =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var a =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,true];
   var isNull = function(b){
     if(b==''||b==' '||b==0){return 0;}
     else return b;
@@ -421,6 +426,10 @@ for(var i=0; i&lt;masterData.length;i++){
     a[17]+=parseFloat(isNull(masterData[i][23]));
     a[18]+=parseFloat(isNull(masterData[i][24]));
     a[19]+=parseFloat(isNull(masterData[i][26]));
+
+    if(masterData[i][26]!="1"){
+      a[20]=false;
+    }
   }
 }
 console.log(a);

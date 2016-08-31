@@ -1,0 +1,377 @@
+<html>   <head>
+      <title>CAN Report</title>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/FAR.Common.031114-a.js"/>
+      <script type="text/javascript">
+    /*************START Fusion Field Mapping *********************/
+    var fieldMap = {
+        fusionNumberKey: 'RFA',                    //(Optional) This is the key TWIRP will give you specific to your board the default is 'test'.
+        fusionTime: 'saveDateTime',                 //(Optional) This is the name of the input you want the save date and time to go to, please ensure the input tag has fieldtype="datetime" as an attribute.
+        serverTime: 'serverTime',                   //(Optional) This is the name of the input that you want to save the server time
+        fusionNumber: 'fusionNumber',               //(Optional) This is the name of the input that you have the fusion number being saved.
+        backupFusionNumber: 'backupFusionNumber'    //(Optional) This is the name of the input that you have the backup fusion number being saved.
+    };
+     /*************END Fusion Field Mapping **********************/
+    /********START Fusion Configurations DO NOT MODIFY************/
+    var script={add:function(url){var X=document.createElement('script');X.setAttribute("type","text/javascript");X.setAttribute("src",url);document.getElementsByTagName("head")[0].appendChild(X);}};var fH={wR:false,h:window.location.hostname,u:"https://fusion.soc.texas.gov/FusionHelper/DynamicScript.ashx",bFN:function(fieldName){var dt=new Date();fH.aV(fieldName,[0].value=(dt.getMonth()+1)+''+dt.getDate()+''+dt.getFullYear()+''+'.'+dt.getHours()+''+dt.getMinutes()+''+dt.getUTCSeconds()+''+dt.getMilliseconds());},eBn:function(name){if(document.getElementsByName(name).length&gt;0){return[true,document.getElementsByName(name)[0]];}
+    else{return[false];}},aV:function(name,value){var e=fH.eBn(name);if(e[0]===true){e[1].value=value;}},there:function(name,fn){if(name){if(fH.eBn(name)[0]===true){if(fH.eBn(name)[1].value===''){fn(name);}}}},there2:function(name,fn){if(name){if(fH.eBn(name)[0]===true){fn(name);}}},onload:function(){}};function fInit(){fH.wR=true;var urlFN='?host='+fH.h;fH.there(fieldMap.backupFusionNumber,fH.bFN);fH.there(fieldMap.fusionNumber,function(a){urlFN+="&amp;fusionNumberKey="+fieldMap.fusionNumberKey;});fH.there2(fieldMap.serverTime,function(a){var f=fH.eBn(a);if(f[0]===true){f[1].value='<currentdate/>'+' <currenttime/>'}});script.add(fH.u+urlFN);var d=new Date();startDateTime=d.getTime();prependSave(function(){fH.there2(fieldMap.fusionTime,calDiff);fH.there2(fieldMap.serverTime,calDiff);})}
+    function calDiff(a){var cur=new Date();var dif=cur.getTime()-startDateTime;var f=fH.eBn(a);var cur;if(f[0]===true){var prev=new Date(f[1].value);var n=new Date(prev.getTime()+dif);f[1].value=fusionTime.dateTimeFormat(n);}}
+    var RSCI=setInterval(function(){if(document.readyState==="complete"){clearInterval(RSCI);fInit();}},10);var startDateTime;function prependSave(fn){var existingEvent=document.forms[0].onsubmit;document.forms[0].onsubmit=function(e){fn();if(existingEvent){existingEvent();}};}
+    /*************END Fusion Configurations********************/
+var whatButtonWasClicked;
+function init(){
+  
+  scribe.fields4History=[
+          ["canAnticipatedConditions","Anticipated Conditions"],
+          ["canActions","Actions"],
+          ["canNeeds","Needs"],
+          ["canRegConfCall","Conference Call"],
+          ["canQuestions","Questions"],
+          ["canAffectedCounties","Affected Counties"],
+          ["fakeDataLink","Send Email"],
+          ["emailTo","Email Sent To"],
+          ["comments","Comments"]
+        ];
+        scribe.inicialReview();
+        each(document.getElementById('nav').getElementsByTagName('input'),function(){this.onclick=function(){proxySaveFunction(this.value);}});
+  document.getElementsByName('email2_1')[0].checked=true;
+initializeMenuActions('nextCmd','nav','backgroundOverlay');
+document.getElementById('currentUser').value='<value-of select="/data/@username"/>';
+document.getElementById('currentPosition').value='<value-of select="/data/@positionname"/>';
+/*email will need this to send email. Checks if checkbox is checked, runs sendEmail if so*/
+var datalinkArea = document.getElementById('emailCheckbox').getElementsByTagName('input');
+if(datalinkArea.length===0){
+document.getElementById('emailSection').style.display='none';//*email This hides and shows the email section
+alert('Email Capability is not Configured for this server');
+}else{
+datalinkArea[0].onclick=sendEmail;
+}
+/*email will need this to send email. Checks if emailCheckbox is checked, runs sendEmail if so*/
+}
+function proxySaveFunction(whatButton){
+  sendEmail();//*email this runs sendEmail on save or resave, NO ProxysaveFunct in DSO Input
+          whatButtonWasClicked=whatButton;
+          var tf= document.getElementById('historyEmbedView');
+           if(tf.contentWindow){
+              tf.contentWindow.document.getElementById('frameBody').contentWindow.frames.injectHistory(document.getElementsByName('dataid')[0].value,fusionTime.value(),'<value-of select="/data/@username"/>',scribe.postReview());
+          }
+          else
+          {tf.contentDocument.document.getElementById('frameBody').contentDocument.frames.injectHistory(document.getElementsByName('dataid')[0].value,fusionTime.value(),'<value-of select="/data/@username"/>',scribe.postReview());
+          }
+          }
+          function saveFunction(){
+            if(scribe.changesMade===true){
+                document.getElementsByName('canChangesMade')[0].value='True';
+            }
+            each(document.getElementById('saveButtons').getElementsByTagName('input'),function(){if(this.value===whatButtonWasClicked){this.click();return;}});
+          }
+function toggle(a){
+  if(a.style.display==='none'){a.style.display='';}
+    else{a.style.display='none';}
+}
+function sendEmail(){//Sends *email like 682-707 in CS file
+
+  document.getElementsByName('fakeDataLink')[0].checked = this.checked;// *email checks the checkbox to send the emails
+ //alert('email has been turned off for testing, see El Señor FAR Developer to turn it on');
+ document.getElementById('emailTo').value=compileEmail2Addresses(); //*email fills the To field with complied email addresses
+ //uncomment to activate sending
+document.getElementById('emailSubject').value="CAN Report "+document.getElementById('DDC_SC').value;// *email copy's value of CAN report and DDC_SC value and insertd for subject line. This line will be a pre recored comment in DSO Input "Changes have been made to this DSO"
+
+  var body='';//*email will be area for body message in email , DSO needs to be like 626-680 in CS file
+  var txt = function(id){
+    return document.getElementById(id).value+'\r\n';
+  };
+  //*email this next section is what would go in body, DSO needs to be like 626-680 in CS file
+  if(this.checked===true){
+    body += '                     Incident:'+document.getElementById('fusionNumber').value+'/'+txt('shortDescription');
+    body += '                    Date/Time:'+ fusionTime.value()+'\r\n';
+    body += '                 Submitted By:'+document.getElementById('currentUser').value+'/'+txt('currentPosition');
+    body += '\r\n';
+    body += '____________________________________________________________________________________';
+    body += '\r\n\r\n';
+    body += 'Anticipated Conditions: '+txt('canAnticipatedConditions')+'\r\n';
+    body += 'Actions: '+txt('canActions')+'\r\n';
+    body += 'Needs: '+txt('canNeeds')+'\r\n';
+    body += 'Anticipate being on the Regional Conference Call: ';
+    body += document.getElementsByName('canRegConfCall')[0].value==='Yes'?'Yes':'No';
+    body += '\r\n\r\n';
+    body += 'Questions: '+txt('canQuestions')+'\r\n';
+    body += 'Affected Counties: '+txt('canAffectedCounties')+'\r\n';
+document.getElementById('emailBody').value=body;
+//*email this next section is what would go in body, DSO needs to be like 626-680 in CS file
+  }
+}
+function compileEmail2Addresses(){//*email joins all email addresses in to string for To field. DSO has 4 fields to combine, whereas this file grabs checked values and combines with textarea addresses
+
+var addresses=[];//addresses 
+var addressesFinal=[];// final insertion to To field
+
+if('<value-of select="/data/userdetail/@primaryemail"/>'!='')addresses.push('<value-of select="/data/userdetail/@primaryemail"/>');//user who is updating DSO email
+//in table
+var ti = document.getElementById('emailToTable').getElementsByTagName('input');// *email not needed for DSO
+each(ti,function(){if(this.type==='checkbox'&amp;&amp;this.checked===true&amp;&amp;this.value!=''){addresses.push(this.value);}});//Grab add emails from checked boxes and insert them into textarea for To line
+var textarea = document.getElementById('emailAdditionalTos').value;// *email - this is what I need to break down into the seperate fields for the DSO, maybe give them all a class
+textarea=textarea.split(/\s*[, ;]\s*|\s{2,}|[\r\n]/g);// *email - splits the emails up adds commas semicolons
+each(textarea,function(){addresses.push(this);});// *email - this is what I need to break down into the seperate fields for the DSO, maybe give them all a class
+each(addresses,function(){// *email - this is what I need to break down into the seperate fields for the DSO, maybe give them all a class
+  var valEmail=/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/g;//Checks email if is a valid format
+  if(this!==''&amp;&amp; this!==' '&amp;&amp; this!==null&amp;&amp; this.length!==0){
+    if(valEmail.exec(this)!==null){
+      addressesFinal.push(this);
+    }
+    else{
+      alert(this + ' is not a valid email');// alerts if an incorrect or bad format for email address is entered
+    }
+  }
+});
+
+return addressesFinal.join(',');// *email joins emails with commas
+}
+window.onload=init// *email like start function in DSO
+</script>
+      <style type="text/css">
+#emailCheckbox input{
+  height: 15px;
+}
+
+</style>
+      <link rel="stylesheet" href="https://olympus.soc.texas.gov/files/CDN/FAR.input.031113.css"/>
+      <link rel="stylesheet" href="https://olympus.soc.texas.gov/files/CDN/FAR.main.031113.css"/>
+   </head>   <body>
+      <form>
+         <div id="hiddenFields" style="display:none">
+            <div id="saveButtons">
+               <savebutton view="Activity - General (DO NOT ASSIGN)">General Information</savebutton>
+               <savebutton view="Activity - CheckIn.RelatedList (DO NOT ASSIGN)">Check In</savebutton>
+               <savebutton view="Activity - Human Impact (DO NOT ASSIGN)">Human Impact</savebutton>
+               <savebutton view="Activity - Damages (DO NOT ASSIGN)">Damages</savebutton>
+               <savebutton view="Activity - ICP.RelatedList (DO NOT ASSIGN)">ICP</savebutton>
+               <savebutton view="Activity - Shelter.RelatedList (DO NOT ASSIGN)">Shelter</savebutton>
+               <savebutton view="Activity - Commodities Distribution (DO NOT ASSIGN)">Commodities Distribution</savebutton>
+               <savebutton view="Activity - TransportationAffected.RelatedList (DO NOT ASSIGN)">Transportation Infrastructure Affected</savebutton>
+               <savebutton view="Activity - InfrastructureAffected.RelatedList (DO NOT ASSIGN)">Critical Infrastructure Affected</savebutton>
+               <savebutton view="Activity - HeathCareAffected.RelatedList (DO NOT ASSIGN)">Healthcare Facilities Affected</savebutton>
+               <savebutton view="Activity - StateAgenciesEngaged.RelatedList (DO NOT ASSIGN)">State Agencies Engaged</savebutton>
+               <savebutton view="Activity - AnticipatedResource.RelatedList (DO NOT ASSIGN)">Anticipated Resource Requirements</savebutton>
+               <savebutton view="Activity - CityEOC.RelatedList (DO NOT ASSIGN)">EOCs Active</savebutton>
+               <savebutton view="Activity - Attachment.RelatedList (DO NOT ASSIGN)">Attachments</savebutton>
+               <savebutton view="Activity - CAN (DO NOT ASSIGN)">CAN</savebutton>
+               <savebutton view="Activity - SaveAndClose (DO NOT ASSIGN)">Save &amp; Close</savebutton>
+               <input type="text" name="shortDescription" id="shortDescription"/>
+            </div>
+            <input name="canChangesMade" type="text"/>
+            <input type="text" name="DDC_SC" id="DDC_SC"/>
+            <input type="checkbox" name="fakeDataLink" value="Yes"/>
+         </div>
+         <div id="backgroundOverlay" style="display:none"/>
+         <div id="nav" style="display:none;">
+            <ul>
+               <li class="notSelected">
+                  <input type="button" name="generalInformation" value="General Information"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="checkIn" value="Check In"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="humanImpact" value="Human Impact"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="damages" value="Damages"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="icp" value="ICP"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="shelter" value="Shelter"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="commoditiesDistribution" value="Commodities Distribution"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="transportationInfrastructure" value="Transportation Infrastructure Affected"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="criticalInfrastructure" value="Critical Infrastructure Affected"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="healthCareFacilities" value="Healthcare Facilities Affected"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="stateAgenciesEngaged" value="State Agencies Engaged"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="anticipatedResourceRequirements" value="Anticipated Resource Requirements"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="cityEOCActivated" value="EOCs Active"/>
+               </li>
+               <li class="notSelected">
+                  <input type="button" name="attachments" value="Attachments"/>
+               </li>
+               <li class="selected">
+                  <input type="button" name="can" value="CAN"/>
+               </li>
+               <li class="saveButton">
+                  <input type="button" name="saveClose" value="Save &amp; Close"/>
+               </li>
+            </ul>
+         </div>
+         <div id="mainContent">
+            <div class="hidden">
+               <input type="text" name="saveDateTime" id="saveDateTime"/>
+               <input type="text" name="serverTime" id="serverTime"/>
+               <input type="text" name="fusionNumber" id="fusionNumber"/>
+               <input type="text" name="backupFusionNumber" id="backupFusionNumber"/>
+               <input type="text" name="currentUser" id="currentUser"/>
+               <input type="text" name="currentPosition" id="currentPosition"/>
+            </div>
+            <div>
+               <fieldset class="level1 format50w">
+                  <legend>CAN Report</legend>
+                  <label for="canAnticipatedConditions">Anticipated Conditions</label>
+                  <textarea id="canAnticipatedConditions" name="canAnticipatedConditions" cols="30" rows="4"/>
+                  <br/>
+                  <label for="canActions">Actions</label>
+                  <textarea id="canActions" name="canActions" cols="30" rows="4"/>
+                  <br/>
+                  <label for="canNeeds">Needs</label>
+                  <textarea id="canNeeds" name="canNeeds" cols="30" rows="4"/>
+                  <br/>
+                  <br/>
+                  <fieldset>
+Are Local jurisdiction representatives planning to be on the Regional Conference Call?
+                     <br/>
+Yes
+                     <input type="radio" name="canRegConfCall" id="canRegConfCallYes" value="Yes"/>
+No
+                     <input type="radio" name="canRegConfCall" id="canRegConfCallNo" value="No"/>
+                  </fieldset>
+                  <br/>
+                  <label for="canQuestions">Questions, Comments Concerns</label>
+                  <textarea id="canQuestions" name="canQuestions" cols="30" rows="4"/>
+                  <br/>
+                  <label for="canAffectedCounties">Affected Counties</label>
+                  <textarea id="canAffectedCounties" name="canAffectedCounties" cols="30" rows="4"/>
+                  <br/>
+                  <fieldset id="emailSection"><!-- *email -->
+                     <legend>EMAIL Section</legend>
+                     <label for="emailCheckbox">Send Email:</label>
+                     <span id="emailCheckbox">
+                        <datalink name="email"/><!-- *email -->
+                     </span>
+                     <table id="emailToTable"><!-- *email -->
+                        <tr>
+                           <td colspan="2">SOC</td>
+                           <td colspan="2">Administrative</td>
+                           <td colspan="2">Field</td>
+                        </tr>
+                        <tr>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_1" value="soc@dps.texas.gov" checked="true" onclick="this.checked=true;"/>
+                           </td>
+                           <td>SOC</td>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_2" value="Nim.Kidd@dps.texas.gov"/>
+                           </td>
+                           <td>AD: Nim Kidd</td>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_3" value="phillip.mongeau@dps.texas.gov"/>
+                           </td>
+                           <td>SC1: Phillip Mongeau</td>
+                        </tr>
+                        <tr>
+                           <td class="checkArea"/>
+                           <td/>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_4" value="Tom.Polonis@dps.texas.gov"/>
+                           </td>
+                           <td>DAD: Tom Polonis</td>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_5" value="jay.hall@dps.texas.gov"/>
+                           </td>
+                           <td>SC2: Jay Hall</td>
+                        </tr>
+                        <tr>
+                           <td class="checkArea"/>
+                           <td/>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_6" value="shari.ramirez-mackay@dps.texas.gov"/>
+                           </td>
+                           <td>DAD: Shari Ramirez-Mackay</td>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_7" value="Tony.Pena@dps.texas.gov"/>
+                           </td>
+                           <td>SC3: Tony Pena</td>
+                        </tr>
+                        <tr>
+                           <td class="checkArea"/>
+                           <td/>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_8" value="paula.logan@dps.texas.gov"/>
+                           </td>
+                           <td>DAD: Paula Logan</td>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_9" value="Raymundo.Resendez@dps.texas.gov"/>
+                           </td>
+                           <td>SC4: Raymundo Resendez</td>
+                        </tr>
+                        <tr>
+                           <td class="checkArea"/>
+                           <td/>
+                           <td class="checkArea"/>
+                           <td/>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_10" value="David.Solis@dps.texas.gov"/>
+                           </td>
+                           <td>SC5: David Solis</td>
+                        </tr>
+                        <tr>
+                           <td class="checkArea"/>
+                           <td/>
+                           <td class="checkArea"/>
+                           <td/>
+                           <td class="checkArea">
+                              <input type="checkbox" name="email2_11" value="mike.miller@dps.texas.gov"/>
+                           </td>
+                           <td>SC6: Mike Miller</td>
+                        </tr>
+                        <!--<tr>
+  <td class="checkArea"></td><td></td>
+  <td class="checkArea"></td><td></td>
+  <td class="checkArea">
+    <input type="checkbox" name="email2_12" value="Richard.Hooks@dps.texas.gov"/></td><td>SC7: Richard Hooks</td>
+</tr>-->
+                     </table>
+  Additional email addresses:
+  <!--function compileEmail2Addresses will take email addresses from emailAdditionalTos and place them in a string with commas inbetween them and put them in the To field-->
+                     <textarea name="emailAdditionalTos" id="emailAdditionalTos"/><!-- *email -->
+                     <div class="hidden"><!-- *email -->
+                        <label for="emailTo">To</label>
+                        <input type="text" name="emailTo" id="emailTo"/>
+                        <br/>
+                        <label for="emailSubject">Subject</label>
+                        <input type="text" name="emailSubject" id="emailSubject"/>
+                        <br/>
+                        <label for="emailBody">Body (only For Demo)</label>
+                        <textarea name="emailBody" id="emailBody" cols="30" rows="15"/>
+                     </div>
+                  </fieldset>
+               </fieldset>
+               <br/>
+               <br/>
+               <br/>
+            </div>
+         </div>
+         <div id="footerContainer">
+            <div id="footer">
+               <span class="cancelButton">
+                  <viewlink name="!Activity - Display (Default)" type="button">Back to the List</viewlink>
+               </span>
+               <span class="saveButton">
+                  <input type="button" id="nextCmd" value="Next"/>
+               </span>
+            </div>
+         </div>
+         <embedview id="historyEmbedView" view="History - Input (DO NOT ASSIGN)" name="historyEmbedView" height="0px" width="0px"/>
+      </form>
+   </body>
+</html>
