@@ -383,6 +383,10 @@ var totalRowVar=function(i){
     newRow(t,(t.rows.length),masterData[i]);//alert("new row");
     if(i==masterData.length-1){//alert();
  totalRowVar(i)
+    
+    }
+    else if(i==0 &amp;&amp; masterData[i][5]!=masterData[i+1][5]){
+       totalRowVar(i);
     }
 
     else if(((i!=0)&amp;&amp; ((masterData[i][5]===masterData[i-1][5]) &amp;&amp;(masterData[i+1][5]!=masterData[i][5])||(masterData[i][5]!=masterData[i-1][5])&amp;&amp;(masterData[i+1][5]!=masterData[i][5]) )))
