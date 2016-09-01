@@ -126,7 +126,7 @@
                      </td>
                   </tr>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing2">sum(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0.00') or (numberMajorDamage!='' and numberMajorDamage!='0.00') then 1 else 0 end)</expression>)
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing2">sum(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0') then 1 else 0 end)</expression>)
                      
                      </td>
                      <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Aff</td>
@@ -179,12 +179,7 @@
                <span style="display:none" class="data" name="data">
                   <value-of select="@sortCountyOrder"/>|
           
-                  <value-of select="@sortCityOrder"/>|
-            
-                  
-                  <span>(<expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing">(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0.00') or (numberMajorDamage!='' and numberMajorDamage!='0.00') then 1 else 0 end)</expression>)
-                  
-                  </span>|
+                  <value-of select="@sortCityOrder"/>|<span>(<expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing">(case when ((totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0')) then 1 else 0 end)</expression>)</span>|
             
                   
                   <value-of select="@jurisdictionType"/>|
@@ -327,9 +322,6 @@ masterData = masterData.sort(function(a,b){
   popluateTable();
   alert("Hello");
 }*/
-
-
-
 
 function start(){
 //next two lines are commented out in PA (working file)
