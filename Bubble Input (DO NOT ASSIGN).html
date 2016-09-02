@@ -199,11 +199,11 @@ $("#saveBtn2").click(function() {
             }
         }
         function hideDSOdrop() {
-            if (document.getElementById('dsoYesNo1').checked ==true) {
+            if (document.getElementById('dsoYesNo1').checked==true) {
                 document.getElementById('dsoDropdown').style.display="";
                 var fk = document.getElementById('fk').getElementsByTagName('select')[0];
                 for (var i=0; i&lt; fk.options.length; i++){
-                if(fk.options[i].value==='0'){
+                if(fk.options[i].value===''){
                     fk.remove(fk.options[i]);
                 }
                 }
@@ -450,7 +450,7 @@ $(document).ready(function(){
                      <space/>
                      <span id="fk">
                         <foreignkey table="Core" type="select">
-                           <eocfield type="fk" table="Core" name="county"/>/
+                           <eocfield type="fk" table="Core" name="county"/> /
                            
                            
                            <eocfield type="fk" table="Core" name="city"/>
