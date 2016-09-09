@@ -14,8 +14,70 @@
     </style>
       <script type="text/javascript">
     var currentStatus;
+    var sortSelectLists=function() {
+  var allSelectBox=document.getElementsById('fkID');
+    this.optionObject=function(Value, Text, Selected, Disabled) {
+        this.Value=Value;
+        this.Text=Text;
+        this.Selected=Selected;
+        this.Disabled=Disabled;
+        return this;
+    }
+    this.addOption=function(select, optionValue, optionTxt, selected, disabled) {
+      var option=document.createElement("option");
+            option.value=optionValue;
+            option.text=optionTxt;
+            option.selected=selected;
+            option.disabled=disabled;
+        try {
+            select.add(option, null);
+        }
+        catch(ex) {
+            select.add(option);
+        }
+    }
+    for(var i=0; i &lt; allSelectBox.length; i++) {
+      //if(allSelectBox[i].name != 'userid'){
+        var selectedSelectBox=allSelectBox[i];
+        var optionsArray=[];
+        for(var k=0; k &lt; selectedSelectBox.options.length; k++) {
+            var selectedOption=selectedSelectBox.options[k];
+            var thisOptionObject=new optionObject(selectedOption.value, selectedOption.text, selectedOption.selected, selectedOption.disabled);
+            optionsArray.push(thisOptionObject);
+        }
+        optionsArray=optionsArray.sort(function(a, b) {
+        var a1=a.Text,b1=b.Text;
+            if(a1!=b1) {
+                if(a1 &gt; b1) {
+                 return 1;
+             }
+             if(a1 &lt; b1) {
+                return -1;
+            };
+                return 0;
+            }
+        });
+        while(selectedSelectBox.options.length &gt; 0) {
+            selectedSelectBox.options[0]=null;
+        };
+        for(var o=0; o &lt; optionsArray.length; o++) {
+            addOption(selectedSelectBox, optionsArray[o].Value, optionsArray[o].Text, optionsArray[o].Selected, optionsArray[o].Disabled);
+        }
+    //}
+     }
+};
+
+function alphabetizeDSOdrop(){
+  $("#fkID").html($("#fkID option").sort(function (a, b) {
+    return a.text == b.text ? 0 : a.text &lt; b.text ? -1 : 1
+}))
+}
     function start(){
+      //give the span an ID 71-72 then manipulate the ID 74-76
+      var fkSPAN = document.getElementById('fk').getElementsByTagName('select')[0];
+      $(fkSPAN).prop("id", "fkID");
         $('.datepicker').datepicker();
+        //sortSelectLists
       document.getElementById('jurisdictionType1').onchange=TypeJurisdiciton;
         document.getElementById('jurisdictionType2').onchange=TypeJurisdiciton;
         //HI();
@@ -346,7 +408,19 @@ function copyIncidentNameFirst(){
 
 second1.value = first1.value;
 }
+function totalJurisdictions(){
 
+if(document.getElementById('declarationIssued1').checked==true || document.getElementsByName('acknowledgeLetterSent1')[0].value!='' || document.getElementsByName('acknowledgeLetterSent2')[0].value!='' || document.getElementsByName('impactedCountiesDSO')[0].value!=''){
+  document.getElementsByName('totalJurisdictions')[0].value=1;
+}
+else{
+  document.getElementsByName('totalJurisdictions')[0].value=0;
+}
+
+}
+/*function copyValue(){
+    document.getElementsByName("ack1")[0].value = document.getElementsByName("ack1")[0].value + document.getElementById("AcknowledgeLetterSent1").value + "/ ";
+  }*/
 
 function checkIncidentNameValueWithIncidentListText() {
 
@@ -385,6 +459,7 @@ var filterByIncident={
 };
 
 $(document).ready(function(){
+  document.forms[0].onsubmit=totalJurisdictions;
     incSelList=document.getElementById('incidentList');
     loopAllInputs=document.getElementsByTagName('input');
    // etnPageHelper.styleSearchField();
@@ -417,9 +492,9 @@ $(document).ready(function(){
                   <label class="control-label" for="updated">updated:</label>
                   <input name="updated" id="updated" type="text" style="form-control input-sm"/>
                </div>
-               <td colSpan="1" selected="false" width="" align="center" style="display:none">
+               
                   <eocfield name="currentUser"/>
-               </td>
+              <input name="totalJurisdictions" value="_number" type="text"/>
             </div>
             <div class="content">
                <br/>
@@ -439,7 +514,7 @@ $(document).ready(function(){
         Yes 
                      
                      
-                     <input id="dsoYesNo1" type="radio" style="form-control input-sm" name="dsoYesNo" value="Yes" onclick="hideDSOdrop();"/>
+                     <input id="dsoYesNo1" type="radio" style="form-control input-sm" name="dsoYesNo" value="Yes" onclick="hideDSOdrop();alphabetizeDSOdrop()"/>
         No 
                      
                      
@@ -1967,7 +2042,7 @@ $(document).ready(function(){
                   <div class="form-group form-inline">
                      <label class="control-label" for="dateDecRec">Date Disaster Declared Issued Rec'd:</label>
                      <space/>
-                     <input name="dateDecRec" class="datepicker" id="dateDecRec" style="form-control input-sm"/>
+                     <textarea name="dateDecRec" id="dateDecRec" style="form-control input-sm"/> 
                   </div>
                   <div class="form-group form-inline hide">
                      <label class="control-label" for="countyLetter">Letter to the Gov:</label>
@@ -1983,63 +2058,63 @@ $(document).ready(function(){
                   <div class="form-group form-inline">
                      <label class="control-label" for="acknowledgeLetterSent1">Acknowledge Letter Sent 1:</label>
                      <space/>
-                     <input name="acknowledgeLetterSent1" class="datepicker" id="acknowledgeLetterSent1" type="text" style="form-control input-sm"/>
+                     <textarea name="acknowledgeLetterSent1" id="acknowledgeLetterSent1" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline hide">
                      <label class="control-label" for="assistanceRequested">Assistance Requested on DSO or Letter to Governor:</label>
                      <space/>
-                     <input name="assistanceRequested" class="datepicker" id="assistanceRequested" type="text" style="form-control input-sm"/>
+                     <textarea name="assistanceRequested" id="assistanceRequested" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="assistanceRequestedDate">Date Assistance Requested:</label>
                      <space/>
-                     <input name="assistanceRequestedDate" class="datepicker" id="assistanceRequestedDate" type="text" style="form-control input-sm"/>
+                     <textarea name="assistanceRequestedDate" id="assistanceRequestedDate" style="form-control input-sm"/>
                   </div>
                   
                   <div class="form-group form-inline">
                      <label class="control-label" for="impactedCountiesDSO">Date Impacted Counties DSO Rec'd:</label>
                      <space/>
-                     <input name="impactedCountiesDSO" class="datepicker" id="impactedCountiesDSO" style="form-control input-sm"/>
+                     <textarea name="impactedCountiesDSO" id="impactedCountiesDSO" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="acknowledgeLetterSent2">Acknowledge Letter Sent 2:</label>
                      <space/>
-                     <input name="acknowledgeLetterSent2" class="datepicker" id="acknowledgeLetterSent2" type="text" style="form-control input-sm"/>
+                     <textarea name="acknowledgeLetterSent2" class="datepicker" id="acknowledgeLetterSent2" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="iaInitialContactDate">Date of PDA Initial Contact:</label>
                      <space/>
-                     <input name="iaInitialContactDate" class="datepicker" id="iaInitialContactDate" type="text" style="form-control input-sm"/>
+                     <textarea name="iaInitialContactDate" id="iaInitialContactDate" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="iaPdaRequested">Date PDA Requested:</label>
                      <space/>
-                     <input name="iaPdaRequested" class="datepicker" id="iaPdaRequested" type="text" style="form-control input-sm"/>
+                     <textarea name="iaPdaRequested" id="iaPdaRequested" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="iaPDAScheduled">Date IA PDA Scheduled:</label>
                      <space/>
-                     <input name="iaPDAScheduled" class="datepicker" id="iaPDAScheduled" type="text" style="form-control input-sm"/>
+                     <textarea name="iaPDAScheduled" id="iaPDAScheduled" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="iaPDAComplete">Date IA PDA Complete:</label>
                      <space/>
-                     <input name="iaPDAComplete" class="datepicker" id="iaPDAComplete" type="text" style="form-control input-sm"/>
+                     <textarea name="iaPDAComplete" id="iaPDAComplete" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="paPdaRequested">Date PA PDA Requested:</label>
                      <space/>
-                     <input name="paPdaRequested" class="datepicker" id="paPdaRequested" type="text" style="form-control input-sm"/>
+                     <textarea name="paPdaRequested" id="paPdaRequested" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="paPDAScheduled">Date PA PDA Scheduled:</label>
                      <space/>
-                     <input name="paPDAScheduled" class="datepicker" id="paPDAScheduled" type="text" style="form-control input-sm"/>
+                     <textarea name="paPDAScheduled" id="paPDAScheduled" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="paPDAComplete">Date PA PDA Complete:</label>
                      <space/>
-                     <input name="paPDAComplete" class="datepicker" id="paPDAComplete" type="text" style="form-control input-sm"/>
+                     <textarea name="paPDAComplete" id="paPDAComplete" style="form-control input-sm"/>
                   </div>
                </fieldset>
                <fieldset>

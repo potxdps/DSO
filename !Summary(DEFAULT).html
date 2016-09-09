@@ -447,14 +447,14 @@
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PDA FEMA</td>
             </tr>
             <tr class="agencytemplate_tableheader">
-              <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(case when declarationIssued='Yes' or AcknowledgeLetterSent1!='' or AcknowledgeLetterSent2!='' or impactedCountiesDSO!='' then 1 else 0 end)</expression>)
+              <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0))</expression>)
                      
                      </td>
               <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Requested</td>
               <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Scheduled</td>
               <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Completed</td>
               <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Requested</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Sheduled</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Scheduled</td>
               <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Completed</td>
             </tr>
             <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
@@ -465,12 +465,8 @@
               </if>
               <tr class="agencytemplate_tableentry">
                 <td colSpan="1" selected="false" align="center">
-                  <eocfield name="totalJursidictions" />
-                (<expression useboardlevelfilters="true" name="totalJurisictionsexpression">(case when declarationIssued='Yes' or AcknowledgeLetterSent1!='' or AcknowledgeLetterSent2!='' or impactedCountiesDSO!='' then 1 else 0 end)</expression>)
-                
-                           
-                           
-                           <span /></td>
+                  ( <eocfield name="totalJurisdictions"/>)</td>
+
                 <td colSpan="1" selected="false" width="">
                   <viewlink name="Bubble Input (DO NOT ASSIGN)">
                     <if test="@jurisdictionType='County'">
@@ -496,7 +492,7 @@
                   <eocfield name="dateDecRec" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield class="tjCount" name="AcknowledgeLetterSent1" />
+                  <eocfield class="tjCount" name="acknowledgeLetterSent1" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="assistanceRequestedDate" />
@@ -508,7 +504,7 @@
                   <eocfield class="tjCount" name="impactedCountiesDSO" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield class="tjCount" name="AcknowledgeLetterSent2" />
+                  <eocfield class="tjCount" name="acknowledgeLetterSent2" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="iaPdaRequested" />

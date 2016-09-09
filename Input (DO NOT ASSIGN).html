@@ -110,25 +110,57 @@
 }
 
 
-        function autoSum() {
+       function autoSum() {
             var fields = ["totalsAffected", "totalsMinorDamage", "totalsMajorDamage", "totalsDestroyed", "numberTotal", "coveredTotal", "totalTotal", "sitesTotals", "repairCostTotals", "insuranceTotals", "sitesOtherTotal", "repairCostTotal", "insuranceCostTotal"];
             for (var i = 0; i &lt; fields.length; i++) {
                 var objs = document.getElementsByClassName(fields[i]);
                 for (var h = 0; h &lt; objs.length; h++) {
                     objs[h].idByClass = fields[i];
                     objs[h].onblur = function () {
-
                         var t = 0;
                         var a = document.getElementsByClassName(this.idByClass);
                         for (var b = 0; b &lt; a.length; b++) {
-                            if (a[b].value != '' || 0) {
-                                t += parseFloat(a[b].value)
+                            if (a[b].value != '') {
+                                var u = removeNonNumber(a[b].value);
+                                t+= parseFloat(u);
+                                a[b].value = comma(u);
+                                /*if (isNaN(a[b].value) === false) {
+                                    t += parseFloat(a[b].value)
+                                }
+                                else {
+                                    numError(a[b].value);
+                                    a[b].value = 0;
+
+                                }*/
                             }
                         }
-                        document.getElementById(this.idByClass).value = t.toFixed(2);;
-                    }
+                        document.getElementById(this.idByClass).value = comma(t);
+                    };
                 }
             }
+        }
+        
+        function removeNonNumber(a) {
+            a = a.replace(/[^0-9.-]+/g, '');
+            var t = 0;
+            if (a != '') {
+                if (isNaN(a) === false) {
+                    t += parseFloat(a)
+                } else {
+                    return 0;
+
+                }
+            }
+            return t.toFixed(2);
+        }
+        function comma(x) {
+            if (isNaN(x) === true || x == "") {
+                x == undefined ? x = '' : x = x;
+                return x;
+            }
+            x = parseFloat(x).toFixed(2);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //return x;
         }
         function commandInfoWindow(clickedId, title, message) {
             $('#' + clickedId).click(function () {
@@ -360,7 +392,7 @@ function finalEmailCheck() {
               $(this).select();
           }).blur(function() {
               $(this).val($(this).val().replace(/\$/g, ''));
-              $(this).val($(this).val().replace(/,/g, ''));
+              //$(this).val($(this).val().replace(/,/g, ''));
               //autoSum();
           });
           //selectTextOnFocus();
@@ -2643,13 +2675,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                         
                         </td>
                         <td>
-                           <input name="sitesDebrisClearance" id="sitesDebrisClearance" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
+                           <input name="sitesDebrisClearance" id="sitesDebrisClearance" type="text" value="0" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
                         </td>
                         <td>
-                           $ <input name="repairCostDebrisClearance" id="repairCostDebrisClearance" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
+                           $ <input name="repairCostDebrisClearance" id="repairCostDebrisClearance" type="text" value="0" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
                         </td>
                         <td>
-                           $ <input name="insuranceDebrisClearance" id="insuranceDebrisClearance" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
+                           $ <input name="insuranceDebrisClearance" id="insuranceDebrisClearance" type="text" value="0" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
                         </td>
                      </tr>
                      <tr>
@@ -2663,13 +2695,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <span id="emergencyProtectiveMeasuresInfo" class="label label-info">i</span>
                         </td>
                         <td>
-                           <input name="sitesEmergency" id="sitesEmergency" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
+                           <input name="sitesEmergency" id="sitesEmergency" type="text" value="0" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
                         </td>
                         <td>
-                           $ <input name="repairCostEmergency" id="repairCostEmergency" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
+                           $ <input name="repairCostEmergency" id="repairCostEmergency" type="text" value="0" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
                         </td>
                         <td>
-                           $ <input name="insuranceEmergency" id="insuranceEmergency" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
+                           $ <input name="insuranceEmergency" id="insuranceEmergency" type="text" value="0" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
                         </td>
                      </tr>
                      <tr>
@@ -2682,13 +2714,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                         
                         </td>
                         <td>
-                           <input name="sitesRoadPaved" id="sitesRoadPaved" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
+                           <input name="sitesRoadPaved" id="sitesRoadPaved" type="text" value="0" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
                         </td>
                         <td>
-                           $ <input name="repairCostRoadPaved" id="repairCostRoadPaved" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
+                           $ <input name="repairCostRoadPaved" id="repairCostRoadPaved" type="text" value="0" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
                         </td>
                         <td>
-                           $ <input name="insuranceRoadPaved" id="insuranceRoadPaved" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
+                           $ <input name="insuranceRoadPaved" id="insuranceRoadPaved" type="text" value="0" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
                         </td>
                      </tr>
                      <tr>
@@ -2708,13 +2740,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                         
                         </td>
                         <td>
-                           <input name="sitesWaterControlFacilities" id="sitesWaterControlFacilities" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
+                           <input name="sitesWaterControlFacilities" id="sitesWaterControlFacilities" type="text" value="0" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
                         </td>
                         <td>
-                           $ <input name="repairCostWaterControlFacilities" id="repairCostWaterControlFacilities" type="text" class="repairCostTotals" placeholder="0" style="form-control input-sm repairCostTotals"/>
+                           $ <input name="repairCostWaterControlFacilities" id="repairCostWaterControlFacilities" type="text" class="repairCostTotals" value="0" placeholder="0" style="form-control input-sm repairCostTotals"/>
                         </td>
                         <td>
-                           $ <input name="insuranceWaterControlFacilities" id="insuranceWaterControlFacilities" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
+                           $ <input name="insuranceWaterControlFacilities" id="insuranceWaterControlFacilities" type="text" value="0" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
                         </td>
                      </tr>
                      <tr>
@@ -2728,13 +2760,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <span id="buildingEquipmentInfo" class="label label-info">i</span>
                         </td>
                         <td>
-                           <input name="sitesBuildingsEquipment" id="sitesBuildingsEquipment" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
+                           <input name="sitesBuildingsEquipment" id="sitesBuildingsEquipment" type="text" value="0" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
                         </td>
                         <td>
-                           $ <input name="repairCostBuildingsEquipment" id="repairCostBuildingsEquipment" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
+                           $ <input name="repairCostBuildingsEquipment" id="repairCostBuildingsEquipment" type="text" value="0" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
                         </td>
                         <td>
-                           $ <input name="insuranceBuildingsEquipment" id="insuranceBuildingsEquipment" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
+                           $ <input name="insuranceBuildingsEquipment" id="insuranceBuildingsEquipment" type="text" value="0" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
                         </td>
                      </tr>
                      <tr>
@@ -2755,13 +2787,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                         
                         </td>
                         <td>
-                           <input name="sitesUtilitySystems" id="sitesUtilitySystems" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
+                           <input name="sitesUtilitySystems" id="sitesUtilitySystems" type="text" value="0" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
                         </td>
                         <td>
-                           $ <input name="repairCostUtilitySystems" id="repairCostUtilitySystems" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
+                           $ <input name="repairCostUtilitySystems" id="repairCostUtilitySystems" type="text" value="0" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
                         </td>
                         <td>
-                           $ <input name="insuranceUtilitySystems" id="insuranceUtilitySystems" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
+                           $ <input name="insuranceUtilitySystems" id="insuranceUtilitySystems" type="text" value="0" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
                         </td>
                      </tr>
                      <tr>
@@ -2783,26 +2815,26 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                         
                         </td>
                         <td>
-                           <input name="sitesOther" id="sitesOther" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
+                           <input name="sitesOther" id="sitesOther" type="text" value="0" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals"/>
                         </td>
                         <td>
-                           $ <input name="repairCostOther" id="repairCostOther" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
+                           $ <input name="repairCostOther" id="repairCostOther" type="text" value="0" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals"/>
                         </td>
                         <td>
-                           $ <input name="insuranceOther" id="insuranceOther" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
+                           $ <input name="insuranceOther" id="insuranceOther" type="text" value="0" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals"/>
                         </td>
                      </tr>
                      <tr>
                         <td>Totals
 </td>
                         <td>
-                           <input name="sitesTotals" id="sitesTotals" type="text" placeholder="0" style="form-control input-sm"/>
+                           <input name="sitesTotals" id="sitesTotals" type="text" value="0" placeholder="0" style="form-control input-sm"/>
                         </td>
                         <td>
-                           $ <input name="repairCostTotals" id="repairCostTotals" type="text" placeholder="0" style="form-control input-sm"/>
+                           $ <input name="repairCostTotals" id="repairCostTotals" type="text" value="0" placeholder="0" style="form-control input-sm"/>
                         </td>
                         <td>
-                           $ <input name="insuranceTotals" id="insuranceTotals" type="text" placeholder="0" style="form-control input-sm"/>
+                           $ <input name="insuranceTotals" id="insuranceTotals" type="text" value="0" placeholder="0" style="form-control input-sm"/>
                         </td>
                      </tr>
                   </table>
@@ -2852,13 +2884,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites01" id="sites01" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites01" id="sites01" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost01" id="repairCost01" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost01" id="repairCost01" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance01" id="insurance01" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance01" id="insurance01" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -2878,13 +2910,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites02" id="sites02" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites02" id="sites02" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost02" id="repairCost02" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost02" id="repairCost02" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance02" id="insurance02" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance02" id="insurance02" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -2904,13 +2936,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites03" id="sites03" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites03" id="sites03" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost03" id="repairCost03" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost03" id="repairCost03" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance03" id="insurance03" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance03" id="insurance03" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -2930,13 +2962,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites04" id="sites04" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites04" id="sites04" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost04" id="repairCost04" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost04" id="repairCost04" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance04" id="insurance04" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance04" id="insurance04" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -2956,13 +2988,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites05" id="sites05" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites05" id="sites05" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost05" id="repairCost05" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost05" id="repairCost05" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance05" id="insurance05" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance05" id="insurance05" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -2982,13 +3014,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites06" id="sites06" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites06" id="sites06" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost06" id="repairCost06" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost06" id="repairCost06" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance06" id="insurance06" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance06" id="insurance06" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3008,13 +3040,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites07" id="sites07" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites07" id="sites07" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost07" id="repairCost07" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost07" id="repairCost07" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance07" id="insurance07" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance07" id="insurance07" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3034,13 +3066,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites08" id="sites08" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites08" id="sites08" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost08" id="repairCost08" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost08" id="repairCost08" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance08" id="insurance08" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance08" id="insurance08" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3060,13 +3092,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites09" id="sites09" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites09" id="sites09" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost09" id="repairCost09" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost09" id="repairCost09" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance09" id="insurance09" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance09" id="insurance09" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3086,13 +3118,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites10" id="sites10" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites10" id="sites10" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost10" id="repairCost10" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost10" id="repairCost10" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance10" id="insurance10" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance10" id="insurance10" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3112,13 +3144,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites11" id="sites11" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites11" id="sites11" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost11" id="repairCost11" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost11" id="repairCost11" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance11" id="insurance11" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance11" id="insurance11" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3138,13 +3170,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites12" id="sites12" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites12" id="sites12" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost12" id="repairCost12" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost12" id="repairCost12" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance12" id="insurance12" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance12" id="insurance12" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3164,13 +3196,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites13" id="sites13" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites13" id="sites13" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost13" id="repairCost13" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost13" id="repairCost13" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance13" id="insurance13" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance13" id="insurance13" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3190,13 +3222,13 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites14" id="sites14" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites14" id="sites14" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost14" id="repairCost14" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost14" id="repairCost14" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance14" id="insurance14" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance14" id="insurance14" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
@@ -3216,26 +3248,26 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            </select>
                         </td>
                         <td>
-                           <input name="sites15" id="sites15" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
+                           <input name="sites15" id="sites15" type="text" value="0" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal"/>
                         </td>
                         <td>
-                           $ <input name="repairCost15" id="repairCost15" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
+                           $ <input name="repairCost15" id="repairCost15" type="text" value="0" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal"/>
                         </td>
                         <td>
-                           $ <input name="insurance15" id="insurance15" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
+                           $ <input name="insurance15" id="insurance15" type="text" value="0" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal"/>
                         </td>
                      </tr>
                      <tr>
                         <td>Totals</td>
                         <td/>
                         <td>
-                           <input name="sitesOtherTotal" id="sitesOtherTotal" type="text" placeholder="0" style="form-control input-sm"/>
+                           <input name="sitesOtherTotal" id="sitesOtherTotal" type="text" value="0" placeholder="0" style="form-control input-sm"/>
                         </td>
                         <td>
-                           $ <input name="repairCostTotal" id="repairCostTotal" type="text" placeholder="0" style="form-control input-sm"/>
+                           $ <input name="repairCostTotal" id="repairCostTotal" type="text" value="0" placeholder="0" style="form-control input-sm"/>
                         </td>
                         <td>
-                           $ <input name="insuranceCostTotal" id="insuranceCostTotal" type="text" placeholder="0" style="form-control input-sm"/>
+                           $ <input name="insuranceCostTotal" id="insuranceCostTotal" type="text" value="0" placeholder="0" style="form-control input-sm"/>
                         </td>
                      </tr>
                   </table>
