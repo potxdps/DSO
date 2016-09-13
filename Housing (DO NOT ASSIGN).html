@@ -55,8 +55,7 @@
                <tr>
                   <td id="tdBoard" colSpan="2" selected="false" align="center">Local Estimates
                      
-                     <br/>
-                     <h4>(Housing / IA)</h4>
+                     <br/><h4>This page shows only DSOs (Housing / IA)<br/><br/>The RED (total) row indicates that the Housing PDAs have been completed and that the numbers have been vetted between IA and FEMA</h4>
                   </td>
                </tr>
             </tbody>
@@ -64,8 +63,8 @@
          <div class="content">
            <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink><space/><space/>
             <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink><space/><space/>
-            <!--<viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>--><button type="button" class="btn active">View Housing / IA</button><space/><space/><space/><space/><space/><space/>
+            <button type="button" class="btn active">View Housing / IA</button><space/><space/>
+            <!--<viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>--><viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink><space/><space/><space/><space/><space/><space/>
            <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink><space/><space/>
             <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>
             <br/>
@@ -263,7 +262,7 @@
                   
                   <viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)">
                      <button class="btn btn-warning btn-xs">DSO History</button>
-                  </viewlink>|<relatedexpression name="femaTest" table="Supplemental">sum(case when femaCheckbox='Yes' then 1 else 0 end)</relatedexpression>|END27
+                  </viewlink>|<relatedexpression name="femaTest" table="Supplemental">sum(case when femaCheckboxV1='Yes' then 1 else 0 end)</relatedexpression>|END27
                </span>
             </eocrepeatallrecords>
          </div>

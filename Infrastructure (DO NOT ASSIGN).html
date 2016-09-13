@@ -51,7 +51,7 @@
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h4>This page shows only DSOs (Infrastructure / PA)<br/><br/>The RED (total) row indicates that the Housing/Infrastructure PDAs have been completed and that the numbers have been vetted between IA and PA with FEMA</h4></td>
+                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h4>This page shows only DSOs (Infrastructure / PA)<br/><br/>The RED (total) row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA</h4></td>
                </tr>
             </tbody>
          </table>
@@ -59,8 +59,8 @@
              <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink><space/><space/>
             <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink><space/><space/>
             <!--<viewlink class="btn active" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>-->
-            <button type="button" class="btn active">View Infrastructure / PA</button><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/><space/><space/><space/><space/>
+            <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/>
+            <button type="button" class="btn active">View Infrastructure / PA</button><space/><space/><space/><space/><space/><space/>
             <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink><space/><space/>
             <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>
             <br/>
@@ -414,7 +414,7 @@
       (case when cat15 = 'G' then isNull(cast(repairCost15 as money),0) else 0 end)+
       cast(repairCostOther as money)
       </expression>|
-      <if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div style=""><value-of select="@declarationIssued"/></div></if>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckbox='Yes' then 1 else 0 end)</relatedexpression>|END20|</span>
+      <if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div style=""><value-of select="@declarationIssued"/></div></if>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>|END20|</span>
             </eocrepeatallrecords>
          </div>
       </div>

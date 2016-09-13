@@ -84,7 +84,8 @@ function alphabetizeDSOdrop(){
         hideDSOdrop();
         
 scribe.fields4History=[
-    ["femaCheckbox","Housing/Infrastructure PDAs have been completed and Numbers have been vetted between IA and PA with FEMA"],
+    ["femaCheckboxV2","Infrastructure PDAs have been completed and Numbers have been vetted between PA and FEMA"],
+    ["femaCheckboxV1","Housing PDAs have been completed and Numbers have been vetted between IA and FEMA"],
     ["otherAttachment","Other Attachment"],
     ["letterAttachment","Letter Attachment"],
     ["decAttachment","Dec Attachment"],
@@ -2079,7 +2080,7 @@ $(document).ready(function(){
                   <div class="form-group form-inline">
                      <label class="control-label" for="acknowledgeLetterSent2">Acknowledge Letter Sent 2:</label>
                      <space/>
-                     <textarea name="acknowledgeLetterSent2" class="datepicker" id="acknowledgeLetterSent2" style="form-control input-sm"/>
+                     <textarea name="acknowledgeLetterSent2" id="acknowledgeLetterSent2" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="iaInitialContactDate">Date of PDA Initial Contact:</label>
@@ -2136,9 +2137,15 @@ $(document).ready(function(){
                <fieldset>
                   <legend>Other Items</legend>
                   <div class="form-group form-inline">
-                     <label class="control-label" for="femaCheckbox">Housing/Infrastructure PDAs have been completed and numbers have been vetted between IA and PA with FEMA:</label>
+                     <label class="control-label" for="femaCheckboxV1">Housing PDAs have been completed and numbers have been vetted between IA and FEMA:</label>
                      <space/>
-                     <input name="femaCheckbox" id="femaCheckbox" type="checkbox" value="Yes" style="form-control input-sm"/>
+                     <input name="femaCheckboxV1" id="femaCheckboxV1" type="checkbox" value="Yes" style="form-control input-sm"/>
+                     <div class="form-group form-inline">
+                     <label class="control-label" for="femaCheckboxV2">Infrastructure PDAs have been completed and numbers have been vetted between PA and FEMA:</label>
+                     <space/>
+                     
+                  </div>
+                     <input name="femaCheckboxV2" id="femaCheckboxV2" type="checkbox" value="Yes" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="hide">Hide:</label>

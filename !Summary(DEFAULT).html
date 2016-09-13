@@ -42,7 +42,7 @@
             <td id="tdBoard" colSpan="2" selected="false" align="center">Recovery Summary
                      
                      
-                     <br /><h4>(Bubble Inputs)</h4></td>
+                     <br /><h4>This page shows only Supplemental Inputs (Bubble Inputs)</h4></td>
           </tr>
         </tbody>
       </table>
@@ -54,10 +54,8 @@
         <button type="button" class="btn active">View Recovery Summary</button>
         <space />
         <space />
-        <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
-        <space />
-        <space />
-        <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+        <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/>
+            <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
         <space />
         <space />
         <space />
@@ -444,10 +442,11 @@
               <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Individual Assistance</td>
               <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Public Assistance</td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Bubble Input Audit Log</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PDA FEMA</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">IA PDA FEMA</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PA PDA FEMA</td>
             </tr>
             <tr class="agencytemplate_tableheader">
-              <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0))</expression>)
+              <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0) )</expression>)
                      
                      </td>
               <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Requested</td>
@@ -530,7 +529,10 @@
                   </viewlink>
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="femaCheckbox" />
+                  <eocfield name="femaCheckboxV1" />
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="femaCheckboxV2" />
                 </td>
               </tr>
             </eocrepeatallrecords>
