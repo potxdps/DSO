@@ -29,10 +29,11 @@
   table.display td{border-top:solid 1px;border-color:#ccc;}
   .rowYellow {background-color:#F5FF79;}
   .rowBlue {background-color:#ccebff;}
-  .rowRed {background-color:#FF1100;}
+  .rowRed {background-color:#ff5e5e;}
+  .lightRowRed {background-color:#FFb3b3;}
   .rowGray {background-color: #b7bfc8;}
 .rowReg {}
-.rowGreen{background-color:#00ff55;}
+.rowGreen{background-color:#BCED91;}
 .textYellow {color:#ffff99;}
 </style>
    </head>   
@@ -51,7 +52,7 @@
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h4>This page shows only DSOs (Infrastructure / PA)<br/><br/>The RED (total) row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA</h4></td>
+                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h4>This page shows only DSOs (Infrastructure / PA)<br/><br/>The RED row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA</h4></td>
                </tr>
             </tbody>
          </table>
@@ -181,7 +182,7 @@
                   <value-of select="@sortCityOrder"/>|
                   (<expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression>)|
                   <value-of select="@jurisdictionType"/>|
-                  <viewlink name="Input (DO NOT ASSIGN)"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></viewlink><space/>|<value-of select="@county"/>|<value-of select="@city"/>|<expression useboardlevelfilters="true" name="catASum">
+                  <viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></span></viewlink><space/>|<value-of select="@county"/>|<value-of select="@city"/>|<expression useboardlevelfilters="true" name="catASum">
       (case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)+
       (case when cat02 = 'A' then isNull(cast(repairCost02 as money),0) else 0 end)+
       (case when cat03 = 'A' then isNull(cast(repairCost03 as money),0) else 0 end)+
@@ -454,26 +455,7 @@ threshold.TotalOnPage=0;
 
 var masterData =[];
 
-//function start(){
-//  populateMasterData();
-  //popluateTable();
-  //these two functions run on onstart in IA file
- // populateMasterData();
- // popluateTable();
 
-//
-/*var totalGrandRowVar=function(i){
-   var a = getTotalsFor(masterData[i][5]);
-   var b = a[10]===true?"rowRed":"rowYellow";
-   
-   //is the totals of 9 (the totals of that counties femaCheckboxes) greater than 0, if so turn row red, if not turn yellow
-      var thresholdResult = threshold(masterData[i][5]);
-      var a = getTotalsFor(masterData[i][5]);
-      threshold.TotalOnPage+=parseInt(thresholdResult);
-      var Mets = parseFloat(a[8]) &gt;= parseFloat(thresholdResult)?'Yes':'No';
-      //yellow or red total rows
-      
-};*/
 //populates the data, holding area before the table
 function populateMasterData(){
 var a = document.getElementsByClassName('data');
@@ -503,41 +485,10 @@ function trim(a) {
 //this populates the table - t is main table itself, b is for the total row turning yellow or red based on femaCheck choice
 function popluateTable(){
 var t = document.getElementById('mainTable');
-/*var a = getTotalsForAll();
-
-      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9]],"rowGray")*/
-
-//  var firstGrandTotal = getTotalsForAll1();
-  //alert('grand totals1');
-    //  newRow(t,t.rows.length,["","","","","Grand Totals","",firstGrandTotal[0],firstGrandTotal[1],firstGrandTotal[2],firstGrandTotal[3],firstGrandTotal[4],firstGrandTotal[5],firstGrandTotal[6],firstGrandTotal[7],firstGrandTotal[8],firstGrandTotal[9]],"rowGray");
-      //console.log(firstGrandTotal);
-    //  function getTotalsForAll1(){
- // var firstGrandTotal =[0,0,0,0,0,0,0,0,0,0];
-/*  var isNull = function(b){
-    if(b==''||b==' ' ||b==0){return 0;}
-    else return b;
-  };
-for(var i=0; i&lt;masterData.length;i++){
-    //a[0]+=parseFloat(isNull(masterData[i][6]));
-    firstGrandTotal[1]+=parseFloat(isNull(masterData[i][7]));
-    firstGrandTotal[2]+=parseFloat(isNull(masterData[i][8]));
-    firstGrandTotal[3]+=parseFloat(isNull(masterData[i][9]));
-    firstGrandTotal[4]+=parseFloat(isNull(masterData[i][10]));
-    firstGrandTotal[5]+=parseFloat(isNull(masterData[i][11]));
-    firstGrandTotal[6]+=parseFloat(isNull(masterData[i][12]));
-    firstGrandTotal[7]+=parseFloat(isNull(masterData[i][13]));
-    firstGrandTotal[8]+=parseFloat(isNull(masterData[i][14]));
-   
-}
- firstGrandTotal[9]=parseFloat(threshold.TotalOnPage);
-console.log(firstGrandTotal);
-return firstGrandTotal;
-
-}*/
 
 var totalRowVar=function(i){
    var a = getTotalsFor(masterData[i][5]);
-   var b = a[10]===true?"rowRed":"rowYellow";
+   var b = "rowYellow";
    
    //is the totals of 9 (the totals of that counties femaCheckboxes) greater than 0, if so turn row red, if not turn yellow
       var thresholdResult = threshold(masterData[i][5]);
@@ -549,7 +500,7 @@ var totalRowVar=function(i){
 };
   for(var i=0; i &lt; masterData.length;i++){
     //adds regular row
-    newRow(t,(t.rows.length),["","",masterData[i][2],masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],masterData[i][7],masterData[i][8],masterData[i][9],masterData[i][10],masterData[i][11],masterData[i][12],masterData[i][13],masterData[i][14],"","",masterData[i][15],masterData[i][17],masterData[i][19]],masterData[i][17]=='No DSO'?"rowBlue":"rowReg");
+    newRow(t,(t.rows.length),["","",masterData[i][2],masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],masterData[i][7],masterData[i][8],masterData[i][9],masterData[i][10],masterData[i][11],masterData[i][12],masterData[i][13],masterData[i][14],"","",masterData[i][15],masterData[i][17],masterData[i][19]],masterData[i][19]=='1'?"rowRed":"rowReg");
     if(i==masterData.length-1){//if not the last row
  totalRowVar(i);
  console.log("reg");
@@ -632,7 +583,7 @@ return a;
 
 
 
-var etnPageHelper={
+var dsoPageHelper={
 
 
     //startOf: identifying what filter is on
@@ -691,7 +642,7 @@ var filterByIncident={
 $(document).ready(function(){
     populateMasterData();
     popluateTable();
-    etnPageHelper.styleSearchField();
+    dsoPageHelper.styleSearchField();
     //var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
     //$(countyFilter).addClass('form-control');
     filterByIncident.incidentListOptionsBuild();
@@ -702,7 +653,7 @@ $(document).ready(function(){
    /* var ddcFilter=document.getElementById('ddcFilter').getElementsByTagName('select')[0];
     $(ddcFilter).addClass('form-control');*/
     var a = document.getElementsByClassName('greenCell');
-for(var i=0; i&lt;a.length;i++){a[i].parentElement.style.backgroundColor="#00ff55";}
+for(var i=0; i&lt;a.length;i++){a[i].parentElement.style.backgroundColor="#4AC948";}
    //totalGrandRowVar();
   });
 

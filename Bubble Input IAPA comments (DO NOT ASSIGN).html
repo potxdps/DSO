@@ -84,9 +84,7 @@ function alphabetizeDSOdrop(){
         hideDSOdrop();
         
 scribe.fields4History=[
-    ["PAComments","PA Comments"],
     ["femaCheckboxV2","Infrastructure PDAs have been completed and Numbers have been vetted between PA and FEMA"],
-    ["IAComments","IA Comments"],
     ["femaCheckboxV1","Housing PDAs have been completed and Numbers have been vetted between IA and FEMA"],
     ["otherAttachment","Other Attachment"],
     ["letterAttachment","Letter Attachment"],
@@ -495,8 +493,9 @@ $(document).ready(function(){
                   <label class="control-label" for="updated">updated:</label>
                   <input name="updated" id="updated" type="text" style="form-control input-sm"/>
                </div>
-               <eocfield name="currentUser"/>
-               <input name="totalJurisdictions" value="_number" type="text"/>
+               
+                  <eocfield name="currentUser"/>
+              <input name="totalJurisdictions" value="_number" type="text"/>
             </div>
             <div class="content">
                <br/>
@@ -516,10 +515,8 @@ $(document).ready(function(){
         Yes 
                      
                      
-                     
                      <input id="dsoYesNo1" type="radio" style="form-control input-sm" name="dsoYesNo" value="Yes" onclick="hideDSOdrop();alphabetizeDSOdrop()"/>
         No 
-                     
                      
                      
                      <input id="dsoYesNo2" type="radio" style="form-control input-sm" name="dsoYesNo" value="No" onclick="hideDSOdrop();"/>
@@ -532,7 +529,6 @@ $(document).ready(function(){
                            <eocfield type="fk" table="Core" name="county"/> /
                            
                            
-                           
                            <eocfield type="fk" table="Core" name="city"/>
                         </foreignkey>
                      </span>
@@ -542,10 +538,8 @@ $(document).ready(function(){
         City 
                      
                      
-                     
                      <input id="jurisdictionType1" type="radio" style="form-control input-sm" name="jurisdictionType" value="City"/>
         County 
-                     
                      
                      
                      <input id="jurisdictionType2" type="radio" style="form-control input-sm" name="jurisdictionType" checked="true" value="County"/>
@@ -2040,10 +2034,8 @@ $(document).ready(function(){
        Yes 
                      
                      
-                     
                      <input id="declarationIssued1" type="radio" style="form-control input-sm" name="declarationIssued" value="Yes"/>
        No 
-                     
                      
                      
                      <input id="declarationIssued2" type="radio" style="form-control input-sm" name="declarationIssued" value="No"/>
@@ -2051,7 +2043,7 @@ $(document).ready(function(){
                   <div class="form-group form-inline">
                      <label class="control-label" for="dateDecRec">Date Disaster Declared Issued Rec'd:</label>
                      <space/>
-                     <textarea name="dateDecRec" id="dateDecRec" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <textarea name="dateDecRec" id="dateDecRec" placeholder="XX/XX/XXXX" style="form-control input-sm"/> 
                   </div>
                   <div class="form-group form-inline hide">
                      <label class="control-label" for="countyLetter">Letter to the Gov:</label>
@@ -2059,9 +2051,7 @@ $(document).ready(function(){
         Yes 
                      
                      
-                     
                      <input type="radio" name="countyLetter" style="form-control input-sm" value="Yes"/> No 
-                     
                      
                      
                      <input type="radio" style="form-control input-sm" name="countyLetter" value="No"/>
@@ -2081,6 +2071,7 @@ $(document).ready(function(){
                      <space/>
                      <textarea name="assistanceRequestedDate" id="assistanceRequestedDate" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                   </div>
+                  
                   <div class="form-group form-inline">
                      <label class="control-label" for="impactedCountiesDSO">Date Impacted Counties DSO Rec'd:</label>
                      <space/>
@@ -2094,7 +2085,7 @@ $(document).ready(function(){
                   <div class="form-group form-inline">
                      <label class="control-label" for="iaInitialContactDate">Date of PDA Initial Contact:</label>
                      <space/>
-                     <textarea name="iaInitialContactDate" id="iaInitialContactDate" placeholder="XX/XX/XXXX Not in Recovery Sum Display" style="form-control input-sm"/>
+                     <textarea name="iaInitialContactDate" id="iaInitialContactDate" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="iaPdaRequested">Date PDA Requested:</label>
@@ -2149,33 +2140,31 @@ $(document).ready(function(){
                      <label class="control-label" for="femaCheckboxV1">Housing PDAs have been completed and numbers have been vetted between IA and FEMA:</label>
                      <space/>
                      <input name="femaCheckboxV1" id="femaCheckboxV1" type="checkbox" value="Yes" style="form-control input-sm"/>
-                  </div>
-                  <div class="form-group form-inline">
+                     </div>
+                     <div class="form-group form-inline">
                      <label class="control-label" for="IAComments">IA Commments:</label>
                      <space/>
                      <textarea name="IAComments" id="IAComments" style="form-control input-sm"/>
-                  </div>
-                  <p>_____</p>
-                  <div class="form-group form-inline">
+                     </div>
+                     <div class="form-group form-inline">
                      <label class="control-label" for="femaCheckboxV2">Infrastructure PDAs have been completed and numbers have been vetted between PA and FEMA:</label>
                      <space/>
                      <input name="femaCheckboxV2" id="femaCheckboxV2" type="checkbox" value="Yes" style="form-control input-sm"/>
-                  </div>
-                  <space/>
-                  <div class="form-group form-inline">
+                     </div>
+                     <space/>
+                     <div class="form-group form-inline">
                      <label class="control-label" for="PAComments">PA Commments:</label>
                      <space/>
                      <textarea name="PAComments" id="PAComments" style="form-control input-sm"/>
-                  </div>
-                  <space/>
-                  <legend>Hide</legend>
+                     </div>
+                     <space/>
+                     
+                  
                   <div class="form-group form-inline">
                      <label class="control-label" for="hide">Hide:</label>
                      <space/>
                      <input name="hide" id="hide" type="checkbox" value="Yes" style="form-control input-sm"/>
                   </div>
-                  <div/>
-                  <br/>
                   <div id="buttons">
                      <savebutton id="saveBtn" class="hide"/>
                      <button id="saveBtn2" type="button" class="btn btn-info">Save</button>

@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Summary</title>
+    <title>IA</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -39,10 +39,11 @@
             </td>
           </tr>
           <tr>
-            <td id="tdBoard" colSpan="2" selected="false" align="center">Recovery Summary
+            <td id="tdBoard" colSpan="2" selected="false" align="center">Recovery PA Summary
                      
                      
-                     <br /><h4>This page shows only Supplemental Inputs (Bubble Inputs)</h4></td>
+                     <br /><h4>PA Numbers</h4>
+                     </td>
           </tr>
         </tbody>
       </table>
@@ -50,8 +51,8 @@
         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
         <space />
         <space />
-        <!--<viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>-->
-        <button type="button" class="btn active">View Recovery Summary</button>
+        <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
+        <!--<button type="button" class="btn active">View Recovery Summary</button>-->
         <space />
         <space />
         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/>
@@ -59,9 +60,12 @@
         <space />
         <space />
         <viewlink class="btn btn-info" type="button" name="NEW IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        
         <space />
         <space />
-        <viewlink class="btn btn-info" type="button" name="NEW PA (DO NOT ASSIGN)">View Recovery PA</viewlink><space/><space/>
+        <button type="button" class="btn active">View Recovery PA</button>
+        <space />
+        <space />
         <space />
         <space />
         <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink>
@@ -398,78 +402,70 @@
         </div>
         <div />
         <br />
-        <table id="sumTable" class="table display">
+        <table id="mainTable" class="table display">
           <tbody>
             <tr class="agencytemplate_tableheader">
               <td selected="false" colSpan="1" rowSpan="1" width="" align="center">Total Jurisdictions</td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">County / City
                         
                         
-                        <br />(Click to Edit Bubble Input)
+                        <br />(Click to Edit)
                      
                      
                      </td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Incident Period</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Disaster Declaration
-                        
-                        
-                        <br />(X)
-                     
-                     
+             <td selected="false" colSpan="5" width="" rowSpan="1" align="center">xxxx</td>
+                     <td selected="false" colSpan="5" width="" rowSpan="1" align="center">xxxxx</td>
+                     <td selected="false" colSpan="5" width="" rowSpan="1" align="center">xxxx</td>
+                     <td selected="false" colSpan="4" width="" rowSpan="1" align="center">xxxxxx</td>
+                     <td selected="false" colSpan="2" width="" rowSpan="1" align="center">xxxxxxx</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">
+                        <br/>DSO Audit Log
                      </td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Disaster Declaration Issued/Rec'd</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">ACK Letters Sent 1
-                        
-                        
-                        <br />(X)
-                     
-                     
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">
+                        <br/>Related Info
                      </td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Assistance Requested</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">DSO</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Impacted Counties DSO Rec'd
-                        
-                        
-                        <br />(X)
-                     
-                     
-                     </td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">ACK Letters Sent 2
-                        
-                        
-                        <br />(X)
-                     
-                     
-                     </td>
-              <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Individual Assistance</td>
-              <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Public Assistance</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Bubble Input Audit Log</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">IA PDA FEMA</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PA PDA FEMA</td>
             </tr>
             <tr class="agencytemplate_tableheader">
-              <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0) )</expression>)
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(expression<!--<relatedexpression useboardlevelfilters="true" name="totalJurisictionsexpression3">sum(isnull(totalJurisdictions,0) )</relatedexpression>-->)
                      
                      </td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Requested</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Scheduled</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Completed</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Requested</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Scheduled</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Completed</td>
-            </tr>
-            <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
-              <if test="1=0">
-                <eocfield name="jurisdictionType" />
-                <eocfield name="county" />
-                <eocfield name="city" />
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">DS</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">% IS</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">DS</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">% IS</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">DS</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">% IS</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">DS</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
+                  </tr>
+                  <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
+                   <if test="1=0">
+                <eocfield name="sortCountyOrder"/>
+                  <eocfield name="sortCityOrder"/>
+                  <eocfield name="jurisdictionType"/>
+                  <eocfield name="county"/>
+                  <eocfield name="city"/>
+                  
+                  
               </if>
               <tr class="agencytemplate_tableentry">
-                <td colSpan="1" selected="false" align="center">
-                  ( <eocfield name="totalJurisdictions"/>)</td>
-
-                <td colSpan="1" selected="false" width="">
-                  <viewlink name="Bubble Input (DO NOT ASSIGN)">
+               <td colSpan="1" selected="false" align="center">
+                  (expression<!--<eocfield table="Supplemental" name="totalJurisdictions"/>-->)</td>
+                  <td colSpan="1" selected="false" width="">
+                  <viewlink name="Input (DO NOT ASSIGN)">
                   <span style="color:#111111">
                     <if test="@jurisdictionType='County'">
                       <div style="text-align:left">
@@ -484,61 +480,82 @@
                   </viewlink>
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <!--<eocfield name="incidentPeriod" />-->
-                  <eocfield table="Core" name="dateOfDisaster1" />- 
-                           <eocfield table="Core" name="dateOfDisaster2" /></td>
-                <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="declarationIssued" />
+                  <eocfield name="sfhAffected" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="dateDecRec" />
+                  <eocfield name="sfhMinorDamage" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="ack1" />
+                  <eocfield name="sfhMajorDamage" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="assistanceRequestedDate" />
+                  <eocfield name="sfhDestroyed" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="dsoYesNo" />
+                  <eocfield name="sfhCovByInsurance" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="impactedCountiesDSO" />
+                  <eocfield name="mhAffected" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="ack2" />
+                  <eocfield name="mhMinorDamage" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="iaPdaRequested" />
+                  <eocfield name="mhMajorDamage" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="iaPDAScheduled" />
+                  <eocfield name="mhDestroyed" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="iaPDAComplete" />
+                  <eocfield name="mhCovByInsurance" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="paPdaRequested" />
+                  <eocfield name="mfuAffected" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="paPDAScheduled" />
+                  <eocfield name="mfuMinorDamage" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="paPDAComplete" />
+                  <eocfield name="mfuMajorDamage" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <viewlink name="Bubble Audit RelatedList (DO NOT ASSIGN)">
-                    <button class="btn btn-warning btn-xs">Bubble History</button>
+                  <eocfield name="mfuDestroyed" />
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="mfuCovByInsurance" />
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="totalsAffected"/>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="totalsMinorDamage"/>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="totalsMajorDamage"/>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="totalsDestroyed"/>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="numberMinorDamage"/>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="numberMajorDamage"/>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)">
+                    <button class="btn btn-warning btn-xs">DSO History</button>
                   </viewlink>
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="femaCheckboxV1" />
+                  <viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)">
+                    <button class="btn btn-warning btn-xs">XXXXXX</button>
+                  </viewlink>
                 </td>
-                <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="femaCheckboxV2" />
-                </td>
+
+
               </tr>
-            </eocrepeatallrecords>
+                  </eocrepeatallrecords>
           </tbody>
         </table>
       </div>

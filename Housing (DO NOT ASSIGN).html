@@ -29,7 +29,8 @@
   table.display td{border-top:solid 1px;border-color:#ccc;}
   .rowYellow {background-color:#F5FF79;}
   .rowBlue {background-color:#ccebff;}
-  .rowRed {background-color:#FF1100;}
+  .rowRed {background-color:#FF4C4C;}
+  .lightRowRed {background-color:#FFb3b3;}
   .rowOrange {background-color: #FFA600;}
   .rowGray {background-color: #b7bfc8;}
 .rowReg {}
@@ -185,6 +186,7 @@
             
                   
                   <viewlink name="Input (DO NOT ASSIGN)">
+                  <span style="color:#111111">
                      <if test="@jurisdictionType='County'">
                         <b>
                            <value-of select="@county"/>
@@ -196,7 +198,7 @@
                         <b>
                            <value-of select="@city"/>
                         </b>
-                     </if>
+                     </if></span>
                   </viewlink>|
             
                   
@@ -364,10 +366,10 @@ var firstGrandTotal = getTotalsForAll();
 
 var totalRowVar=function(i){
    var a = getTotalsFor(masterData[i][5]);
-   var b = a[20]===true?"rowRed":"rowYellow";
+   //var b = a[20]===true?"rowRed":"rowYellow";
    //var b = a[19]&gt;0?"rowRed":"rowYellow";//[19] is hidden and contains the femaCheck totals for the county
       //alert("yellow rows");
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],"",a[19]],b);//[19] is hidden and contains the femaCheck totals for the county
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9],a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],"",a[19]],"rowYellow");//[19] is hidden and contains the femaCheck totals for the county
 };
   for(var i=0; i &lt; masterData.length;i++){//alert("won!");
       
@@ -462,7 +464,7 @@ for(var i=0; i&lt;masterData.length;i++){
 return a;
 
 }
-  var etnPageHelper={
+  var dsoPageHelper={
 
     
 
@@ -530,7 +532,7 @@ var filterByIncident={
 
 $(document).ready(function(){
     
-    etnPageHelper.styleSearchField();
+    dsoPageHelper.styleSearchField();
     //var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
     //$(countyFilter).addClass('form-control');
     filterByIncident.incidentListOptionsBuild();
