@@ -1,10 +1,17 @@
 Vetting to FEMA
-•	Turn each record light red as its vetted and then the total row red once all from a county are vetted. White text, less intense red.
-Insurance
+•	Turn each record red only on PA CHECK
+
+
+
 •	PA numbers should include insurance adjustments, as the county totals for the thresholds are affected by this. 
+
+
+
 o	PA - For each record, the Est Repair Costs for A-G fields on the Infrastructure page should display The Est Cost field minus the Anticipated insurance. The DSO itself should tally this. If no insurance reported yet, The “Threshold Met” would say NA (as the totals should not be correct), then user can hover over NA and it will explain no insurance is entered for the A or B etc. Remove place holder “0”. Tell them they must enter 0 if zero or enter actual anticipated insurance for numbers to be accurate
-•	IA would like insurance on the adding rows, if too difficult scrap it, or change array to accommodate this. Might sound harder than is or might be even harder than I think….
+
+
+•	IA needs Related info link when inbetween page is complete
 
 
 
-using VET files
+MAke expressions work again for Total Jurisdictions
