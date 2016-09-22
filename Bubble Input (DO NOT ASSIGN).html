@@ -2127,8 +2127,11 @@ $(document).ready(function(){
                      <textarea name="paPDAComplete" id="paPDAComplete" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                   </div>
                </fieldset>
+                  <br/>
                <fieldset>
-                  <legend>Attachments</legend>
+                  <h3>
+                     <span class="label label-default">Attachments</span>
+                  </h3>
                   <div class="form-group form-inline">
                      <label class="control-label" for="decAttachment">Dec Attachment:</label>
                      <input type="file" name="decAttachment" size="40"/>
@@ -2143,8 +2146,11 @@ $(document).ready(function(){
                   </div>
                   <input type="text" id="dateTimeUpdate" name="dateTimeUpdate" style="display:none"/>
                </fieldset>
+                  <br/>
                <fieldset>
-                  <legend>IA and PA FEMA Vetting</legend>
+                  <h3>
+                     <span class="label label-default">IA FEMA Vetting</span>
+                  </h3>
                   <div class="form-group form-inline">
                      <label class="control-label" for="femaCheckboxV1">Housing PDAs have been completed and numbers have been vetted between IA and FEMA:</label>
                      <space/>
@@ -2155,20 +2161,25 @@ $(document).ready(function(){
                      <space/>
                      <textarea name="IAComments" id="IAComments" style="form-control input-sm"/>
                   </div>
-                  <p>_____</p>
+                  <br/>
+                  <h3>
+                     <span class="label label-default">PA FEMA Vetting</span>
+                  </h3>
                   <div class="form-group form-inline">
                      <label class="control-label" for="femaCheckboxV2">Infrastructure PDAs have been completed and numbers have been vetted between PA and FEMA:</label>
                      <space/>
                      <input name="femaCheckboxV2" id="femaCheckboxV2" type="checkbox" value="Yes" style="form-control input-sm"/>
                   </div>
-                  <space/>
+                  <br/>
                   <div class="form-group form-inline">
                      <label class="control-label" for="PAComments">PA Commments:</label>
                      <space/>
                      <textarea name="PAComments" id="PAComments" style="form-control input-sm"/>
                   </div>
-                  <space/>
-                  <legend>Hide</legend>
+                  <br/>
+                  <h3>
+                     <span class="label label-default">Hide</span>
+                  </h3>
                   <div class="form-group form-inline">
                      <label class="control-label" for="hide">Hide:</label>
                      <space/>
@@ -2176,6 +2187,7 @@ $(document).ready(function(){
                   </div>
                   <div/>
                   <br/>
+
                   <div id="buttons">
                      <savebutton id="saveBtn" class="hide"/>
                      <button id="saveBtn2" type="button" class="btn btn-info">Save</button>

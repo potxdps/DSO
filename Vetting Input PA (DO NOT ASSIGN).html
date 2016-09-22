@@ -63,9 +63,9 @@ window.onload=start;
    <div class="container agencytemplate_boardbackground">
       <form id="input1" role="form">
          <h1>
-            <span class="label label-default">Supplemental Information</span>
+            <span class="label label-default">PA Supplemental Information</span>
          </h1>
-         <br/>
+            <br/>
             <!--<tr>
                <td class="webeoc-section-header" colSpan="2" selected="false">Details</td>
             </tr>
@@ -73,7 +73,7 @@ window.onload=start;
                <td width="15%" selected="false" rowSpan="1" colSpan="1">Label</td>
                <td selected="true" rowSpan="1" colSpan="1">Field</td>
             </tr>-->
-            <legend>Choose the DSO</legend>
+            <!--<legend>Choose the DSO</legend>
             <div class="form-group required form-inline">
                      <label class="control-label" for="dsoYesNo">DSO:</label>
         Yes 
@@ -110,8 +110,11 @@ window.onload=start;
                      
                      <input id="jurisdictionType2" type="radio" style="form-control input-sm" name="jurisdictionType" checked="true" value="County"/>
                   </div>
-
-            <legend>PA FEMA Vetting</legend>
+            <br/>
+            <br/>-->
+            <h3>
+               <span class="label label-default">PA FEMA Vetting</span>
+            </h3>
             <div class="form-group form-inline">
                <label class="control-label" for="femaCheckboxV2">Infrastructure PDAs have been completed and numbers have been vetted between PA and FEMA:</label>
                <space/>
@@ -122,17 +125,23 @@ window.onload=start;
                <space/>
                <textarea name="PAComments" id="PAComments" style="form-control input-sm"/>
             </div>
-            <legend>FEMA Declaration</legend>
+            <br/>
+            <h3>
+               <span class="label label-default">FEMA Declaration</span>
+            </h3>
+
             <div class="form-group form-inline">
                <label class="control-label" for="femaDeclaration">FEMA Declaration:</label>
                <space/>
                <input name="femaDeclaration" id="femaDeclaration" type="checkbox" value="Yes" style="form-control input-sm"/>
             </div>
             <div class="form-group form-inline">
-               <label class="control-label" for="femaDeclarationComments2">FEMA Declaration Date/Comments:</label>
+               <label class="control-label" for="femaDeclarationComments2">PA FEMA Declaration Comments:</label>
                <space/>
                <textarea name="femaDeclarationComments2" id="femaDeclarationComments2" style="form-control input-sm"/>
             </div>
+            <br/>
+
          <footer>
             <div class="webeoc-footer">
                <savebutton class="btn btn-info">Save</savebutton>

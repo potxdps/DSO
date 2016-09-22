@@ -63,7 +63,7 @@ window.onload=start;
    <div class="container agencytemplate_boardbackground">
       <form id="input1" role="form">
          <h1>
-            <span class="label label-default">Supplemental Information</span>
+            <span class="label label-default">IA Supplemental Information</span>
          </h1>
          <br/>
             <!--<tr>
@@ -73,7 +73,7 @@ window.onload=start;
                <td width="15%" selected="false" rowSpan="1" colSpan="1">Label</td>
                <td selected="true" rowSpan="1" colSpan="1">Field</td>
             </tr>-->
-            <legend>Choose the DSO</legend>
+            <!--<legend>Choose the DSO</legend>
             <div class="form-group required form-inline">
                      <label class="control-label" for="dsoYesNo">DSO:</label>
         Yes 
@@ -96,9 +96,11 @@ window.onload=start;
                            <eocfield type="fk" table="Core" name="city"/>
                         </foreignkey>
                      </span>
-                  </div>
+                  </div>-->
 
-            <legend>IA FEMA Vetting</legend>
+            <h3>
+               <span class="label label-default">IA FEMA Vetting</span>
+            </h3>
             <div class="form-group form-inline">
                <label class="control-label" for="femaCheckboxV1">Housing PDAs have been completed and numbers have been vetted between IA and FEMA:</label>
                <space/>
@@ -109,28 +111,35 @@ window.onload=start;
                <space/>
                <textarea name="IAComments" id="IAComments" style="form-control input-sm"/>
             </div>
-            <legend>FEMA Declaration</legend>
+            <br/>
+            <h3>
+               <span class="label label-default">FEMA Declaration</span>
+            </h3>
             <div class="form-group form-inline">
                <label class="control-label" for="femaDeclaration">FEMA Declaration:</label>
                <space/>
                <input name="femaDeclaration" id="femaDeclaration" type="checkbox" value="Yes" style="form-control input-sm"/>
             </div>
             <div class="form-group form-inline">
-               <label class="control-label" for="femaDeclarationComments">FEMA Declaration Date/Comments:</label>
+               <label class="control-label" for="femaDeclarationComments">IA FEMA Declaration Comments:</label>
                <space/>
                <textarea name="femaDeclarationComments" id="femaDeclarationComments" style="form-control input-sm"/>
             </div>
-            <legend>SBA Declaration</legend>
+            <br/>
+            <h3>
+               <span class="label label-default">SBA Declaration</span>
+            </h3>
             <div class="form-group form-inline">
                <label class="control-label" for="sbaDeclaration">SBA Declaration:</label>
                <space/>
                <input name="sbaDeclaration" id="sbaDeclaration" type="checkbox" value="Yes" style="form-control input-sm"/>
             </div>
             <div class="form-group form-inline">
-               <label class="control-label" for="sbaDeclarationComments">SBA Declaration Date/Comments:</label>
+               <label class="control-label" for="sbaDeclarationComments">SBA Declaration Comments:</label>
                <space/>
                <textarea name="sbaDeclarationComments" id="sbaDeclarationComments" style="form-control input-sm"/>
             </div>
+            <br/>
          <footer>
             <div class="webeoc-footer">
                <savebutton class="btn btn-info">Save</savebutton>

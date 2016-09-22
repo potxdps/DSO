@@ -425,7 +425,7 @@
                      </td>
             </tr>
             <tr class="agencytemplate_tableheader">
-                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(expression<!--<relatedexpression useboardlevelfilters="true" name="totalJurisictionsexpression3">sum(isnull(totalJurisdictions,0) )</relatedexpression>-->)
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing2">sum(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0') then 1 else 0 end)</expression> )
                      
                      </td>
                      <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
@@ -462,7 +462,7 @@
               </if>
               <tr class="agencytemplate_tableentry">
                <td colSpan="1" selected="false" align="center">
-                  (expression<!--<eocfield table="Supplemental" name="totalJurisdictions"/>-->)</td>
+                  ( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionRecoveryIA">(case when ((totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0')) then 1 else 0 end)</expression> )</td>
                   <td colSpan="1" selected="false" width="">
                   <viewlink name="Input (DO NOT ASSIGN)">
                   <span style="color:#111111">
@@ -491,7 +491,7 @@
                   <eocfield name="sfhDestroyed" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="sfhCovByInsurance" />
+                  <eocfield name="sfhCovByInsurance" />%
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="mhAffected" />
@@ -506,7 +506,7 @@
                   <eocfield name="mhDestroyed" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="mhCovByInsurance" />
+                  <eocfield name="mhCovByInsurance" />%
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="mfuAffected" />
@@ -521,7 +521,7 @@
                   <eocfield name="mfuDestroyed" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
-                  <eocfield name="mfuCovByInsurance" />
+                  <eocfield name="mfuCovByInsurance" />%
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="totalsAffected"/>

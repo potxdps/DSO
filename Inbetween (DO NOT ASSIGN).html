@@ -35,16 +35,19 @@
          </table>
          <div class="content">
             <eocrepeatallrecords rowcount="0">
-            <h2>IA Supplemental Info</h2>
+            <h2>Supplemental Info</h2>
                <table class="display">
                   <tbody>
-                     <tr class="agencytemplate_tableentry">
+                     <tr class="agencytemplate_tableheader">
                      <td selected="false" colSpan="1" rowSpan="1">Jurisdiction Type</td>
                      <td selected="false" colSpan="1" rowSpan="1">County / City</td>
                         <td selected="false" colSpan="1" rowSpan="1">IA FEMA Vetting</td>
                         <td selected="false" colSpan="1" width="" rowSpan="1">IA Comments</td>
+                        <td selected="false" colSpan="1" rowSpan="1">PA FEMA Vetting</td>
+                        <td selected="false" colSpan="1" width="" rowSpan="1">PA Comments</td>
                         <td selected="false" colSpan="1" rowSpan="1">FEMA Declaration</td>
                         <td selected="false" colSpan="1" width="" rowSpan="1">IA FEMA Declaration Comments</td>
+                        <td selected="false" colSpan="1" width="" rowSpan="1">PA FEMA Declaration Comments</td>
                         <td selected="false" colSpan="1" rowSpan="1">SBA Declaration</td>
                         <td selected="false" colSpan="1" width="" rowSpan="1">SBA Declaration Comments</td>
                         <td selected="false" colSpan="1" width="" rowSpan="1">Edit</td>
@@ -52,18 +55,19 @@
                      <relatedlist table="Supplemental">
                         <!--<if test="@type='Milage'" table="Supplemental">-->
                            <if test="1=0">
-                              <eocfield table="Supplemental" type="rl" name="femaCheckboxV1"/>
-                              <eocfield table="Supplemental" type="rl" name="IAComments"/>
+                              <eocfield table="Supplemental" type="rl" name="jurisdictionType"/>
                               <eocfield table="Supplemental" type="rl" name="county"/>
                               <eocfield table="Supplemental" type="rl" name="city"/>
-                              <eocfield table="Supplemental" type="rl" name="jurisdictionType"/>
+                              <eocfield table="Supplemental" type="rl" name="femaCheckboxV1"/>
+                              <eocfield table="Supplemental" type="rl" name="IAComments"/>
                               <eocfield table="Supplemental" type="rl" name="femaCheckboxV2"/>
                               <eocfield table="Supplemental" type="rl" name="PAComments"/>
                               <eocfield table="Supplemental" type="rl" name="femaDeclaration"/>
                               <eocfield table="Supplemental" type="rl" name="femaDeclarationComments"/>
+                              <eocfield table="Supplemental" type="rl" name="femaDeclarationComments2"/>
                               <eocfield table="Supplemental" type="rl" name="sbaDeclaration"/>
                               <eocfield table="Supplemental" type="rl" name="sbaDeclarationComments"/>
-                              <eocfield table="Supplemental" type="rl" name="femaDeclarationComments2"/>
+                              
 
                               
                            </if>
@@ -81,12 +85,21 @@
                                  <td selected="" colSpan="1" width="" rowSpan="1">
                                     <value-of table="Supplemental" type="rl" select="@IAComments"/>
                                     </td>
+                                    <td selected="" colSpan="1" rowSpan="1">
+                                    <value-of table="Supplemental" type="rl" select="@femaCheckboxV2"/><br/>
+                                    </td>
+                                 <td selected="" colSpan="1" width="" rowSpan="1">
+                                    <value-of table="Supplemental" type="rl" select="@PAComments"/>
+                                    </td>
 
                                     <td selected="" colSpan="1" rowSpan="1">
                                     <value-of table="Supplemental" type="rl" select="@femaDeclaration"/>
                                     </td>
                                  <td selected="" colSpan="1" width="" rowSpan="1">
                                     <value-of table="Supplemental" type="rl" select="@femaDeclarationComments"/>
+                                    </td>
+                                    <td selected="" colSpan="1" width="" rowSpan="1">
+                                    <value-of table="Supplemental" type="rl" select="@femaDeclarationComments2"/>
                                     </td>
 
                                     <td selected="" colSpan="1" rowSpan="1">
@@ -98,7 +111,7 @@
 
                                     <td selected="" colSpan="1" width="" rowSpan="1">
                                     <!--<viewlink name="Vetting Input IA (DO NOT ASSIGN)" type="button">Vetting Input IA EDIT</viewlink>-->
-                                    <viewlink name="Vetting Input IA (DO NOT ASSIGN)" type="button">Vetting Input IA EDIT</viewlink>
+                                    <viewlink name="Vetting Input IA (DO NOT ASSIGN)" type="button">IA EDIT</viewlink><space/><viewlink name="Vetting Input PA (DO NOT ASSIGN)" type="button">PA EDIT</viewlink>
                                  </td>
                               </tr>
                            <!--</if>-->
@@ -107,51 +120,6 @@
                   </tbody>
                </table>
               
-               <h2>PA Supplemental Info</h2>
-               <table class="display">
-                  <tbody>
-                     <tr class="agencytemplate_tableentry">
-                     <td selected="false" colSpan="1" rowSpan="1">Jurisdiction Type</td>
-                     <td selected="false" colSpan="1" rowSpan="1">County / City</td>
-                        <td selected="false" colSpan="1" rowSpan="1">PA FEMA Vetting</td>
-                        <td selected="false" colSpan="1" width="" rowSpan="1">PA Comments</td>
-                        <td selected="false" colSpan="1" rowSpan="1">FEMA Declaration</td>
-                        <td selected="false" colSpan="1" width="" rowSpan="1">PA FEMA Declaration Comments</td>
-                        <td selected="false" colSpan="1" width="" rowSpan="1">Edit</td>
-                     </tr>
-                     <relatedlist table="Supplemental">
-                        <!--<if test="@type='Milage'" table="Supplemental">-->
-                          
-                           <!--<if test="@hidden='No'" table="Supplemental">-->
-                              <tr class="agencytemplate_tableentry">
-                              <td selected="" colSpan="1" rowSpan="1">
-                                    <value-of table="Supplemental" type="rl" select="@jurisdictionType"/>
-                                    </td>
-                              <td selected="" colSpan="1">
-                                    <value-of table="Supplemental" type="rl" select="@county"/> / <value-of table="Supplemental" type="rl" select="@city"/>
-                                    </td>
-                                 <td selected="" colSpan="1" rowSpan="1">
-                                    <value-of table="Supplemental" type="rl" select="@femaCheckboxV2"/><br/>
-                                    </td>
-                                 <td selected="" colSpan="1" width="" rowSpan="1">
-                                    <value-of table="Supplemental" type="rl" select="@PAComments"/>
-                                    </td>
-                                    <td selected="" colSpan="1" rowSpan="1">
-                                    <value-of table="Supplemental" type="rl" select="@femaDeclaration"/>
-                                    </td>
-                                 <td selected="" colSpan="1" width="" rowSpan="1">
-                                    <value-of table="Supplemental" type="rl" select="@femaDeclarationComments2"/>
-                                    </td>
-                                    <td selected="" colSpan="1" width="" rowSpan="1">
-                                    <!--<viewlink name="Vetting Input IA (DO NOT ASSIGN)" type="button">Vetting Input IA EDIT</viewlink>-->
-                                    <viewlink name="Vetting Input PA (DO NOT ASSIGN)" type="button">Vetting Input PA EDIT</viewlink>
-                                 </td>
-                              </tr>
-                           <!--</if>-->
-                        <!--</if>-->
-                     </relatedlist>
-                  </tbody>
-               </table>
 
                
                <!--<h2>IA Supplemental Info</h2>

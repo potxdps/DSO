@@ -114,7 +114,7 @@
 
                   </tr>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">(<expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression>)</td>
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression> )</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Debris Removal</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Police / EMS</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Roads &amp; Bridges</td>
@@ -180,7 +180,7 @@
                   <value-of select="@sortCountyOrder"/>|
           
                   <value-of select="@sortCityOrder"/>|
-                  (<expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression>)|
+                  <div align="center">( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression> )</div>|
                   <value-of select="@jurisdictionType"/>|
                   <viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></span></viewlink><space/>|<value-of select="@county"/>|<value-of select="@city"/>|<expression useboardlevelfilters="true" name="catASum">
       (case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)+
