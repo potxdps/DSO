@@ -69,7 +69,7 @@
             <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
         <space />
         <space />
-        <viewlink class="btn btn-info" type="button" name="NEW IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
         
         <space />
         <space />
@@ -78,10 +78,10 @@
         <space />
         <space />
         <space />
-        <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink>
+        <!--<viewlink class="btn btn-success" type="button" name="Vetting Input PA (DO NOT ASSIGN)">+ New PA Input</viewlink>-->
         <space />
         <space />
-        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>
+        <!--<viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>-->
         <br />
         <br />
             <div class="form-inline" id="resourceFilters" style="display: inline-block;">
@@ -147,7 +147,7 @@
                   </tr>
                </tbody>
             </table>
-            <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
+            <eocrepeatallrecords rowcount="0" sort="cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
                <if test="1=0">
                   <eocfield name="sortCountyOrder"/>
                   <eocfield name="sortCityOrder"/>
@@ -433,7 +433,7 @@
       ((case when cat15 = 'G' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'G' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostOther as money))-(cast(insuranceOther as money)))
       </expression>|
-      <if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div style=""><value-of select="@declarationIssued"/></div></if>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">XXXX</button></viewlink>|<expression useboardlevelfilters="true" name="repairCostVSinsurance">(case when (repairCostDebrisClearance!='' and insuranceDebrisClearance='') or (repairCostEmergency!='' and repairCostEmergency='') or (repairCostRoadPaved!='' and insuranceRoadPaved='') or (repairCostWaterControlFacilities!='' and insuranceWaterControlFacilities='') or (repairCostBuildingsEquipment!='' and insuranceBuildingsEquipment='') or (repairCostUtilitySystems!='' and insuranceUtilitySystems='') or (repairCostOther!='' and insuranceOther='') or (cat01!='' and insurance01='') or (cat02!='' and insurance02='') or (cat03!='' and insurance03='') or (cat04!='' and insurance04='') or (cat05!='' and insurance05='') or (cat06!='' and insurance06='') or (cat07!='' and insurance07='') or (cat08!='' and insurance08='') or (cat09!='' and insurance09='') or (cat10!='' and insurance10='') or (cat11!='' and insurance11='') or (cat12!='' and insurance12='') or (cat13!='' and insurance13='') or (cat14!='' and insurance14='') or (cat15!='' and insurance15='') then 1 else 0 end)</expression></span><!--and this and that and this and that whole row--> <!--then another-->
+      <if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div style=""><value-of select="@declarationIssued"/></div></if>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>|<viewlink name="Inbetween (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">Supplemental Info</button></viewlink>|<expression useboardlevelfilters="true" name="repairCostVSinsurance">(case when (repairCostDebrisClearance!='' and insuranceDebrisClearance='') or (repairCostEmergency!='' and insuranceEmergency='') or (repairCostRoadPaved!='' and insuranceRoadPaved='') or (repairCostWaterControlFacilities!='' and insuranceWaterControlFacilities='') or (repairCostBuildingsEquipment!='' and insuranceBuildingsEquipment='') or (repairCostUtilitySystems!='' and insuranceUtilitySystems='') or (repairCostOther!='' and insuranceOther='') or (cat01!='' and insurance01='') or (cat02!='' and insurance02='') or (cat03!='' and insurance03='') or (cat04!='' and insurance04='') or (cat05!='' and insurance05='') or (cat06!='' and insurance06='') or (cat07!='' and insurance07='') or (cat08!='' and insurance08='') or (cat09!='' and insurance09='') or (cat10!='' and insurance10='') or (cat11!='' and insurance11='') or (cat12!='' and insurance12='') or (cat13!='' and insurance13='') or (cat14!='' and insurance14='') or (cat15!='' and insurance15='') then 1 else 0 end)</expression></span><!--and this and that and this and that whole row--> <!--then another-->
             </eocrepeatallrecords>
          </div>
       </div>

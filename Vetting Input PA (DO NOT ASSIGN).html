@@ -1,22 +1,78 @@
-<html lang="en">   <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-      <link href="suit/5.3.2/css/boards.css" rel="stylesheet" media="screen"/>
+<html xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="6">   <head>
+      <title>PA Extra County Info</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <link href="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap.min.css" rel="stylesheet"/>
+      <link href="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap-dialog.min.css" rel="stylesheet"/>
+      <link href="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap-datepicker.min.css" rel="stylesheet"/>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/services/DSO/Scripts/jquery.min.js"/>
+      <script type="text/javascript" src="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap.min.js"/>
+      <script src="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap-dialog.min.js"/>
+      <script src="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap-datepicker.min.js"/>
+      <style type="text/css">
+     /* body{background-color:#d1d2d4;color:#000;font:normal 0.9em arial;margin:1.0em;}*/
+  div.container{border:none;}
+  div.content{margin:1em;}
+  table.heading{border:solid 1px;border-collapse:collapse;empty-cells:show;margin:0;padding:3px;width:100%;}      table.heading td, table.heading th{padding:0.1em 0.5em 0.1em 0.5em;}
+  table.heading th{text-align:center;}
+  #tdFilter{text-align:right;}
+  #tdBoard{text-align:center;}
+  table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
+  table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
+  table.display td{border-top:solid 1px;border-color:#ccc;}
+    </style>
+    <script type="text/javascript">
+
+       function alphabetizeDSOdrop(){
+  $("#fkID").html($("#fkID option").sort(function (a, b) {
+    return a.text == b.text ? 0 : a.text &lt; b.text ? -1 : 1
+}))
+}
+
+function hideDSOdrop() {
+            if (document.getElementById('dsoYesNo1').checked==true) {
+                document.getElementById('dsoDropdown').style.display="";
+                var fk = document.getElementById('fk').getElementsByTagName('select')[0];
+                for (var i=0; i&lt; fk.options.length; i++){
+                if(fk.options[i].value===''){
+                    fk.remove(fk.options[i]);
+                }
+                }
+
+            } else {
+                document.getElementById('dsoDropdown').style.display="none";
+                CreateOrphanLink();
+            }
+        }
+        function CreateOrphanLink(){
+            var fk = document.getElementById('fk').getElementsByTagName('select')[0];
+            var a = document.createElement('option');
+            a.value='0';
+            a.text='Please Select';
+            fk.appendChild(a);
+            fk.selectedIndex=fk.options.length-1;
+        }
+
+
+function start(){
+   hideDSOdrop();
+}
+
+window.onload=start;
+    </script>
    </head>   <body>
-      <form>
-         <header>
-            <h2>
-          Edit
-        </h2>
-         </header>
-         <table class="webeoc-section" cellpadding="0" cellspacing="0">
-            <tr>
+   <div class="container agencytemplate_boardbackground">
+      <form id="input1" role="form">
+         <h1>
+            <span class="label label-default">Supplemental Information</span>
+         </h1>
+         <br/>
+            <!--<tr>
                <td class="webeoc-section-header" colSpan="2" selected="false">Details</td>
             </tr>
             <tr>
                <td width="15%" selected="false" rowSpan="1" colSpan="1">Label</td>
                <td selected="true" rowSpan="1" colSpan="1">Field</td>
-            </tr>
+            </tr>-->
             <legend>Choose the DSO</legend>
             <div class="form-group required form-inline">
                      <label class="control-label" for="dsoYesNo">DSO:</label>
@@ -41,20 +97,51 @@
                         </foreignkey>
                      </span>
                   </div>
-            <legend>Vetting Numbers</legend>
+                  <div class="form-group required form-inline">
+                     <label class="control-label" for="jurisdictionType">Jurisdiction Type:</label>
+        City 
+                     
+                     
+                     
+                     <input id="jurisdictionType1" type="radio" style="form-control input-sm" name="jurisdictionType" value="City"/>
+        County 
+                     
+                     
+                     
+                     <input id="jurisdictionType2" type="radio" style="form-control input-sm" name="jurisdictionType" checked="true" value="County"/>
+                  </div>
+
+            <legend>PA FEMA Vetting</legend>
             <div class="form-group form-inline">
                <label class="control-label" for="femaCheckboxV2">Infrastructure PDAs have been completed and numbers have been vetted between PA and FEMA:</label>
                <space/>
                <input name="femaCheckboxV2" id="femaCheckboxV2" type="checkbox" value="Yes" style="form-control input-sm"/>
             </div>
-         </table>
+            <div class="form-group form-inline">
+               <label class="control-label" for="PAComments">PA Comments:</label>
+               <space/>
+               <textarea name="PAComments" id="PAComments" style="form-control input-sm"/>
+            </div>
+            <legend>FEMA Declaration</legend>
+            <div class="form-group form-inline">
+               <label class="control-label" for="femaDeclaration">FEMA Declaration:</label>
+               <space/>
+               <input name="femaDeclaration" id="femaDeclaration" type="checkbox" value="Yes" style="form-control input-sm"/>
+            </div>
+            <div class="form-group form-inline">
+               <label class="control-label" for="femaDeclarationComments2">FEMA Declaration Date/Comments:</label>
+               <space/>
+               <textarea name="femaDeclarationComments2" id="femaDeclarationComments2" style="form-control input-sm"/>
+            </div>
          <footer>
             <div class="webeoc-footer">
-               <returnlink class="webeoc-link">Cancel</returnlink>
+               <savebutton class="btn btn-info">Save</savebutton>
                <space/>
-               <savebutton class="webeoc-save">Save</savebutton>
+               <cancelbutton class="btn btn-danger"/>
+               <space/>
             </div>
          </footer>
       </form>
+      </div>
    </body>
 </html>
