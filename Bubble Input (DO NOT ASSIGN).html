@@ -72,12 +72,37 @@ function alphabetizeDSOdrop(){
     return a.text == b.text ? 0 : a.text &lt; b.text ? -1 : 1
 }))
 }
+
+function rebuildingCityCountyOptionsOnJTypeCheck(a) {
+            $(a).on("click", function () {
+                var coList = document.getElementById("county");
+                removeOptions(coList);
+                addOption(coList, 'Select One', true);
+                for (var k = 0; k &lt; countyList.length; k++) {
+                    addOption(coList, countyList[k], false);
+                }
+                var cityList = document.getElementById("city");
+                removeOptions(cityList);
+                addOption(cityList, "Select One", true);
+                addOption(cityList, "Unincorporated Areas", false);
+                for (var k = 0; k &lt; cityMatrix.length; k++) {
+                    addOption(cityList, cityMatrix[k][1], false);
+                }
+                $("#sortCountyOrder").val(0);
+                $("#sortCityOrder").val(0);
+                $("#county").prop("disabled", false);
+                $("#city").prop("disabled", false);
+            });
+        }
+
     function start(){
       //give the span an ID 71-72 then manipulate the ID 74-76
       var fkSPAN = document.getElementById('fk').getElementsByTagName('select')[0];
       $(fkSPAN).prop("id", "fkID");
         $('.datepicker').datepicker();
         //sortSelectLists
+        rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType1");
+          rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType2");
       document.getElementById('jurisdictionType1').onchange=TypeJurisdiciton;
         document.getElementById('jurisdictionType2').onchange=TypeJurisdiciton;
         //HI();
@@ -114,14 +139,18 @@ scribe.fields4History=[
   ];
   checkIncidentNameValueWithIncidentListText();
   scribe.inicialReview();
+  $("#county").prop("disabled", true);
+  $("#city").prop("disabled", true);
+  if ('<xsl:value-of select="/data/@dataid"/>'!=0){
+     $("#county").prop("disabled", false);
+      $("#city").prop("disabled", false);
+  }
 
 //if data is not equal to 0
 if (document.getElementsByName('dataid')[0].value!=''){
-  //alert(1);
-  //checkIncidentNameValueWithIncidentListText();
+ 
   updateDateTime();
-  //alert("pre saveBtn");
-  //alert("Update Record");
+ 
 
   $("#saveBtn2").click(function() {
      someSaveBttn=function(){
@@ -135,7 +164,7 @@ if (document.getElementsByName('dataid')[0].value!=''){
     
 } else {
   //first record
-  //alert("First Record");
+ 
 $("#saveBtn2").click(function() {
     updateDateTime();
     document.getElementById('currentChangeLog').value = scribe.postReview();
@@ -421,9 +450,7 @@ else{
 }
 
 }
-/*function copyValue(){
-    document.getElementsByName("ack1")[0].value = document.getElementsByName("ack1")[0].value + document.getElementById("AcknowledgeLetterSent1").value + "/ ";
-  }*/
+
 
 function checkIncidentNameValueWithIncidentListText() {
 
@@ -548,7 +575,7 @@ $(document).ready(function(){
                      
                      
                      
-                     <input id="jurisdictionType2" type="radio" style="form-control input-sm" name="jurisdictionType" checked="true" value="County"/>
+                     <input id="jurisdictionType2" type="radio" style="form-control input-sm" name="jurisdictionType" value="County"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="County">County:</label>

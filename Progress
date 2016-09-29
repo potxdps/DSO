@@ -1,17 +1,21 @@
-Vetting to FEMA
-•	
+Cleaning up files
+
+Making sure inputs match
+
+Add history to fema vetting ?
+
+Clean  up all files
+	comments
+	legacy code
+	unused junk
+	console logs
+	alerts
+
+
+Testing
 
 
 
-•	PA numbers should include insurance adjustments, as the county totals for the thresholds are affected by this. - Done  
+cat01
 
-
-
-o	PA - For each record, the Est Repair Costs for A-G fields on the Infrastructure page should display The Est Cost field minus the Anticipated insurance. The DSO itself should tally this. If no insurance reported yet, The “Threshold Met” would say NA (as the totals should not be correct),  Placeholder to tell them they must enter 0 if zero or enter actual anticipated insurance for numbers to be accurate
-
-
-•	IA needs Related info link when inbetween page is complete
-
-
-
-MAke expressions work again for Total Jurisdictions on IA page
+repairCost01

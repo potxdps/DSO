@@ -18,6 +18,7 @@
 }
     </style>
       <script type="text/javascript">
+      var cats = true;
             var scribe = { 
             status: 0,
             autoRun: function () { },
@@ -354,59 +355,92 @@ function finalEmailCheck() {
             }
 }
 
-
-
-/*function selectTextOnFocus() {
-    $(document).ready(function() {
-    $("input:text").focus(function() { $(this).select(); } );
-});
-}*/
-//$("div").text().replace("$", "");
-/*function selectTextOnFocus() {
-    $(document).ready(function() {
-    $("input:text").focus(function() { $(this).select(); } );
-});
-}*/
-//NO like trimDollar
-/*function trimDollar() {
-  return $("input:text").replace(/^\s+|\s+$|\&amp;nbsp;+$/g, '');
-}*/
-
         function start() {
-         // parseFloat(['input[type=text]'].replace(/[^0-9-,]/g, ''));
-          //$('form').submit(function() {
-
-    /*$('input[type=text]', this).each(function() {
-        $(this).val( $(this).val().replace(/\$/g, '') );
-        autoSum();
-    
-    
-    return true;
-});*/
+         
           if (document.getElementsByName('datalinkid')[0]){
             document.getElementsByName('datalinkid')[0].checked=true;
       } else { alert('The data links are not configured correctly. Please contact your local WebEOC Admin.');
 }
         
+
+
+
+//startOf: event actions
+
+
           $("input:text").focus(function() {
               $(this).select();
           }).blur(function() {
               $(this).val($(this).val().replace(/\$/g, ''));
-              //$(this).val($(this).val().replace(/,/g, ''));
-              //autoSum();
+             
           });
-          //selectTextOnFocus();
+          
           countyEmailHideReveal();
           $("#notRealSave").click(function() {
-              if(!$(".jTypeCLASS").is(":checked") || $("#contactPerson").val() === "" &amp;&amp; $("#contactPersonTitle").val() === "") {
+
+          if($("#repairCost01").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost01", "#cat01", "#cat01");
+          }
+          if($("#repairCost02").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost02", "#cat02", "#cat02");
+          }
+          if($("#repairCost03").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost03", "#cat03", "#cat03");
+          }
+          if($("#repairCost04").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost04", "#cat04", "#cat04");
+          }
+          if($("#repairCost05").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost05", "#cat05", "#cat05");
+          }
+          if($("#repairCost06").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost06", "#cat06", "#cat06");
+          }
+          if($("#repairCost07").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost07", "#cat07", "#cat07");
+          }
+          if($("#repairCost08").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost08", "#cat08", "#cat08");
+          }
+          if($("#repairCost09").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost09", "#cat09", "#cat09");
+          }
+          if($("#repairCost10").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost10", "#cat10", "#cat10");
+          }
+          if($("#repairCost11").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost11", "#cat11", "#cat11");
+          }
+          if($("#repairCost12").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost12", "#cat12", "#cat12");
+          }
+          if($("#repairCost13").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost13", "#cat13", "#cat13");
+          }
+          if($("#repairCost14").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost14", "#cat14", "#cat14");
+          }
+          if($("#repairCost15").val() !== ""){
+            validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost15", "#cat15", "#cat15");
+          }
+
+
+             if(!$(".jTypeCLASS").is(":checked") || $("#contactPerson").val() === "" &amp;&amp; $("#contactPersonTitle").val() === "") {
                   alert("Please fill in the missing required field(s).\n\nJurisdiction Type, Contact Person and/or Contact Person Title need input.");
                   return false;
               } else {
+                if (cats === true){
                   updateOrFirstTime();
                   sendEmails();
                   fakeSubmit();
-              }
+                } else {
+                          return false;
+                  
+              } 
+                }
+              
           });
+          //end of notRealSave click
 
           rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType1");
           rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType2");
@@ -733,6 +767,66 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
         }
     })()
 });
+    /*function makeCatDropdownRequired(a,b){
+      if($(a).value!='');
+      alert('added value');{
+        $(b).prop('required',true);
+        alert('made required');
+      } else {
+        $(b).prop('required',false);
+      }
+    }*/
+
+/*   
+   function cat01DropRequired() {
+      document.getElementById("repairCost01").value!=''{
+    document.getElementById("cat01").required = true;
+    alert("Please select a value for Cat A-G");
+    document.getElementById('cat01').focus();
+  } else {
+    document.getElementById("repairCost01").value=''{
+    document.getElementById("cat01").required = false;
+  }
+
+}
+}*/
+
+
+/*
+function cat01DropRequired() {
+    if(document.getElementById("repairCost01").value != '') {
+        document.getElementById("cat01").required = true;
+        alert("Please select a value for Cat A-G");
+        document.getElementById('cat01').focus();
+    } else {
+        document.getElementById("cat01").required = false;
+    }
+}
+*/
+
+function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
+    if($(a).val() != "" &amp;&amp; $(b).val() === "") {
+        alert("Please select a value for Cat A-G");
+        $(c).focus().select();
+        e.preventDefault();
+        cats = false;
+
+    } else {
+        cats = true;
+    }
+}
+
+/*function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c, e) {
+   var catSelectList = document.getElementById(b).selectedIndex;
+   if($(a).val() != "" &amp;&amp; catSelectList === 0) {
+       $(c).focus().select();
+       alert("Please select a value for Cat A-G");
+       e.preventDefault();
+  }
+}*/
+
+
+
         window.onload = start;
     </script>
    </head>   <body>
@@ -2872,7 +2966,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility01" id="orgFacility01" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat01" style="form-control input-sm">
+                           <select name="cat01" id="cat01" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -2898,7 +2992,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility02" id="orgFacility02" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat02" style="form-control input-sm">
+                           <select name="cat02" id="cat02" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -2924,7 +3018,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility03" id="orgFacility03" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat03" style="form-control input-sm">
+                           <select name="cat03" id="cat03" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -2950,7 +3044,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility04" id="orgFacility04" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat04" style="form-control input-sm">
+                           <select name="cat04" id="cat04" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -2976,7 +3070,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility05" id="orgFacility05" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat05" style="form-control input-sm">
+                           <select name="cat05" id="cat05" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3002,7 +3096,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility06" id="orgFacility06" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat06" style="form-control input-sm">
+                           <select name="cat06" id="cat06" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3028,7 +3122,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility07" id="orgFacility07" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat07" style="form-control input-sm">
+                           <select name="cat07" id="cat07" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3054,7 +3148,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility08" id="orgFacility08" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat08" style="form-control input-sm">
+                           <select name="cat08" id="cat08" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3080,7 +3174,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility09" id="orgFacility09" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat09" style="form-control input-sm">
+                           <select name="cat09" id="cat09" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3106,7 +3200,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility10" id="orgFacility10" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat10" style="form-control input-sm">
+                           <select name="cat10" id="cat10" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3132,7 +3226,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility11" id="orgFacility11" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat11" style="form-control input-sm">
+                           <select name="cat11" id="cat11" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3158,7 +3252,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility12" id="orgFacility12" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat12" style="form-control input-sm">
+                           <select name="cat12" id="cat12" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3184,7 +3278,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility13" id="orgFacility13" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat13" style="form-control input-sm">
+                           <select name="cat13" id="cat13" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3210,7 +3304,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility14" id="orgFacility14" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat14" style="form-control input-sm">
+                           <select name="cat14" id="cat14" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
@@ -3236,7 +3330,7 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                            <input name="orgFacility15" id="orgFacility15" type="text" style="form-control input-sm"/>
                         </td>
                         <td>
-                           <select name="cat15" style="form-control input-sm">
+                           <select name="cat15" id="cat15" style="form-control input-sm">
                               <option/>
                               <option>A</option>
                               <option>B</option>
