@@ -18,6 +18,7 @@
 }
     </style>
       <script type="text/javascript">
+                var cityArrayCopy = [];
       var cats = true;
             var scribe = { 
             status: 0,
@@ -326,6 +327,7 @@ function finalEmailCheck() {
 }
 
       function rebuildingCityCountyOptionsOnJTypeCheck(a) {
+        //alert('rebuilding list runs');
             $(a).on("click", function () {
                 var coList = document.getElementById("county");
                 removeOptions(coList);
@@ -350,10 +352,29 @@ function finalEmailCheck() {
       function updateOrFirstTime(){
   if ('<xsl:value-of select="/data/@dataid"/>'!=0){
                updateDateTime();
+              
+
             } else {
                 submitDateTime();
             }
 }
+
+       function selectOptionsIfExistsInArray() {
+                    var textAreaValue = $("#cityTmp").val();
+                    var textAreaValueSplit = textAreaValue.split(",");
+                    cityArrayCopy = textAreaValueSplit;
+                    console.log(cityArrayCopy);
+                    $("#city").val("");
+                    for(var i = 0; i &lt; cityArrayCopy.length; i++) {
+
+                        $("[name = city] option").filter(function() {
+                            return($(this).text() === cityArrayCopy[i]);
+                        }).prop("selected", true);
+
+                        $("#cityTmp").val("");
+                        $("#city").focus();
+                    }
+                }
 
         function start() {
          
@@ -361,10 +382,7 @@ function finalEmailCheck() {
             document.getElementsByName('datalinkid')[0].checked=true;
       } else { alert('The data links are not configured correctly. Please contact your local WebEOC Admin.');
 }
-        
-
-
-
+         
 //startOf: event actions
 
 
@@ -425,19 +443,47 @@ function finalEmailCheck() {
           }
 
 
-             if(!$(".jTypeCLASS").is(":checked") || $("#contactPerson").val() === "" &amp;&amp; $("#contactPersonTitle").val() === "") {
-                  alert("Please fill in the missing required field(s).\n\nJurisdiction Type, Contact Person and/or Contact Person Title need input.");
+             if(!$(".jTypeCLASS").is(":checked")) {
+                  alert("Please fill in the missing required field, Jurisdiction Type. Pick one City or County.");
+                  $("#jurisdictionType1").focus().select();
+      
                   return false;
+
+              } else if($("#county").val() === "Select One"){
+                alert("Please make a choice in the missing required field, County.");
+                  $("#county").focus().select();
+      
+                  return false;
+
+              } else if($("#city").val() === "Select One"){
+                alert("Please make a choice in the missing required field, City.");
+                  $("#city").focus().select();
+      
+                  return false;
+
+              } else if($("#contactPerson").val() === "") {
+                alert("Please fill in the missing required field, Contact Person.");
+                  $("#contactPerson").focus().select();
+      
+                  return false;
+
+              } else if($("#contactPersonTitle").val() === "") {
+                alert("Please fill in the missing required field, Contact Person Title.");
+                  $("#contactPersonTitle").focus().select();
+      
+                  return false;
+
               } else {
                 if (cats === true){
+                  copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
                   updateOrFirstTime();
                   sendEmails();
                   fakeSubmit();
                 } else {
-                          return false;
+                  return false;
                   
               } 
-                }
+          }
               
           });
           //end of notRealSave click
@@ -698,9 +744,45 @@ function finalEmailCheck() {
             if ('<xsl:value-of select="/data/@dataid"/>'!=0){
                $("#county").prop("disabled", false);
                 $("#city").prop("disabled", false);
-            }
+
+                //startOf: doing stuff on update/edit
+                var countySelectListOnUpdate = document.getElementById("county");
+                sortOrderCounty(countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text);
+                var cityList = document.getElementById("city");
+                if (countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text == 'Select One') {
+                  console.log('750');
+                    removeOptions(cityList);
+                    addOption(cityList, "Select One", false);
+                    addOption(cityList, "Unincorporated Areas", true);
+                    for (var k = 0; k &lt; cityMatrix.length; k++) {
+                        addOption(cityList, cityMatrix[k][1], false);
+                    }
+                } else {
+                  console.log('758')
+                    removeOptions(cityList);
+                    addOption(cityList, "Select One", false);
+                    addOption(cityList, "Unincorporated Areas", true);
+                    for (var k = 0; k &lt; cityMatrix.length; k++) {
+
+                        if (cityMatrix[k][0] === countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text) {
+                            addOption(cityList, cityMatrix[k][1], false);
+                        }
+                    }
+                }
+
+
+                setTimeout(function() {
+                  console.log('timeout 772');
+                    selectOptionsIfExistsInArray();
+                }, 1000); 
+            } 
             
         }
+
+        function copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray() {
+                    document.getElementById("cityTmp").value += $("#city").val();
+                }
+
 
 
         function fakeSubmit() {
@@ -747,26 +829,7 @@ function finalEmailCheck() {
  }
 }
 
-Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
-    get: (function() {
-        try {
-            document.querySelector(":checked");
-            return function() {
-                return this.querySelectorAll(":checked");
-            };
-        } catch (e) {
-            return function() {
-                if (!this.multiple) {
-                    return this.selectedIndex &gt;= 0
-                            ? [this.options[this.selectedIndex]] : [];
-                }
-                for (var i = 0, a = []; i &lt; this.options.length; i++)
-                    if (this.options[i].selected) a.push(this.options[i]);
-                return a;
-            };
-        }
-    })()
-});
+
     /*function makeCatDropdownRequired(a,b){
       if($(a).value!='');
       alert('added value');{
@@ -825,7 +888,38 @@ function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
   }
 }*/
 
+Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
+    get: (function() {
+        try {
+            document.querySelector(":checked");
+            return function() {
+                return this.querySelectorAll(":checked");
+            };
+        } catch (e) {
+            return function() {
+                if (!this.multiple) {
+                    return this.selectedIndex &gt;= 0
+                            ? [this.options[this.selectedIndex]] : [];
+                }
+                for (var i = 0, a = []; i &lt; this.options.length; i++)
+                    if (this.options[i].selected) a.push(this.options[i]);
+                return a;
+            };
+        }
+    })()
+});
 
+/*function copyValue(){
+    
+    $("#city option:selected").each(function(){
+        $("#copyCity").val($("#copyCity").val() + $(this).text() + "\n"); // Add its innerhtml to the textarea
+    });
+
+  }
+
+function clearValues(){
+  document.getElementById('copyCity').value='';
+}*/
 
         window.onload = start;
     </script>
@@ -884,8 +978,8 @@ function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
                      <span class="label label-default">General</span>
                   </h1>
                   <br/>
-                  <div class="form-group required form-inline">
-                     <label class="control-label" for="jurisdictionType">Jurisdiction Type:</label>
+                  <div class="form-group required form-inline" id="jurisdictionTypeDIV">
+                     <label id="jurisdictionTypeLabel" class="control-label" for="jurisdictionType">Jurisdiction Type:</label>
         City 
                      
                      
@@ -901,6 +995,8 @@ function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
                      
                      <input id="jurisdictionType2" type="radio" class="form-control input-sm jTypeCLASS" name="jurisdictionType" value="County" onclick="countyEmailHideReveal()"/>
                   </div>
+
+
                   <div class="form-group form-inline">
                      <label class="control-label" for="county">County:</label>
                      <space/>
@@ -2388,6 +2484,10 @@ function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
                      </select>
                      <!--<input type="text" name="city" style="form-control input-sm" />-->
                   </div>
+                  <div class="form-group form-inline" style="display:none">
+                    <textarea id="cityTmp" name="cityTmp" />
+                  </div>
+                 
                   <div class="form-group form-inline">
                      <label class="control-label" for="population">Population:</label>
                      <space/>
