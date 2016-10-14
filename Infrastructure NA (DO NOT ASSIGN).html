@@ -53,7 +53,7 @@
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h3>(Infrastructure / PA)</h3><hr/><h4>The Numbers in A-G show Catergory Totals minus the Anticipated Insurance, if entered in DSO. If the Anticipated Insurance is not entered yet, the Met column shows "N/A".<hr/>The RED row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA.</h4></td>
+                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h3>(Infrastructure / PA)</h3><hr/><h4>The Numbers in A-G show Catergory Totals minus the Anticipated Insurance, if it is entered in DSO. If the Anticipated Insurance is not entered yet, the column shows "N/A".<br/>Any Column with N/A present will make the totals (County and Grand) inaccurate until the antipated insurance is applied. Once all the N/A's are gone, the totals can be considered accurate.</h4><hr/><h4>The RED row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA.</h4></td>
                </tr>
             </tbody>
          </table>
@@ -149,18 +149,25 @@
             </table>
             <eocrepeatallrecords rowcount="0" sort="cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
                <if test="1=0">
-                  <eocfield name="sortCountyOrder"/>
+                 <eocfield name="sortCountyOrder"/>
                   <eocfield name="sortCityOrder"/>
                   <eocfield name="jurisdictionType"/>
                   <eocfield name="county"/>
                   <eocfield name="city"/>
                   <eocfield name="repairCostDebrisClearance"/>
+                  <eocfield name="insuranceDebrisClearance"/>
                   <eocfield name="repairCostEmergency"/>
+                  <eocfield name="insuranceEmergency"/>
                   <eocfield name="repairCostRoadPaved"/>
+                  <eocfield name="insuranceRoadPaved"/>
                   <eocfield name="repairCostWaterControlFacilities"/>
+                  <eocfield name="insuranceWaterControlFacilities"/>
                   <eocfield name="repairCostBuildingsEquipment"/>
+                  <eocfield name="insuranceBuildingsEquipment"/>
                   <eocfield name="repairCostUtilitySystems"/>
+                  <eocfield name="insuranceUtilitySystems"/>
                   <eocfield name="repairCostOther"/>
+                  <eocfield name="insuranceOther"/>
                   <eocfield name="repairCostTotals"/>
                   <eocfield name="cat01"/>
                   <eocfield name="cat02"/>
@@ -192,15 +199,25 @@
                   <eocfield name="repairCost13"/>
                   <eocfield name="repairCost14"/>
                   <eocfield name="repairCost15"/>
+                  <eocfield name="insurance01"/>
+                  <eocfield name="insurance02"/>
+                  <eocfield name="insurance03"/>
+                  <eocfield name="insurance04"/>
+                  <eocfield name="insurance05"/>
+                  <eocfield name="insurance06"/>
+                  <eocfield name="insurance07"/>
+                  <eocfield name="insurance08"/>
+                  <eocfield name="insurance09"/>
+                  <eocfield name="insurance10"/>
+                  <eocfield name="insurance11"/>
+                  <eocfield name="insurance12"/>
+                  <eocfield name="insurance13"/>
+                  <eocfield name="insurance14"/>
+                  <eocfield name="insurance15"/>
                   <eocfield name="declarationIssued"/>
                </if>
                <span style="display:none" class="data" name="data">
-                  <value-of select="@sortCountyOrder"/>|
-          
-                  <value-of select="@sortCityOrder"/>|<div align="center">
-                  ( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when (repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000') or (repairCostTotal!='' and repairCostTotal!='0' and repairCostTotal!='0.00' and repairCostTotal!='0.0000') then 1 else 0 end)</expression> )</div>|
-                  <value-of select="@jurisdictionType"/>|
-                  <viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></span></viewlink><space/>|<value-of select="@county"/>|<value-of select="@city"/>|<expression useboardlevelfilters="true" name="catASum">
+               <span id="catSumsSpan" style="display:none;"><expression useboardlevelfilters="true" name="catASum">
       ((case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'A' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'A' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'A' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -217,7 +234,7 @@
       ((case when cat14 = 'A' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'A' then isNull(cast(insurance14 as money),0) else 0 end))+
       ((case when cat15 = 'A' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'A' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostDebrisClearance as money))-(cast(insuranceDebrisClearance as money)))
-      </expression>|<expression useboardlevelfilters="true" name="catBSum">
+      </expression>end A start B<expression useboardlevelfilters="true" name="catBSum">
       ((case when cat01 = 'B' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'B' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'B' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'B' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'B' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'B' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -234,7 +251,7 @@
       ((case when cat14 = 'B' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'B' then isNull(cast(insurance14 as money),0) else 0 end))+
       ((case when cat15 = 'B' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'B' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostEmergency as money))-(cast(insuranceEmergency as money)))
-      </expression>|<expression useboardlevelfilters="true" name="catCSum">
+      </expression>end B start C<expression useboardlevelfilters="true" name="catCSum">
       ((case when cat01 = 'C' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'C' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'C' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'C' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'C' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'C' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -251,7 +268,7 @@
       ((case when cat14 = 'C' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'C' then isNull(cast(insurance14 as money),0) else 0 end))+
       ((case when cat15 = 'C' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'C' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostRoadPaved as money))-(cast(insuranceRoadPaved as money)))
-      </expression>|<expression useboardlevelfilters="true" name="catDSum">
+      </expression>end C start D<expression useboardlevelfilters="true" name="catDSum">
       ((case when cat01 = 'D' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'D' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'D' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'D' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'D' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'D' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -268,7 +285,7 @@
       ((case when cat14 = 'D' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'D' then isNull(cast(insurance14 as money),0) else 0 end))+
       ((case when cat15 = 'D' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'D' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostWaterControlFacilities as money))-(cast(insuranceWaterControlFacilities as money)))
-      </expression>|<expression useboardlevelfilters="true" name="catESum">
+      </expression>end D start E<expression useboardlevelfilters="true" name="catESum">
       ((case when cat01 = 'E' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'E' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'E' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'E' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'E' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'E' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -285,7 +302,7 @@
       ((case when cat14 = 'E' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'E' then isNull(cast(insurance14 as money),0) else 0 end))+
       ((case when cat15 = 'E' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'E' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostBuildingsEquipment as money))-(cast(insuranceBuildingsEquipment as money)))
-      </expression>|<expression useboardlevelfilters="true" name="catFSum">
+      </expression>end E start F<expression useboardlevelfilters="true" name="catFSum">
       ((case when cat01 = 'F' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'F' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'F' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'F' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'F' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'F' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -302,7 +319,7 @@
       ((case when cat14 = 'F' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'F' then isNull(cast(insurance14 as money),0) else 0 end))+
       ((case when cat15 = 'F' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'F' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostUtilitySystems as money))-(cast(insuranceUtilitySystems as money)))
-      </expression>|<expression useboardlevelfilters="true" name="catGSum">
+      </expression>end F start G<expression useboardlevelfilters="true" name="catGSum">
       ((case when cat01 = 'G' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'G' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'G' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'G' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'G' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'G' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -319,7 +336,7 @@
       ((case when cat14 = 'G' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'G' then isNull(cast(insurance14 as money),0) else 0 end))+
       ((case when cat15 = 'G' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'G' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostOther as money))-(cast(insuranceOther as money)))
-      </expression>|<expression useboardlevelfilters="true" name="catSumTotal">
+      </expression>end G start All<expression useboardlevelfilters="true" name="catSumTotal">
      ((case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'A' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'A' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'A' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -432,8 +449,30 @@
       ((case when cat14 = 'G' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'G' then isNull(cast(insurance14 as money),0) else 0 end))+
       ((case when cat15 = 'G' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'G' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostOther as money))-(cast(insuranceOther as money)))
-      </expression>|
-      <if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div style=""><value-of select="@declarationIssued"/></div></if>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>|<!--<viewlink name="Inbetween (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">Supplemental Info</button></viewlink>-->|<expression useboardlevelfilters="true" name="repairCostVSinsurance">(case when (repairCostDebrisClearance!='' and insuranceDebrisClearance='') or (repairCostEmergency!='' and insuranceEmergency='') or (repairCostRoadPaved!='' and insuranceRoadPaved='') or (repairCostWaterControlFacilities!='' and insuranceWaterControlFacilities='') or (repairCostBuildingsEquipment!='' and insuranceBuildingsEquipment='') or (repairCostUtilitySystems!='' and insuranceUtilitySystems='') or (repairCostOther!='' and insuranceOther='') or (cat01!='' and insurance01='') or (cat02!='' and insurance02='') or (cat03!='' and insurance03='') or (cat04!='' and insurance04='') or (cat05!='' and insurance05='') or (cat06!='' and insurance06='') or (cat07!='' and insurance07='') or (cat08!='' and insurance08='') or (cat09!='' and insurance09='') or (cat10!='' and insurance10='') or (cat11!='' and insurance11='') or (cat12!='' and insurance12='') or (cat13!='' and insurance13='') or (cat14!='' and insurance14='') or (cat15!='' and insurance15='') then 1 else 0 end)</expression></span><!--and this and that and this and that whole row--> <!--then another-->
+      </expression></span>
+                  <value-of select="@sortCountyOrder"/>|
+          
+                  <value-of select="@sortCityOrder"/>|<div align="center">
+                  ( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when (repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000') or (repairCostTotal!='' and repairCostTotal!='0' and repairCostTotal!='0.00' and repairCostTotal!='0.0000') then 1 else 0 end)</expression> )</div>|
+                  <value-of select="@jurisdictionType"/>|
+                  <viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></span></viewlink><space/>|<value-of select="@county"/>|<value-of select="@city"/>|<value-of select="format-number(@catASum, '###0.00')"></value-of><space/>
+      <if test="(@repairCostDebrisClearance != '' and @insuranceDebrisClearance = '') or (@cat01 = 'A' and @repairCost01 != '' and @insurance01 = '') or (@cat02 = 'A' and @repairCost02 != '' and @insurance02 = '') or (@cat03 = 'A' and @repairCost03 != '' and @insurance03 = '') or (@cat04 = 'A' and @repairCost04 != '' and @insurance04 = '') or (@cat05 = 'A' and @repairCost05 != '' and @insurance05 = '') or (@cat06 = 'A' and @repairCost06 != '' and @insurance06 = '') or (@cat07 = 'A' and @repairCost07 != '' and @insurance07 = '') or (@cat08 = 'A' and @repairCost08 != '' and @insurance08 = '') or (@cat09 = 'A' and @repairCost09 != '' and @insurance09 = '') or (@cat10 = 'A' and @repairCost10 != '' and @insurance10 = '') or (@cat11 = 'A' and @repairCost11 != '' and @insurance11 = '') or (@cat12 = 'A' and @repairCost12 != '' and @insurance12 = '') or (@cat13 = 'A' and @repairCost13 != '' and @insurance13 = '') or (@cat14 = 'A' and @repairCost14 != '' and @insurance14 = '') or (@cat15 = 'A' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+
+      <!-- <if test="@repairCostDebrisClearance != ''"><if test="@insuranceDebrisClearance = ''">(N/A)</if></if>-->
+      |<value-of select="format-number(@catBSum, '###0.00')"></value-of><space/>
+      <if test="(@repairCostEmergency != '' and @insuranceEmergency = '') or (@cat01 ='B' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='B' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='B' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='B' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='B' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='B' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='B' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='B' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='B' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='B' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='B' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='B' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='B' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='B' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='B' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      |<value-of select="format-number(@catCSum, '###0.00')"></value-of><space/>
+      <if test="(@repairCostRoadPaved != '' and @insuranceRoadPaved = '') or (@cat01 ='C' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='C' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='C' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='C' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='C' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='C' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='C' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='C' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='C' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='C' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='C' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='C' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='C' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='C' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='C' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      |<value-of select="format-number(@catDSum, '###0.00')"></value-of><space/>
+      <if test="(@repairCostWaterControlFacilities != '' and @insuranceWaterControlFacilities = '') or (@cat01 ='D' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='D' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='D' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='D' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='D' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='D' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='D' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='D' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='D' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='D' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='D' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='D' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='D' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='D' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='D' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      |<value-of select="format-number(@catESum, '###0.00')"></value-of><space/>
+      <if test="(@repairCostBuildingsEquipment != '' and @insuranceBuildingsEquipment = '') or (@cat01 ='E' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='E' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='E' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='E' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='E' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='E' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='E' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='E' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='E' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='E' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='E' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='E' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='E' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='E' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='E' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      |<value-of select="format-number(@catFSum, '###0.00')"></value-of><space/>
+      <if test="(@repairCostUtilitySystems != '' and @insuranceUtilitySystems = '') or (@cat01 ='F' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='F' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='F' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='F' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='F' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='F' and @repairCost06 != '' and @insurance06 = '') or (cat07 ='F' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='F' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='F' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='F' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='F' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='F' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='F' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='F' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='F' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      |<value-of select="format-number(@catGSum, '###0.00')"></value-of><space/>
+      <if test="(@repairCostOther != '' and @insuranceOther = '') or (@cat01 ='G' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='G' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='G' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='G' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='G' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='G' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='G' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='G' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='G' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='G' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='G' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='G' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='G' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='G' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='G' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      |<value-of select="format-number(@catSumTotal, '###0.00')"></value-of><space/><if test="(@repairCostDebrisClearance != '' and @insuranceDebrisClearance = '') or (@cat01 = 'A' and @repairCost01 != '' and @insurance01 = '') or (@cat02 = 'A' and @repairCost02 != '' and @insurance02 = '') or (@cat03 = 'A' and @repairCost03 != '' and @insurance03 = '') or (@cat04 = 'A' and @repairCost04 != '' and @insurance04 = '') or (@cat05 = 'A' and @repairCost05 != '' and @insurance05 = '') or (@cat06 = 'A' and @repairCost06 != '' and @insurance06 = '') or (@cat07 = 'A' and @repairCost07 != '' and @insurance07 = '') or (@cat08 = 'A' and @repairCost08 != '' and @insurance08 = '') or (@cat09 = 'A' and @repairCost09 != '' and @insurance09 = '') or (@cat10 = 'A' and @repairCost10 != '' and @insurance10 = '') or (@cat11 = 'A' and @repairCost11 != '' and @insurance11 = '') or (@cat12 = 'A' and @repairCost12 != '' and @insurance12 = '') or (@cat13 = 'A' and @repairCost13 != '' and @insurance13 = '') or (@cat14 = 'A' and @repairCost14 != '' and @insurance14 = '') or (@cat15 = 'A' and @repairCost15 != '' and @insurance15 = '') or (@repairCostEmergency != '' and @insuranceEmergency = '') or (@cat01 ='B' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='B' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='B' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='B' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='B' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='B' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='B' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='B' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='B' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='B' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='B' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='B' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='B' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='B' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='B' and @repairCost15 != '' and @insurance15 = '') or (@repairCostRoadPaved != '' and @insuranceRoadPaved = '') or (@cat01 ='C' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='C' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='C' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='C' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='C' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='C' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='C' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='C' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='C' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='C' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='C' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='C' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='C' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='C' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='C' and @repairCost15 != '' and @insurance15 = '') or (@repairCostWaterControlFacilities != '' and @insuranceWaterControlFacilities = '') or (@cat01 ='D' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='D' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='D' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='D' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='D' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='D' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='D' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='D' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='D' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='D' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='D' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='D' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='D' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='D' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='D' and @repairCost15 != '' and @insurance15 = '') or (@repairCostBuildingsEquipment != '' and @insuranceBuildingsEquipment = '') or (@cat01 ='E' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='E' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='E' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='E' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='E' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='E' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='E' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='E' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='E' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='E' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='E' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='E' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='E' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='E' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='E' and @repairCost15 != '' and @insurance15 = '') or (@repairCostUtilitySystems != '' and @insuranceUtilitySystems = '') or (@cat01 ='F' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='F' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='F' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='F' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='F' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='F' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='F' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='F' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='F' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='F' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='F' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='F' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='F' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='F' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='F' and @repairCost15 != '' and @insurance15 = '') or (@repairCostOther != '' and @insuranceOther = '') or (@cat01 ='G' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='G' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='G' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='G' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='G' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='G' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='G' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='G' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='G' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='G' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='G' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='G' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='G' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='G' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='G' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      |<if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div style=""><value-of select="@declarationIssued"/></div></if>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>|<!--<viewlink name="Inbetween (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">Supplemental Info</button></viewlink>-->|<expression useboardlevelfilters="true" name="repairCostVSinsurance">(case when (repairCostDebrisClearance!='' and insuranceDebrisClearance='') or (repairCostEmergency!='' and insuranceEmergency='') or (repairCostRoadPaved!='' and insuranceRoadPaved='') or (repairCostWaterControlFacilities!='' and insuranceWaterControlFacilities='') or (repairCostBuildingsEquipment!='' and insuranceBuildingsEquipment='') or (repairCostUtilitySystems!='' and insuranceUtilitySystems='') or (repairCostOther!='' and insuranceOther='') or (cat01!='' and insurance01='') or (cat02!='' and insurance02='') or (cat03!='' and insurance03='') or (cat04!='' and insurance04='') or (cat05!='' and insurance05='') or (cat06!='' and insurance06='') or (cat07!='' and insurance07='') or (cat08!='' and insurance08='') or (cat09!='' and insurance09='') or (cat10!='' and insurance10='') or (cat11!='' and insurance11='') or (cat12!='' and insurance12='') or (cat13!='' and insurance13='') or (cat14!='' and insurance14='') or (cat15!='' and insurance15='') then 1 else 0 end)</expression></span><!--and this and that and this and that whole row--> <!--then another-->
             </eocrepeatallrecords>
          </div>
       </div>
@@ -524,8 +563,8 @@ var totalRowVar=function(i){
 
       var thresholdResultWithCommas = thresholdResult.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-      var Mets3 = "$"+((thresholdResult-(a[8])).toFixed(2))+" MORE to REACH THRESHOLD ";
-      var Mets33 = "$"+(((a[8])-thresholdResult).toFixed(2))+" OVER the THRESHOLD ";
+      var Mets3 = "$ "+((thresholdResult-(a[8])).toFixed(2))+" MORE to REACH THRESHOLD ";
+      var Mets33 = "$ "+(((a[8])-thresholdResult).toFixed(2))+" OVER the THRESHOLD ";
       var Mets4 = 0;
       
       if((a[8]) &gt; thresholdResult){
@@ -543,14 +582,30 @@ var totalRowVar=function(i){
       
 
 
-
-
-      //yellow or red total rows
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],Mets5+"$"+thresholdResultWithCommas,Mets,a[15],"",a[19],"FEMA",NaCount],b);
+  var yellowA = (a[1]).toFixed(2);
+  var yellowB = (a[2]).toFixed(2);
+  var yellowC = (a[3]).toFixed(2);
+  var yellowD = (a[4]).toFixed(2);
+  var yellowE = (a[5]).toFixed(2);
+  var yellowF = (a[6]).toFixed(2);
+  var yellowG = (a[7]).toFixed(2);
+  var yellowAT = (a[8]).toFixed(2);
+  
+    
+      //yellow total rows
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],yellowA,yellowB,yellowC,yellowD,yellowE,yellowF,yellowG,yellowAT,Mets5+"$ "+thresholdResultWithCommas,Mets,a[15],"",a[19],"FEMA",NaCount],b);
 };
   for(var i=0; i &lt; masterData.length;i++){
+    var wootA = masterData[i][7].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootB = masterData[i][8].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootC = masterData[i][9].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootD = masterData[i][10].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootE = masterData[i][11].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootF = masterData[i][12].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootG = masterData[i][13].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootAreaTotals = masterData[i][14].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     //adds regular row
-    newRow(t,(t.rows.length),["","",masterData[i][2],masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],masterData[i][7],masterData[i][8],masterData[i][9],masterData[i][10],masterData[i][11],masterData[i][12],masterData[i][13],masterData[i][14],"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21]],masterData[i][19]=='1'?"rowRed":"rowReg");
+    newRow(t,(t.rows.length),["","",masterData[i][2]/*Total Jurisdictions*/,masterData[i][3]/*unknown*/,masterData[i][4]/*county and city*/,masterData[i][5]/*unknown*/,masterData[i][6]/*unknown*/,wootA/*A*/,wootB/*B*/,wootC/*C*/,wootD/*D*/,wootE/*E*/,wootF/*F*/,wootG/*G*/,wootAreaTotals/*areaTotals*/,"","",masterData[i][15]/*Local Dec*/,masterData[i][17]/*DSO History*/,masterData[i][20]/*Supplemental Info*/,masterData[i][19]/*FEMA*/,masterData[i][21]/*1 for NA COUNT*/],masterData[i][19]=='1'?"rowRed":"rowReg");
     if(i==masterData.length-1){//if not the last row
  totalRowVar(i);
  console.log("reg");
@@ -565,13 +620,26 @@ var totalRowVar=function(i){
     else if((i!=0)&amp;&amp;(((masterData[i][5]===masterData[i-1][5])&amp;&amp;(masterData[i+1][5]!=masterData[i][5]))||((masterData[i][5]!=masterData[i-1][5])&amp;&amp;(masterData[i+1][5]!=masterData[i][5])) ))
       {
       totalRowVar(i);
-      console.log("else if");
+      //console.log("else if");
     }
   }
   //grand totals row and class of rowGray
   var a = getTotalsForAll();
-      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9]],"rowGray")
-      newRow(t,2,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9]],"rowGray")
+
+      //This works to make 0 into 0.00 in the gray rows. Not too important...but looks nice and like other fields
+  var grayA = (a[1]).toFixed(2);
+  var grayB = (a[2]).toFixed(2);
+  var grayC = (a[3]).toFixed(2);
+  var grayD = (a[4]).toFixed(2);
+  var grayE = (a[5]).toFixed(2);
+  var grayF = (a[6]).toFixed(2);
+  var grayG = (a[7]).toFixed(2);
+  var grayAT = (a[8]).toFixed(2);
+  var grayCT = (a[9]).toFixed(2); 
+   
+//trying to add $'s here with "$ "+a[X] makes the commas and decimals disappear. Boo!
+      newRow(t,t.rows.length,["","","","","Grand Totals - Accurate if all N/A's are gone from column","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],"rowGray")
+      newRow(t,2,["","","","","Grand Totals - Accurate if all N/A's are gone from column","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],"rowGray")
 }
 
 //this will get totals for the county totals row, for more spots, O's nned to added to var a as well as the parseFloat statements below
