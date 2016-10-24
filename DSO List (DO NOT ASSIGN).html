@@ -27,7 +27,16 @@ var b = a.parentNode.childNodes[4].innerHTML;
   table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
   table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
   table.display td{border-top:solid 1px;border-color:#ccc;}
+  .fieldsetButtons { 
+    display:inline-block;
+
+   }
+legend{
+   font-size: 10pt;
+}
+
 </style>
+
    </head>   <body>
       <div class="container agencytemplate_boardbackground">
          <table class="heading agencytemplate_boardheader">
@@ -51,14 +60,31 @@ var b = a.parentNode.childNodes[4].innerHTML;
             </tbody>
          </table>
          <div class="content">
-         <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>--><button type="button" class="btn active">View DSO List</button><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink><space/><space/><space/><space/>
-            <!--<viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink><space/><space/>
-            <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>-->
-            <br/>
-            <br/>
+         <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
+         <div>
+         <fieldset class="fieldsetButtons"><legend>Operations</legend>
+         <space/><space/>
+         <button type="button" class="btn active">View DSO List</button>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
+            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
+         <space /><space />
+         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+         <space /><space /><space /><space />
+         <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>Recovery</legend>
+        <space/><space/>
+        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        <space /><space />
+        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>DSO</legend>
+        <space/><space/>
+        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
+        </div><hr/>
             <table class="display">
                <tbody>
                   <tr class="agencytemplate_tableheader">
@@ -71,6 +97,11 @@ var b = a.parentNode.childNodes[4].innerHTML;
                      <td selected="false" colSpan="1" width="">Action</td>
                   </tr>
                   <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
+                  <if test="1=0">
+                  <eocfield name="jurisdictionType"/>
+                  <eocfield name="county"/>
+                  <eocfield name="city"/>
+                  </if>
                      <tr class="agencytemplate_tableentry">
                         <td selected="false" colSpan="1">
                            <eocfield name="dataid"/><space/><space/>|<space/><space/><eocfield name="editKey"/>
@@ -82,11 +113,10 @@ var b = a.parentNode.childNodes[4].innerHTML;
                            </a>
                         </td>
                         <td selected="false" colSpan="1" width="">
-                           <eocfield name="jurisdictionType"/>
+                           <value-of select="@jurisdictionType"/>
                         </td>
                         <td selected="false" colSpan="1" width="">
-                           <eocfield name="county"/>/
-                           <eocfield name="city"/>
+                           <span style="color:#111111"><if test="@jurisdictionType='County'"><div align="left"><b><value-of select="@county"/></b> / <value-of select="@city"/></div></if><if test="@jurisdictionType='City'"><div align="right"><value-of select="@county"/> / <b><value-of select="@city"/></b></div></if></span>
                         </td>
                         <td selected="false" colSpan="1" width="">
                            <eocfield name="webeocIncident"/>

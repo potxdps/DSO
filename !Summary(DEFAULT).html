@@ -21,7 +21,16 @@
   table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
   table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
   table.display td{border-top:solid 1px;border-color:#ccc;}
+  .fieldsetButtons { 
+    display:inline-block;
+
+   }
+legend {
+   font-size: 10pt;
+}
+.hideA { font-size: 20pt;}
   /*.tjCount{background-color:#ffffb3;}*/
+}
 </style>
   </head>
   <body>
@@ -47,29 +56,32 @@
         </tbody>
       </table>
       <div class="content">
-        <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
-        <space />
-        <space />
-        <!--<viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>-->
-        <button type="button" class="btn active">View Recovery Summary</button>
-        <space />
-        <space />
-        <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
-        <space />
-        <space />
+      <!--<button type="button" class="btn active">View Recovery Summary</button>-->
+        <div>
+         <fieldset class="fieldsetButtons"><legend>Operations</legend>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
+         <space/><space/>
+         <button type="button" class="btn active">View Recovery Summary</button>
+         <!--<viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>-->
+         <space /><space />
+         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+         <space /><space /><space /><space />
+         <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>Recovery</legend>
+        <space/><space/>
         <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
-        <space />
-        <space />
-        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink><space/><space/>
-        <space />
-        <space />
-        <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink>
-        <space />
-        <space />
-        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>
-        <br />
-        <br />
+        <space /><space />
+        <!--<button type="button" class="btn active">View Recovery PA</button>-->
+        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>DSO</legend>
+        <space/><space/>
+        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
+        </div><hr/>
         <div class="form-inline" id="resourceFilters" style="display: inline-block;">
           <span id="countyFilter">
             <filterdropdown defaulttext="All Counties" class="form-control">
@@ -448,7 +460,7 @@
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PA PDA FEMA</td>
             </tr>
             <tr class="agencytemplate_tableheader">
-              <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">( <expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0))</expression> )
+              <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0))</expression>
                      
                      </td>
               <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Requested</td>
@@ -460,13 +472,14 @@
             </tr>
             <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
               <if test="1=0">
+              <eocfield name="totalJurisdictions"/>
                 <eocfield name="jurisdictionType" />
                 <eocfield name="county" />
                 <eocfield name="city" />
               </if>
               <tr class="agencytemplate_tableentry">
-                <td colSpan="1" selected="false" align="center">
-                  ( <eocfield name="totalJurisdictions"/>)</td>
+                <td colSpan="1" selected="false" align="center"><if test="@totalJurisdictions!='0'">
+                <value-of select="@totalJurisdictions"/></if></td>
 
                 <td colSpan="1" selected="false" width="">
                   <viewlink name="Bubble Input (DO NOT ASSIGN)">
@@ -606,7 +619,9 @@ var filterByIncident={
  }
 };
 
+
 $(document).ready(function(){
+  
     
     dsoPageHelper.styleSearchField();
     var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
@@ -614,7 +629,7 @@ $(document).ready(function(){
     filterByIncident.incidentListOptionsBuild();
     filterByIncident.searchFieldVariableSet();
     filterByIncident.clearIncidentListSelection();
-
+    
   });
 
 

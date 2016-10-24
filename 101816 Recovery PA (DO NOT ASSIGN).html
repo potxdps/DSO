@@ -36,6 +36,8 @@
 .rowGreen{background-color:#BCED91;}
 .textYellow {color:#ffff99;}
 .cellOrange {color:#FFC04C;}
+.hideValues {display:none;}
+.hideValuesNoInsurance {display:none;}
 </style>
    </head>   
    <body>
@@ -69,7 +71,7 @@
             <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
         <space />
         <space />
-        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+       <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
         
         <space />
         <space />
@@ -125,12 +127,13 @@
                      <strong>Yes</strong><space/><input id="AnticipatedInsurance1" type="radio" name="AnticipatedInsurance" value="Yes"/><space/><space/><space/>
 
                      <strong>No</strong><space/><input id="AnticipatedInsurance2" type="radio" name="AnticipatedInsurance" value="No"/>
+                     <!--<input id="AnticipatedInsurance2" type="radio" name="AnticipatedInsurance" value="No" onclick="reloadPage()"/>-->
                      </div>
 
                      </td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"></td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"> </td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"> </td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"> </td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"> </td>
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">DSO Audit Log</td>
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">Related Info</td>
 
@@ -224,7 +227,7 @@
 
                   
                </if>
-               <span style="display:nonea;font-weight: normal; font-size: 10pt;" class="data" name="data">
+               <span style="display:nonea;font-weight: normal; font-size: 10pt;" class="data" name="data" id="data">
                <span id="catSumsSpan" style="display:none;"><expression useboardlevelfilters="true" name="catASum">
       ((case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'A' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
@@ -266,7 +269,7 @@
       ((case when cat04 = 'C' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'C' then isNull(cast(insurance04 as money),0) else 0 end))+
       ((case when cat05 = 'C' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'C' then isNull(cast(insurance05 as money),0) else 0 end))+
       ((case when cat06 = 'C' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'C' then isNull(cast(insurance06 as money),0) else 0 end))+
-      ((case when cat07 = 'C' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'C' then isNull(cast(insurance07 as money),0) else 0 end))+
+     ((case when cat07 = 'C' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'C' then isNull(cast(insurance07 as money),0) else 0 end))+
       ((case when cat08 = 'C' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'C' then isNull(cast(insurance08 as money),0) else 0 end))+
       ((case when cat09 = 'C' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'C' then isNull(cast(insurance09 as money),0) else 0 end))+
       ((case when cat10 = 'C' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'C' then isNull(cast(insurance10 as money),0) else 0 end))+
@@ -345,22 +348,22 @@
       ((case when cat15 = 'G' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'G' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostOther as money))-(cast(insuranceOther as money)))
       </expression>/end G start All/<expression useboardlevelfilters="true" name="catSumTotal">
-     ((case when cat01 = 'A' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
-      ((case when cat02 = 'A' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
-      ((case when cat03 = 'A' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'A' then isNull(cast(insurance03 as money),0) else 0 end))+
-      ((case when cat04 = 'A' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'A' then isNull(cast(insurance04 as money),0) else 0 end))+
-      ((case when cat05 = 'A' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'A' then isNull(cast(insurance05 as money),0) else 0 end))+
-      ((case when cat06 = 'A' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'A' then isNull(cast(insurance06 as money),0) else 0 end))+
-      ((case when cat07 = 'A' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'A' then isNull(cast(insurance07 as money),0) else 0 end))+
-      ((case when cat08 = 'A' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'A' then isNull(cast(insurance08 as money),0) else 0 end))+
-      ((case when cat09 = 'A' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'A' then isNull(cast(insurance09 as money),0) else 0 end))+
-      ((case when cat10 = 'A' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'A' then isNull(cast(insurance10 as money),0) else 0 end))+
-      ((case when cat11 = 'A' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'A' then isNull(cast(insurance11 as money),0) else 0 end))+
-      ((case when cat12 = 'A' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'A' then isNull(cast(insurance12 as money),0) else 0 end))+
-      ((case when cat13 = 'A' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'A' then isNull(cast(insurance13 as money),0) else 0 end))+
-      ((case when cat14 = 'A' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'A' then isNull(cast(insurance14 as money),0) else 0 end))+
-      ((case when cat15 = 'A' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'A' then isNull(cast(insurance15 as money),0) else 0 end))+
-      (((case when insuranceDebrisClearance != '' then isNull(cast(repairCostDebrisClearance as money),0) else 0 end))-(cast(insuranceDebrisClearance as money)))+
+     ((case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'A' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'A' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'A' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'A' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'A' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'A' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'A' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'A' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'A' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'A' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'A' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'A' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'A' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'A' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'A' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'A' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'A' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'A' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'A' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'A' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'A' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'A' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'A' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'A' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'A' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'A' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'A' then isNull(cast(insurance15 as money),0) else 0 end))+
+      ((cast(repairCostDebrisClearance as money))-(cast(insuranceDebrisClearance as money)))+
       ((case when cat01 = 'B' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'B' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'B' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'B' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'B' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'B' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -458,37 +461,270 @@
       ((case when cat15 = 'G' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'G' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostOther as money))-(cast(insuranceOther as money)))
       </expression></span>
+      <span id="catSumsSpanWithInsurance" style="display:none;">
+      <expression useboardlevelfilters="true" name="catASumWithInsurance">
+      ((case when cat01 = 'A' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'A' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'A' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'A' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'A' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'A' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'A' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'A' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'A' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'A' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'A' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'A' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'A' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'A' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'A' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'A' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'A' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'A' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'A' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'A' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'A' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'A' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'A' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'A' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'A' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'A' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'A' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'A' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceDebrisClearance != '' then isNull(cast(repairCostDebrisClearance as money),0) else 0 end))-(cast(insuranceDebrisClearance as money)))
+      </expression>/end A start B/<expression useboardlevelfilters="true" name="catBSumWithInsurance">
+      ((case when cat01 = 'B' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'B' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'B' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'B' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'B' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'B' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'B' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'B' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'B' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'B' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'B' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'B' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'B' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'B' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'B' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'B' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'B' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'B' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'B' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'B' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'B' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'B' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'B' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'B' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'B' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'B' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'B' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'B' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'B' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'B' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceEmergency != '' then isNull(cast(repairCostEmergency as money),0) else 0 end))-(cast(insuranceEmergency as money)))
+      </expression>/end B start C/<expression useboardlevelfilters="true" name="catCSumWithInsurance">
+      ((case when cat01 = 'C' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'C' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'C' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'C' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'C' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'C' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'C' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'C' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'C' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'C' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'C' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'C' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'C' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'C' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'C' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'C' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'C' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'C' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'C' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'C' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'C' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'C' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'C' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'C' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'C' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'C' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'C' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'C' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'C' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'C' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceRoadPaved != '' then isNull(cast(repairCostRoadPaved as money),0) else 0 end))-(cast(insuranceRoadPaved as money)))
+      </expression>/end C start D/<expression useboardlevelfilters="true" name="catDSumWithInsurance">
+      ((case when cat01 = 'D' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'D' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'D' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'D' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'D' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'D' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'D' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'D' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'D' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'D' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'D' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'D' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'D' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'D' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'D' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'D' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'D' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'D' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'D' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'D' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'D' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'D' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'D' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'D' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'D' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'D' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'D' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'D' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'D' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'D' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceWaterControlFacilities != '' then isNull(cast(repairCostWaterControlFacilities as money),0) else 0 end))-(cast(insuranceWaterControlFacilities as money)))
+      </expression>/end D start E/<expression useboardlevelfilters="true" name="catESumWithInsurance">
+      ((case when cat01 = 'E' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'E' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'E' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'E' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'E' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'E' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'E' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'E' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'E' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'E' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'E' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'E' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'E' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'E' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'E' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'E' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'E' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'E' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'E' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'E' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'E' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'E' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'E' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'E' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'E' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'E' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'E' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'E' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'E' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'E' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceBuildingsEquipment != '' then isNull(cast(repairCostBuildingsEquipment as money),0) else 0 end))-(cast(insuranceBuildingsEquipment as money)))
+      </expression>/end E start F/<expression useboardlevelfilters="true" name="catFSumWithInsurance">
+      ((case when cat01 = 'F' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'F' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'F' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'F' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'F' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'F' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'F' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'F' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'F' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'F' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'F' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'F' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'F' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'F' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'F' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'F' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'F' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'F' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'F' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'F' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'F' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'F' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'F' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'F' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'F' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'F' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'F' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'F' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'F' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'F' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceUtilitySystems != '' then isNull(cast(repairCostUtilitySystems as money),0) else 0 end))-(cast(insuranceUtilitySystems as money)))
+      </expression>/end F start G/<expression useboardlevelfilters="true" name="catGSumWithInsurance">
+      ((case when cat01 = 'G' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'G' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'G' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'G' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'G' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'G' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'G' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'G' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'G' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'G' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'G' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'G' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'G' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'G' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'G' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'G' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'G' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'G' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'G' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'G' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'G' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'G' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'G' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'G' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'G' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'G' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'G' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'G' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'G' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'G' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceOther != '' then isNull(cast(repairCostOther as money),0) else 0 end))-(cast(insuranceOther as money)))
+      </expression>/end G start All/<expression useboardlevelfilters="true" name="catSumTotalWithInsurance">
+     ((case when cat01 = 'A' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'A' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'A' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'A' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'A' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'A' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'A' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'A' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'A' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'A' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'A' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'A' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'A' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'A' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'A' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'A' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'A' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'A' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'A' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'A' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'A' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'A' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'A' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'A' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'A' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'A' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'A' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'A' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceDebrisClearance != '' then isNull(cast(repairCostDebrisClearance as money),0) else 0 end))-(cast(insuranceDebrisClearance as money)))+
+      ((case when cat01 = 'B' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'B' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'B' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'B' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'B' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'B' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'B' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'B' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'B' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'B' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'B' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'B' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'B' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'B' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'B' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'B' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'B' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'B' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'B' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'B' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'B' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'B' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'B' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'B' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'B' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'B' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'B' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'B' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'B' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'B' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceEmergency != '' then isNull(cast(repairCostEmergency as money),0) else 0 end))-(cast(insuranceEmergency as money)))+
+      ((case when cat01 = 'C' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'C' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'C' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'C' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'C' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'C' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'C' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'C' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'C' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'C' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'C' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'C' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'C' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'C' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'C' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'C' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'C' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'C' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'C' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'C' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'C' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'C' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'C' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'C' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'C' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'C' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'C' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'C' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'C' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'C' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceRoadPaved != '' then isNull(cast(repairCostRoadPaved as money),0) else 0 end))-(cast(insuranceRoadPaved as money)))+
+      ((case when cat01 = 'D' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'D' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'D' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'D' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'D' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'D' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'D' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'D' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'D' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'D' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'D' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'D' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'D' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'D' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'D' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'D' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'D' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'D' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'D' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'D' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'D' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'D' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'D' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'D' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'D' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'D' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'D' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'D' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'D' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'D' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceWaterControlFacilities != '' then isNull(cast(repairCostWaterControlFacilities as money),0) else 0 end))-(cast(insuranceWaterControlFacilities as money)))+
+      ((case when cat01 = 'E' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'E' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'E' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'E' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'E' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'E' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'E' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'E' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'E' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'E' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'E' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'E' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'E' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'E' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'E' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'E' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'E' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'E' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'E' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'E' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'E' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'E' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'E' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'E' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'E' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'E' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'E' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'E' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'E' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'E' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceBuildingsEquipment != '' then isNull(cast(repairCostBuildingsEquipment as money),0) else 0 end))-(cast(insuranceBuildingsEquipment as money)))+
+      ((case when cat01 = 'F' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'F' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'F' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'F' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'F' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'F' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'F' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'F' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'F' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'F' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'F' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'F' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'F' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'F' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'F' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'F' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'F' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'F' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'F' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'F' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'F' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'F' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'F' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'F' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'F' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'F' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'F' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'F' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'F' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'F' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceUtilitySystems != '' then isNull(cast(repairCostUtilitySystems as money),0) else 0 end))-(cast(insuranceUtilitySystems as money)))+
+      ((case when cat01 = 'G' and insurance01 != '' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'G' then isNull(cast(insurance01 as money),0) else 0 end))+
+      ((case when cat02 = 'G' and insurance02 != '' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'G' then isNull(cast(insurance02 as money),0) else 0 end))+
+      ((case when cat03 = 'G' and insurance03 != '' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'G' then isNull(cast(insurance03 as money),0) else 0 end))+
+      ((case when cat04 = 'G' and insurance04 != '' then isNull(cast(repairCost04 as money),0) else 0 end)-(case when cat04 = 'G' then isNull(cast(insurance04 as money),0) else 0 end))+
+      ((case when cat05 = 'G' and insurance05 != '' then isNull(cast(repairCost05 as money),0) else 0 end)-(case when cat05 = 'G' then isNull(cast(insurance05 as money),0) else 0 end))+
+      ((case when cat06 = 'G' and insurance06 != '' then isNull(cast(repairCost06 as money),0) else 0 end)-(case when cat06 = 'G' then isNull(cast(insurance06 as money),0) else 0 end))+
+      ((case when cat07 = 'G' and insurance07 != '' then isNull(cast(repairCost07 as money),0) else 0 end)-(case when cat07 = 'G' then isNull(cast(insurance07 as money),0) else 0 end))+
+      ((case when cat08 = 'G' and insurance08 != '' then isNull(cast(repairCost08 as money),0) else 0 end)-(case when cat08 = 'G' then isNull(cast(insurance08 as money),0) else 0 end))+
+      ((case when cat09 = 'G' and insurance09 != '' then isNull(cast(repairCost09 as money),0) else 0 end)-(case when cat09 = 'G' then isNull(cast(insurance09 as money),0) else 0 end))+
+      ((case when cat10 = 'G' and insurance10 != '' then isNull(cast(repairCost10 as money),0) else 0 end)-(case when cat10 = 'G' then isNull(cast(insurance10 as money),0) else 0 end))+
+      ((case when cat11 = 'G' and insurance11 != '' then isNull(cast(repairCost11 as money),0) else 0 end)-(case when cat11 = 'G' then isNull(cast(insurance11 as money),0) else 0 end))+
+      ((case when cat12 = 'G' and insurance12 != '' then isNull(cast(repairCost12 as money),0) else 0 end)-(case when cat12 = 'G' then isNull(cast(insurance12 as money),0) else 0 end))+
+      ((case when cat13 = 'G' and insurance13 != '' then isNull(cast(repairCost13 as money),0) else 0 end)-(case when cat13 = 'G' then isNull(cast(insurance13 as money),0) else 0 end))+
+      ((case when cat14 = 'G' and insurance14 != '' then isNull(cast(repairCost14 as money),0) else 0 end)-(case when cat14 = 'G' then isNull(cast(insurance14 as money),0) else 0 end))+
+      ((case when cat15 = 'G' and insurance15 != '' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'G' then isNull(cast(insurance15 as money),0) else 0 end))+
+      (((case when insuranceOther != '' then isNull(cast(repairCostOther as money),0) else 0 end))-(cast(insuranceOther as money)))
+      </expression>  
+
+      </span>
 
 
       <value-of select="@sortCountyOrder"/>
 
-      |<!--1--><value-of select="@sortCityOrder"/>
+      |<value-of select="@sortCityOrder"/>
 
-      |<!--2--><div align="center">
+      |<div align="center">
                   ( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when (repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000') or (repairCostTotal!='' and repairCostTotal!='0' and repairCostTotal!='0.00' and repairCostTotal!='0.0000') then 1 else 0 end)</expression> )</div>
       
-      |<!--3--><value-of select="@jurisdictionType"/>
+      |<value-of select="@jurisdictionType"/>
 
-      |<!--4--><viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></span></viewlink><space/>
+      |<viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></span></viewlink><space/>
 
-      |<!--5--><value-of select="@county"/>
-
-      |<!--6--><value-of select="@city"/>
+      |<value-of select="@county"/>|<value-of select="@city"/>
 
       |<value-of select="format-number(@catASum, '###0.00')"></value-of><space/>
-      <if test="(@repairCostDebrisClearance != '' and @insuranceDebrisClearance = '') or (@cat01 = 'A' and @repairCost01 != '' and @insurance01 = '') or (@cat02 = 'A' and @repairCost02 != '' and @insurance02 = '') or (@cat03 = 'A' and @repairCost03 != '' and @insurance03 = '') or (@cat04 = 'A' and @repairCost04 != '' and @insurance04 = '') or (@cat05 = 'A' and @repairCost05 != '' and @insurance05 = '') or (@cat06 = 'A' and @repairCost06 != '' and @insurance06 = '') or (@cat07 = 'A' and @repairCost07 != '' and @insurance07 = '') or (@cat08 = 'A' and @repairCost08 != '' and @insurance08 = '') or (@cat09 = 'A' and @repairCost09 != '' and @insurance09 = '') or (@cat10 = 'A' and @repairCost10 != '' and @insurance10 = '') or (@cat11 = 'A' and @repairCost11 != '' and @insurance11 = '') or (@cat12 = 'A' and @repairCost12 != '' and @insurance12 = '') or (@cat13 = 'A' and @repairCost13 != '' and @insurance13 = '') or (@cat14 = 'A' and @repairCost14 != '' and @insurance14 = '') or (@cat15 = 'A' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      
 
       |<value-of select="format-number(@catBSum, '###0.00')"></value-of><space/>
-      <if test="(@repairCostEmergency != '' and @insuranceEmergency = '') or (@cat01 ='B' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='B' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='B' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='B' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='B' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='B' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='B' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='B' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='B' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='B' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='B' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='B' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='B' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='B' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='B' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      
       
       |<value-of select="format-number(@catCSum, '###0.00')"></value-of><space/>
-      <if test="(@repairCostRoadPaved != '' and @insuranceRoadPaved = '') or (@cat01 ='C' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='C' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='C' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='C' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='C' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='C' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='C' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='C' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='C' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='C' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='C' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='C' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='C' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='C' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='C' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      
       
       |<value-of select="format-number(@catDSum, '###0.00')"></value-of><space/>
-      <if test="(@repairCostWaterControlFacilities != '' and @insuranceWaterControlFacilities = '') or (@cat01 ='D' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='D' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='D' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='D' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='D' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='D' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='D' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='D' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='D' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='D' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='D' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='D' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='D' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='D' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='D' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      
       
       |<value-of select="format-number(@catESum, '###0.00')"></value-of><space/>
-      <if test="(@repairCostBuildingsEquipment != '' and @insuranceBuildingsEquipment = '') or (@cat01 ='E' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='E' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='E' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='E' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='E' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='E' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='E' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='E' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='E' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='E' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='E' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='E' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='E' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='E' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='E' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
       
       |<value-of select="format-number(@catFSum, '###0.00')"></value-of><space/>
       
@@ -498,42 +734,51 @@
 
       |<if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div style=""><value-of select="@declarationIssued"/></div></if>
 
-      |<!--16-->NomNom16
+      |NomNom16
 
-      |<!--17--><viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>
+      |<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>
 
-      |<!--18-->EXTRA
+      |EXTRA
 
-      |<!--19--><relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>
-      |<!--20--><viewlink name="Inbetween (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">Supplemental Info</button></viewlink>
+      |<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>
+      |<viewlink name="Inbetween (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">Supplemental Info</button></viewlink>
 
-      |<!--21--><expression useboardlevelfilters="true" name="repairCostVSinsurance">(case when (repairCostDebrisClearance!='' and insuranceDebrisClearance='') or (repairCostEmergency!='' and insuranceEmergency='') or (repairCostRoadPaved!='' and insuranceRoadPaved='') or (repairCostWaterControlFacilities!='' and insuranceWaterControlFacilities='') or (repairCostBuildingsEquipment!='' and insuranceBuildingsEquipment='') or (repairCostUtilitySystems!='' and insuranceUtilitySystems='') or (repairCostOther!='' and insuranceOther='') or (cat01!='' and insurance01='') or (cat02!='' and insurance02='') or (cat03!='' and insurance03='') or (cat04!='' and insurance04='') or (cat05!='' and insurance05='') or (cat06!='' and insurance06='') or (cat07!='' and insurance07='') or (cat08!='' and insurance08='') or (cat09!='' and insurance09='') or (cat10!='' and insurance10='') or (cat11!='' and insurance11='') or (cat12!='' and insurance12='') or (cat13!='' and insurance13='') or (cat14!='' and insurance14='') or (cat15!='' and insurance15='') then 1 else 0 end)</expression>
+      |<expression useboardlevelfilters="true" name="repairCostVSinsurance">(case when (repairCostDebrisClearance!='' and insuranceDebrisClearance='') or (repairCostEmergency!='' and insuranceEmergency='') or (repairCostRoadPaved!='' and insuranceRoadPaved='') or (repairCostWaterControlFacilities!='' and insuranceWaterControlFacilities='') or (repairCostBuildingsEquipment!='' and insuranceBuildingsEquipment='') or (repairCostUtilitySystems!='' and insuranceUtilitySystems='') or (repairCostOther!='' and insuranceOther='') or (cat01!='' and insurance01='') or (cat02!='' and insurance02='') or (cat03!='' and insurance03='') or (cat04!='' and insurance04='') or (cat05!='' and insurance05='') or (cat06!='' and insurance06='') or (cat07!='' and insurance07='') or (cat08!='' and insurance08='') or (cat09!='' and insurance09='') or (cat10!='' and insurance10='') or (cat11!='' and insurance11='') or (cat12!='' and insurance12='') or (cat13!='' and insurance13='') or (cat14!='' and insurance14='') or (cat15!='' and insurance15='') then 1 else 0 end)</expression>
 
-      |<!--22-->
+      |<value-of select="format-number(@catASumWithInsurance, '###0.00')"></value-of><space/>
+      <if test="(@repairCostDebrisClearance != '' and @insuranceDebrisClearance = '') or (@cat01 = 'A' and @repairCost01 != '' and @insurance01 = '') or (@cat02 = 'A' and @repairCost02 != '' and @insurance02 = '') or (@cat03 = 'A' and @repairCost03 != '' and @insurance03 = '') or (@cat04 = 'A' and @repairCost04 != '' and @insurance04 = '') or (@cat05 = 'A' and @repairCost05 != '' and @insurance05 = '') or (@cat06 = 'A' and @repairCost06 != '' and @insurance06 = '') or (@cat07 = 'A' and @repairCost07 != '' and @insurance07 = '') or (@cat08 = 'A' and @repairCost08 != '' and @insurance08 = '') or (@cat09 = 'A' and @repairCost09 != '' and @insurance09 = '') or (@cat10 = 'A' and @repairCost10 != '' and @insurance10 = '') or (@cat11 = 'A' and @repairCost11 != '' and @insurance11 = '') or (@cat12 = 'A' and @repairCost12 != '' and @insurance12 = '') or (@cat13 = 'A' and @repairCost13 != '' and @insurance13 = '') or (@cat14 = 'A' and @repairCost14 != '' and @insurance14 = '') or (@cat15 = 'A' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
 
-      |<!--23--><!--23--><!--change to NA--><value-of select="format-number(@catBSum, '###0.00')"></value-of><space/>
+      |<value-of select="format-number(@catBSumWithInsurance, '###0.00')"></value-of><space/>
       <if test="(@repairCostEmergency != '' and @insuranceEmergency = '') or (@cat01 ='B' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='B' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='B' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='B' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='B' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='B' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='B' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='B' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='B' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='B' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='B' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='B' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='B' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='B' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='B' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
 
-      |<!--24--><!--change to NA--><value-of select="format-number(@catCSum, '###0.00')"></value-of><space/>
+      |<value-of select="format-number(@catCSumWithInsurance, '###0.00')"></value-of><space/>
       <if test="(@repairCostRoadPaved != '' and @insuranceRoadPaved = '') or (@cat01 ='C' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='C' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='C' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='C' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='C' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='C' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='C' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='C' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='C' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='C' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='C' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='C' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='C' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='C' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='C' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
 
-      |<!--25--><!--change to NA--><value-of select="format-number(@catDSum, '###0.00')"></value-of><space/>
+      |<value-of select="format-number(@catDSumWithInsurance, '###0.00')"></value-of><space/>
       <if test="(@repairCostWaterControlFacilities != '' and @insuranceWaterControlFacilities = '') or (@cat01 ='D' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='D' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='D' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='D' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='D' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='D' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='D' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='D' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='D' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='D' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='D' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='D' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='D' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='D' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='D' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
 
-      |<!--26--><!--change to NA--><value-of select="format-number(@catESum, '###0.00')"></value-of><space/>
+      |<value-of select="format-number(@catESumWithInsurance, '###0.00')"></value-of><space/>
       <if test="(@repairCostBuildingsEquipment != '' and @insuranceBuildingsEquipment = '') or (@cat01 ='E' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='E' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='E' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='E' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='E' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='E' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='E' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='E' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='E' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='E' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='E' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='E' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='E' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='E' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='E' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
 
-      |<!--27--><value-of select="format-number(@catFSum, '###0.00')"></value-of><space/>
-      <if test="(@repairCostUtilitySystems != '' and @insuranceUtilitySystems = '') or (@cat01 ='F' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='F' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='F' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='F' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='F' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='F' and @repairCost06 != '' and @insurance06 = '') or (cat07 ='F' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='F' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='F' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='F' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='F' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='F' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='F' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='F' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='F' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
+      |<value-of select="format-number(@catFSumWithInsurance, '###0.00')"></value-of><space/>
+      <if test="(@repairCostUtilitySystems != '' and @insuranceUtilitySystems = '') or (@cat01 ='F' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='F' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='F' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='F' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='F' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='F' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='F' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='F' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='F' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='F' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='F' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='F' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='F' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='F' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='F' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
 
-      |<!--28--><value-of select="format-number(@catGSum, '###0.00')"></value-of><!--change to NA--><space/>
+      |<value-of select="format-number(@catGSumWithInsurance, '###0.00')"></value-of><space/>
       <if test="(@repairCostOther != '' and @insuranceOther = '') or (@cat01 ='G' and @repairCost01 != '' and @insurance01 = '') or (@cat02 ='G' and @repairCost02 != '' and @insurance02 = '') or (@cat03 ='G' and @repairCost03 != '' and @insurance03 = '') or (@cat04 ='G' and @repairCost04 != '' and @insurance04 = '') or (@cat05 ='G' and @repairCost05 != '' and @insurance05 = '') or (@cat06 ='G' and @repairCost06 != '' and @insurance06 = '') or (@cat07 ='G' and @repairCost07 != '' and @insurance07 = '') or (@cat08 ='G' and @repairCost08 != '' and @insurance08 = '') or (@cat09 ='G' and @repairCost09 != '' and @insurance09 = '') or (@cat10 ='G' and @repairCost10 != '' and @insurance10 = '') or (@cat11 ='G' and @repairCost11 != '' and @insurance11 = '') or (@cat12 ='G' and @repairCost12 != '' and @insurance12 = '') or (@cat13 ='G' and @repairCost13 != '' and @insurance13 = '') or (@cat14 ='G' and @repairCost14 != '' and @insurance14 = '') or (@cat15 ='G' and @repairCost15 != '' and @insurance15 = '')">(N/A)</if>
 
-      |<!--29--><value-of select="format-number(@catSumTotal, '###0.00')"></value-of><!--change to NA-->
+      |<value-of select="format-number(@catSumTotalWithInsurance, '###0.00')"></value-of>
 
-      |<!--30-->EXTRA
+      |
 
-      |<!--31-->EXTRA
+      |EXTRA
+
+      |
+
+      |
+
+      |
+
+      |<!--DONT write Comments here in the array spots That will stop the totals from happening!-->
       </span><!--and this and that and this and that whole row--> <!--then another-->
             </eocrepeatallrecords>
          </div>
@@ -558,16 +803,48 @@ align='right'
   
    data[16]='(N/A)';
   }
-  
+
+
   //row.className('agencytemplate_tableentry');
-    row.innerHTML = '<td>'+data[0]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td class="'+metClass+'">'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'+'<td>'+comma(data[19])+'</td>'/*+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'*/;//view femaCheck total cell[20] here, Below in row array in spot masterData[i][19]in comment area "adds regular row"
+     row.innerHTML = '<td>'+'<span class="notinsured">'+data[0]+'</span><span class="insured">'+data[0]+'</span>'+'</td>'+'<td align="'+align+'">'+'<span class="notinsured">'+data[4]+'</span><span class="insured">'+data[4]+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[7])+'</span><span class="insured">'+comma(data[22])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[8])+'</span><span class="insured">'+comma(data[23])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[9])+'</span><span class="insured">'+comma(data[24])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[10])+'</span><span class="insured">'+comma(data[25])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[11])+'</span><span class="insured">'+comma(data[26])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[12])+'</span><span class="insured">'+comma(data[27])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[13])+'</span><span class="insured">'+comma(data[28])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[14])+'</span><span class="insured">'+comma(data[29])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[15])+'</span><span class="insured">'+comma(data[15])+'</span>'+'</td>'+'<td class="'+metClass+'">'+'<span class="notinsured">'+comma(data[16])+'</span><span class="insured">'+comma(data[16])+'</span>'+'</td>'+'<td>'+'<span  class="notinsured">'+comma(data[17])+'</span><span class="insured">'+comma(data[17])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[18])+'</span><span class="insured">'+comma(data[18])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[19])+'</span><span class="insured">'+comma(data[19])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[20])+'</span><span class="insured">'+comma(data[20])+'</span>'+'</td>'+'<td>'+'<span class="notinsured">'+comma(data[21])+'</span><span class="insured">'+comma(data[21])+'</span>'+'</td>';//view femaCheck total cell[20] here, Below in row array in spot masterData[i][19]in comment area "adds regular row"
     var rowColorClass =''
     if (((position/2) - Math.floor(position/2)) === 0) {rowColorClass='agencytemplate_tableroweven'} else {rowColorClass='agencytemplate_tablerowodd'};
 
     table.rows[position].className='agencytemplate_tableentry '+rowClass;
-    //agencytemplate_tableroweven
+   //agencytemplate_tableroweven
 }
- //threshold totals and limits
+
+function classChangeForInsurance(){
+if(document.getElementById('AnticipatedInsurance1').checked===true){
+hideshowClass(true);
+}else{
+  hideshowClass(false);
+}
+}
+
+function hideshowClass(a){
+var c = document.getElementsByClassName('insured');
+var d = document.getElementsByClassName('notinsured');
+
+for(var i=0; i&lt; c.length; i++ ){
+  if(a===true){
+    c[i].style.display='';
+  }else{
+    c[i].style.display='none';
+  }
+
+}
+for(var i=0; i&lt; d.length; i++ ){
+  if(a===false){
+    d[i].style.display='';
+  }else{
+    d[i].style.display='none';
+  }
+
+}
+    
+  }
+//threshold totals and limits
 function threshold(c){
 var a = [["Anderson","208110.48"],["Andrews","52638.16"],["Angelina","308904.76"],["Aransas","82442.48"],["Archer","32232.24"],["Armstrong","6767.56"],["Atascosa","159883.16"],["Austin","101164.52"],["Bailey","25507.40"],["Bandera","72926.60"],["Bastrop","264048.76"],["Baylor","13264.56"],["Bee","113425.16"],["Bell","1104436.60"],["Bexar","6104591.88"],["Blanco","37369.32"],["Borden","2281.96"],["Bosque","64834.72"],["Bowie","329531.40"],["Brazoria","1114870.96"],["Brazos","693669.56"],["Brewster","32865.92"],["Briscoe","5827.72"],["Brooks","25713.88"],["Brown","135657.36"],["Burleson","61185.72"],["Burnet","152190.00"],["Caldwell","135514.96"],["Calhoun","76116.36"],["Callahan","48216.64"],["Cameron","1446143.20"],["Camp","44147.56"],["Carson","22007.92"],["Cass","108451.84"],["Castro","28700.72"],["Chambers","124941.76"],["Cherokee","181008.20"],["Childress","25065.96"],["Clay","38277.12"],["Cochran","11132.12"],["Coke","11819.20"],["Coleman","31666.20"],["Collin","2785133.96"],["Collingsworth","10882.92"],["Colorado","74311.44"],["Comal","386160.32"],["Comanche","49747.44"],["Concho","14549.72"],["Cooke","136835.72"],["Coryell","268381.28"],["Cottle","5357.80"],["Crane","15575.00"],["Crockett","13239.64"],["Crosby","21570.04"],["Culberson","8536.88"],["Dallam","23862.68"],["Dallas","8430574.84"],["Dawson","49245.48"],["Deaf Smith","68964.32"],["Delta","18622.36"],["Denton","2358905.84"],["DeWitt","71545.32"],["Dickens","8700.64"],["Dimmit","35585.76"],["Donley","13090.12"],["Duval","41943.92"],["Eastland","66155.48"],["Ector","488182.80"],["Edwards","7127.12"],["El Paso","2850303.32"],["Ellis","532611.60"],["Erath","134888.40"],["Falls","63602.96"],["Fannin","120737.40"],["Fayette","87412.24"],["Fisher","14147.44"],["Floyd","22947.76"],["Foard","4756.16"],["Fort Bend","2083935.00"],["Franklin","37753.80"],["Freestone","70544.96"],["Frio","61292.52"],["Gaines","62392.56"],["Galveston","1037060.04"],["Garza","23001.16"],["Gillespie","88419.72"],["Glasscock","4364.56"],["Goliad","25667.60"],["Gonzales","70512.92"],["Gray","80224.60"],["Grayson","430322.12"],["Gregg","433358.80"],["Grimes","94710.24"],["Guadalupe","468257.48"],["Hale","129131.88"],["Hall","11936.68"],["Hamilton","30320.52"],["Hansford","19982.28"],["Hardeman","14734.84"],["Hardin","194500.60"],["Harris","14569154.04"],["Harrison","233646.36"],["Hartley","21580.72"],["Haskell","21000.44"],["Hays","559300.92"],["Hemphill","13552.92"],["Henderson","279573.92"],["Hidalgo","2758177.64"],["Hill","124916.84"],["Hockley","81648.60"],["Hood","182207.92"],["Hopkins","125173.16"],["Houston","84485.92"],["Howard","124642.72"],["Hudspeth","12374.56"],["Hunt","306619.24"],["Hutchinson","78854.00"],["Irion","5692.44"],["Jack","32196.64"],["Jackson","50107.00"],["Jasper","127127.60"],["Jeff Davis","8337.52"],["Jefferson","898091.88"],["Jim Hogg","18868.00"],["Jim Wells","145383.28"],["Johnson","537325.04"],["Jones","71919.12"],["Karnes","52773.44"],["Kaufman","367926.00"],["Kendall","118939.60"],["Kenedy","1480.96"],["Kent","2876.48"],["Kerr","176665"],["Kimble","16400.92"],["King","1018.16"],["Kinney","12808.88"],["Kleberg","114137.16"],["Knox","13239.64"],["La Salle","24514.16"],["Lamar","177263.08"],["Lamb","49758.12"],["Lampasas","70050.12"],["Lavaca","68576.28"],["Lee","59138.72"],["Leon","59811.56"],["Liberty","269289.08"],["Limestone","83247.04"],["Lipscomb","11755.12"],["Live Oak","41050.36"],["Llano","68711.56"],["Loving","291.92"],["Lubbock","992638.36"],["Lynn","21057.40"],["Madison","48643.84"],["Marion","37543.76"],["Martin","17084.44"],["Mason","14282.72"],["Matagorda","130659.12"],["Maverick","193158.48"],["McCulloch","29487.48"],["McLennan","836265.36"],["McMullen","2516.92"],["Medina","163781.36"],["Menard","7981.52"],["Midland","487264.32"],["Milam","88134.92"],["Mills","17572.16"],["Mitchell","33474.68"],["Montague","70199.64"],["Montgomery","1622455.76"],["Moore","77978.24"],["Morris","46045.04"],["Motley","4307.60"],["Nacogdoches","229705.44"],["Navarro","169936.60"],["Newton","51424.20"],["Nolan","54168.96"],["Nueces","1211193.88"],["Ochiltree","36393.88"],["Oldham","7305.12"],["Orange","291339.72"],["Palo Pinto","100075.16"],["Panola","84713.76"],["Parker","416260.12"],["Parmer","36557.64"],["Pecos","55204.92"],["Polk","161670.28"],["Potter","431019.88"],["Presidio","27832.08"],["Rains","38853.84"],["Randall","429781.00"],["Reagan","11986.52"],["Real","11780.04"],["Red River","45781.60"],["Reeves","49067.48"],["Refugio","26283.48"],["Roberts","3307.24"],["Robertson","59174.32"],["Rockwall","278879.72"],["Runnels","37383.56"],["Rusk","189854.80"],["Sabine","38569.04"],["San Augustine","31559.40"],["San Jacinto","93927.04"],["San Patricio","230702.24"],["San Saba","21826.36"],["Schleicher","12321.16"],["Scurry","60238.76"],["Shackelford","12025.68"],["Shelby","90594.88"],["Sherman","10801.04"],["Smith","746581.84"],["Somervell","30224.40"],["Starr","217046.08"],["Stephens","34282.80"],["Sterling","4069.08"],["Stonewall","5304.40"],["Sutton","14695.68"],["Swisher","27960.24"],["Tarrant","6440161.04"],["Taylor","468161.36"],["Terrell","3503.04"],["Terry","45037.56"],["Throckmorton","5841.96"],["Titus","115109.04"],["Tom Green","392397.44"],["Travis","3646386.96"],["Trinity","51922.60"],["Tyler","77486.96"],["Upshur","139940.04"],["Upton","11943.80"],["Uvalde","94001.80"],["Val Verde","174009.24"],["Van Zandt","187181.24"],["Victoria","308983.08"],["Walker","241585.16"],["Waller","153809.80"],["Ward","37942.48"],["Washington","120036.08"],["Webb","891082.24"],["Wharton","146956.80"],["Wheeler","19259.60"],["Wichita","468140.00"],["Wilbarger","48184.60"],["Willacy","78797.04"],["Williamson","1504737.24"],["Wilson","152788.08"],["Winkler","25311.60"],["Wise","210492.12"],["Wood","149391.84"],["Yoakum","28049.24"],["Young","66038.00"],["Zapata","49904.08"],["Zavala","41570.12"]];
 for(var i = 0; i&lt;a.length;i++){
@@ -616,6 +893,13 @@ var totalRowVar=function(i){
    var a = getTotalsFor(masterData[i][5]);
    var b = "rowYellow";
    var NaCount = parseFloat(a[12]) &gt; (0)?'Yes':'No';
+   if(document.getElementById('AnticipatedInsurance1').checked==true){
+    //alert("2 hiding yellow");
+    b = "rowYellow";
+  } else {
+    //alert("2 showing yellow");
+     b = "rowYellow";
+  }
 
 
       var thresholdResult = threshold(masterData[i][5]);
@@ -641,16 +925,16 @@ var totalRowVar=function(i){
 
       //var ACT = a[8];
       //var AIN = a[8];
-      var yellowAreaTotal = a[8];
+      //var yellowAreaTotal = a[8];
 
-      if(Mets=='(N/A)'){
+      /*if(Mets=='(N/A)'){
         //AIN = 'N/A';
   
    Mets5='(Anticipated Insurance Needed) ';
-   yellowAreaTotal = a[8]+" (N/A)";
+   //yellowAreaTotal = a[8]+" (N/A)";
    //totalsAccurate = false;
 
-  }
+  }*/
 
   var yellowA = (a[1]).toFixed(2);
   var yellowB = (a[2]).toFixed(2);
@@ -660,12 +944,16 @@ var totalRowVar=function(i){
   var yellowF = (a[6]).toFixed(2);
   var yellowG = (a[7]).toFixed(2);
   var yellowAT = (a[8]).toFixed(2);
+
+  //define 
   
     
       //yellow total rows
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],yellowA,yellowB,yellowC,yellowD,yellowE,yellowF,yellowG,yellowAT,Mets5+"$ "+thresholdResultWithCommas,Mets,a[15],"",a[19],"FEMA",NaCount],b);
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],yellowA,yellowB,yellowC,yellowD,yellowE,yellowF,yellowG,yellowAT,Mets5+"$ "+thresholdResultWithCommas,Mets2,a[15],"",a[19],"FEMA",NaCount],b);
 };
   for(var i=0; i &lt; masterData.length;i++){
+
+   // if (document.getElementById('AnticipatedInsurance1').checked == false){ //this happen after page is built, thats why it didnt work -- maybe onclick rebuild table? not really
           var wootA = masterData[i][7].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootB = masterData[i][8].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootC = masterData[i][9].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -674,6 +962,16 @@ var totalRowVar=function(i){
           var wootF = masterData[i][12].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootG = masterData[i][13].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootAreaTotals = masterData[i][14].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       /* } else {*/
+          var wootAA = masterData[i][22].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootBB = masterData[i][23].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootCC = masterData[i][24].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootDD = masterData[i][25].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootEE = masterData[i][26].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootFF = masterData[i][27].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootGG = masterData[i][28].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootAreaTotals2 = masterData[i][29].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       
     //---------------------------------------------------------------------------------------------
     //newRow below explained 
     //start of data
@@ -713,10 +1011,26 @@ var totalRowVar=function(i){
     //end of class
     //----------------------------------------------------------------------------------------------------
     //adds regular row
+  
+ /*if(document.getElementById('AnticipatedInsurance1').checked==true){
+    //alert("2 hiding yellow");
+    rr = "hideValues";
+    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],rr);
+    //if(i==masterData.length-1)
+  }*/
+
+
+/*if(document.getElementById('AnticipatedInsurance2').checked==true){
+     newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],masterData[i][19]=='1'?"rowRed":"rowReg");
+    //if(i==masterData.length-1)
+  } */
+
+
     newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],masterData[i][19]=='1'?"rowRed":"rowReg");
+    //if(i==masterData.length-1)
     if(i==masterData.length-1){//if not the last row
- totalRowVar(i);
- console.log("reg");
+totalRowVar(i);
+console.log("reg");
     }
     else if(i==0 &amp;&amp; masterData[i][5]!=masterData[i+1][5]){
        totalRowVar(i);
@@ -746,10 +1060,18 @@ var totalRowVar=function(i){
   var grayG = (a[7]).toFixed(2);
   var grayAT = (a[8]).toFixed(2);
   var grayCT = (a[9]).toFixed(2); 
+
+  if(document.getElementById('AnticipatedInsurance1').checked==true){
+    //alert("2 hiding yellow");
+    g = "rowGray hideValues";
+  } else {
+    //alert("2 showing yellow");
+     g = "rowGray";
+  }
    
 //trying to add $'s here with "$ "+a[X] or "$ "+grayA makes the commas and decimals disappear. Boo!
-      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],"rowGray")
-      newRow(t,2,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],"rowGray")
+      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],g)
+      newRow(t,2,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],g)
 }
 
 //this will get totals for the county totals row, for more spots, O's nned to added to var a as well as the parseFloat statements below
@@ -805,13 +1127,273 @@ for(var i=0; i&lt;masterData.length;i++){
     a[8]+=parseFloat(isNull(masterData[i][14]));
    
 }
- a[9]=parseFloat(threshold.TotalOnPage);
+a[9]=parseFloat(threshold.TotalOnPage);
+console.log(a);
+return a;
+
+}
+//------Start of popluateTable2 for Insurance---------------------------------------------------------------------------------------------------------------
+
+function popluateTable2(){
+var t = document.getElementById('mainTable');
+
+var totalRowVar2=function(i){
+   var a = getTotalsFor2(masterData[i][5]);
+   var b = "rowYellow";
+   var NaCount = parseFloat(a[12]) &gt; (0)?'Yes':'No';
+
+   if(document.getElementById('AnticipatedInsurance1').checked==true){
+    b = "rowYellow";
+  } else {
+     b = "rowYellow hideValuesNoInsurance";
+  }
+
+
+      var thresholdResult = threshold(masterData[i][5]);
+      var a = getTotalsFor2(masterData[i][5]);
+      threshold.TotalOnPage+=parseInt(thresholdResult);
+      var Mets2 = parseFloat(a[8]) &gt;= parseFloat(thresholdResult)?'Yes':'No';
+      var Mets = (NaCount=='Yes')?'(N/A)':Mets2;
+      //var thresholdResultWithDecimals = ((thresholdResult).toFixed(2));
+      var thresholdResultWithCommas = thresholdResult.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      var Mets3 = "$ "+((thresholdResult-(a[8])).toFixed(2))+" MORE to REACH THRESHOLD ";
+      var Mets33 = "$ "+(((a[8])-thresholdResult).toFixed(2))+" OVER the THRESHOLD ";
+      var Mets4 = 0;
+      //var totalsAccurate = true;
+      
+      if((a[8]) &gt; thresholdResult){
+        Mets4 = Mets33;
+      } else {
+        Mets4 = Mets3;
+      }
+
+      var Mets5 = Mets4.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      //var ACT = a[8];
+      //var AIN = a[8];
+      //var yellowAreaTotal = a[8];
+
+      if(Mets=='(N/A)'){
+        //AIN = 'N/A';
+  
+   Mets5='(Anticipated Insurance Needed) ';
+   //yellowAreaTotal = a[8]+" (N/A)";
+   //totalsAccurate = false;
+
+  }
+
+  var yellowA = (a[1]).toFixed(2);
+  var yellowB = (a[2]).toFixed(2);
+  var yellowC = (a[3]).toFixed(2);
+  var yellowD = (a[4]).toFixed(2);
+  var yellowE = (a[5]).toFixed(2);
+  var yellowF = (a[6]).toFixed(2);
+  var yellowG = (a[7]).toFixed(2);
+  var yellowAT = (a[8]).toFixed(2);
+
+  //define 
+  
+    
+      //yellow total rows
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],yellowA,yellowB,yellowC,yellowD,yellowE,yellowF,yellowG,a[8],Mets5+"$ "+thresholdResultWithCommas,Mets,a[15],"",a[19],"FEMA",NaCount],b);
+};
+  for(var i=0; i &lt; masterData.length;i++){
+
+   // if (document.getElementById('AnticipatedInsurance1').checked == false){ //this happen after page is built, thats why it didnt work -- maybe onclick rebuild table? not really
+          var wootA = masterData[i][7].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootB = masterData[i][8].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootC = masterData[i][9].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootD = masterData[i][10].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootE = masterData[i][11].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootF = masterData[i][12].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootG = masterData[i][13].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootAreaTotals = masterData[i][14].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       /* } else {*/
+          var wootAA = masterData[i][22].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootBB = masterData[i][23].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootCC = masterData[i][24].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootDD = masterData[i][25].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootEE = masterData[i][26].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootFF = masterData[i][27].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootGG = masterData[i][28].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          var wootAreaTotals2 = masterData[i][29].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       
+    //---------------------------------------------------------------------------------------------
+    //newRow below explained 
+    //start of data
+    //masterData[i][2] is Total Jurisdictions
+    //,"","", two blanks
+    //masterData[i][3] is unknown to me,
+    //masterData[i][4] is county and city,
+    //masterData[i][5] is unknown to me,
+    //masterData[i][6] is unknown to me,
+    //wootA is A, masterData[i][7] No Insurance factored
+    //wootB is B, masterData[i][8] No Insurance factored
+    //wootC is C, masterData[i][9] No Insurance factored
+    //wootD is D, masterData[i][10] No Insurance factored
+    //wootE is E, masterData[i][11] No Insurance factored
+    //wootF is F, masterData[i][12] No Insurance factored
+    //wootG is G, masterData[i][13] No Insurance factored
+    //wootAreaTotals is Area Totals, masterData[i][14] No Insurance factored
+    //"","", two blanks
+    //masterData[i][15] is Local Dec,
+    //masterData[i][17] is DSO History Button,
+    //masterData[i][20] is Supplemental Info Button,
+    //masterData[i][19] is FEMA count,
+    //masterData[i][21] is 1 for Insurance NA COUNT,
+    //masterData[i][22], A Yes Insurance factored
+    //masterData[i][23], B Yes Insurance factored
+    //masterData[i][24], C Yes Insurance factored
+    //masterData[i][25], D Yes Insurance factored
+    //masterData[i][26], E Yes Insurance factored
+    //masterData[i][27], F Yes Insurance factored
+    //masterData[i][28], G Yes Insurance factored
+    //masterData[i][29], Area Totals Yes Insurance factored
+    //masterData[i][30], extra for now
+    //masterData[i][31] extra for now 
+    //end of data],
+    //start of class
+    //masterData[i][19]=='1'?"rowRed":"rowReg"); changes row to red if fema check is checked on supplemental 
+    //end of class
+    //----------------------------------------------------------------------------------------------------
+    //adds regular row
+//var rr = masterData[i][19]=='1'?"rowRed":"rowReg";
+
+
+/*if(document.getElementById('AnticipatedInsurance1').checked==true){
+
+    rrr = (masterData[i][19]=='1'?"rowRed":"rowReg");
+  } else {
+
+     rrr = "hideValuesNoInsurance";
+  }*/
+
+    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootAA,wootBB,wootCC,wootDD,wootEE,wootFF,wootGG,wootAreaTotals2,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],masterData[i][19]=='1'?"rowRed":"rowReg");
+    if(i==masterData.length-1){//if not the last row
+totalRowVar2(i);
+console.log("reg");
+    }
+    else if(i==0 &amp;&amp; masterData[i][5]!=masterData[i+1][5]){
+       totalRowVar2(i);
+    }
+//else if (( (there is an entry) and 
+//((county equals county before) and (county after does not equal county) or 
+//(county does not equal county before) and 
+//(county after does not equal coounty)) ))
+    else if((i!=0)&amp;&amp;(((masterData[i][5]===masterData[i-1][5])&amp;&amp;(masterData[i+1][5]!=masterData[i][5]))||((masterData[i][5]!=masterData[i-1][5])&amp;&amp;(masterData[i+1][5]!=masterData[i][5])) ))
+      {
+      totalRowVar2(i);
+      //console.log("else if");
+    }
+  }
+  //grand totals row and class of rowGray
+
+  var a = getTotalsFor2All();
+
+  //This works to make 0 into 0.00 in the gray rows. Not too important...but looks nice and like other fields
+  //trying to add $'s here with "$ "+a[X] makes just the commas disappear. Decimals remain
+  var grayA = (a[1]).toFixed(2);
+  var grayB = (a[2]).toFixed(2);
+  var grayC = (a[3]).toFixed(2);
+  var grayD = (a[4]).toFixed(2);
+  var grayE = (a[5]).toFixed(2);
+  var grayF = (a[6]).toFixed(2);
+  var grayG = (a[7]).toFixed(2);
+  var grayAT = (a[8]).toFixed(2);
+  var grayCT = (a[9]).toFixed(2); 
+
+  var g = "rowGray";
+  if(document.getElementById('AnticipatedInsurance1').checked==true){
+    g = "rowGray";
+  } else {
+     g = "rowGray hideValuesNoInsurance";
+  }
+   
+//trying to add $'s here with "$ "+a[X] or "$ "+grayA makes the commas and decimals disappear. Boo!
+      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],g)
+      newRow(t,2,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],g)
+}
+
+//this will get totals for the county totals row, for more spots, O's nned to added to var a as well as the parseFloat statements below
+function getTotalsFor2(c){
+  var a =[0,0,0,0,0,0,0,0,0,0,true,0,0];
+  var isNull = function(b){
+    if(b==''||b==' ' ||b==0){return 0;}
+    else return b;
+  };
+for(var i=0; i&lt;masterData.length;i++){
+  if(masterData[i][5]==c){
+//parseFloat cuts off the first character if a number, otherwise NaN is returned ------------ the [19] spot is where the total is stored from femaCheckboxes
+    //a[0]+=parseFloat(isNull(masterData[i][6]));
+    a[1]+=parseFloat(isNull(masterData[i][22]));
+   a[2]+=parseFloat(isNull(masterData[i][23]));
+    a[3]+=parseFloat(isNull(masterData[i][24]));
+    a[4]+=parseFloat(isNull(masterData[i][25]));
+    a[5]+=parseFloat(isNull(masterData[i][26]));
+    a[6]+=parseFloat(isNull(masterData[i][27]));
+    a[7]+=parseFloat(isNull(masterData[i][28]));
+    a[8]+=parseFloat(isNull(masterData[i][29]));
+    a[9]+=parseFloat(isNull(masterData[i][19]));
+    a[12]+=parseFloat(isNull(masterData[i][21]));
+    if(masterData[i][19]!="1"){
+      a[10]=false;
+      a[11]+=parseFloat(isNull(masterData[i][20]));
+      
+    }
+    
+    //a[10]+=parseFloat(isNull(masterData[i][19]));
+  }
+}
+console.log(a);
+return a;
+
+}
+//Grand totals 
+function getTotalsFor2All(){
+  var a =[0,0,0,0,0,0,0,0,0,0];
+  var isNull = function(b){
+    if(b==''||b==' ' ||b==0){return 0;}
+    else return b;
+  };
+for(var i=0; i&lt;masterData.length;i++){
+    //a[0]+=parseFloat(isNull(masterData[i][6]));
+    a[1]+=parseFloat(isNull(masterData[i][22]));
+    a[2]+=parseFloat(isNull(masterData[i][23]));
+    a[3]+=parseFloat(isNull(masterData[i][24]));
+    a[4]+=parseFloat(isNull(masterData[i][25]));
+    a[5]+=parseFloat(isNull(masterData[i][26]));
+    a[6]+=parseFloat(isNull(masterData[i][27]));
+    a[7]+=parseFloat(isNull(masterData[i][28]));
+    a[8]+=parseFloat(isNull(masterData[i][29]));
+   
+}
+a[9]=parseFloat(threshold.TotalOnPage);
 console.log(a);
 return a;
 
 }
 
+//------------------------------------------------------------------------------------------------------------------
 
+ /*function reloadTableNoIns() {
+  $("#AnticipatedInsurance2").prop("checked", true);
+  //$("#data").load(location.href + " #data");
+  populateMasterData();
+      popluateTable();
+}
+
+function reloadTableYesIns() {
+  //$("#data").load(location.href + " #data");
+  populateMasterData();
+      popluateTable2();
+}*/
+
+function reloadPage() {
+  location.reload(true/false);
+  //$("#AnticipatedInsurance2").prop("checked", true);
+  //alert("Loading trying to check no");
+}
 
 var dsoPageHelper={
 
@@ -822,14 +1404,31 @@ var dsoPageHelper={
     },
     
     //startOf: styling search field
-      styleSearchField: function() {
-         var searchFld=document.getElementById('searchDIV').getElementsByTagName('input');
-         for(var j=0; j &lt; searchFld.length; j++) {
+    styleSearchField: function() {
+        var searchFld=document.getElementById('searchDIV').getElementsByTagName('input');
+        for(var j=0; j &lt; searchFld.length; j++) {
             if($(searchFld[j]).val()=='Search' || $(searchFld[j]).val()=='Clear Search'){$(searchFld[j]).addClass('btn btn-default');}
-          if(searchFld[j].id.search('searchfield')&gt;=0){$(searchFld[j]).addClass('form-control').prop('placeholder', 'Search');}
+            if(searchFld[j].id.search('searchfield')&gt;=0){$(searchFld[j]).addClass('form-control').prop('placeholder', 'Search');}
         }     
-      }
-  };
+    },
+    checkAnticpatedInsuranceValue : function(){
+        $("#AnticipatedInsurance1").click(function() {
+            window.parent.anticpatedInsuranceValuePlaceHolder = "Yes";
+            reloadPage();
+        });
+        $("#AnticipatedInsurance2").click(function() {
+            window.parent.anticpatedInsuranceValuePlaceHolder = "No";
+            reloadPage();
+        });
+        if(window.parent.anticpatedInsuranceValuePlaceHolder === "Yes" || window.parent.anticpatedInsuranceValuePlaceHolder === "") {
+            $("#AnticipatedInsurance1").prop("checked", true);
+        } else if(!window.parent.anticpatedInsuranceValuePlaceHolder === "No" || !window.parent.anticpatedInsuranceValuePlaceHolder === "Yes") {
+
+        } else if(window.parent.anticpatedInsuranceValuePlaceHolder === "No") {
+            $("#AnticipatedInsurance2").prop("checked", true);
+        }
+    }
+};
 
 var incSelList=document.getElementById('webeocIncident');
 var loopAllInputs=document.getElementsByTagName('input');
@@ -837,7 +1436,7 @@ var incVar;
 
 //startOf: filter by incident process method
 var filterByIncident={
- clearIncidentListSelection: function() {
+clearIncidentListSelection: function() {
    var incSearch=document.getElementById('incidentNameSearchSPAN').getElementsByTagName('input');
    for(var i=0; i &lt; incSearch.length; i++) {
      if(incSearch[i].value==='') {
@@ -847,38 +1446,53 @@ var filterByIncident={
      //  console.log(window.parent.window.parent.selectedIncident);
      }      
    }
- },
- searchFieldVariableSet: function() {
+},
+searchFieldVariableSet: function() {
    for(var i=0; i &lt; loopAllInputs.length; i++) {
      if(loopAllInputs[i].id &amp;&amp; loopAllInputs[i].getAttribute('id').indexOf('searchfield')&gt; -1){incVar=loopAllInputs[i];}
    }
- },
- incidentListOptionsBuild: function() {
+},
+incidentListOptionsBuild: function() {
    <for-each select="/data/allincidentlist/incidents">
      incSelList.options[incSelList.options.length]=new Option('<value-of select="@name"/>','<value-of select="@name"/>',false,false);
    </for-each>
    incSelList.options.selectedIndex=0;
- },
- incidentListActionOnChange: function() {
+},
+incidentListActionOnChange: function() {
    incSelList.options[incSelList.options.length]=new Option('','',false,false);
    incVar.value=incSelList.options[incSelList.options.selectedIndex].text;
    for(var i=0; i &lt; loopAllInputs.length; i++) {
-     if(loopAllInputs[i].getAttribute('value')=='Search'){$(loopAllInputs[i]).click();}
+    if(loopAllInputs[i].getAttribute('value')=='Search'){$(loopAllInputs[i]).click();}
    }
    window.parent.window.parent.selectedIncident=(incSelList.options[incSelList.options.selectedIndex]).text;
- }
+}
 };
 
 function checkTheRadioAIY(){
-$("#AnticipatedInsurance1").prop("checked", true);
+  if(document.getElementById('AnticipatedInsurance2').checked==true){
+$("#AnticipatedInsurance2").prop("checked", true);
+  } else {
+    $("#AnticipatedInsurance1").prop("checked", true);
+  }
+
+//reloadTableYesIns();
 
 }
 
 $(document).ready(function(){
-    
+    //checkTheRadioAIY();
+
+$("#AnticipatedInsurance1").prop("checked", true);
+
+    dsoPageHelper.checkAnticpatedInsuranceValue();
+console.log(window.parent.anticpatedInsuranceValuePlaceHolder)
+
     populateMasterData();
     popluateTable();
+    popluateTable2();
     dsoPageHelper.styleSearchField();
+    classChangeForInsurance();
+
     //var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
     //$(countyFilter).addClass('form-control');
     filterByIncident.incidentListOptionsBuild();
@@ -891,7 +1505,11 @@ $(document).ready(function(){
     var a = document.getElementsByClassName('greenCell');
 for(var i=0; i&lt;a.length;i++){a[i].parentElement.style.backgroundColor="#32D632";}/*Local Dec*/
    //totalGrandRowVar();
- checkTheRadioAIY();
+//checkTheRadioAIY();
+
+
+
+
   });
 
   

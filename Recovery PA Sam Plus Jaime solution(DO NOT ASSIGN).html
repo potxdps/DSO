@@ -38,13 +38,6 @@
 .cellOrange {color:#FFC04C;}
 .hideValues {display: none;}
 .hideValuesNoInsurance {display: none;}
-.fieldsetButtons { 
-    display:inline-block;
-
-   }
-legend{
-   font-size: 10pt;
-}
 </style>
    </head>   
    <body>
@@ -62,37 +55,37 @@ legend{
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h3>(Infrastructure / PA)</h3><hr/><h4>Any Column with N/A present will make the totals (County and Grand) inaccurate until the antipated insurance is applied.<br/><br/>The values with N/A are not factored into the totals. Once all the N/A's are gone, the totals can be considered accurate.</h4><hr/><h4>The RED row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA.</h4></td>
+                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h3>(Infrastructure / PA)</h3><hr/><h4>Any Column with N/A present will make the totals (County and Grand) inaccurate until the antipated insurance is applied. Once all the N/A's are gone, the totals can be considered accurate.</h4><hr/><h4>The RED row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA.</h4></td>
                </tr>
             </tbody>
          </table>
          <div class="content">
-              <div>
-         <fieldset class="fieldsetButtons"><legend>Operations</legend>
-         <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
-         <!--<button type="button" class="btn active">View DSO List</button>-->
-         <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
-            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
-         <space /><space />
-         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
-         <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
-         <space /><space /><space /><space />
-         <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
-        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
-        <fieldset class="fieldsetButtons"><legend>Recovery</legend>
-        <space/><space/>
+              <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
+        <space />
+        <space />
+        <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
+        <!--<button type="button" class="btn active">View Recovery Summary</button>-->
+        <space />
+        <space />
+        <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink><space/><space/>
+            <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+        <space />
+        <space />
         <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
-        <space /><space />
+        
+        <space />
+        <space />
         <button type="button" class="btn active">View Recovery PA</button>
-        <!--<viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink>--></fieldset>
-        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
-        <fieldset class="fieldsetButtons"><legend>DSO</legend>
-        <space/><space/>
-        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
-        </div><hr/>
+        <space />
+        <space />
+        <space />
+        <space />
+        <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink>
+        <space />
+        <space />
+        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>
+        <br />
+        <br />
             <div class="form-inline" id="resourceFilters" style="display: inline-block;">
                <filterlistdropdown field="county" list="Counties - Texas" defaulttext="All Counties" class="form-control"/>
                
@@ -126,7 +119,7 @@ legend{
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center"><br/><br/>County / City
                         <br/>(Click to Edit DSO)
                      </td>
-                     <td selected="false" colSpan="8" width="" rowSpan="1" align="center" top-align="center">
+                     <td selected="false" colSpan="8" width="" rowSpan="1" align="center">
 
                      <div class="form-inline" id="AnticipatedInsuranceRadios" name="AnticipatedInsuranceRadios" style="background-color:#003366;">
                      <label id="AnticipatedInsuranceLabel" class="control-label" for="AnticipatedInsurance"><h3 style="font-weight: bold;">Calculate with Anticipated Insurance:</h3></label><space/><space/><space/><space/>
@@ -146,7 +139,7 @@ legend{
 
                   </tr>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression></td>
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression> )</td>
                      
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>A</strong><br/>Debris Removal</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>B</strong><br/>Police / EMS</td>
@@ -156,7 +149,7 @@ legend{
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>F</strong><br/>Public Utility Systems</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>G</strong><br/>Other</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">Area / <span class="textYellow">County</span> Totals</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">County Threshold / is this grand total needed here?</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">County Threshold / is this needed?</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">Met?</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">Local Dec</td>
                   </tr>
@@ -234,7 +227,7 @@ legend{
 
                   
                </if>
-               <span style="display:none;font-weight: normal; font-size: 10pt;" class="data" name="data" id="data">
+               <span style="display:nonea;font-weight: normal; font-size: 10pt;" class="data" name="data" id="data">
                <span id="catSumsSpan" style="display:none;"><expression useboardlevelfilters="true" name="catASum">
       ((case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'A' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
@@ -710,8 +703,8 @@ legend{
 
       |<value-of select="@sortCityOrder"/>
 
-      |<div align="center"><if test="@totalJurisictionsexpressionInfra1!='0'">
-                  <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when (repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000') or (repairCostTotal!='' and repairCostTotal!='0' and repairCostTotal!='0.00' and repairCostTotal!='0.0000') then 1 else 0 end)</expression></if></div>
+      |<div align="center">
+                  ( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when (repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000') or (repairCostTotal!='' and repairCostTotal!='0' and repairCostTotal!='0.00' and repairCostTotal!='0.0000') then 1 else 0 end)</expression> )</div>
       
       |<value-of select="@jurisdictionType"/>
 
@@ -812,13 +805,44 @@ align='right'
   }
   
   //row.className('agencytemplate_tableentry');
-    row.innerHTML = '<td>'+data[0]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td class="'+metClass+'">'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'+'<td>'+comma(data[19])+'</td>'/*+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'*/;//view femaCheck total cell[20] here, Below in row array in spot masterData[i][19]in comment area "adds regular row"
+    row.innerHTML = '<td>'+'<span id="data0a" class="notinsured">'+data[0]+'</span><span id="data0b" class="insured">'+data[0]+'</span>'+'</td>'+'<td align="'+align+'">'+'<span id="data4a" class="notinsured">'+data[4]+'</span><span id="data4b" class="insured">'+data[4]+'</span>'+'</td>'+'<td>'+'<span id="data7a" class="notinsured">'+comma(data[7])+'</span><span id="data7b" class="insured">'+comma(data[22])+'</span>'+'</td>'+'<td>'+'<span  id="data8a" class="notinsured">'+comma(data[8])+'</span><span id="data8b" class="insured">'+comma(data[23])+'</span>'+'</td>'+'<td>'+'<span id="data9a" class="notinsured">'+comma(data[9])+'</span><span id="data9b" class="insured">'+comma(data[24])+'</span>'+'</td>'+'<td>'+'<span id="data10a" class="notinsured">'+comma(data[10])+'</span><span id="data10b" class="insured">'+comma(data[25])+'</span>'+'</td>'+'<td>'+'<span id="data11a" class="notinsured">'+comma(data[11])+'</span><span id="data11b" class="insured">'+comma(data[26])+'</span>'+'</td>'+'<td>'+'<span id="data12a" class="notinsured">'+comma(data[12])+'</span><span id="data12b" class="insured">'+comma(data[27])+'</span>'+'</td>'+'<td>'+'<span id="data13a" class="notinsured">'+comma(data[13])+'</span><span id="data13b" class="insured">'+comma(data[28])+'</span>'+'</td>'+'<td>'+'<span id="data14a" class="notinsured">'+comma(data[14])+'</span><span id="data14b" class="insured">'+comma(data[29])+'</span>'+'</td>'+'<td>'+'<span id="data15a" class="notinsured">'+comma(data[15])+'</span><span id="data15b" class="insured">'+comma(data[15])+'</span>'+'</td>'+'<td class="'+metClass+'">'+'<span id="data16a" class="notinsured">'+comma(data[16])+'</span><span id="data16ba" class="insured">'+comma(data[16])+'</span>'+'</td>'+'<td>'+'<span  id="data17a" class="notinsured">'+comma(data[17])+'</span><span id="data17b" class="insured">'+comma(data[17])+'</span>'+'</td>'+'<td>'+'<span id="data18a" class="notinsured">'+comma(data[18])+'</span><span id="data18b" class="insured">'+comma(data[18])+'</span>'+'</td>'+'<td>'+'<span id="data19a" class="notinsured">'+comma(data[19])+'</span><span id="data19b" class="insured">'+comma(data[19])+'</span>'+'</td>'+'<td>'+'<span id="data20a" class="notinsured">'+comma(data[20])+'</span><span id="data20b" class="insured">'+comma(data[20])+'</span>'+'</td>'+'<td>'+'<span id="data10a" class="notinsured">'+comma(data[21])+'</span><span id="data21b" class="insured">'+comma(data[21])+'</span>'+'</td>';//view femaCheck total cell[20] here, Below in row array in spot masterData[i][19]in comment area "adds regular row"
     var rowColorClass =''
     if (((position/2) - Math.floor(position/2)) === 0) {rowColorClass='agencytemplate_tableroweven'} else {rowColorClass='agencytemplate_tablerowodd'};
 
     table.rows[position].className='agencytemplate_tableentry '+rowClass;
     //agencytemplate_tableroweven
 }
+
+function classChangeForInsurance(){
+if(document.getElementById('AnticipatedInsurance1').checked===true){
+hideshowClass(true);
+}else{
+  hideshowClass(false);
+}
+}
+
+function hideshowClass(a){
+var c = document.getElementsByClassName('insured');
+var d = document.getElementsByClassName('notinsured');
+
+for(var i=0; i&lt; c.length; i++ ){
+  if(a===true){
+    c[i].style.display='';
+  }else{
+    c[i].style.display='none';
+  }
+
+}
+for(var i=0; i&lt; d.length; i++ ){
+  if(a===true){
+    d[i].style.display='';
+  }else{
+    d[i].style.display='none';
+  }
+
+}
+    
+  }
  //threshold totals and limits
 function threshold(c){
 var a = [["Anderson","208110.48"],["Andrews","52638.16"],["Angelina","308904.76"],["Aransas","82442.48"],["Archer","32232.24"],["Armstrong","6767.56"],["Atascosa","159883.16"],["Austin","101164.52"],["Bailey","25507.40"],["Bandera","72926.60"],["Bastrop","264048.76"],["Baylor","13264.56"],["Bee","113425.16"],["Bell","1104436.60"],["Bexar","6104591.88"],["Blanco","37369.32"],["Borden","2281.96"],["Bosque","64834.72"],["Bowie","329531.40"],["Brazoria","1114870.96"],["Brazos","693669.56"],["Brewster","32865.92"],["Briscoe","5827.72"],["Brooks","25713.88"],["Brown","135657.36"],["Burleson","61185.72"],["Burnet","152190.00"],["Caldwell","135514.96"],["Calhoun","76116.36"],["Callahan","48216.64"],["Cameron","1446143.20"],["Camp","44147.56"],["Carson","22007.92"],["Cass","108451.84"],["Castro","28700.72"],["Chambers","124941.76"],["Cherokee","181008.20"],["Childress","25065.96"],["Clay","38277.12"],["Cochran","11132.12"],["Coke","11819.20"],["Coleman","31666.20"],["Collin","2785133.96"],["Collingsworth","10882.92"],["Colorado","74311.44"],["Comal","386160.32"],["Comanche","49747.44"],["Concho","14549.72"],["Cooke","136835.72"],["Coryell","268381.28"],["Cottle","5357.80"],["Crane","15575.00"],["Crockett","13239.64"],["Crosby","21570.04"],["Culberson","8536.88"],["Dallam","23862.68"],["Dallas","8430574.84"],["Dawson","49245.48"],["Deaf Smith","68964.32"],["Delta","18622.36"],["Denton","2358905.84"],["DeWitt","71545.32"],["Dickens","8700.64"],["Dimmit","35585.76"],["Donley","13090.12"],["Duval","41943.92"],["Eastland","66155.48"],["Ector","488182.80"],["Edwards","7127.12"],["El Paso","2850303.32"],["Ellis","532611.60"],["Erath","134888.40"],["Falls","63602.96"],["Fannin","120737.40"],["Fayette","87412.24"],["Fisher","14147.44"],["Floyd","22947.76"],["Foard","4756.16"],["Fort Bend","2083935.00"],["Franklin","37753.80"],["Freestone","70544.96"],["Frio","61292.52"],["Gaines","62392.56"],["Galveston","1037060.04"],["Garza","23001.16"],["Gillespie","88419.72"],["Glasscock","4364.56"],["Goliad","25667.60"],["Gonzales","70512.92"],["Gray","80224.60"],["Grayson","430322.12"],["Gregg","433358.80"],["Grimes","94710.24"],["Guadalupe","468257.48"],["Hale","129131.88"],["Hall","11936.68"],["Hamilton","30320.52"],["Hansford","19982.28"],["Hardeman","14734.84"],["Hardin","194500.60"],["Harris","14569154.04"],["Harrison","233646.36"],["Hartley","21580.72"],["Haskell","21000.44"],["Hays","559300.92"],["Hemphill","13552.92"],["Henderson","279573.92"],["Hidalgo","2758177.64"],["Hill","124916.84"],["Hockley","81648.60"],["Hood","182207.92"],["Hopkins","125173.16"],["Houston","84485.92"],["Howard","124642.72"],["Hudspeth","12374.56"],["Hunt","306619.24"],["Hutchinson","78854.00"],["Irion","5692.44"],["Jack","32196.64"],["Jackson","50107.00"],["Jasper","127127.60"],["Jeff Davis","8337.52"],["Jefferson","898091.88"],["Jim Hogg","18868.00"],["Jim Wells","145383.28"],["Johnson","537325.04"],["Jones","71919.12"],["Karnes","52773.44"],["Kaufman","367926.00"],["Kendall","118939.60"],["Kenedy","1480.96"],["Kent","2876.48"],["Kerr","176665"],["Kimble","16400.92"],["King","1018.16"],["Kinney","12808.88"],["Kleberg","114137.16"],["Knox","13239.64"],["La Salle","24514.16"],["Lamar","177263.08"],["Lamb","49758.12"],["Lampasas","70050.12"],["Lavaca","68576.28"],["Lee","59138.72"],["Leon","59811.56"],["Liberty","269289.08"],["Limestone","83247.04"],["Lipscomb","11755.12"],["Live Oak","41050.36"],["Llano","68711.56"],["Loving","291.92"],["Lubbock","992638.36"],["Lynn","21057.40"],["Madison","48643.84"],["Marion","37543.76"],["Martin","17084.44"],["Mason","14282.72"],["Matagorda","130659.12"],["Maverick","193158.48"],["McCulloch","29487.48"],["McLennan","836265.36"],["McMullen","2516.92"],["Medina","163781.36"],["Menard","7981.52"],["Midland","487264.32"],["Milam","88134.92"],["Mills","17572.16"],["Mitchell","33474.68"],["Montague","70199.64"],["Montgomery","1622455.76"],["Moore","77978.24"],["Morris","46045.04"],["Motley","4307.60"],["Nacogdoches","229705.44"],["Navarro","169936.60"],["Newton","51424.20"],["Nolan","54168.96"],["Nueces","1211193.88"],["Ochiltree","36393.88"],["Oldham","7305.12"],["Orange","291339.72"],["Palo Pinto","100075.16"],["Panola","84713.76"],["Parker","416260.12"],["Parmer","36557.64"],["Pecos","55204.92"],["Polk","161670.28"],["Potter","431019.88"],["Presidio","27832.08"],["Rains","38853.84"],["Randall","429781.00"],["Reagan","11986.52"],["Real","11780.04"],["Red River","45781.60"],["Reeves","49067.48"],["Refugio","26283.48"],["Roberts","3307.24"],["Robertson","59174.32"],["Rockwall","278879.72"],["Runnels","37383.56"],["Rusk","189854.80"],["Sabine","38569.04"],["San Augustine","31559.40"],["San Jacinto","93927.04"],["San Patricio","230702.24"],["San Saba","21826.36"],["Schleicher","12321.16"],["Scurry","60238.76"],["Shackelford","12025.68"],["Shelby","90594.88"],["Sherman","10801.04"],["Smith","746581.84"],["Somervell","30224.40"],["Starr","217046.08"],["Stephens","34282.80"],["Sterling","4069.08"],["Stonewall","5304.40"],["Sutton","14695.68"],["Swisher","27960.24"],["Tarrant","6440161.04"],["Taylor","468161.36"],["Terrell","3503.04"],["Terry","45037.56"],["Throckmorton","5841.96"],["Titus","115109.04"],["Tom Green","392397.44"],["Travis","3646386.96"],["Trinity","51922.60"],["Tyler","77486.96"],["Upshur","139940.04"],["Upton","11943.80"],["Uvalde","94001.80"],["Val Verde","174009.24"],["Van Zandt","187181.24"],["Victoria","308983.08"],["Walker","241585.16"],["Waller","153809.80"],["Ward","37942.48"],["Washington","120036.08"],["Webb","891082.24"],["Wharton","146956.80"],["Wheeler","19259.60"],["Wichita","468140.00"],["Wilbarger","48184.60"],["Willacy","78797.04"],["Williamson","1504737.24"],["Wilson","152788.08"],["Winkler","25311.60"],["Wise","210492.12"],["Wood","149391.84"],["Yoakum","28049.24"],["Young","66038.00"],["Zapata","49904.08"],["Zavala","41570.12"]];
@@ -870,7 +894,7 @@ var totalRowVar=function(i){
    var NaCount = parseFloat(a[12]) &gt; (0)?'Yes':'No';
    if(document.getElementById('AnticipatedInsurance1').checked==true){
     //alert("2 hiding yellow");
-    b = "rowYellow hideValues";
+    b = "rowYellow";
   } else {
     //alert("2 showing yellow");
      b = "rowYellow";
@@ -986,25 +1010,22 @@ var totalRowVar=function(i){
     //end of class
     //----------------------------------------------------------------------------------------------------
     //adds regular row
-    var rr = 0;
-
-if(masterData[i][19]&gt;='1'){
-  var rr = "rowRed";
-} else {
-  var rr = "rowReg";
-}
-//masterData[i][19]=='1'?"rowRed":"rowReg"
-
-
-if(document.getElementById('AnticipatedInsurance1').checked==true){
-
-    rrrr = "hideValues";
-  } else {
-
-     rrrr = rr;
-  }
   
-    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],rrrr);
+ /*if(document.getElementById('AnticipatedInsurance1').checked==true){
+    //alert("2 hiding yellow");
+    rr = "hideValues";
+    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],rr);
+    //if(i==masterData.length-1)
+  }*/
+
+
+/*if(document.getElementById('AnticipatedInsurance2').checked==true){
+     newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],masterData[i][19]=='1'?"rowRed":"rowReg");
+    //if(i==masterData.length-1)
+  } */
+
+
+    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],masterData[i][19]=='1'?"rowRed":"rowReg");
     if(i==masterData.length-1){//if not the last row
  totalRowVar(i);
  console.log("reg");
@@ -1040,7 +1061,7 @@ if(document.getElementById('AnticipatedInsurance1').checked==true){
 
   if(document.getElementById('AnticipatedInsurance1').checked==true){
     //alert("2 hiding yellow");
-    g = "rowGray hideValues";
+    g = "rowGray";
   } else {
     //alert("2 showing yellow");
      g = "rowGray";
@@ -1122,7 +1143,7 @@ var totalRowVar2=function(i){
    if(document.getElementById('AnticipatedInsurance1').checked==true){
     b = "rowYellow";
   } else {
-     b = "rowYellow hideValuesNoInsurance";
+     b = "rowYellow";
   }
 
 
@@ -1235,25 +1256,18 @@ var totalRowVar2=function(i){
     //end of class
     //----------------------------------------------------------------------------------------------------
     //adds regular row
-var rgr = 0;
-
-if(masterData[i][19]&gt;='1'){
-  var rgr = "rowRed";
-} else {
-  var rgr = "rowReg";
-}
-//masterData[i][19]=='1'?"rowRed":"rowReg"
+//var rr = masterData[i][19]=='1'?"rowRed":"rowReg";
 
 
-if(document.getElementById('AnticipatedInsurance1').checked==true){
+/*if(document.getElementById('AnticipatedInsurance1').checked==true){
 
-    rrr = rgr;
+    rrr = (masterData[i][19]=='1'?"rowRed":"rowReg");
   } else {
 
      rrr = "hideValuesNoInsurance";
-  }
+  }*/
 
-    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootAA,wootBB,wootCC,wootDD,wootEE,wootFF,wootGG,wootAreaTotals2,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],rrr);
+    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootAA,wootBB,wootCC,wootDD,wootEE,wootFF,wootGG,wootAreaTotals2,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],masterData[i][19]=='1'?"rowRed":"rowReg");
     if(i==masterData.length-1){//if not the last row
  totalRowVar2(i);
  console.log("reg");
@@ -1291,7 +1305,7 @@ if(document.getElementById('AnticipatedInsurance1').checked==true){
   if(document.getElementById('AnticipatedInsurance1').checked==true){
     g = "rowGray";
   } else {
-     g = "rowGray hideValuesNoInsurance";
+     g = "rowGray";
   }
    
 //trying to add $'s here with "$ "+a[X] or "$ "+grayA makes the commas and decimals disappear. Boo!
@@ -1475,6 +1489,7 @@ console.log(window.parent.anticpatedInsuranceValuePlaceHolder)
     popluateTable();
     popluateTable2();
     dsoPageHelper.styleSearchField();
+    classChangeForInsurance();
 
     //var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
     //$(countyFilter).addClass('form-control');

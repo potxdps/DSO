@@ -37,6 +37,13 @@
 .data {
   text-align:center;
 }
+.fieldsetButtons { 
+    display:inline-block;
+
+   }
+legend{
+   font-size: 10pt;
+}
 </style>
    </head>   <body>
       <div class="container agencytemplate_boardbackground">
@@ -62,21 +69,32 @@
             </tbody>
          </table>
          <div class="content">
-           <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink><space/><space/>
-            <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink><space/><space/>
-            <button type="button" class="btn active">View Housing / IA</button><space/><space/>
-            <!--<viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>--><viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
-            <space/>
-            <space/>
-            <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
-            <space/>
-            <space/>
-            <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink>
-            <space/><space/><space/><space/><space/><space/>
-           <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink><space/><space/>
-            <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink>
-            <br/>
-            <br/>
+           <div>
+         <fieldset class="fieldsetButtons"><legend>Operations</legend>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
+         <!--<button type="button" class="btn active">View DSO List</button>-->
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
+            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
+         <space /><space />
+         <button type="button" class="btn active">View Housing / IA</button>
+         <!--<viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>-->
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+         <space /><space /><space /><space />
+         <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>Recovery</legend>
+        <space/><space/>
+        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        <space /><space />
+        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>DSO</legend>
+        <space/><space/>
+        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
+        </div><hr/>
             <div class="form-inline" id="resourceFilters" style="display: inline-block;">
                <filterlistdropdown field="county" list="Counties - Texas" defaulttext="All Counties" class="form-control"/>
                
@@ -133,7 +151,7 @@
                      </td>
                   </tr>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1">( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing2">sum(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0') then 1 else 0 end)</expression> )
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing2">sum(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0') then 1 else 0 end)</expression>
                      
                      </td>
                      <td selected="false" rowSpan="1" colSpan="1" width="" align="center">Aff</td>
@@ -186,7 +204,7 @@
                <span style="display:none" class="data" name="data">
                   <value-of select="@sortCountyOrder"/>|
           
-                  <value-of select="@sortCityOrder"/>|<div align="center"><span>( <expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing">(case when ((totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0')) then 1 else 0 end)</expression> )</span></div>|
+                  <value-of select="@sortCityOrder"/>|<if test="@totalJurisictionsexpressionHousing!='0'"><div align="center"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing">(case when ((totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0')) then 1 else 0 end)</expression></div></if>|
             
                   
                   <value-of select="@jurisdictionType"/>|
