@@ -27,7 +27,6 @@
             baseArray: [],
             changesMade: false,
             Evaluation: function() {
-            //console.log("Evaluation starts");
     var a=[];
     for(var i=0; i &lt; scribe.fields4History.length; i++) {
       var b=document.getElementsByName(scribe.fields4History[i][0]);
@@ -38,24 +37,19 @@
             var msr =[];
             for(var msi=0; msi &lt; ms.length; ms++){
                msr.push(ms[msi].text);
-               //console.log("Evaluation starts 2");
             }
              result.push(scribe.fields4History[i][1]);
              result.push(msr.join(','));   
         } else if (b[k].type==="radio" || b[k].type==="checkbox") {
-          //console.log("Evaluation starts 3");
           result.push(scribe.fields4History[i][1]);
           if(b[k].checked===true) {
             result.push('Selected');
-            //console.log("Evaluation starts 4");
           } else {
             result.push('Not Selected');
-            //console.log("Evaluation starts 5");
           }
         } else {
           result.push(scribe.fields4History[i][1]);
           result.push(b[k].value);
-          //console.log("Evaluation starts 6");
         }
         a.push(result);
         
@@ -64,11 +58,9 @@
     return a;
             },
             inicialReview: function () {
-              console.log("inicialReview 1");
                 scribe.baseArray = scribe.Evaluation();
             },
             postReview: function () {
-              console.log("postReview 1"); //good
                 var p = [];
                 var f = scribe.Evaluation();
                 for (var i = 0; i &lt; f.length; i++) {
@@ -76,18 +68,12 @@
                         p.push(f[i][0] + ': ' + f[i][1]);
                     }
                 }
-                console.log("postReview 1.5"); //good
                 p = p.join('\r\n');
-                console.log("postReview 2"); //good
                 if (p.length &gt; 0) { scribe.changesMade = true; } else {
                 document.getElementById('cancelbtn').click();
-                console.log("postReview 3 cancel no change"); //good
                 //cancels unedited save
                 }
-                console.log(p);
-                console.log("p above");
                 return p;
-                console.log("postReview p"); //this does not run in mozilla 
             }
         };
         function removeOptions(obj) {
@@ -244,7 +230,6 @@
         }
 
        function consolidateEmails() {
-        console.log("consolidateEmails starts");
           var a = [document.getElementsByName('submitterEmail')[0], document.getElementsByName('additionalEmails')[0], document.getElementsByName('countyEmail')[0], document.getElementsByName('ddcEmail')[0]];
           var b = [];
             for (var e =0; e&lt;a.length;e++) {
@@ -256,7 +241,6 @@
     }
   }
         return b.join(',');
-        console.log("consolidateEmails finishes");
 }
 
         function sendEmails(){
@@ -275,7 +259,6 @@
         
         document.getElementsByName('emailBody')[0].value=body;
         document.getElementsByName('emailTo')[0].value=consolidateEmails();
-        console.log("emails should have sent");
         };
 
 
@@ -299,22 +282,22 @@ function finalEmailCheck() {
             var e = document.getElementById('submitterEmail').value.split(/[ ,;]+/);
             if(checkEmail(e) != false){
                 document.getElementById('submitterEmail').value=e.join(',');
-                console.log('submitteremail final emailcheck');
+                //console.log('submitteremail final emailcheck');
             };
             var b = document.getElementById('additionalEmails').value.split(/[ ,;]+/);
             if(checkEmail(b) != false){
                 document.getElementById('additionalEmails').value=b.join(',');
-                console.log('additional final emailcheck');
+                //console.log('additional final emailcheck');
             };
             var c = document.getElementById('countyEmail').value.split(/[ ,;]+/);
             if(checkEmail(c) != false){
                 document.getElementById('countyEmail').value=c.join(',');
-                console.log('county final emailcheck');
+                //console.log('county final emailcheck');
             };
             var d = document.getElementById('ddcEmail').value.split(/[ ,;]+/);
             if(checkEmail(d) != false){
                 document.getElementById('ddcEmail').value=d.join(',');
-                console.log('ddc final emailcheck');
+                //console.log('ddc final emailcheck');
             };
 
         }
@@ -345,7 +328,7 @@ function finalEmailCheck() {
 }
 
       function rebuildingCityCountyOptionsOnJTypeCheck(a) {
-        console.log('rebuilding list runs');
+        //alert('rebuilding list runs');
             $(a).on("click", function () {
                 var coList = document.getElementById("county");
                 removeOptions(coList);
@@ -370,12 +353,10 @@ function finalEmailCheck() {
       function updateOrFirstTime(){
   if ('<xsl:value-of select="/data/@dataid" />'!=0){
                updateDateTime();
-               console.log("updateOrFirstTime");
               
 
             } else {
                 submitDateTime();
-                console.log("else updateOrFirstTime");
             }
 }
 
@@ -383,8 +364,7 @@ function finalEmailCheck() {
                     var textAreaValue = $("#cityTmp").val();
                     var textAreaValueSplit = textAreaValue.split(",");
                     cityArrayCopy = textAreaValueSplit;
-                    //console.log(cityArrayCopy);
-                    //console.log("selectOptionsIfExistsInArray");
+                    console.log(cityArrayCopy);
                     $("#city").val("");
                     for(var i = 0; i &lt; cityArrayCopy.length; i++) {
 
@@ -416,7 +396,6 @@ function finalEmailCheck() {
           
           countyEmailHideReveal();
           $("#notRealSave").click(function() {
-            console.log("notRealSave clicked");
 
           if($("#repairCost01").val() !== ""){
             validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost01", "#cat01", "#cat01");
@@ -508,7 +487,6 @@ function finalEmailCheck() {
           if($("#cat15").val() !== "" &amp;&amp; $("#repairCost15").val() == "" ){
             $("#cat15").val("");
           }
-          console.log("cat code ran");
 
 
              if(!$(".jTypeCLASS").is(":checked")) {
@@ -543,23 +521,16 @@ function finalEmailCheck() {
 
               } else {
                 if (cats === true){
-                  console.log("A-G filled, other required fields filled");
                   copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
-                  console.log("copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray ran");
                   updateOrFirstTime();
-                  console.log("updateOrFirstTime ran");
                   sendEmails();
-                  console.log("sendEmails ran");
                   fakeSubmit();
-                  console.log("fakeSubmit ran");
                 } else {
                   return false;
-                  console.log("fail");
                   
               } 
           }
-             //$( "#saveButton" ).click();
-             console.log("notReal clicked and ran"); 
+              
           });
           //end of notRealSave click
 
@@ -576,7 +547,6 @@ function finalEmailCheck() {
         
         
        document.getElementById('city').onchange = function () {
-        console.log("document.getElementById('city').onchange = function starts");
 
                 sortOrderCity(this.options[this.selectedIndex].text);
                 var coList = document.getElementById("county");
@@ -586,12 +556,8 @@ function finalEmailCheck() {
                     addOption(coList, 'Select One', true);
                     for (var k = 0; k &lt; countyList.length; k++) {
                         addOption(coList, countyList[k], false);
-                        console.log("document.getElementById('city').onchange = function starts 2");
-
                     }
-                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='0';
-                console.log("document.getElementById('city').onchange = function starts 3 else if");
- 
+                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='0'; 
                 } else {
                     removeOptions(coList);
                     addOption(coList, 'Select One', false);
@@ -600,8 +566,6 @@ function finalEmailCheck() {
                             var selected = false;
                             if (cityMatrix[k][0] == coSelected) { selected = true; }
                             addOption(coList, cityMatrix[k][0], selected);
-                            console.log("document.getElementById('city').onchange = function starts 4 else");
-
                         }
                     }
                 }
@@ -625,7 +589,7 @@ function finalEmailCheck() {
                     if(document.getElementById('jurisdictionType2').checked ==true){
                       addOption(cityList, "Unincorporated Areas", true);
                     } else {
-                     //do nothing
+                     //alert("remove it");
                     }
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
 
@@ -824,7 +788,7 @@ function finalEmailCheck() {
               ["socProcessed","SOC Processed"]
             ];
             scribe.inicialReview();
-            console.log("History fields prepped");
+            //console.log("Audit list");
             $("#county").prop("disabled", true);
             $("#city").prop("disabled", true);
             if ('<xsl:value-of select="/data/@dataid" />'!=0){
@@ -836,7 +800,7 @@ function finalEmailCheck() {
                 sortOrderCounty(countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text);
                 var cityList = document.getElementById("city");
                 if (countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text == 'Select One') {
-                  console.log('doing stuff on update/edit');
+                  //console.log('750');
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     addOption(cityList, "Unincorporated Areas", true);
@@ -844,7 +808,7 @@ function finalEmailCheck() {
                         addOption(cityList, cityMatrix[k][1], false);
                     }
                 } else {
-                  console.log('else doing stuff on update/edit');
+                  //console.log('758')
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     addOption(cityList, "Unincorporated Areas", true);
@@ -858,17 +822,15 @@ function finalEmailCheck() {
 
 
                 setTimeout(function() {
-                  
+                  //console.log('timeout 772');
                     selectOptionsIfExistsInArray();
-                }, 1000);
-                console.log('timeout runs');
+                }, 1000); 
             } 
             
         }
 
         function copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray() {
                     document.getElementById("cityTmp").value += $("#city").val();
-                    console.log("citycounty choices recorded for edit");
                 }
 
 
@@ -878,11 +840,9 @@ function finalEmailCheck() {
           var tf= document.getElementById('auditEmbed');
            if(tf.contentWindow){
               tf.contentWindow.document.getElementById('frameBody').contentWindow.frames.injectHistory(document.getElementsByName('dataid')[0].value,'<value-of select="/data/@username" />','<value-of select="/data/@currentdate" />'+' '+'<value-of select="/data/@currenttime" />',scribe.postReview());
-              console.log("Fake submit actually runs 1st part");
 
           } else {
             tf.contentDocument.document.getElementById('frameBody').contentDocument.frames.injectHistory(document.getElementsByName('dataid')[0].value,'<value-of select="/data/@username" />','<value-of select="/data/@currentdate" />'+' '+'<value-of select="/data/@currenttime" />',scribe.postReview());
-            console.log("Else Fake submit actually runs 2nd part");
           }
         
         }
@@ -969,20 +929,11 @@ function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
     if($(a).val() != "" &amp;&amp; $(b).val() === "") {
         alert("Please select a value for Cat A-G");
         $(c).focus().select();
-        event.preventDefault();
-        //maybe not in IE / safari ------NEEDS TEST
-        //event.stopPropagation(); //this does not work in firefox, maybe not in IE / safari ------NEEDS TEST
+        e.preventDefault();
         cats = false;
-        console.log(cats);
-        console.log("cats false above");
-        console.log("validatingCatSelectOptionIfEstimatedIsNotEmpty runs and stops form");
 
     } else {
         cats = true;
-         console.log(cats);
-        console.log("cats true above");
-
-        console.log("validatingCatSelectOptionIfEstimatedIsNotEmpty else finishes");
     }
 }
 
@@ -1011,17 +962,10 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                 for (var i = 0, a = []; i &lt; this.options.length; i++)
                     if (this.options[i].selected) a.push(this.options[i]);
                 return a;
-                console.log(a);
-                console.log("Object.defineProperty(HTMLSelectElement.prototype a ABOVE");
             };
         }
     })()
 });
-
-
-function saveButtonRuns(){
-  console.log("real save button is clicked");
-}
 
 /*function copyValue(){
     
@@ -3628,9 +3572,7 @@ This form is for damage assessment reporting purposes only.  In accordance with 
             <div style="display:none" id="saveButton">
               <savebutton />
             </div>
-            
-            <div style="border-style:none;background-color:white">
-            <embedview style="display:nonea;border-style:none" width="0.1px" height="0.1px" id="auditEmbed" view="DSO Audit Input (DO NOT ASSIGN)" /></div>
+            <embedview style="display:none" width="0px" height="0px" id="auditEmbed" view="DSO Audit Input (DO NOT ASSIGN)" />
           </div>
         </fieldset>
       </form>

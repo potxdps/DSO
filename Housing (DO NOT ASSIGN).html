@@ -27,12 +27,16 @@
   table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
   table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
   table.display td{border-top:solid 1px;border-color:#ccc;}
-  .rowYellow {background-color:#F5FF79;}
+  .rowYellow {background-color:#ffffb3;}
   .rowBlue {background-color:#ccebff;}
-  .rowRed {background-color:#FF4C4C;}
+  .rowRed {background-color:#FF9999;}
   .lightRowRed {background-color:#FFb3b3;}
-  .rowOrange {background-color: #FFA600;}
   .rowGray {background-color: #b7bfc8;}
+.rowReg {}
+.rowGreen{background-color:#00e673;}
+.cellYellow{background-color:#ffff00;}
+.textYellow {color:#ffff99;}
+.cellOrange {background-color:#ff751a;}
 .rowReg {}
 .data {
   text-align:center;
@@ -63,11 +67,41 @@ legend{
                <tr>
                   <td id="tdBoard" colSpan="2" selected="false" align="center">Local Estimates
                      
-                     <br/><h4>This page shows only DSOs (Housing / IA)<br/><br/>The RED (total) row indicates that the Housing PDAs have been completed and that the numbers have been vetted between IA and FEMA</h4>
+                     <br/><h3>(Housing / IA)<br/></h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button></span>
                   </td>
                </tr>
             </tbody>
          </table>
+         <div class="container">
+  <!-- Trigger the modal with a button -->
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          <h4 class="modal-title">Legend / Information</h4>
+        </div>
+        <div class="modal-body">
+        <table id="smallTable" class="table display">
+          <tr><td><div style="text-align:center;" class="rowYellow"><span style="text-align:center;font-size:12pt">County / City Totals</span></div></td><td><div style="text-align:center;" class="rowGray"><span style="text-align:center;font-size:12pt">Grand Totals</span></div></td><td><div style="text-align:center;" class="rowRed"><span style="text-align:center;font-size:12pt">FEMA Vetting</span></div></td><td><div style="text-align:center;" class="rowGreen"><span style="text-align:center;font-size:12pt">Yes</span></div></td><td><div style="text-align:center;" class="cellYellow"><span style="font-size:12pt">No</span></div></td><td><div style="text-align:center;" class="cellOrange"><span style="text-align:center;font-size:12pt">N/A</span></div></td></tr>
+
+        </table>
+        <table><tr><h5>X<!--The RED (total) row indicates that the Housing PDAs have been completed and that the numbers have been vetted between IA and FEMA--></h5></tr></table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
          <div class="content">
            <div>
          <fieldset class="fieldsetButtons"><legend>Operations</legend>
@@ -138,7 +172,7 @@ legend{
                   <tr class="agencytemplate_tableheader">
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Total Jursidictions</td>
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center">
-                        <br/>County / City
+                        County / City
                         <br/>(Click to Edit DSO)
                      </td>
                      <td selected="false" colSpan="4" width="" rowSpan="1" align="center">Single Family Homes</td>
@@ -147,7 +181,7 @@ legend{
                      <td selected="false" colSpan="4" width="" rowSpan="1" align="center">Totals</td>
                      <td selected="false" colSpan="2" width="" rowSpan="1" align="center">Business Loss / Economic Impact</td>
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center">
-                        <br/>DSO Audit Log
+                        DSO Audit Log
                      </td>
                   </tr>
                   <tr class="agencytemplate_tableheader">
@@ -201,7 +235,7 @@ legend{
                   <eocfield name="numberMinorDamage"/>
                   <eocfield name="numberMajorDamage"/>
                </if>
-               <span style="display:none" class="data" name="data">
+               <span style="font-size:10pt;display:nonea" class="data" name="data">
                   <value-of select="@sortCountyOrder"/>|
           
                   <value-of select="@sortCityOrder"/>|<if test="@totalJurisictionsexpressionHousing!='0'"><div align="center"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing">(case when ((totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0')) then 1 else 0 end)</expression></div></if>|

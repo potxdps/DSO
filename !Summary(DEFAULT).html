@@ -21,6 +21,16 @@
   table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
   table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
   table.display td{border-top:solid 1px;border-color:#ccc;}
+  .rowYellow {background-color:#ffffb3;}
+  .rowBlue {background-color:#ccebff;}
+  .rowRed {background-color:#FF9999;}
+  .lightRowRed {background-color:#FFb3b3;}
+  .rowGray {background-color: #b7bfc8;}
+.rowReg {}
+.rowGreen{background-color:#00e673;}
+.cellYellow{background-color:#ffff00;}
+.textYellow {color:#ffff99;}
+.cellOrange {background-color:#ff751a;}
   .fieldsetButtons { 
     display:inline-block;
 
@@ -51,10 +61,40 @@ legend {
             <td id="tdBoard" colSpan="2" selected="false" align="center">Recovery Summary
                      
                      
-                     <br /><h4>This page shows only Supplemental Inputs (Bubble Inputs)</h4></td>
+                     <br /><h3>(Bubble Inputs)</h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button></span></td>
           </tr>
         </tbody>
       </table>
+      <div class="container">
+  <!-- Trigger the modal with a button -->
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          <h4 class="modal-title">Legend / Information</h4>
+        </div>
+        <div class="modal-body">
+        <!--<table id="smallTable" class="table display">
+          <tr><td><div style="text-align:center;" class="rowYellow"><span style="text-align:center;font-size:12pt">County / City Totals</span></div></td><td><div style="text-align:center;" class="rowGray"><span style="text-align:center;font-size:12pt">Grand Totals</span></div></td><td><div style="text-align:center;" class="rowRed"><span style="text-align:center;font-size:12pt">FEMA Vetting</span></div></td><td><div style="text-align:center;" class="rowGreen"><span style="text-align:center;font-size:12pt">Yes</span></div></td><td><div style="text-align:center;" class="cellYellow"><span style="font-size:12pt">No</span></div></td><td><div style="text-align:center;" class="cellOrange"><span style="text-align:center;font-size:12pt">N/A</span></div></td></tr>
+
+        </table>-->
+        <table><tr><h5><!--<br/>-->This page shows only Supplemental Inputs (Bubble Inputs)</h5><hr/><h5>Total Jurisdictions are determined if a yes value is entered for Disaster Declaration, if a date is entered into Acknowledgement Letters Sent 1 or 2 or a date is entered into Date Impacted Counties DSO Rec'd.</h5></tr></table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
       <div class="content">
       <!--<button type="button" class="btn active">View Recovery Summary</button>-->
         <div>
@@ -429,7 +469,7 @@ legend {
                      
                      
                      </td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Disaster Declaration Issued/Rec'd</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Disaster<br/>Declaration<br/>Issued<br/>/ Rec'd</td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">ACK Letters Sent 1
                         
                         
@@ -453,8 +493,8 @@ legend {
                      
                      
                      </td>
-              <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Individual Assistance</td>
-              <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Public Assistance</td>
+              <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Individual Assistance Dates</td>
+              <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Public Assistance Dates</td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Bubble Input Audit Log</td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">IA PDA FEMA</td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PA PDA FEMA</td>
@@ -463,12 +503,12 @@ legend {
               <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0))</expression>
                      
                      </td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Requested</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Scheduled</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Date PDA Completed</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Requested</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Scheduled</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center">PDA Completed</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Scheduled</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Completed</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Scheduled</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Completed</td>
             </tr>
             <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
               <if test="1=0">

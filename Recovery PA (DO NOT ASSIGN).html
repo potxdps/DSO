@@ -27,15 +27,16 @@
   table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
   table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
   table.display td{border-top:solid 1px;border-color:#ccc;}
-  .rowYellow {background-color:#F5FF79;}
+  .rowYellow {background-color:#ffffb3;}
   .rowBlue {background-color:#ccebff;}
   .rowRed {background-color:#FF9999;}
   .lightRowRed {background-color:#FFb3b3;}
   .rowGray {background-color: #b7bfc8;}
 .rowReg {}
-.rowGreen{background-color:#BCED91;}
+.rowGreen{background-color:#00e673;}
+.cellYellow{background-color:#ffff66;}
 .textYellow {color:#ffff99;}
-.cellOrange {color:#FFC04C;}
+.cellOrange {background-color:#ff751a;}
 .hideValues {display: none;}
 .hideValuesNoInsurance {display: none;}
 .fieldsetButtons { 
@@ -62,10 +63,44 @@ legend{
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h3>(Infrastructure / PA)</h3><hr/><h4>Any Column with N/A present will make the totals (County and Grand) inaccurate until the antipated insurance is applied.<br/><br/>The values with N/A are not factored into the totals. Once all the N/A's are gone, the totals can be considered accurate.</h4><hr/><h4>The RED row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA.</h4></td>
+                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h3>(Infrastructure / PA)</h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button></span></td>
                </tr>
+               
             </tbody>
+
          </table>
+         <div class="container">
+  <!-- Trigger the modal with a button -->
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          <h4 class="modal-title">Legend / Information</h4>
+        </div>
+        <div class="modal-body">
+        <table id="smallTable" class="table display">
+          <tr><td><div style="text-align:center;" class="rowYellow"><span style="text-align:center;font-size:12pt">County / City Totals</span></div></td><td><div style="text-align:center;" class="rowGray"><span style="text-align:center;font-size:12pt">Grand Totals</span></div></td><td><div style="text-align:center;" class="rowRed"><span style="text-align:center;font-size:12pt">FEMA Vetting</span></div></td><td><div style="text-align:center;" class="rowGreen"><span style="text-align:center;font-size:12pt">Yes</span></div></td><td><div style="text-align:center;" class="cellYellow"><span style="font-size:12pt">No</span></div></td><td><div style="text-align:center;" class="cellOrange"><span style="text-align:center;font-size:12pt">N/A</span></div></td></tr>
+
+        </table>
+        <table><tr><h5><br/><strong>Must Use Anticipated Insurance for Totals: Yes</strong><br/>The values with N/A are not factored into the totals. Once all the N/A's are gone, the totals can be considered accurate.</h5><hr/><h5><strong>Must Use Anticipated Insurance for Totals: No</strong><br/>The values are factored into the totals, regardless if Anticipated Insurance is entered or not. If Anticipated Insurance is entered, it is subtracted.<br/><br/><span style="color:#c61aff;">NOTE: Use it, if there, if not, don't.(PA Question: Is this the way it should be displayed or take out AI entirely for this choice?)</span></h5><hr/><h5>The RED row indicates that the Infrastructure PDAs have been completed and that the numbers have been vetted between PA and FEMA.</h5></tr></table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
          <div class="content">
               <div>
          <fieldset class="fieldsetButtons"><legend>Operations</legend>
@@ -123,42 +158,41 @@ legend{
                <tbody>
                   <tr class="agencytemplate_tableheader">
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Total Jurisdictions</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center"><br/><br/>County / City
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">County / City
                         <br/>(Click to Edit DSO)
                      </td>
                      <td selected="false" colSpan="8" width="" rowSpan="1" align="center" top-align="center">
 
                      <div class="form-inline" id="AnticipatedInsuranceRadios" name="AnticipatedInsuranceRadios" style="background-color:#003366;">
-                     <label id="AnticipatedInsuranceLabel" class="control-label" for="AnticipatedInsurance"><h3 style="font-weight: bold;">Calculate with Anticipated Insurance:</h3></label><space/><space/><space/><space/>
+                     <label id="AnticipatedInsuranceLabel" class="control-label" for="AnticipatedInsurance"><h4 style="font-weight: bold;">Must Use Anticipated Insurance for Totals:</h4></label><space/><space/><space/><space/>
 
-                     <span style="vertical-align:-35%;"><strong>Yes</strong><space/><input id="AnticipatedInsurance1" type="radio" name="AnticipatedInsurance" value="Yes"/><space/><space/><space/>
+                     <span style="vertical-align:-12%;"><strong>Yes</strong><space/><input id="AnticipatedInsurance1" type="radio" name="AnticipatedInsurance" value="Yes"/><space/><space/><space/>
 
                      <strong>No</strong><space/><input id="AnticipatedInsurance2" type="radio" name="AnticipatedInsurance" value="No"/></span>
                      <!--<input id="AnticipatedInsurance2" type="radio" name="AnticipatedInsurance" value="No" onclick="reloadPage()"/>-->
                      </div>
 
                      </td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"></td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"> </td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"> </td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">County Threshold / is this grand total needed here?</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">Met?</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">Local Dec</td>
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">DSO Audit Log</td>
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">Related Info</td>
 
                   </tr>
                   <tr class="agencytemplate_tableheader">
                      <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression></td>
+
                      
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>A</strong><br/>Debris Removal</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>B</strong><br/>Police / EMS</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>C</strong><br/>Roads &amp; Bridges</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>D</strong><br/>Water Facilites</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>E</strong><br/>Buildings</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>F</strong><br/>Public Utility Systems</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center"><strong>G</strong><br/>Other</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">Area / <span class="textYellow">County</span> Totals</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">County Threshold / is this grand total needed here?</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">Met?</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center">Local Dec</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">A</strong><br/>Debris Removal</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">B</strong><br/>Police / EMS</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">C</strong><br/>Roads &amp; Bridges</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">D</strong><br/>Water Facilites</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">E</strong><br/>Buildings</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">F</strong><br/>Public Utility Systems</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">G</strong><br/>Other</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">A - G</strong><br/>Totals</td>
+                     
                   </tr>
                </tbody>
             </table>
@@ -739,7 +773,7 @@ legend{
       
       |<value-of select="format-number(@catSumTotal, '###0.00')"></value-of><space/>
 
-      |<if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div style=""><value-of select="@declarationIssued"/></div></if>
+      |<if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div class="yellowCell"><value-of select="@declarationIssued"/></div></if>
 
       |NomNom16
 
@@ -805,6 +839,10 @@ align='right'
   var metClass="NoClass";
   if(comma(data[16])==='Yes'){
    metClass="rowGreen";
+  } else if (comma(data[16])==='No'){
+    metClass="cellYellow";
+  } else if (comma(data[16])==='(N/A)'){
+    metClass="cellOrange";
   }
   if(data[21]=='1'){
   
@@ -989,6 +1027,7 @@ var totalRowVar=function(i){
     var rr = 0;
 
 if(masterData[i][19]&gt;='1'){
+  //alert("rowRed! 1031");
   var rr = "rowRed";
 } else {
   var rr = "rowReg";
@@ -1072,11 +1111,11 @@ for(var i=0; i&lt;masterData.length;i++){
     a[8]+=parseFloat(isNull(masterData[i][14]));
     a[9]+=parseFloat(isNull(masterData[i][19]));
     a[12]+=parseFloat(isNull(masterData[i][21]));
-    if(masterData[i][19]!="1"){
+    /*if(masterData[i][19]!="1"){
       a[10]=false;
       a[11]+=parseFloat(isNull(masterData[i][20]));
       
-    }
+    }*/
     
     //a[10]+=parseFloat(isNull(masterData[i][19]));
   }
@@ -1486,7 +1525,9 @@ console.log(window.parent.anticpatedInsuranceValuePlaceHolder)
    /* var ddcFilter=document.getElementById('ddcFilter').getElementsByTagName('select')[0];
     $(ddcFilter).addClass('form-control');*/
     var a = document.getElementsByClassName('greenCell');
-for(var i=0; i&lt;a.length;i++){a[i].parentElement.style.backgroundColor="#32D632";}/*Local Dec*/
+for(var i=0; i&lt;a.length;i++){a[i].parentElement.style.backgroundColor="#00e673";}/*Local Dec*/
+  var b = document.getElementsByClassName('yellowCell');
+for(var i=0; i&lt;b.length;i++){b[i].parentElement.style.backgroundColor="#ffff00";}
    //totalGrandRowVar();
  //checkTheRadioAIY();
 

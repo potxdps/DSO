@@ -219,19 +219,19 @@ $("#saveBtn2").click(function() {
                     addOption(cityList, "Unincorporated Areas", true);
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
                         addOption(cityList, cityMatrix[k][1], false);
-                        
                     }
-                    
-                }
-                else {
+                } else {
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
-                    addOption(cityList, "Unincorporated Areas", true);
+                    if(document.getElementById('jurisdictionType2').checked ==true){
+                      addOption(cityList, "Unincorporated Areas", true);
+                    } else {
+                     //do nothing
+                    }
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
 
                         if (cityMatrix[k][0] === this.options[this.selectedIndex].text) {
                             addOption(cityList, cityMatrix[k][1], false);
-                            
                         }
                     }
                 }

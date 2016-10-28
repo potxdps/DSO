@@ -3,3 +3,49 @@ Insurance totals Yes/No working
 
 10-20-16
 Replace demo board on Texas server with new version that is subscribed to Olympus DEV - DSO.
+
+
+Time Zones
+
+
+Verify the following settings in the WebEOC Configuration Tool on each WebEOC server.
+
+Go to Start > All Programs > ESi Software > WebEOC 7 > EOC Professional > Configuration Tool.
+
+In the WebEOC Configuration tool window, select the Date and Time tab.
+
+Are you in the right time zone?
+
+
+
+--------------------------------------------
+
+
+document.getElementById('county').onchange = function () {
+                sortOrderCounty(this.options[this.selectedIndex].text);
+                var cityList = document.getElementById("city");
+                if (this.options[this.selectedIndex].text == 'Select One') {
+                    removeOptions(cityList);
+                    addOption(cityList, "Select One", false);
+                    addOption(cityList, "Unincorporated Areas", true);
+                    for (var k = 0; k &lt; cityMatrix.length; k++) {
+                        addOption(cityList, cityMatrix[k][1], false);
+                    }
+                } else {
+                    removeOptions(cityList);
+                    addOption(cityList, "Select One", false);
+                    if(document.getElementById('jurisdictionType2').checked ==true){
+                      addOption(cityList, "Unincorporated Areas", true);
+                    } else {
+                     //do nothing
+                    }
+                    for (var k = 0; k &lt; cityMatrix.length; k++) {
+
+                        if (cityMatrix[k][0] === this.options[this.selectedIndex].text) {
+                            addOption(cityList, cityMatrix[k][1], false);
+                        }
+                    }
+                }
+            }
+
+            ------------------------------------
