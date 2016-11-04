@@ -457,19 +457,21 @@ legend {
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">County / City
                         
                         
-                        <br />(Click to Edit Bubble Input)
+                        <br />(Click to Edit)
                      
                      
                      </td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Incident Period</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Disaster Declaration
+              <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">Disaster Dec
                         
                         
                         <br />(X)
                      
                      
-                     </td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Disaster<br/>Declaration<br/>Issued<br/>/ Rec'd</td>
+                     </td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Local<br/>Dec<br/>/ Rec'd (X)</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date State<br/>Dec<br/>/ Rec'd (X)</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Fed<br/>Dec<br/>/ Rec'd (X)</td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">ACK Letters Sent 1
                         
                         
@@ -477,9 +479,9 @@ legend {
                      
                      
                      </td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Assistance Requested</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Asst Req'd</td>
               <td selected="false" colSpan="1" width="" rowSpan="2" align="center">DSO</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date Impacted Counties DSO Rec'd
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Date DSO Rec'd
                         
                         
                         <br />(X)
@@ -493,22 +495,22 @@ legend {
                      
                      
                      </td>
-              <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Individual Assistance Dates</td>
-              <td selected="false" colSpan="3" width="" rowSpan="1" align="center">Public Assistance Dates</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Bubble Input Audit Log</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">IA PDA FEMA</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PA PDA FEMA</td>
+              <td selected="false" colSpan="2" width="" rowSpan="1" align="center">IA Dates</td>
+              <td selected="false" colSpan="2" width="" rowSpan="1" align="center">PA Dates</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Bubble Audit Log</td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">IA PDA FEMA</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PA PDA FEMA</td>-->
             </tr>
             <tr class="agencytemplate_tableheader">
               <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0))</expression>
                      
                      </td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Scheduled</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Completed</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Scheduled</td>
-              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Completed</td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA SCHED</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA CMPL</td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA SCHED</td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA CMPL</td>
             </tr>
             <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
               <if test="1=0">
@@ -540,11 +542,17 @@ legend {
                   <!--<eocfield name="incidentPeriod" />-->
                   <eocfield table="Core" name="dateOfDisaster1" />- 
                            <eocfield table="Core" name="dateOfDisaster2" /></td>
-                <td colSpan="1" selected="false" width="" align="center">
+                <!--<td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="declarationIssued" />
-                </td>
+                </td>-->
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="dateDecRec" />
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="dateDecRecState" />
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="dateDecRecFederal" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="ack1" />
@@ -561,18 +569,18 @@ legend {
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="ack2" />
                 </td>
-                <td colSpan="1" selected="false" width="" align="center">
+                <!--<td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="iaPdaRequested" />
-                </td>
+                </td>-->
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="iaPDAScheduled" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="iaPDAComplete" />
                 </td>
-                <td colSpan="1" selected="false" width="" align="center">
+                <!--<td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="paPdaRequested" />
-                </td>
+                </td>-->
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="paPDAScheduled" />
                 </td>
@@ -584,12 +592,12 @@ legend {
                     <button class="btn btn-warning btn-xs">Bubble History</button>
                   </viewlink>
                 </td>
-                <td colSpan="1" selected="false" width="" align="center">
+                <!--<td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="femaCheckboxV1" />
                 </td>
                 <td colSpan="1" selected="false" width="" align="center">
                   <eocfield name="femaCheckboxV2" />
-                </td>
+                </td>-->
               </tr>
             </eocrepeatallrecords>
           </tbody>

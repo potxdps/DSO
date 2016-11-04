@@ -13,6 +13,7 @@
 .form-controlLG{width:100px;}
     </style>
       <script type="text/javascript">
+      var countyArrayCopy = [];
       var cityArrayCopy = [];
     var currentStatus;
     var sortSelectLists=function() {
@@ -69,24 +70,35 @@
 };
 
 function selectOptionsIfExistsInArray() {
+                    var textAreaValueCO = $("#countyTmp").val();
                     var textAreaValue = $("#cityTmp").val();
+                    var textAreaValueSplitCO = textAreaValueCO.split(",");
                     var textAreaValueSplit = textAreaValue.split(",");
+                    countyArrayCopy = textAreaValueSplitCO;
                     cityArrayCopy = textAreaValueSplit;
                     //console.log(cityArrayCopy);
                     //console.log("selectOptionsIfExistsInArray");
+                    $("#county").val("");
                     $("#city").val("");
+                    for(var i = 0; i &lt; countyArrayCopy.length; i++) {
+
+                        $("[name = county] option").filter(function() {
+                            return($(this).text() === countyArrayCopy[i]);
+                        }).prop("selected", true);
                     for(var i = 0; i &lt; cityArrayCopy.length; i++) {
 
                         $("[name = city] option").filter(function() {
                             return($(this).text() === cityArrayCopy[i]);
                         }).prop("selected", true);
 
+                        $("#county").val("");
                         $("#cityTmp").val("");
                         $("#city").focus();
                     }
                 }
 
                 function copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray() {
+                    document.getElementById("countyTmp").value += $("#county").val();
                     document.getElementById("cityTmp").value += $("#city").val();
                     console.log("citycounty choices recorded for edit");
                 }
@@ -169,47 +181,15 @@ scribe.fields4History=[
   $("#city").prop("disabled", true);
   if ('<xsl:value-of select="/data/@dataid"/>'!=0){
      $("#county").prop("disabled", false);
-                $("#city").prop("disabled", false);
-
-                //startOf: doing stuff on update/edit
-                var countySelectListOnUpdate = document.getElementById("county");
-                sortOrderCounty(countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text);
-                var cityList = document.getElementById("city");
-                if (countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text == 'Select One') {
-                  console.log('doing stuff on update/edit');
-                    removeOptions(cityList);
-                    addOption(cityList, "Select One", false);
-                    addOption(cityList, "Unincorporated Areas", true);
-                    for (var k = 0; k &lt; cityMatrix.length; k++) {
-                        addOption(cityList, cityMatrix[k][1], false);
-                    }
-                } else {
-                  console.log('else doing stuff on update/edit');
-                    removeOptions(cityList);
-                    addOption(cityList, "Select One", false);
-                    addOption(cityList, "Unincorporated Areas", true);
-                    for (var k = 0; k &lt; cityMatrix.length; k++) {
-
-                        if (cityMatrix[k][0] === countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text) {
-                            addOption(cityList, cityMatrix[k][1], false);
-                        }
-                    }
-                }
-
-
-                setTimeout(function() {
-                  
-                    selectOptionsIfExistsInArray();
-                }, 1000);
-                console.log('timeout runs');
+      $("#city").prop("disabled", false);
   }
 
 //if data is not equal to 0
 if (document.getElementsByName('dataid')[0].value!=''){
-  /*setTimeout(function() {
+  setTimeout(function() {
                   
                     selectOptionsIfExistsInArray();
-                }, 1000);*/
+                }, 1000);
  
   updateDateTime();
  
@@ -2132,8 +2112,11 @@ $(document).ready(function(){
                         <option value="Zavalla">Zavalla</option>
                      </select>
                      <br/>
-                     <div class="form-group form-inline" style="display:none">
+                     <div class="form-group form-inline" style="display:nonea">
               <textarea id="cityTmp" name="cityTmp" />
+            </div>
+            <div class="form-group form-inline" style="display:nonea">
+              <textarea id="countyTmp" name="countyTmp" />
             </div>
                    _______________________________
                   </div>
