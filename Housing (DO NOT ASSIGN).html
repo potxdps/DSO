@@ -235,7 +235,7 @@ legend{
                   <eocfield name="numberMinorDamage"/>
                   <eocfield name="numberMajorDamage"/>
                </if>
-               <span style="font-size:10pt;display:nonea" class="data" name="data">
+               <span style="font-size:10pt;display:none" class="data" name="data">
                   <value-of select="@sortCountyOrder"/>|
           
                   <value-of select="@sortCityOrder"/>|<if test="@totalJurisictionsexpressionHousing!='0'"><div align="center"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing">(case when ((totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0')) then 1 else 0 end)</expression></div></if>|
