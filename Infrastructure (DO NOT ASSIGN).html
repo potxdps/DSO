@@ -18,19 +18,21 @@
 </script>
    <style type="text/css">
   body{background-color:#d1d2d4;color:#000;font:normal 0.9em arial;margin:1.0em;}
-  div.container{border:solid 1px #0069aa; width:100%;}
-  div.content{margin:1em; width:99%;}
+  div.container{border:solid 1px #0069aa; width:100%;} /*controls the outermost black border boundry*/
+  div.content{margin:1em; width:99%;} /*Squish this to fit inside a PDF*/
+  div.content2{margin:1em; width:99%;}
   table.heading{border:solid 1px;border-collapse:collapse;empty-cells:show;margin:0;padding:3px;width:100%;}      table.heading td, table.heading th{padding:0.1em 0.5em 0.1em 0.5em;}
   table.heading th{text-align:center;}
   #tdFilter{text-align:right;}
   #tdBoard{text-align:center;}
-  table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
+  table.display{border-collapse:collapse;border:solid 1px;width:99%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
   table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
-  table.display td{border-top:solid 1px;border-color:#ccc;}
+  table.display td{border-top:solid 3px;border-color:#ccc;}
   .rowYellow {background-color:#ffffb3;}
   .rowBlue {background-color:#ccebff;}
-  .rowRed {background-color:#FF9999;}
+  .rowRed {background-color:#FFCCCC;}
   .lightRowRed {background-color:#FFb3b3;}
+  .rowRedTotal {background-color:#FF8C8C;}
   .rowGray {background-color: #b7bfc8;}
 .rowReg {}
 .rowGreen{background-color:#00e673;}
@@ -39,12 +41,65 @@
 .cellOrange {background-color:#ff751a;}
 .fieldsetButtons { 
     display:inline-block;
+    /*margin-top: 5px;*/
 
    }
 legend{
    font-size: 10pt;
 }
+.tableWords {
+  font-size: 10pt;
+}
 
+.narrowColumns50px{
+  max-width: 50px;
+  /*word-break: break-all;
+  word-wrap: break-word;*/
+}
+
+.narrowDateColumns160px{
+  max-width: 160px;
+  /*word-break: break-all;
+  word-wrap: break-word;*/
+}
+.narrowColumns200px{
+  max-width: 200px;
+  /*word-break: break-all;
+  word-wrap: break-word;*/
+}
+
+@media print and (max-width: 800px)
+{ 
+  
+  div.container{border:solid 1px #0069aa; width:100%;}
+  table.display{border-collapse:collapse;border:solid 1px;width:95%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
+  table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
+  table.display td{border-top:solid 3px;border-color:#ccc;}
+@page {
+      margin: 1em;   
+    }
+    
+
+
+  table { page-break-after:auto }
+  tr    { page-break-inside:avoid; page-break-after:auto }
+  td    { page-break-inside:avoid; page-break-after:auto }
+  thead { display:table-header-group }
+  tfoot { display:table-footer-group }
+  div   { page-break-inside:avoid; }  
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+.btnMargin {
+  /*margin:5px;*/
+}
+
+.topBtnMargin {
+  top-margin:5px;
+}
 </style>
    </head>   
    <body>
@@ -62,7 +117,7 @@ legend{
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h3>(Infrastructure / PA)</h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button></span></td>
+                  <td id="tdBoard" colSpan="2" selected="false"><strong><i>UNVETTED and VETTED</i></strong> - Local Estimate of Damage to Public Property By Category - <strong><i>UNVETTED and VETTED</i></strong><br /><h3>(Infrastructure / PA)</h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button><space/><span id="pdfButtons" class="hidea"><pdflink type="button" class="btn btn-warning" orientation="landscape" enablejs="false">PDF</pdflink></span><space/><span><a href="javascript:window.print()"><button type="button" class="btn btn-info btn">Print</button></a></span></span></td>
                </tr>
             </tbody>
          </table>
@@ -97,27 +152,27 @@ legend{
   
 </div>
          <div class="content">
-              <div>
+              <div class="no-print">
          <fieldset class="fieldsetButtons"><legend>Operations</legend>
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
-         <!--<button type="button" class="btn active">View DSO List</button>-->
+         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">DSO List</viewlink>
+         <!--<button type="button" class="btn active">DSO List</button>-->
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
-            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
+         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">Recovery Summary</viewlink>
+            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">DSO List</viewlink>-->
          <space /><space />
-         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">Housing / IA</viewlink>
          <space/><space/>
-         <button type="button" class="btn active">View Infrastructure / PA</button>
-         <!--<viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>-->
+         <button type="button" class="btn active">Infrastructure / PA</button>
+         <!--<viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">Infrastructure / PA</viewlink>-->
          <space /><space /><space /><space />
          <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
         <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
         <fieldset class="fieldsetButtons"><legend>Recovery</legend>
         <space/><space/>
-        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">Recovery IA</viewlink>
         <space /><space />
-        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink></fieldset>
+        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">Recovery PA</viewlink></fieldset>
         <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
         <fieldset class="fieldsetButtons"><legend>DSO</legend>
         <space/><space/>
@@ -138,36 +193,37 @@ legend{
                   <select name="webeocIncident" id="webeocIncident" class="form-control" onchange="filterByIncident.incidentListActionOnChange();"/></div>
                <space/><space/><space/><space/><space/><space/>
                <span id="searchDIV">
-                  <search exact="false" range="false" rangetext="false">
+                  <search exact="false" range="false" rangetext="false"  class="btnMargin">
                      <field name="county"/>
                      <field name="city"/>
+                     <field name="otherValue"/>
                   </search>
-                  <clearsearchbutton/>
+                  <clearsearchbutton class="btnMargin"/>
                   <span style="display: none;" id="incidentNameSearchSPAN">
                      <search field="webeocIncident" clearsearch="true"/>
                   </span>
                </span>
             </div>
             <div/><br/>
-            <table id="mainTable" class="table display">
+            <table id="mainTable" class="content table display">
                <tbody>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Total Jurisdictions</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">County / City
-                        <br/>(Click to Edit DSO)
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center" class="narrowColumns50px"><span class="tableWords">Total JDX</span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" class="narrowColumns200px"><span class="tableWords">County / City
+                        <br/>(Click to Edit DSO)</span>
                      </td>
                      <td selected="false" colSpan="8" width="" rowSpan="1" style="font-weight: bold;" align="center" top-align="center">Public Assistance Categories</td>
                      
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">County Threshold</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Met?</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">Local Dec</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">$$'s towards State Threshold in gray</span><br/>--------------<br/><span style="color:white"><span class="tableWords">$$'s towards County Threshold in yellow or red</span></span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">TX Met?</span><br/>-----<br/><span class="tableWords">CO Met?</span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Disaster Dec</span></td>
                      
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center">DSO Audit Log</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">DSO Audit Log</span></td>
                      <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">Related Info</td>-->
 
                   </tr>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression></td>
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><span class="tableWords"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression></span></td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">A</strong><br/>Debris Removal</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">B</strong><br/>Police / EMS</td>
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">C</strong><br/>Roads &amp; Bridges</td>
@@ -188,6 +244,10 @@ legend{
                   <eocfield name="jurisdictionType"/>
                   <eocfield name="county"/>
                   <eocfield name="city"/>
+                  <eocfield name="city2"/>
+
+                  <eocfield name="otherValue"/>
+                  <eocfield name="dsoSelected"/>
                   <eocfield name="repairCostDebrisClearance"/>
                   <eocfield name="repairCostEmergency"/>
                   <eocfield name="repairCostRoadPaved"/>
@@ -227,14 +287,26 @@ legend{
                   <eocfield name="repairCost14"/>
                   <eocfield name="repairCost15"/>
                   <eocfield name="declarationIssued"/>
+                  
                </if>
+               <relatedlist table="Supplemental">
+               <if test="1=0">
+                      <eocfield table="Supplemental" type="rl" name="dateDecRecState"/>
+                      <eocfield table="Supplemental" type="rl" name="dateDecRecFederal"/>
+                      <eocfield table="Supplemental" type="rl" name="declarationIssuedFederal"/>
+                      <eocfield table="Supplemental" type="rl" name="declarationIssuedState"/>
+                      </if>
+               </relatedlist>
+               
                <span style="display:none;font-weight: normal; font-size: 10pt;" class="data" name="data">
                   <value-of select="@sortCountyOrder"/>|
           
                   <value-of select="@sortCityOrder"/>|<if test="@totalJurisictionsexpressionInfra1!='0'"><div align="center">
                   <expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra1">(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression></div></if>|
                   <value-of select="@jurisdictionType"/>|
-                  <viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></span></viewlink><space/>|<value-of select="@county"/>|<value-of select="@city"/>|<expression useboardlevelfilters="true" name="catASum">
+                  <viewlink name="Input (DO NOT ASSIGN)"><span class="narrowColumns200px" style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county" /></b> /
+                        <value-of select="@city2" /><if test="@otherValue!=''"> - <value-of select="@otherValue" /></if><if test="@dsoSelected!=''"> / <value-of select="@dsoSelected" /></if></if><if test="@jurisdictionType='City'"><value-of select="@county" /> /
+                        <b><value-of select="@city2" /></b><if test="@otherValue!=''"> - <value-of select="@otherValue" /></if><if test="@dsoSelected!=''"> / XX</if></if></span></viewlink><space/>|<value-of select="@county"/>|<value-of select="@city"/>|<expression useboardlevelfilters="true" name="catASum">
       ((case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
       ((case when cat02 = 'A' then isNull(cast(repairCost02 as money),0) else 0 end)-(case when cat02 = 'A' then isNull(cast(insurance02 as money),0) else 0 end))+
       ((case when cat03 = 'A' then isNull(cast(repairCost03 as money),0) else 0 end)-(case when cat03 = 'A' then isNull(cast(insurance03 as money),0) else 0 end))+
@@ -467,7 +539,26 @@ legend{
       ((case when cat15 = 'G' then isNull(cast(repairCost15 as money),0) else 0 end)-(case when cat15 = 'G' then isNull(cast(insurance15 as money),0) else 0 end))+
       ((cast(repairCostOther as money))-(cast(insuranceOther as money)))
       </expression>|
-      <if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div class="yellowCell"><value-of select="@declarationIssued"/></div></if>|NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>|<!--<viewlink name="Inbetween (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">Supplemental Info</button></viewlink>-->|<expression useboardlevelfilters="true" name="repairCostVSinsurance">(case when (repairCostDebrisClearance!='' and insuranceDebrisClearance='') or (repairCostEmergency!='' and insuranceEmergency='') or (repairCostRoadPaved!='' and insuranceRoadPaved='') or (repairCostWaterControlFacilities!='' and insuranceWaterControlFacilities='') or (repairCostBuildingsEquipment!='' and insuranceBuildingsEquipment='') or (repairCostUtilitySystems!='' and insuranceUtilitySystems='') or (repairCostOther!='' and insuranceOther='') or (cat01!='' and insurance01='') or (cat02!='' and insurance02='') or (cat03!='' and insurance03='') or (cat04!='' and insurance04='') or (cat05!='' and insurance05='') or (cat06!='' and insurance06='') or (cat07!='' and insurance07='') or (cat08!='' and insurance08='') or (cat09!='' and insurance09='') or (cat10!='' and insurance10='') or (cat11!='' and insurance11='') or (cat12!='' and insurance12='') or (cat13!='' and insurance13='') or (cat14!='' and insurance14='') or (cat15!='' and insurance15='') then 1 else 0 end)</expression>|END</span><!--and this and that and this and that whole row--> <!--then another-->
+      <span style="display: none;">
+          <relatedexpression name="declarationIssuedStateTest" table="Supplemental">sum(case when declarationIssuedState='Yes' then 1 else 0 end)</relatedexpression>
+          <relatedexpression name="declarationIssuedFederalTest" table="Supplemental">sum(case when declarationIssuedFederal='Yes' then 1 else 0 end)</relatedexpression>
+        </span>
+
+        <if test="@declarationIssued='Yes'">
+            <span class="greenCell">Local<br/></span>
+        </if>
+
+        <if test="@declarationIssuedStateTest > '0'" table="Supplemental">
+            <span class="greenCell">State</span>
+        </if>
+
+        <if test="@declarationIssuedFederalTest > '0'" table="Supplemental">
+            <span class="greenCell"><br/>Federal</span>
+        </if> 
+
+
+      
+      |NomNom16|<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>|18|<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>|20|<expression useboardlevelfilters="true" name="repairCostVSinsurance">(case when (repairCostDebrisClearance!='' and insuranceDebrisClearance='') or (repairCostEmergency!='' and insuranceEmergency='') or (repairCostRoadPaved!='' and insuranceRoadPaved='') or (repairCostWaterControlFacilities!='' and insuranceWaterControlFacilities='') or (repairCostBuildingsEquipment!='' and insuranceBuildingsEquipment='') or (repairCostUtilitySystems!='' and insuranceUtilitySystems='') or (repairCostOther!='' and insuranceOther='') or (cat01!='' and insurance01='') or (cat02!='' and insurance02='') or (cat03!='' and insurance03='') or (cat04!='' and insurance04='') or (cat05!='' and insurance05='') or (cat06!='' and insurance06='') or (cat07!='' and insurance07='') or (cat08!='' and insurance08='') or (cat09!='' and insurance09='') or (cat10!='' and insurance10='') or (cat11!='' and insurance11='') or (cat12!='' and insurance12='') or (cat13!='' and insurance13='') or (cat14!='' and insurance14='') or (cat15!='' and insurance15='') then 1 else 0 end)</expression>|END</span><!--and this and that and this and that whole row--> <!--then another-->
             </eocrepeatallrecords>
          </div>
       </div>
@@ -495,7 +586,7 @@ align='right'
     Mets='N/A';cellOrange
   }*/
   //row.className('agencytemplate_tableentry');
-    row.innerHTML = '<td>'+data[2]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td class="'+metClass+'">'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'/*+'<td>'+comma(data[19])+'</td>'*//*+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'*/;//view femaCheck total cell[20] here, Below in row array in spot masterData[i][19]in comment area "adds regular row"
+    row.innerHTML = '<td>'+data[2]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td class="'+metClass+'">'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'+'<td>'+comma(data[19])+'</td>'+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'+'<td>'+comma(data[22])+'</td>';//view femaCheck total cell[20] here, Below in row array in spot masterData[i][19]in comment area "adds regular row"
     var rowColorClass =''
     if (((position/2) - Math.floor(position/2)) === 0) {rowColorClass='agencytemplate_tableroweven'} else {rowColorClass='agencytemplate_tablerowodd'};
 
@@ -513,6 +604,7 @@ for(var i = 0; i&lt;a.length;i++){
 return "";
 }
 threshold.TotalOnPage=0;
+//yesMets.TotalOnPage=0;
 
 var masterData =[];
 
@@ -543,27 +635,31 @@ x=parseFloat(x).toFixed(2);
 function trim(a) {
   return a.replace(/^\s+|\s+$|\&amp;nbsp;+$/g, '');
 }
-//this populates the table - t is main table itself, b is for the total row turning yellow or red based on femaCheck choice
+//this populates the table - b is class of row
 function popluateTable(){
 var t = document.getElementById('mainTable');
 
 var totalRowVar=function(i){
    var a = getTotalsFor(masterData[i][5]);
-   var b = "rowYellow";
+   //var b = "rowYellow"; // uncomment this and recomment below to stop county from turning red 
+   var b = a[10]===true?"rowRedTotal":"rowYellow"; // if all records in a county are fema checked yes make rowRedTotal
    var NaCount = parseFloat(a[12]) &gt; (0)?'Yes':'No';
 
       var thresholdResult = threshold(masterData[i][5]);
       var a = getTotalsFor(masterData[i][5]);
       threshold.TotalOnPage+=parseInt(thresholdResult);
+      //yesMets.TotalOnPage+=parseInt(getTotalsFor(yesMets)); //this does not work
       var Mets2 = parseFloat(a[8]) &gt;= parseFloat(thresholdResult)?'Yes':'No';
       var Mets = (NaCount=='Yes')?'N/A':Mets2;
+      var yesMets = (Mets2=='Yes')?'1':'0';
+
+      //var numYesMets = parseInt(yesMets.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
       var thresholdResultWithCommas = thresholdResult.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
       var Mets3 = "$ "+((thresholdResult-(a[8])).toFixed(2))+" MORE to REACH THRESHOLD ";
       var Mets33 = "$ "+(((a[8])-thresholdResult).toFixed(2))+" OVER the THRESHOLD ";
       var Mets4 = 0;
-      //var totalsAccurate = true;
       
       if((a[8]) &gt; thresholdResult){
         Mets4 = Mets33;
@@ -573,13 +669,12 @@ var totalRowVar=function(i){
 
       var Mets5 = Mets4.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-
       //yellow or red total rows
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],Mets5+"$ "+thresholdResultWithCommas,Mets2,a[15],"",a[19],"FEMA",NaCount],b);
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],Mets5+"$ "+thresholdResultWithCommas,Mets2,"",yesMets,"","FEMAS "+a[10],"NAS "+NaCount],b); //NaCount is not needed, nor filtered on Infrastructure page. Moved to Recovery PA and vetted PA pages
 };
   for(var i=0; i &lt; masterData.length;i++){
     //adds regular row
-    newRow(t,(t.rows.length),["","",masterData[i][2],masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],masterData[i][7],masterData[i][8],masterData[i][9],masterData[i][10],masterData[i][11],masterData[i][12],masterData[i][13],masterData[i][14],"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],""],masterData[i][19]=='1'?"rowRed":"rowReg");
+    newRow(t,(t.rows.length),["","",masterData[i][2],masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],masterData[i][7],masterData[i][8],masterData[i][9],masterData[i][10],masterData[i][11],masterData[i][12],masterData[i][13],masterData[i][14],"","",masterData[i][15],masterData[i][17],masterData[i][20],"FEMA "+masterData[i][19],""],masterData[i][19]=='1'?"rowRed":"rowReg");
     if(i==masterData.length-1){//if not the last row
  totalRowVar(i);
  console.log("reg");
@@ -597,15 +692,44 @@ var totalRowVar=function(i){
       console.log("else if");
     }
   }
+
+//below
+  //a[10] = Met grand totals
   //grand totals row and class of rowGray
   var a = getTotalsForAll();
-      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9]],"rowGray")
-      newRow(t,2,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],a[9]],"rowGray")
+  var grayAT = (a[8]).toFixed(2);
+  var stateTxThreshold = 40000000;
+  //var yesMets = (Mets2=='Yes')?'1':'0'; //always returns 1 not totals of 1s
+  var coMets = 0;
+  //var coMets = getTotalsForAll(yesMets); //nope
+  /*if(yesMets=='Yes'){
+    coMets = 1;
+  } else {
+    coMets = 0;
+  }*/
+      
+      var TXMets2 = parseFloat(grayAT) &gt;= parseFloat(stateTxThreshold)?'Yes':'No'; //are county totals >= to state threshold
+      var TXthresholdResultWithCommas = stateTxThreshold.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      //Below determines whether or not more is needed to reach state threshold or if reached and by how much over
+      var TXMets3 = "$ "+((stateTxThreshold-(grayAT)).toFixed(2))+" MORE to REACH (TX) THRESHOLD ";
+      var TXMets33 = "$ "+(((grayAT)-stateTxThreshold).toFixed(2))+" OVER the (TX) THRESHOLD ";
+      var TXMets4 = 0;
+      
+      if((grayAT) &gt; stateTxThreshold){
+        TXMets4 = TXMets33;
+      } else {
+        TXMets4 = TXMets3;
+      }
+
+      var TXMets5 = TXMets4.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],TXMets5+"$ "+TXthresholdResultWithCommas,TXMets2],"rowGray")
+      newRow(t,2,["","","","","Grand Totals","",a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8],TXMets5+"$ "+TXthresholdResultWithCommas,TXMets2,a[9]],"rowGray")
 }
 
 //this will get totals for the county totals row, for more spots, O's nned to added to var a as well as the parseFloat statements below
 function getTotalsFor(c){
-  var a =[0,0,0,0,0,0,0,0,0,0,true,0,0];
+  //var a =[0,0,0,0,0,0,0,0,0,0,true,0,0]; // commented out 110816 dont think this is needed will need for FEMA rows!!!!
+  var a =[0,0,0,0,0,0,0,0,0,false];
   var isNull = function(b){
     if(b==''||b==' ' ||b==0){return 0;}
     else return b;
@@ -618,17 +742,26 @@ for(var i=0; i&lt;masterData.length;i++){
     a[2]+=parseFloat(isNull(masterData[i][8]));
     a[3]+=parseFloat(isNull(masterData[i][9]));
     a[4]+=parseFloat(isNull(masterData[i][10]));
-    a[5]+=parseFloat(isNull(masterData[i][11]));
+    a[5]+=parseFloat(isNull(masterData[i][11])); //5
     a[6]+=parseFloat(isNull(masterData[i][12]));
     a[7]+=parseFloat(isNull(masterData[i][13]));
     a[8]+=parseFloat(isNull(masterData[i][14]));
     a[9]+=parseFloat(isNull(masterData[i][19]));
+    //edit below still
+    if(masterData[i][19]&gt;="1"){
+      a[10]=true;                                 
+    } else{
+      a[10]=false;
+    }
+
+    //commented out 110816 dont think this is needed
+    /*a[9]+=parseFloat(isNull(masterData[i][19]));
     a[12]+=parseFloat(isNull(masterData[i][21]));
     if(masterData[i][19]!="1"){
       a[10]=false;
       a[11]+=parseFloat(isNull(masterData[i][20]));
       
-    }
+    }*/ //commented out 110816 dont think this is needed
     
     //a[10]+=parseFloat(isNull(masterData[i][19]));
   }
@@ -650,13 +783,16 @@ for(var i=0; i&lt;masterData.length;i++){
     a[2]+=parseFloat(isNull(masterData[i][8]));
     a[3]+=parseFloat(isNull(masterData[i][9]));
     a[4]+=parseFloat(isNull(masterData[i][10]));
-    a[5]+=parseFloat(isNull(masterData[i][11]));
+    a[5]+=parseFloat(isNull(masterData[i][11]));//5
     a[6]+=parseFloat(isNull(masterData[i][12]));
     a[7]+=parseFloat(isNull(masterData[i][13]));
     a[8]+=parseFloat(isNull(masterData[i][14]));
+    a[10]+=parseFloat(isNull(masterData[i][16])); //Met grand totals THIS row is not right yet
    
 }
  a[9]=parseFloat(threshold.TotalOnPage);
+ //a[9]=parseFloat(yesMets); nope
+ //a[11]=parseFloat(yesMets.TotalOnPage); nope
 console.log(a);
 return a;
 

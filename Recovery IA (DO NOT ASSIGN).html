@@ -29,10 +29,12 @@
   table.display td{border-top:solid 1px;border-color:#ccc;}
   .rowYellow {background-color:#ffffb3;}
   .rowBlue {background-color:#ccebff;}
-  .rowRed {background-color:#FF9999;}
+  .rowRed {background-color:#FFCCCC;}
+  .rowRedTotal {background-color:#FF8C8C;}
   .lightRowRed {background-color:#FFb3b3;}
   .rowGray {background-color: #b7bfc8;}
 .rowReg {}
+.rowRedExclude{display: none;}
 .rowGreen{background-color:#00e673;}
 .cellYellow{background-color:#ffff00;}
 .textYellow {color:#ffff99;}
@@ -47,6 +49,9 @@
    }
 legend{
    font-size: 10pt;
+}
+.tableWords {
+  font-size: 10pt;
 }
 </style>
    </head>   <body>
@@ -65,9 +70,9 @@ legend{
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="2" selected="false" align="center">Recovery IA Summary
+                  <td id="tdBoard" colSpan="2" selected="false" align="center"><strong><i>UNVETTED</i></strong> - Recovery IA Summary - <strong><i>UNVETTED</i></strong>
                      
-                     <br/><h3>(Housing / IA)<br/></h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button></span><h5>AFF = Affected<space/><space/><space/><space/>|<space/><space/><space/><space/>MI = Minor<space/><space/><space/><space/>|<space/><space/><space/><space/>MA = Major<space/><space/><space/><space/>|<space/><space/><space/><space/>DS = Destroyed<space/><space/><space/><space/>|<space/><space/><space/><space/>% IS = % Covered by Insurance</h5>
+                     <br/><h3>(Housing / IA)<br/></h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button><space/><span id="pdfButtons" class="hide"><pdflink type="button" class="btn btn-warning" orientation="landscape">PDF</pdflink></span></span><h5>AFF = Affected<space/><space/><space/><space/>|<space/><space/><space/><space/>MI = Minor<space/><space/><space/><space/>|<space/><space/><space/><space/>MA = Major<space/><space/><space/><space/>|<space/><space/><space/><space/>DS = Destroyed<space/><space/><space/><space/>|<space/><space/><space/><space/>% IS = % Covered by Insurance</h5>
                   </td>
                </tr>
             </tbody>
@@ -106,28 +111,33 @@ legend{
            <div>
          <fieldset class="fieldsetButtons"><legend>Operations</legend>
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
-         <!--<button type="button" class="btn active">View DSO List</button>-->
+         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">DSO List</viewlink>
+         <!--<button type="button" class="btn active">DSO List</button>-->
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
-            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
+         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">Recovery Summary</viewlink>
+            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">DSO List</viewlink>-->
          <space /><space />
-         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">Housing / IA</viewlink>
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">Infrastructure / PA</viewlink>
          <space /><space /><space /><space />
          <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
         <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
         <fieldset class="fieldsetButtons"><legend>Recovery</legend>
         <space/><space/>
-        <button type="button" class="btn active">View Recovery IA</button>
-        <!--<viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>-->
+        <button type="button" class="btn active">Recovery IA</button>
+        <!--<viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">Recovery IA</viewlink>-->
         <space /><space />
-        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink></fieldset>
+        <viewlink class="btn btn-info" type="button" name="Vetted Recovery IA (DO NOT ASSIGN)">Vetted Recovery IA</viewlink>
+        <space /><space />
+        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">Recovery PA</viewlink>
+        <space/><space/>
+        <viewlink class="btn btn-info" type="button" name="Vetted Recovery PA (DO NOT ASSIGN)">Vetted Recovery PA</viewlink></fieldset>
         <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
         <fieldset class="fieldsetButtons"><legend>DSO</legend>
         <space/><space/>
-        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
+        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink><space/><space/>
+        <viewlink class="btn btn-warning" type="button" name="Master Input (DO NOT ASSIGN)">+ Master County Totals</viewlink></fieldset>
         </div><hr/>
             <div class="form-inline" id="resourceFilters" style="display: inline-block;">
                <filterlistdropdown field="county" list="Counties - Texas" defaulttext="All Counties" class="form-control"/>
@@ -158,6 +168,7 @@ legend{
                   <search exact="false" range="false" rangetext="false">
                      <field name="county"/>
                      <field name="city"/>
+                     <field name="otherValue"/>
                   </search>
                   <clearsearchbutton/>
                   <span style="display: none;" id="incidentNameSearchSPAN">
@@ -170,51 +181,51 @@ legend{
             <table id="mainTable" class="table display">
                <tbody>
                   <tr class="agencytemplate_tableheader">
-              <td selected="false" colSpan="1" rowSpan="1" width="" align="center">Total Jurisdictions</td>
-              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">County / City
+              <td selected="false" colSpan="1" rowSpan="1" width="" align="center"><span class="tableWords">Total JDX</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">County / City
                         
                         
-                        <br />(Click to Edit)
+                        <br />(Click to Edit)</span>
                      
                      
                      </td>
-             <td selected="false" colSpan="5" width="" rowSpan="1" align="center">Single Family Homes</td>
-                     <td selected="false" colSpan="5" width="" rowSpan="1" align="center">Mobile Homes</td>
-                     <td selected="false" colSpan="5" width="" rowSpan="1" align="center">Multi-Family Homes</td>
-                     <td selected="false" colSpan="4" width="" rowSpan="1" align="center">Totals</td>
-                     <td selected="false" colSpan="2" width="" rowSpan="1" align="center">Business Loss / Economic Impact</td>
+             <td selected="false" colSpan="5" width="" rowSpan="1" align="center"><span class="tableWords">Single Family Homes</span></td>
+                     <td selected="false" colSpan="5" width="" rowSpan="1" align="center"><span class="tableWords">Mobile Homes</span></td>
+                     <td selected="false" colSpan="5" width="" rowSpan="1" align="center"><span class="tableWords">Multi-Family Homes</span></td>
+                     <td selected="false" colSpan="4" width="" rowSpan="1" align="center"><span class="tableWords">Totals</span></td>
+                     <td selected="false" colSpan="2" width="" rowSpan="1" align="center"><span class="tableWords">Business Loss / Economic Impact</span></td>
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center">
-                        DSO Audit Log
+                        <span class="tableWords">DSO Audit Log</span>
                      </td>
                      <td selected="false" colSpan="1" width="" rowSpan="2" align="center">
-                        Related Info
+                        <span class="tableWords">Related Info</span>
                      </td>
             </tr>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing2">sum(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0') then 1 else 0 end)</expression>
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><span class="tableWords"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionHousing2">sum(case when (totalsAffected!='' and totalsAffected!='0.00') or (totalsMinorDamage!='' and totalsMinorDamage!='0.00') or (totalsMajorDamage!='' and totalsMajorDamage!='0.00') or (totalsDestroyed!='' and totalsDestroyed!='0.00') or (numberMinorDamage!='' and numberMinorDamage!='0') or (numberMajorDamage!='' and numberMajorDamage!='0') then 1 else 0 end)</expression></span>
                      
                      </td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">DS</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">% IS</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">DS</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">% IS</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">DS</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">% IS</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">AFF</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">DS</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MI</td>
-                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center">MA</td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">AFF</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MI</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MA</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">DS</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">% IS</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">AFF</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MI</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MA</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">DS</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">% IS</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">AFF</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MI</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MA</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">DS</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">% IS</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">AFF</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MI</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MA</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">DS</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MI</span></td>
+                     <td selected="false" rowSpan="1" colSpan="1" width="" align="center"><span class="tableWords">MA</span></td>
                   </tr>
                </tbody>
             </table>
@@ -225,6 +236,10 @@ legend{
                   <eocfield name="jurisdictionType"/>
                   <eocfield name="county"/>
                   <eocfield name="city"/>
+                  <eocfield name="city2" />
+                  <eocfield name="otherValue"/>
+                  <eocfield name="dsoSelected" />
+                  <eocfield name="dsoYesNo" />
                   <eocfield name="sfhCovByInsurance" />
                   <eocfield name="mhCovByInsurance" />
                   <eocfield name="mfuCovByInsurance" />
@@ -256,21 +271,9 @@ legend{
                   <value-of select="@jurisdictionType"/>|
             
                   
-                  <viewlink name="Input (DO NOT ASSIGN)">
-                  <span style="color:#111111">
-                     <if test="@jurisdictionType='County'">
-                        <b>
-                           <value-of select="@county"/>
-                        </b> /
-                        <value-of select="@city"/>
-                     </if>
-                     <if test="@jurisdictionType='City'">
-                        <value-of select="@county"/> /
-                        <b>
-                           <value-of select="@city"/>
-                        </b>
-                     </if></span>
-                  </viewlink>|
+                  <viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county" /></b> /
+                        <value-of select="@city2" /><if test="@otherValue!=''"> - <value-of select="@otherValue" /></if><if test="@DSOisSelected!=''"> / <value-of select="@DSOisSelected" /> </if></if><if test="@jurisdictionType='City'"><value-of select="@county" /> /
+                        <b><value-of select="@city2" /></b><if test="@otherValue!=''"> - <value-of select="@otherValue" /></if><if test="@DSOisSelected!=''"> / <value-of select="@DSOisSelected" /> </if></if></span></viewlink>|
             
                   
                   <value-of select="@county"/>|
@@ -446,14 +449,19 @@ var firstGrandTotal = getTotalsForAll();
 
 var totalRowVar=function(i){
    var a = getTotalsFor(masterData[i][5]);
-   var b = a[24]===true?"rowRed":"rowYellow";
+   var b = a[23]===true?"rowRedTotal":"rowYellow";
 
       //alert("yellow rows");
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],"%",a[6],a[7],a[8],a[9],"%",a[11],a[12],a[13],a[14],"%",a[16],a[17],a[18],a[19],a[20],a[21],"","",a[23]],b);//[x] is hidden and contains the femaCheck totals for the county
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],a[1],a[2],a[3],a[4],"%",a[6],a[7],a[8],a[9],"%",a[11],a[12],a[13],a[14],"%",a[16],a[17],a[18],a[19],/*MI*/a[20],/*MA*/a[21],"","","FEMAS "+a[23],a[22]],b);//[x] is hidden and contains the femaCheck totals for the county
 };
   for(var i=0; i &lt; masterData.length;i++){//alert("won!");
-      
-    newRow(t,(t.rows.length),masterData[i]);//alert("new row");
+      if(masterData[i][30]&gt;='1'){
+  
+  var bb = "rowRedExclude";//hides row based on femaCheckboxV1 linked to DSO
+} else {
+  var bb = "rowReg"; 
+}
+    newRow(t,(t.rows.length),["","",masterData[i][2],masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],masterData[i][7],masterData[i][8],masterData[i][9],masterData[i][10],masterData[i][11],masterData[i][12],masterData[i][13],masterData[i][14],masterData[i][15],masterData[i][16],masterData[i][17],masterData[i][18],masterData[i][19],masterData[i][20],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],"FEMA "+masterData[i][30]],bb);//alert("new row");
     if(i==masterData.length-1){//alert();
  totalRowVar(i)
     
@@ -475,7 +483,7 @@ var totalRowVar=function(i){
 //16 0's Single Family Aff totals through Totals Destroyed plus 2
 
 function getTotalsFor(c){
-  var a =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,true];
+  var a =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,true]; //24 true
   var isNull = function(b){
     if(b==''||b==' '||b==0){return 0;}
     else return b;
@@ -483,38 +491,36 @@ function getTotalsFor(c){
   //parseFloat cuts off the first character if a number, otherwise NaN is returned - 16 spots below - creates into decimal integer
 for(var i=0; i&lt;masterData.length;i++){
   if(masterData[i][5]==c){
-    //a[0]+=parseFloat(isNull(masterData[i][6]));
+    if(masterData[i][30]&lt;'1'){ //this removes redRows values with femaCheckboxV1's from the total count
+    a[0]+=parseFloat(isNull(masterData[i][6]));
     a[1]+=parseFloat(isNull(masterData[i][7]));
     a[2]+=parseFloat(isNull(masterData[i][8]));
     a[3]+=parseFloat(isNull(masterData[i][9]));
-    a[4]+=parseFloat(isNull(masterData[i][10]));
+    a[4]+=parseFloat(isNull(masterData[i][10])); //5
     a[5]+=parseFloat(isNull(masterData[i][11]));
     a[6]+=parseFloat(isNull(masterData[i][12]));
     a[7]+=parseFloat(isNull(masterData[i][13]));
     a[8]+=parseFloat(isNull(masterData[i][14]));
-    a[9]+=parseFloat(isNull(masterData[i][15]));
+    a[9]+=parseFloat(isNull(masterData[i][15])); //10
     a[10]+=parseFloat(isNull(masterData[i][16]));
     a[11]+=parseFloat(isNull(masterData[i][17]));
     a[12]+=parseFloat(isNull(masterData[i][18]));
     a[13]+=parseFloat(isNull(masterData[i][19]));
-    a[14]+=parseFloat(isNull(masterData[i][20]));
+    a[14]+=parseFloat(isNull(masterData[i][20])); //15
     a[15]+=parseFloat(isNull(masterData[i][21]));
     a[16]+=parseFloat(isNull(masterData[i][22]));
     a[17]+=parseFloat(isNull(masterData[i][23]));
     a[18]+=parseFloat(isNull(masterData[i][24]));
-    a[19]+=parseFloat(isNull(masterData[i][25]));
+    a[19]+=parseFloat(isNull(masterData[i][25])); //20
     a[20]+=parseFloat(isNull(masterData[i][26]));
     a[21]+=parseFloat(isNull(masterData[i][27]));
-    a[22]+=parseFloat(isNull(masterData[i][28]));
+    a[22]+=parseFloat(isNull(masterData[i][30]));
+  }
     //a[23]+=parseFloat(isNull(masterData[i][30]));
-    a[24]+=parseFloat(isNull(masterData[i][30]));
-    /*if(masterData[i][26]!="1"){
-      a[20]=false;
-    }*/    //these are the old spots
-
-   /* if(masterData[i][30]!="1"){
-      a[24]=false;
-    } */              //?????????Find new spots
+    //a[24]+=parseFloat(isNull(masterData[i][30]));
+    if(masterData[i][30]!="1"){                   //24
+      a[23]=false;
+    }    
   }
 }
 console.log(a);
@@ -529,6 +535,7 @@ function getTotalsForAll(){
     else return b;
   };
 for(var i=0; i&lt;masterData.length;i++){
+  if(masterData[i][30]&lt;'1'){ //this removes redRows values with femaCheckboxV1's from the grand total count
     a[0]+=parseFloat(isNull(masterData[i][6]));
     a[1]+=parseFloat(isNull(masterData[i][7]));
     a[2]+=parseFloat(isNull(masterData[i][8]));
@@ -551,6 +558,7 @@ for(var i=0; i&lt;masterData.length;i++){
     a[19]+=parseFloat(isNull(masterData[i][25]));
     a[20]+=parseFloat(isNull(masterData[i][26]));
     a[21]+=parseFloat(isNull(masterData[i][27]));
+  }
 }
 return a;
 

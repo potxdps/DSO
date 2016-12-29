@@ -1,6 +1,6 @@
 <html version="6" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <head>
-    <title>DSO Form</title>
+    <title>Master DSO Form</title>
     <!--this works-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap.min.css" rel="stylesheet" />
@@ -16,6 +16,11 @@
         .form-group.required .control-label:after {
   content:"*";
   color:red;
+}
+
+.master{
+  background-color:#800080; /*dark purple*/
+  color:white;
 }
 
     </style>
@@ -204,16 +209,16 @@
             for (var i = 0; i &lt; countyList.length; i++) {
                 if (co == countyList[i]) {
                     document.getElementById('sortCountyOrder').value = i;
-                    if (document.getElementById('jurisdictionType1').checked == false) {
+                    /*if (document.getElementById('jurisdictionType1').checked == false) {
                         //document.getElementById('sortCityOrder').value = '';  //commented out 11/07/16 to stop city field from being blanked out on update
-                    }
+                    }*/
                     return;
                     
                 }
             }
         }
 
-        function sortOrderCity(ci) {
+        /*function sortOrderCity(ci) {
           var co="";
           var a  = document.getElementById('county');
           if(a.selectedIndex!=0){
@@ -229,7 +234,7 @@
                     return;
                 }
             }
-        }
+        }*/
 
        function consolidateEmails() {
           var a = [document.getElementsByName('submitterEmail')[0], document.getElementsByName('additionalEmails')[0], document.getElementsByName('countyEmail')[0], document.getElementsByName('ddcEmail')[0]];
@@ -341,7 +346,7 @@ function finalEmailCheck() {
                     addOption(cityList, cityMatrix[k][1], false);
                 }
                 $("#sortCountyOrder").val(0);
-                $("#sortCityOrder").val(0);
+                //$("#sortCityOrder").val(0);
                 $("#county").prop("disabled", false);
                 $("#city").prop("disabled", false);
                 addOption(cityList, "Other", false);
@@ -358,7 +363,7 @@ function finalEmailCheck() {
             }
 }
 
-       function selectOptionsIfExistsInArray() {
+       /*function selectOptionsIfExistsInArray() {
                     var textAreaValue = $("#cityTmp").val();
                     var textAreaValueSplit = textAreaValue.split(",");
                     cityArrayCopy = textAreaValueSplit;
@@ -372,15 +377,16 @@ function finalEmailCheck() {
                         $("#cityTmp").val("");
                         $("#city").focus();
                     }
-                }
+                }*/
 
-        function copySelectedOptionsToTextAreaAgain() {
+        /*function copySelectedOptionsToTextAreaAgain() {
                     var ccc =  document.getElementById("cityTmp").value;
                     document.getElementById("city2").value += ccc.replace(/[,]+/g,', ').trim();
               
-                }
+                }*/
 
         function start() {
+          document.getElementById('sortCityOrder').value='100000';
 
 
          
@@ -398,9 +404,8 @@ function finalEmailCheck() {
              
           });
           
-          countyEmailHideReveal();
+          //countyEmailHideReveal();
           $("#notRealSave").click(function() {
-            makeUnincorpLast();
 
           if($("#repairCost01").val() !== ""){
             validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost01", "#cat01", "#cat01");
@@ -500,7 +505,7 @@ function finalEmailCheck() {
       
                   return false;
 
-              } else if($("#county").val() === "Select One"){
+              } else if($("#county").val() === "Please Select:"){
                 alert("Please make a choice in the missing required field, County.");
                   $("#county").focus().select();
       
@@ -526,8 +531,8 @@ function finalEmailCheck() {
 
               } else {
                 if (cats === true){
-                  copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
-                  copySelectedOptionsToTextAreaAgain();
+                  //copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
+                  //copySelectedOptionsToTextAreaAgain();
                   updateOrFirstTime();
                   sendEmails();
                   fakeSubmit();
@@ -540,26 +545,26 @@ function finalEmailCheck() {
           });
           //end of notRealSave click
 
-          rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType1");
-          rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType2");
+          //rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType1");
+         // rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType2");
            document.getElementById('editKey').value = document.getElementById('dataidSpan').getElementsByTagName('u')[0].innerHTML;
            popIncidentName();
-           document.getElementById('jurisdictionType1').onchange=TypeJurisdiciton;
-        document.getElementById('jurisdictionType2').onchange=TypeJurisdiciton;
+           //document.getElementById('jurisdictionType1').onchange=TypeJurisdiciton;
+       // document.getElementById('jurisdictionType2').onchange=TypeJurisdiciton;
             
             autoSum();
-    if ('<xsl:value-of select="/data/@dataid" />'!=0){
-            disableInputsIA();
-            disableInputsPA();
-            selectDSO();
-            $("#city2").val("");
-    }
+    /*if ('<xsl:value-of select="/data/@dataid" />'!=0){
+            //disableInputsIA();
+            //disableInputsPA();
+            //selectDSO();
+            //$("#city2").val("");
+    }*/
            
             var counties = window.parent.window.parent.counties;
         var countieslist= document.getElementById('county');
         
         
-       document.getElementById('city').onchange = function () {
+       /*document.getElementById('city').onchange = function () {
 
                 sortOrderCity(this.options[this.selectedIndex].text);
                 var coList = document.getElementById("county");
@@ -572,9 +577,9 @@ function finalEmailCheck() {
                         addOption(coList, countyList[k], false);
 
                     }
-                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='99998';
+                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='0';
                         //document.getElementById("otherValueDiv").style.display = "none";
-                 } else if (this.options[this.selectedIndex].text == 'Other') {document.getElementById('sortCityOrder').value='99999';
+                 } else if (this.options[this.selectedIndex].text == 'Master') {document.getElementById('sortCityOrder').value='100000';
 
                         document.getElementById("otherValueDiv").style.display = "";
                         $('#otherValue').focus();
@@ -594,11 +599,11 @@ function finalEmailCheck() {
                 }
 
 
-            }
+            }*/
        
        document.getElementById('county').onchange = function () {
-                sortOrderCounty(this.options[this.selectedIndex].text);
-                var cityList = document.getElementById("city");
+                sortOrderCounty(this.options[this.selectedIndex].text);}
+                /*var cityList = document.getElementById("city");
                 if (this.options[this.selectedIndex].text == 'Select One') {
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
@@ -623,7 +628,7 @@ function finalEmailCheck() {
                     }
                     addOption(cityList, "Other", false);
                 }
-            }
+            }*/
           
            
             $('.datepicker').datepicker();
@@ -813,40 +818,40 @@ function finalEmailCheck() {
               ["socProcessed","SOC Processed"]
             ];
             scribe.inicialReview();
-            $("#county").prop("disabled", true);
-            $("#city").prop("disabled", true);
+            //$("#county").prop("disabled", true);
+            //$("#city").prop("disabled", true);
             if ('<xsl:value-of select="/data/@dataid" />'!=0){
 
                $("#county").prop("disabled", false);
                 $("#city").prop("disabled", false);
                 copyCountyValueDSO();
                 //startOf: doing stuff on update/edit
-                var countySelectListOnUpdate = document.getElementById("county");
-                sortOrderCounty(countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text);
-                var cityList = document.getElementById("city");
-                if (countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text == 'Select One') {
+                //var countySelectListOnUpdate = document.getElementById("county");
+                //sortOrderCounty(countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text);
+                //var cityList = document.getElementById("city");
+              /*  if (countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text == 'Select One') {
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     addOption(cityList, "Unincorporated Areas", true);
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
                         addOption(cityList, cityMatrix[k][1], false);
-                    }addOption(cityList, "Other", false);
+                    } addOption(cityList, "Other", false);
                 } else {
-                    removeOptions(cityList);
-                    addOption(cityList, "Select One", false);
-                    addOption(cityList, "Unincorporated Areas", true);
+                    //removeOptions(cityList);
+                    //addOption(cityList, "Select One", false);
+                    //addOption(cityList, "Unincorporated Areas", true);
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
 
                         if (cityMatrix[k][0] === countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text) {
                             addOption(cityList, cityMatrix[k][1], false);
                         }
-                    }addOption(cityList, "Other", false);
-                }
+                    }//addOption(cityList, "Other", false);
+                }*/
 
 
                 setTimeout(function() {
                   
-                    selectOptionsIfExistsInArray();
+                    //selectOptionsIfExistsInArray();
                 }, 1000);
             } 
             
@@ -856,9 +861,9 @@ function finalEmailCheck() {
             
         }
 
-        function copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray() {
+        /*function copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray() {
                     document.getElementById("cityTmp").value += $("#city").val();
-                }
+                }*/
 
 
 
@@ -875,12 +880,12 @@ function finalEmailCheck() {
         }
 
 //this will work but something else is putting it there
-        function removeUniAreas(){
+        /*function removeUniAreas(){
           
           $("#city option:contains(Unincorporated Areas)").remove();
-        }
+        }*/
 
-        function TypeJurisdiciton(){
+        /*function TypeJurisdiciton(){
           var a = document.getElementById('jurisdictionType1');
         
 
@@ -895,7 +900,7 @@ function finalEmailCheck() {
           document.getElementById('sortCityOrder').value='0';
         }
 
-      }
+      }*/
 
       function popIncidentName(){
         var first = document.getElementById('webeocIncident'),
@@ -905,14 +910,14 @@ function finalEmailCheck() {
 }
 
 
-      function countyEmailHideReveal() {
+      /*function countyEmailHideReveal() {
       if (document.getElementById('jurisdictionType1').checked ==true) {
       document.getElementById('countyEmailHide').style.display="";
       } else {
       document.getElementById('countyEmailHide').style.display="none";
     
  }
-}
+}*/
 
 
 function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
@@ -966,7 +971,7 @@ function saveButtonRuns(){
 
 
 //add to webform? only on update
-function disableInputsIA(){
+/*function disableInputsIA(){
   var a = document.getElementById('femaTestIA').textContent;
 if (a[0]=='1'){
   $('input.lockTheseIA').attr('disabled', 'disabled');
@@ -988,13 +993,13 @@ function selectDSO(){
     var aaa = document.getElementById('dsoSelectedTest').textContent;
     if (aaa[0]=='1'){
      $("#dsoSelected").prop("checked", true);
-     $('#testTestTextField').val('Wootee');
+     //$('#testTestTextField').val('Wootee');
      //alert('User must update something else by hand and save to save dsoSelected');     
     } else {
       $("#dsoSelected").prop("checked", false);
       //alert('User may or may not have to update something else by hand and save to save the unselecting of dsoSelected');
     }
-}
+}*/
 
 function copyCountyValueDSO(){
    var firstCounty = document.getElementById('county'),//get from
@@ -1002,13 +1007,6 @@ function copyCountyValueDSO(){
 
 secondC.value = firstCounty.options[firstCounty.selectedIndex].text;
 
-}
-
-function makeUnincorpLast(){
- if($('#city').val()=='Unincorporated Areas') {
-              //alert('woohoo');
-              document.getElementById('sortCityOrder').value='99998';
-            }
 }
 //this works like 9 times out of ten and then 1 time you need to edit the record manually and save and then it saves the checked and wootee value
 //add to webform? only on update
@@ -1032,13 +1030,9 @@ function makeUnincorpLast(){
             </div>
           </span>
           <div id="hidden" style="display:nonea">
-          <!--<div class="form-group form-inline">
-              <label class="control-label" for="stateThreshold">stateThreshold:</label>
-              <input name="stateThreshold" id="stateThreshold" type="text" style="form-control input-sm" value="40000000"/>
-            </div>-->
           <div class="form-group form-inline">
               <label class="control-label" for="masterDSOThisIs">masterDSOThisIs:</label>
-              <input name="masterDSOThisIs" id="masterDSOThisIs" type="text" style="form-control input-sm" value=""/>
+              <input name="masterDSOThisIs" id="masterDSOThisIs" type="text" style="form-control input-sm" value="masterDSO"/>
             </div>
             <div class="form-group form-inline">
               <label class="control-label" for="sortCountyOrder">Sort County Order:</label>
@@ -1073,13 +1067,13 @@ function makeUnincorpLast(){
               <input name="dsoSelected" id="dsoSelected" type="checkbox" value="dsoSelected" style="form-control input-sm" />
             </div>
 
-            DSO Yes/No's
+            <!--DSO Yes/No's
             <div id="dsoSelectedTest">
               <relatedexpression name="dsoSelectedTestExp" table="Supplemental">case when dsoYesNo='Yes' then 1 else 0 end</relatedexpression>
             </div>
             <div id="testTestText">
               <input name="testTestTextField" id="testTestTextField" type="text" />
-            </div>
+            </div>-->
             <div class="form-group form-inline">
               <label class="control-label" for="DSOisSelected">DSOisSelected:</label>
               <input type="text" name="DSOisSelected" value="" />
@@ -1094,7 +1088,7 @@ function makeUnincorpLast(){
           <!--bb<foreignkey><dataid table="Supplemental"/></foreignkey>-->
           <div id="container">
             <h1>
-              <span class="label label-default">Incident</span>
+              <span class="label label-default">Master County Totals - Incident</span>
             </h1>
             <br />
             <!--<input type="text" name="incidentName3" id="incidentName3" class="form-control hide">
@@ -1109,25 +1103,25 @@ function makeUnincorpLast(){
             </div>
             <br />
             <h1>
-              <span class="label label-default">General</span>
+              <span class="label label-default">Master County Totals - General</span>
             </h1>
             <br />
             <div class="form-group required form-inline" id="jurisdictionTypeDIV">
               <label id="jurisdictionTypeLabel" class="control-label" for="jurisdictionType">Jurisdiction Type:</label>
-        City 
+        <!--City 
                      
                      
                      
                      
                      
-                     <input id="jurisdictionType1" type="radio" class="form-control input-sm jTypeCLASS" name="jurisdictionType" value="City" onclick="countyEmailHideReveal();removeUniAreas()" />
+                     <input id="jurisdictionType1" type="radio" class="form-control input-sm jTypeCLASS" name="jurisdictionType" value="City" onclick="countyEmailHideReveal();removeUniAreas()" />-->
         County 
                      
                      
                      
                      
                      
-                     <input id="jurisdictionType2" type="radio" class="form-control input-sm jTypeCLASS" name="jurisdictionType" value="County" onclick="countyEmailHideReveal()" /></div>
+                     <input id="jurisdictionType2" type="radio" class="form-control input-sm jTypeCLASS" name="jurisdictionType" value="County" checked="checked"/></div>
             <div class="form-group form-inline">
               <label class="control-label" for="county">County:</label>
               <space />
@@ -1398,1223 +1392,9 @@ function makeUnincorpLast(){
               <space />
               <span id="cityInfo" class="label label-info">i</span>
               <space />
-              <select size="4" name="city" list="DSO Cities" multiple="multiple" id="city" class="form-control">
-                <option value="Select One">Select One</option>
-                <option value="Unincorporated Areas">Unincorporated Areas</option>
-                <option value="Abbott">Abbott</option>
-                <option value="Abernathy">Abernathy</option>
-                <option value="Abilene">Abilene</option>
-                <option value="Ackerly">Ackerly</option>
-                <option value="Addison">Addison</option>
-                <option value="Adrian">Adrian</option>
-                <option value="Agua Dulce">Agua Dulce</option>
-                <option value="Alamo">Alamo</option>
-                <option value="Alamo Heights">Alamo Heights</option>
-                <option value="Alba">Alba</option>
-                <option value="Albany">Albany</option>
-                <option value="Aledo">Aledo</option>
-                <option value="Alice">Alice</option>
-                <option value="Allen">Allen</option>
-                <option value="Alma">Alma</option>
-                <option value="Alpine">Alpine</option>
-                <option value="Alto">Alto</option>
-                <option value="Alton">Alton</option>
-                <option value="Alvarado">Alvarado</option>
-                <option value="Alvin">Alvin</option>
-                <option value="Alvord">Alvord</option>
-                <option value="Amarillo">Amarillo</option>
-                <option value="Ames">Ames</option>
-                <option value="Amherst">Amherst</option>
-                <option value="Anahuac">Anahuac</option>
-                <option value="Anderson">Anderson</option>
-                <option value="Andrews">Andrews</option>
-                <option value="Angleton">Angleton</option>
-                <option value="Angus">Angus</option>
-                <option value="Anna">Anna</option>
-                <option value="Annetta">Annetta</option>
-                <option value="Annetta North">Annetta North</option>
-                <option value="Annetta South">Annetta South</option>
-                <option value="Annona">Annona</option>
-                <option value="Anson">Anson</option>
-                <option value="Anthony">Anthony</option>
-                <option value="Anton">Anton</option>
-                <option value="Appleby">Appleby</option>
-                <option value="Aquilla">Aquilla</option>
-                <option value="Aransas Pass">Aransas Pass</option>
-                <option value="Archer City">Archer City</option>
-                <option value="Arcola">Arcola</option>
-                <option value="Argyle">Argyle</option>
-                <option value="Arlington">Arlington</option>
-                <option value="Arp">Arp</option>
-                <option value="Asherton">Asherton</option>
-                <option value="Aspermont">Aspermont</option>
-                <option value="Athens">Athens</option>
-                <option value="Atlanta">Atlanta</option>
-                <option value="Aubrey">Aubrey</option>
-                <option value="Aurora">Aurora</option>
-                <option value="Austin">Austin</option>
-                <option value="Austwell">Austwell</option>
-                <option value="Avery">Avery</option>
-                <option value="Avinger">Avinger</option>
-                <option value="Azle">Azle</option>
-                <option value="Bailey">Bailey</option>
-                <option value="Bailey's Prairie">Bailey's Prairie</option>
-                <option value="Baird">Baird</option>
-                <option value="Balch Springs">Balch Springs</option>
-                <option value="Balcones Heights">Balcones Heights</option>
-                <option value="Ballinger">Ballinger</option>
-                <option value="Balmorhea">Balmorhea</option>
-                <option value="Bandera">Bandera</option>
-                <option value="Bangs">Bangs</option>
-                <option value="Bardwell">Bardwell</option>
-                <option value="Barry">Barry</option>
-                <option value="Barstow">Barstow</option>
-                <option value="Bartlett">Bartlett</option>
-                <option value="Bartonville">Bartonville</option>
-                <option value="Bastrop">Bastrop</option>
-                <option value="Bay City">Bay City</option>
-                <option value="Bayou Vista">Bayou Vista</option>
-                <option value="Bayside">Bayside</option>
-                <option value="Baytown">Baytown</option>
-                <option value="Bayview">Bayview</option>
-                <option value="Beach City">Beach City</option>
-                <option value="Bear Creek">Bear Creek</option>
-                <option value="Beasley">Beasley</option>
-                <option value="Beaumont">Beaumont</option>
-                <option value="Beckville">Beckville</option>
-                <option value="Bedford">Bedford</option>
-                <option value="Bedias">Bedias</option>
-                <option value="Bee Cave">Bee Cave</option>
-                <option value="Beeville">Beeville</option>
-                <option value="Bellaire">Bellaire</option>
-                <option value="Bellevue">Bellevue</option>
-                <option value="Bellmead">Bellmead</option>
-                <option value="Bells">Bells</option>
-                <option value="Bellville">Bellville</option>
-                <option value="Belton">Belton</option>
-                <option value="Benavides">Benavides</option>
-                <option value="Benbrook">Benbrook</option>
-                <option value="Benjamin">Benjamin</option>
-                <option value="Berryville">Berryville</option>
-                <option value="Bertram">Bertram</option>
-                <option value="Beverly Hills">Beverly Hills</option>
-                <option value="Bevil Oaks">Bevil Oaks</option>
-                <option value="Big Lake">Big Lake</option>
-                <option value="Big Sandy">Big Sandy</option>
-                <option value="Big Spring">Big Spring</option>
-                <option value="Big Wells">Big Wells</option>
-                <option value="Bishop">Bishop</option>
-                <option value="Bishop Hills">Bishop Hills</option>
-                <option value="Blackwell">Blackwell</option>
-                <option value="Blanco">Blanco</option>
-                <option value="Blanket">Blanket</option>
-                <option value="Bloomburg">Bloomburg</option>
-                <option value="Blooming Grove">Blooming Grove</option>
-                <option value="Blossom">Blossom</option>
-                <option value="Blue Mound">Blue Mound</option>
-                <option value="Blue Ridge">Blue Ridge</option>
-                <option value="Blum">Blum</option>
-                <option value="Boerne">Boerne</option>
-                <option value="Bogata">Bogata</option>
-                <option value="Bonham">Bonham</option>
-                <option value="Bonney">Bonney</option>
-                <option value="Booker">Booker</option>
-                <option value="Borger">Borger</option>
-                <option value="Bovina">Bovina</option>
-                <option value="Bowie">Bowie</option>
-                <option value="Boyd">Boyd</option>
-                <option value="Brackettville">Brackettville</option>
-                <option value="Brady">Brady</option>
-                <option value="Brazoria">Brazoria</option>
-                <option value="Brazos Bend">Brazos Bend</option>
-                <option value="Brazos Country">Brazos Country</option>
-                <option value="Breckenridge">Breckenridge</option>
-                <option value="Bremond">Bremond</option>
-                <option value="Brenham">Brenham</option>
-                <option value="Briarcliff">Briarcliff</option>
-                <option value="Briaroaks">Briaroaks</option>
-                <option value="Bridge City">Bridge City</option>
-                <option value="Bridgeport">Bridgeport</option>
-                <option value="Broaddus">Broaddus</option>
-                <option value="Bronte">Bronte</option>
-                <option value="Brookshire">Brookshire</option>
-                <option value="Brookside Village">Brookside Village</option>
-                <option value="Browndell">Browndell</option>
-                <option value="Brownfield">Brownfield</option>
-                <option value="Brownsboro">Brownsboro</option>
-                <option value="Brownsville">Brownsville</option>
-                <option value="Brownwood">Brownwood</option>
-                <option value="Bruceville-Eddy">Bruceville-Eddy</option>
-                <option value="Bryan">Bryan</option>
-                <option value="Bryson">Bryson</option>
-                <option value="Buckholts">Buckholts</option>
-                <option value="Buda">Buda</option>
-                <option value="Buffalo">Buffalo</option>
-                <option value="Buffalo Gap">Buffalo Gap</option>
-                <option value="Buffalo Springs">Buffalo Springs</option>
-                <option value="Bullard">Bullard</option>
-                <option value="Bulverde">Bulverde</option>
-                <option value="Bunker Hill Village">Bunker Hill Village</option>
-                <option value="Burkburnett">Burkburnett</option>
-                <option value="Burke">Burke</option>
-                <option value="Burleson">Burleson</option>
-                <option value="Burnet">Burnet</option>
-                <option value="Burton">Burton</option>
-                <option value="Byers">Byers</option>
-                <option value="Bynum">Bynum</option>
-                <option value="Cactus">Cactus</option>
-                <option value="Caddo Mills">Caddo Mills</option>
-                <option value="Caldwell">Caldwell</option>
-                <option value="Callisburg">Callisburg</option>
-                <option value="Calvert">Calvert</option>
-                <option value="Cameron">Cameron</option>
-                <option value="Camp Wood">Camp Wood</option>
-                <option value="Campbell">Campbell</option>
-                <option value="Canadian">Canadian</option>
-                <option value="Caney City">Caney City</option>
-                <option value="Canton">Canton</option>
-                <option value="Canyon">Canyon</option>
-                <option value="Carbon">Carbon</option>
-                <option value="Carl's Corner">Carl's Corner</option>
-                <option value="Carmine">Carmine</option>
-                <option value="Carrizo Springs">Carrizo Springs</option>
-                <option value="Carrollton">Carrollton</option>
-                <option value="Carthage">Carthage</option>
-                <option value="Cashion">Cashion</option>
-                <option value="Castle Hills">Castle Hills</option>
-                <option value="Castroville">Castroville</option>
-                <option value="Cedar Hill">Cedar Hill</option>
-                <option value="Cedar Park">Cedar Park</option>
-                <option value="Celeste">Celeste</option>
-                <option value="Celina">Celina</option>
-                <option value="Center">Center</option>
-                <option value="Centerville">Centerville</option>
-                <option value="Chandler">Chandler</option>
-                <option value="Channing">Channing</option>
-                <option value="Charlotte">Charlotte</option>
-                <option value="Chester">Chester</option>
-                <option value="Chico">Chico</option>
-                <option value="Childress">Childress</option>
-                <option value="Chillicothe">Chillicothe</option>
-                <option value="China">China</option>
-                <option value="China Grove">China Grove</option>
-                <option value="Chireno">Chireno</option>
-                <option value="Christine">Christine</option>
-                <option value="Cibolo">Cibolo</option>
-                <option value="Cisco">Cisco</option>
-                <option value="Clarendon">Clarendon</option>
-                <option value="Clarksville">Clarksville</option>
-                <option value="Clarksville City">Clarksville City</option>
-                <option value="Claude">Claude</option>
-                <option value="Clear Lake Shores">Clear Lake Shores</option>
-                <option value="Cleburne">Cleburne</option>
-                <option value="Cleveland">Cleveland</option>
-                <option value="Clifton">Clifton</option>
-                <option value="Clint">Clint</option>
-                <option value="Clute">Clute</option>
-                <option value="Clyde">Clyde</option>
-                <option value="Coahoma">Coahoma</option>
-                <option value="Cockrell Hill">Cockrell Hill</option>
-                <option value="Coffee City">Coffee City</option>
-                <option value="Coldspring">Coldspring</option>
-                <option value="Coleman">Coleman</option>
-                <option value="College Station">College Station</option>
-                <option value="Colleyville">Colleyville</option>
-                <option value="Collinsville">Collinsville</option>
-                <option value="Colmesneil">Colmesneil</option>
-                <option value="Colorado City">Colorado City</option>
-                <option value="Columbus">Columbus</option>
-                <option value="Comanche">Comanche</option>
-                <option value="Combes">Combes</option>
-                <option value="Combine">Combine</option>
-                <option value="Commerce">Commerce</option>
-                <option value="Como">Como</option>
-                <option value="Conroe">Conroe</option>
-                <option value="Converse">Converse</option>
-                <option value="Cool">Cool</option>
-                <option value="Coolidge">Coolidge</option>
-                <option value="Cooper">Cooper</option>
-                <option value="Coppell">Coppell</option>
-                <option value="Copper Canyon">Copper Canyon</option>
-                <option value="Copperas Cove">Copperas Cove</option>
-                <option value="Corinth">Corinth</option>
-                <option value="Corpus Christi">Corpus Christi</option>
-                <option value="Corral City">Corral City</option>
-                <option value="Corrigan">Corrigan</option>
-                <option value="Corsicana">Corsicana</option>
-                <option value="Cottonwood">Cottonwood</option>
-                <option value="Cottonwood Shores">Cottonwood Shores</option>
-                <option value="Cotulla">Cotulla</option>
-                <option value="Cove">Cove</option>
-                <option value="Covington">Covington</option>
-                <option value="Crandall">Crandall</option>
-                <option value="Crane">Crane</option>
-                <option value="Cranfills Gap">Cranfills Gap</option>
-                <option value="Crawford">Crawford</option>
-                <option value="Creedmoor">Creedmoor</option>
-                <option value="Cresson">Cresson</option>
-                <option value="Crockett">Crockett</option>
-                <option value="Crosbyton">Crosbyton</option>
-                <option value="Cross Plains">Cross Plains</option>
-                <option value="Cross Roads">Cross Roads</option>
-                <option value="Cross Timber">Cross Timber</option>
-                <option value="Crowell">Crowell</option>
-                <option value="Crowley">Crowley</option>
-                <option value="Crystal City">Crystal City</option>
-                <option value="Cuero">Cuero</option>
-                <option value="Cumby">Cumby</option>
-                <option value="Cuney">Cuney</option>
-                <option value="Cushing">Cushing</option>
-                <option value="Cut and Shoot">Cut and Shoot</option>
-                <option value="Daingerfield">Daingerfield</option>
-                <option value="Daisetta">Daisetta</option>
-                <option value="Dalhart">Dalhart</option>
-                <option value="Dallas">Dallas</option>
-                <option value="Dalworthington Gardens">Dalworthington Gardens</option>
-                <option value="Danbury">Danbury</option>
-                <option value="Darrouzett">Darrouzett</option>
-                <option value="Dawson">Dawson</option>
-                <option value="Dayton">Dayton</option>
-                <option value="Dayton Lakes">Dayton Lakes</option>
-                <option value="De Leon">De Leon</option>
-                <option value="Dean">Dean</option>
-                <option value="Decatur">Decatur</option>
-                <option value="DeCordova">DeCordova</option>
-                <option value="Deer Park">Deer Park</option>
-                <option value="DeKalb">DeKalb</option>
-                <option value="Del Rio">Del Rio</option>
-                <option value="Dell City">Dell City</option>
-                <option value="Denison">Denison</option>
-                <option value="Denton">Denton</option>
-                <option value="Denver City">Denver City</option>
-                <option value="Deport">Deport</option>
-                <option value="DeSoto">DeSoto</option>
-                <option value="Detroit">Detroit</option>
-                <option value="Devers">Devers</option>
-                <option value="Devine">Devine</option>
-                <option value="Diboll">Diboll</option>
-                <option value="Dickens">Dickens</option>
-                <option value="Dickinson">Dickinson</option>
-                <option value="Dilley">Dilley</option>
-                <option value="Dimmitt">Dimmitt</option>
-                <option value="Dish">Dish</option>
-                <option value="Dodd City">Dodd City</option>
-                <option value="Dodson">Dodson</option>
-                <option value="Domino">Domino</option>
-                <option value="Donna">Donna</option>
-                <option value="Dorchester">Dorchester</option>
-                <option value="Double Oak">Double Oak</option>
-                <option value="Douglassville">Douglassville</option>
-                <option value="Dripping Springs">Dripping Springs</option>
-                <option value="Driscoll">Driscoll</option>
-                <option value="Dublin">Dublin</option>
-                <option value="Dumas">Dumas</option>
-                <option value="Duncanville">Duncanville</option>
-                <option value="Eagle Lake">Eagle Lake</option>
-                <option value="Eagle Pass">Eagle Pass</option>
-                <option value="Early">Early</option>
-                <option value="Earth">Earth</option>
-                <option value="East Bernard">East Bernard</option>
-                <option value="East Mountain">East Mountain</option>
-                <option value="East Tawakoni">East Tawakoni</option>
-                <option value="Eastland">Eastland</option>
-                <option value="Easton">Easton</option>
-                <option value="Ector">Ector</option>
-                <option value="Edcouch">Edcouch</option>
-                <option value="Eden">Eden</option>
-                <option value="Edgecliff">Edgecliff</option>
-                <option value="Edgewood">Edgewood</option>
-                <option value="Edinburg">Edinburg</option>
-                <option value="Edmonson">Edmonson</option>
-                <option value="Edna">Edna</option>
-                <option value="Edom">Edom</option>
-                <option value="El Campo">El Campo</option>
-                <option value="El Cenizo">El Cenizo</option>
-                <option value="El Lago">El Lago</option>
-                <option value="El Paso">El Paso</option>
-                <option value="Eldorado">Eldorado</option>
-                <option value="Electra">Electra</option>
-                <option value="Elgin">Elgin</option>
-                <option value="Elkhart">Elkhart</option>
-                <option value="Elmendorf">Elmendorf</option>
-                <option value="Elsa">Elsa</option>
-                <option value="Emhouse">Emhouse</option>
-                <option value="Emory">Emory</option>
-                <option value="Enchanted Oaks">Enchanted Oaks</option>
-                <option value="Encinal">Encinal</option>
-                <option value="Ennis">Ennis</option>
-                <option value="Escobares">Escobares</option>
-                <option value="Estelline">Estelline</option>
-                <option value="Euless">Euless</option>
-                <option value="Eureka">Eureka</option>
-                <option value="Eustace">Eustace</option>
-                <option value="Evant">Evant</option>
-                <option value="Everman">Everman</option>
-                <option value="Fair Oaks Ranch">Fair Oaks Ranch</option>
-                <option value="Fairchilds">Fairchilds</option>
-                <option value="Fairfield">Fairfield</option>
-                <option value="Fairview">Fairview</option>
-                <option value="Falfurrias">Falfurrias</option>
-                <option value="Falls City">Falls City</option>
-                <option value="Farmers Branch">Farmers Branch</option>
-                <option value="Farmersville">Farmersville</option>
-                <option value="Farwell">Farwell</option>
-                <option value="Fate">Fate</option>
-                <option value="Fayetteville">Fayetteville</option>
-                <option value="Ferris">Ferris</option>
-                <option value="Flatonia">Flatonia</option>
-                <option value="Florence">Florence</option>
-                <option value="Floresville">Floresville</option>
-                <option value="Flower Mound">Flower Mound</option>
-                <option value="Floydada">Floydada</option>
-                <option value="Follett">Follett</option>
-                <option value="Forest Hill">Forest Hill</option>
-                <option value="Forney">Forney</option>
-                <option value="Forsan">Forsan</option>
-                <option value="Fort Stockton">Fort Stockton</option>
-                <option value="Fort Worth">Fort Worth</option>
-                <option value="Franklin">Franklin</option>
-                <option value="Frankston">Frankston</option>
-                <option value="Fredericksburg">Fredericksburg</option>
-                <option value="Freeport">Freeport</option>
-                <option value="Freer">Freer</option>
-                <option value="Friendswood">Friendswood</option>
-                <option value="Friona">Friona</option>
-                <option value="Frisco">Frisco</option>
-                <option value="Fritch">Fritch</option>
-                <option value="Frost">Frost</option>
-                <option value="Fruitvale">Fruitvale</option>
-                <option value="Fulshear">Fulshear</option>
-                <option value="Fulton">Fulton</option>
-                <option value="Gainesville">Gainesville</option>
-                <option value="Galena Park">Galena Park</option>
-                <option value="Gallatin">Gallatin</option>
-                <option value="Galveston">Galveston</option>
-                <option value="Ganado">Ganado</option>
-                <option value="Garden Ridge">Garden Ridge</option>
-                <option value="Garland">Garland</option>
-                <option value="Garrett">Garrett</option>
-                <option value="Garrison">Garrison</option>
-                <option value="Gary">Gary</option>
-                <option value="Gatesville">Gatesville</option>
-                <option value="George West">George West</option>
-                <option value="Georgetown">Georgetown</option>
-                <option value="Gholson">Gholson</option>
-                <option value="Giddings">Giddings</option>
-                <option value="Gilmer">Gilmer</option>
-                <option value="Gladewater">Gladewater</option>
-                <option value="Glen Rose">Glen Rose</option>
-                <option value="Glenn Heights">Glenn Heights</option>
-                <option value="Godley">Godley</option>
-                <option value="Goldsmith">Goldsmith</option>
-                <option value="Goldthwaite">Goldthwaite</option>
-                <option value="Goliad">Goliad</option>
-                <option value="Golinda">Golinda</option>
-                <option value="Gonzales">Gonzales</option>
-                <option value="Goodlow">Goodlow</option>
-                <option value="Goodrich">Goodrich</option>
-                <option value="Gordon">Gordon</option>
-                <option value="Goree">Goree</option>
-                <option value="Gorman">Gorman</option>
-                <option value="Graford">Graford</option>
-                <option value="Graham">Graham</option>
-                <option value="Granbury">Granbury</option>
-                <option value="Grand Prairie">Grand Prairie</option>
-                <option value="Grand Saline">Grand Saline</option>
-                <option value="Grandfalls">Grandfalls</option>
-                <option value="Grandview">Grandview</option>
-                <option value="Granger">Granger</option>
-                <option value="Granite Shoals">Granite Shoals</option>
-                <option value="Granjeno">Granjeno</option>
-                <option value="Grapeland">Grapeland</option>
-                <option value="Grapevine">Grapevine</option>
-                <option value="Grays Prairie">Grays Prairie</option>
-                <option value="Greenville">Greenville</option>
-                <option value="Gregory">Gregory</option>
-                <option value="Grey Forest">Grey Forest</option>
-                <option value="Groesbeck">Groesbeck</option>
-                <option value="Groom">Groom</option>
-                <option value="Groves">Groves</option>
-                <option value="Groveton">Groveton</option>
-                <option value="Gruver">Gruver</option>
-                <option value="Gun Barrel City">Gun Barrel City</option>
-                <option value="Gunter">Gunter</option>
-                <option value="Gustine">Gustine</option>
-                <option value="Hackberry">Hackberry</option>
-                <option value="Hale Center">Hale Center</option>
-                <option value="Hallettsville">Hallettsville</option>
-                <option value="Hallsburg">Hallsburg</option>
-                <option value="Hallsville">Hallsville</option>
-                <option value="Haltom City">Haltom City</option>
-                <option value="Hamilton">Hamilton</option>
-                <option value="Hamlin">Hamlin</option>
-                <option value="Happy">Happy</option>
-                <option value="Hardin">Hardin</option>
-                <option value="Harker Heights">Harker Heights</option>
-                <option value="Harlingen">Harlingen</option>
-                <option value="Hart">Hart</option>
-                <option value="Haskell">Haskell</option>
-                <option value="Haslet">Haslet</option>
-                <option value="Hawk Cove">Hawk Cove</option>
-                <option value="Hawkins">Hawkins</option>
-                <option value="Hawley">Hawley</option>
-                <option value="Hays">Hays</option>
-                <option value="Hearne">Hearne</option>
-                <option value="Heath">Heath</option>
-                <option value="Hebron">Hebron</option>
-                <option value="Hedley">Hedley</option>
-                <option value="Hedwig Village">Hedwig Village</option>
-                <option value="Helotes">Helotes</option>
-                <option value="Hemphill">Hemphill</option>
-                <option value="Hempstead">Hempstead</option>
-                <option value="Henderson">Henderson</option>
-                <option value="Henrietta">Henrietta</option>
-                <option value="Hereford">Hereford</option>
-                <option value="Hewitt">Hewitt</option>
-                <option value="Hickory Creek">Hickory Creek</option>
-                <option value="Hico">Hico</option>
-                <option value="Hidalgo">Hidalgo</option>
-                <option value="Hideaway">Hideaway</option>
-                <option value="Higgins">Higgins</option>
-                <option value="Highland Haven">Highland Haven</option>
-                <option value="Highland Park">Highland Park</option>
-                <option value="Highland Village">Highland Village</option>
-                <option value="Hill Country Village">Hill Country Village</option>
-                <option value="Hillcrest Village">Hillcrest Village</option>
-                <option value="Hillsboro">Hillsboro</option>
-                <option value="Hilshire Village">Hilshire Village</option>
-                <option value="Hitchcock">Hitchcock</option>
-                <option value="Holiday Lakes">Holiday Lakes</option>
-                <option value="Holland">Holland</option>
-                <option value="Holliday">Holliday</option>
-                <option value="Hollywood Park">Hollywood Park</option>
-                <option value="Hondo">Hondo</option>
-                <option value="Honey Grove">Honey Grove</option>
-                <option value="Hooks">Hooks</option>
-                <option value="Horizon City">Horizon City</option>
-                <option value="Horseshoe Bay">Horseshoe Bay</option>
-                <option value="Houston">Houston</option>
-                <option value="Howardwick">Howardwick</option>
-                <option value="Howe">Howe</option>
-                <option value="Hubbard">Hubbard</option>
-                <option value="Hudson">Hudson</option>
-                <option value="Hudson Oaks">Hudson Oaks</option>
-                <option value="Hughes Springs">Hughes Springs</option>
-                <option value="Humble">Humble</option>
-                <option value="Hunters Creek Village">Hunters Creek Village</option>
-                <option value="Huntington">Huntington</option>
-                <option value="Huntsville">Huntsville</option>
-                <option value="Hurst">Hurst</option>
-                <option value="Hutchins">Hutchins</option>
-                <option value="Hutto">Hutto</option>
-                <option value="Huxley">Huxley</option>
-                <option value="Idalou">Idalou</option>
-                <option value="Impact">Impact</option>
-                <option value="Indian Lake">Indian Lake</option>
-                <option value="Industry">Industry</option>
-                <option value="Ingleside">Ingleside</option>
-                <option value="Ingleside On The Bay">Ingleside On The Bay</option>
-                <option value="Ingram">Ingram</option>
-                <option value="Iola">Iola</option>
-                <option value="Iowa Colony">Iowa Colony</option>
-                <option value="Iowa Park">Iowa Park</option>
-                <option value="Iraan">Iraan</option>
-                <option value="Iredell">Iredell</option>
-                <option value="Irving">Irving</option>
-                <option value="Italy">Italy</option>
-                <option value="Itasca">Itasca</option>
-                <option value="Ivanhoe">Ivanhoe</option>
-                <option value="Jacinto City">Jacinto City</option>
-                <option value="Jacksboro">Jacksboro</option>
-                <option value="Jacksonville">Jacksonville</option>
-                <option value="Jamaica Beach">Jamaica Beach</option>
-                <option value="Jarrell">Jarrell</option>
-                <option value="Jasper">Jasper</option>
-                <option value="Jayton">Jayton</option>
-                <option value="Jefferson">Jefferson</option>
-                <option value="Jersey Village">Jersey Village</option>
-                <option value="Jewett">Jewett</option>
-                <option value="Joaquin">Joaquin</option>
-                <option value="Johnson City">Johnson City</option>
-                <option value="Jolly">Jolly</option>
-                <option value="Jones Creek">Jones Creek</option>
-                <option value="Jonestown">Jonestown</option>
-                <option value="Josephine">Josephine</option>
-                <option value="Joshua">Joshua</option>
-                <option value="Jourdanton">Jourdanton</option>
-                <option value="Junction">Junction</option>
-                <option value="Justin">Justin</option>
-                <option value="Karnes City">Karnes City</option>
-                <option value="Katy">Katy</option>
-                <option value="Kaufman">Kaufman</option>
-                <option value="Keene">Keene</option>
-                <option value="Keller">Keller</option>
-                <option value="Kemah">Kemah</option>
-                <option value="Kemp">Kemp</option>
-                <option value="Kempner">Kempner</option>
-                <option value="Kendleton">Kendleton</option>
-                <option value="Kenedy">Kenedy</option>
-                <option value="Kenefick">Kenefick</option>
-                <option value="Kennard">Kennard</option>
-                <option value="Kennedale">Kennedale</option>
-                <option value="Kerens">Kerens</option>
-                <option value="Kermit">Kermit</option>
-                <option value="Kerrville">Kerrville</option>
-                <option value="Kilgore">Kilgore</option>
-                <option value="Killeen">Killeen</option>
-                <option value="Kingsville">Kingsville</option>
-                <option value="Kirby">Kirby</option>
-                <option value="Kirbyville">Kirbyville</option>
-                <option value="Kirvin">Kirvin</option>
-                <option value="Knollwood">Knollwood</option>
-                <option value="Knox City">Knox City</option>
-                <option value="Kosse">Kosse</option>
-                <option value="Kountze">Kountze</option>
-                <option value="Kress">Kress</option>
-                <option value="Krugerville">Krugerville</option>
-                <option value="Krum">Krum</option>
-                <option value="Kurten">Kurten</option>
-                <option value="Kyle">Kyle</option>
-                <option value="La Feria">La Feria</option>
-                <option value="La Grange">La Grange</option>
-                <option value="La Grulla">La Grulla</option>
-                <option value="La Joya">La Joya</option>
-                <option value="La Marque">La Marque</option>
-                <option value="La Porte">La Porte</option>
-                <option value="La Vernia">La Vernia</option>
-                <option value="La Villa">La Villa</option>
-                <option value="La Ward">La Ward</option>
-                <option value="LaCoste">LaCoste</option>
-                <option value="Lacy-Lakeview">Lacy-Lakeview</option>
-                <option value="Ladonia">Ladonia</option>
-                <option value="Lago Vista">Lago Vista</option>
-                <option value="Laguna Vista">Laguna Vista</option>
-                <option value="Lake Bridgeport">Lake Bridgeport</option>
-                <option value="Lake City">Lake City</option>
-                <option value="Lake Dallas">Lake Dallas</option>
-                <option value="Lake Jackson">Lake Jackson</option>
-                <option value="Lake Tanglewood">Lake Tanglewood</option>
-                <option value="Lake Worth">Lake Worth</option>
-                <option value="Lakeport">Lakeport</option>
-                <option value="Lakeside (San Patricio)">Lakeside (San Patricio)</option>
-                <option value="Lakeside (Tarrant)">Lakeside (Tarrant)</option>
-                <option value="Lakeside City">Lakeside City</option>
-                <option value="Lakeview">Lakeview</option>
-                <option value="Lakeway">Lakeway</option>
-                <option value="Lakewood Village">Lakewood Village</option>
-                <option value="Lamesa">Lamesa</option>
-                <option value="Lampasas">Lampasas</option>
-                <option value="Lancaster">Lancaster</option>
-                <option value="Laredo">Laredo</option>
-                <option value="Latexo">Latexo</option>
-                <option value="Lavon">Lavon</option>
-                <option value="Lawn">Lawn</option>
-                <option value="League City">League City</option>
-                <option value="Leakey">Leakey</option>
-                <option value="Leander">Leander</option>
-                <option value="Leary">Leary</option>
-                <option value="Lefors">Lefors</option>
-                <option value="Leon Valley">Leon Valley</option>
-                <option value="Leona">Leona</option>
-                <option value="Leonard">Leonard</option>
-                <option value="Leroy">Leroy</option>
-                <option value="Levelland">Levelland</option>
-                <option value="Lewisville">Lewisville</option>
-                <option value="Lexington">Lexington</option>
-                <option value="Liberty">Liberty</option>
-                <option value="Liberty Hill">Liberty Hill</option>
-                <option value="Lincoln Park">Lincoln Park</option>
-                <option value="Lindale">Lindale</option>
-                <option value="Linden">Linden</option>
-                <option value="Lindsay">Lindsay</option>
-                <option value="Lipan">Lipan</option>
-                <option value="Little Elm">Little Elm</option>
-                <option value="Little River Academy">Little River Academy</option>
-                <option value="Littlefield">Littlefield</option>
-                <option value="Live Oak">Live Oak</option>
-                <option value="Liverpool">Liverpool</option>
-                <option value="Livingston">Livingston</option>
-                <option value="Llano">Llano</option>
-                <option value="Lockhart">Lockhart</option>
-                <option value="Lockney">Lockney</option>
-                <option value="Log Cabin">Log Cabin</option>
-                <option value="Lometa">Lometa</option>
-                <option value="Lone Oak">Lone Oak</option>
-                <option value="Lone Star">Lone Star</option>
-                <option value="Longview">Longview</option>
-                <option value="Loraine">Loraine</option>
-                <option value="Lorena">Lorena</option>
-                <option value="Lorenzo">Lorenzo</option>
-                <option value="Los Fresnos">Los Fresnos</option>
-                <option value="Los Indios">Los Indios</option>
-                <option value="Los Ybanez">Los Ybanez</option>
-                <option value="Lott">Lott</option>
-                <option value="Lovelady">Lovelady</option>
-                <option value="Lowry Crossing">Lowry Crossing</option>
-                <option value="Lubbock">Lubbock</option>
-                <option value="Lucas">Lucas</option>
-                <option value="Lueders">Lueders</option>
-                <option value="Lufkin">Lufkin</option>
-                <option value="Luling">Luling</option>
-                <option value="Lumberton">Lumberton</option>
-                <option value="Lyford">Lyford</option>
-                <option value="Lytle">Lytle</option>
-                <option value="Mabank">Mabank</option>
-                <option value="Madisonville">Madisonville</option>
-                <option value="Magnolia">Magnolia</option>
-                <option value="Malakoff">Malakoff</option>
-                <option value="Malone">Malone</option>
-                <option value="Manor">Manor</option>
-                <option value="Mansfield">Mansfield</option>
-                <option value="Manvel">Manvel</option>
-                <option value="Marble Falls">Marble Falls</option>
-                <option value="Marfa">Marfa</option>
-                <option value="Marietta">Marietta</option>
-                <option value="Marion">Marion</option>
-                <option value="Marlin">Marlin</option>
-                <option value="Marquez">Marquez</option>
-                <option value="Marshall">Marshall</option>
-                <option value="Mart">Mart</option>
-                <option value="Martindale">Martindale</option>
-                <option value="Mason">Mason</option>
-                <option value="Matador">Matador</option>
-                <option value="Mathis">Mathis</option>
-                <option value="Maud">Maud</option>
-                <option value="Maypearl">Maypearl</option>
-                <option value="McAllen">McAllen</option>
-                <option value="McCamey">McCamey</option>
-                <option value="McGregor">McGregor</option>
-                <option value="McKinney">McKinney</option>
-                <option value="McLean">McLean</option>
-                <option value="McLendon-Chisholm">McLendon-Chisholm</option>
-                <option value="Meadow">Meadow</option>
-                <option value="Meadowlakes">Meadowlakes</option>
-                <option value="Meadows Place">Meadows Place</option>
-                <option value="Megargel">Megargel</option>
-                <option value="Melissa">Melissa</option>
-                <option value="Melvin">Melvin</option>
-                <option value="Memphis">Memphis</option>
-                <option value="Menard">Menard</option>
-                <option value="Mercedes">Mercedes</option>
-                <option value="Meridian">Meridian</option>
-                <option value="Merkel">Merkel</option>
-                <option value="Mertens">Mertens</option>
-                <option value="Mertzon">Mertzon</option>
-                <option value="Mesquite">Mesquite</option>
-                <option value="Mexia">Mexia</option>
-                <option value="Miami">Miami</option>
-                <option value="Midland">Midland</option>
-                <option value="Midlothian">Midlothian</option>
-                <option value="Midway">Midway</option>
-                <option value="Milano">Milano</option>
-                <option value="Mildred">Mildred</option>
-                <option value="Miles">Miles</option>
-                <option value="Milford">Milford</option>
-                <option value="Miller's Cove">Miller's Cove</option>
-                <option value="Millsap">Millsap</option>
-                <option value="Mineola">Mineola</option>
-                <option value="Mineral Wells">Mineral Wells</option>
-                <option value="Mingus">Mingus</option>
-                <option value="Mission">Mission</option>
-                <option value="Missouri City">Missouri City</option>
-                <option value="Mobeetie">Mobeetie</option>
-                <option value="Mobile City">Mobile City</option>
-                <option value="Monahans">Monahans</option>
-                <option value="Mont Belvieu">Mont Belvieu</option>
-                <option value="Montgomery">Montgomery</option>
-                <option value="Moody">Moody</option>
-                <option value="Moore Station">Moore Station</option>
-                <option value="Moran">Moran</option>
-                <option value="Morgan">Morgan</option>
-                <option value="Morgan's Point">Morgan's Point</option>
-                <option value="Morgan's Point Resort">Morgan's Point Resort</option>
-                <option value="Morton">Morton</option>
-                <option value="Moulton">Moulton</option>
-                <option value="Mount Calm">Mount Calm</option>
-                <option value="Mount Enterprise">Mount Enterprise</option>
-                <option value="Mount Pleasant">Mount Pleasant</option>
-                <option value="Mount Vernon">Mount Vernon</option>
-                <option value="Mountain City">Mountain City</option>
-                <option value="Muenster">Muenster</option>
-                <option value="Muleshoe">Muleshoe</option>
-                <option value="Mullin">Mullin</option>
-                <option value="Munday">Munday</option>
-                <option value="Murchison">Murchison</option>
-                <option value="Murphy">Murphy</option>
-                <option value="Mustang">Mustang</option>
-                <option value="Mustang Ridge">Mustang Ridge</option>
-                <option value="Nacogdoches">Nacogdoches</option>
-                <option value="Naples">Naples</option>
-                <option value="Nash">Nash</option>
-                <option value="Nassau Bay">Nassau Bay</option>
-                <option value="Natalia">Natalia</option>
-                <option value="Navarro">Navarro</option>
-                <option value="Navasota">Navasota</option>
-                <option value="Nazareth">Nazareth</option>
-                <option value="Nederland">Nederland</option>
-                <option value="Needville">Needville</option>
-                <option value="Nesbitt">Nesbitt</option>
-                <option value="Nevada">Nevada</option>
-                <option value="New Berlin">New Berlin</option>
-                <option value="New Boston">New Boston</option>
-                <option value="New Braunfels">New Braunfels</option>
-                <option value="New Chapel Hill">New Chapel Hill</option>
-                <option value="New Deal">New Deal</option>
-                <option value="New Fairview">New Fairview</option>
-                <option value="New Home">New Home</option>
-                <option value="New Hope">New Hope</option>
-                <option value="New London">New London</option>
-                <option value="New Summerfield">New Summerfield</option>
-                <option value="New Waverly">New Waverly</option>
-                <option value="Newark">Newark</option>
-                <option value="Newcastle">Newcastle</option>
-                <option value="Newton">Newton</option>
-                <option value="Neylandville">Neylandville</option>
-                <option value="Niederwald">Niederwald</option>
-                <option value="Nixon">Nixon</option>
-                <option value="Nocona">Nocona</option>
-                <option value="Nolanville">Nolanville</option>
-                <option value="Nome">Nome</option>
-                <option value="Noonday">Noonday</option>
-                <option value="Nordheim">Nordheim</option>
-                <option value="Normangee">Normangee</option>
-                <option value="North Cleveland">North Cleveland</option>
-                <option value="North Richland Hills">North Richland Hills</option>
-                <option value="Northlake">Northlake</option>
-                <option value="Novice">Novice</option>
-                <option value="Oak Grove">Oak Grove</option>
-                <option value="Oak Leaf">Oak Leaf</option>
-                <option value="Oak Point">Oak Point</option>
-                <option value="Oak Ridge (Cooke)">Oak Ridge (Cooke)</option>
-                <option value="Oak Ridge (Kaufman)">Oak Ridge (Kaufman)</option>
-                <option value="Oak Ridge North">Oak Ridge North</option>
-                <option value="Oak Valley">Oak Valley</option>
-                <option value="Oakwood">Oakwood</option>
-                <option value="O'Brien">O'Brien</option>
-                <option value="Odem">Odem</option>
-                <option value="Odessa">Odessa</option>
-                <option value="O'Donnell">O'Donnell</option>
-                <option value="Oglesby">Oglesby</option>
-                <option value="Old River-Winfree">Old River-Winfree</option>
-                <option value="Olmos Park">Olmos Park</option>
-                <option value="Olney">Olney</option>
-                <option value="Olton">Olton</option>
-                <option value="Omaha">Omaha</option>
-                <option value="Onalaska">Onalaska</option>
-                <option value="Opdyke West">Opdyke West</option>
-                <option value="Orange">Orange</option>
-                <option value="Orange Grove">Orange Grove</option>
-                <option value="Orchard">Orchard</option>
-                <option value="Ore City">Ore City</option>
-                <option value="Overton">Overton</option>
-                <option value="Ovilla">Ovilla</option>
-                <option value="Oyster Creek">Oyster Creek</option>
-                <option value="Paducah">Paducah</option>
-                <option value="Paint Rock">Paint Rock</option>
-                <option value="Palacios">Palacios</option>
-                <option value="Palestine">Palestine</option>
-                <option value="Palisades">Palisades</option>
-                <option value="Palm Valley">Palm Valley</option>
-                <option value="Palmer">Palmer</option>
-                <option value="Palmhurst">Palmhurst</option>
-                <option value="Palmview">Palmview</option>
-                <option value="Pampa">Pampa</option>
-                <option value="Panhandle">Panhandle</option>
-                <option value="Panorama Village">Panorama Village</option>
-                <option value="Pantego">Pantego</option>
-                <option value="Paradise">Paradise</option>
-                <option value="Paris">Paris</option>
-                <option value="Parker">Parker</option>
-                <option value="Pasadena">Pasadena</option>
-                <option value="Pattison">Pattison</option>
-                <option value="Patton Village">Patton Village</option>
-                <option value="Payne Springs">Payne Springs</option>
-                <option value="Pearland">Pearland</option>
-                <option value="Pearsall">Pearsall</option>
-                <option value="Pecan Gap">Pecan Gap</option>
-                <option value="Pecan Hill">Pecan Hill</option>
-                <option value="Pecos">Pecos</option>
-                <option value="Pelican Bay">Pelican Bay</option>
-                <option value="Penelope">Penelope</option>
-                <option value="Penitas">Penitas</option>
-                <option value="Perryton">Perryton</option>
-                <option value="Petersburg">Petersburg</option>
-                <option value="Petrolia">Petrolia</option>
-                <option value="Petronila">Petronila</option>
-                <option value="Pflugerville">Pflugerville</option>
-                <option value="Pharr">Pharr</option>
-                <option value="Pilot Point">Pilot Point</option>
-                <option value="Pine Forest">Pine Forest</option>
-                <option value="Pine Island">Pine Island</option>
-                <option value="Pinehurst">Pinehurst</option>
-                <option value="Pineland">Pineland</option>
-                <option value="Piney Point Village">Piney Point Village</option>
-                <option value="Pittsburg">Pittsburg</option>
-                <option value="Plains">Plains</option>
-                <option value="Plainview">Plainview</option>
-                <option value="Plano">Plano</option>
-                <option value="Pleak">Pleak</option>
-                <option value="Pleasant Valley">Pleasant Valley</option>
-                <option value="Pleasanton">Pleasanton</option>
-                <option value="Plum Grove">Plum Grove</option>
-                <option value="Point">Point</option>
-                <option value="Point Blank">Point Blank</option>
-                <option value="Point Comfort">Point Comfort</option>
-                <option value="Point Venture">Point Venture</option>
-                <option value="Ponder">Ponder</option>
-                <option value="Port Aransas">Port Aransas</option>
-                <option value="Port Arthur">Port Arthur</option>
-                <option value="Port Isabel">Port Isabel</option>
-                <option value="Port Lavaca">Port Lavaca</option>
-                <option value="Port Neches">Port Neches</option>
-                <option value="Portland">Portland</option>
-                <option value="Post">Post</option>
-                <option value="Post Oak Bend">Post Oak Bend</option>
-                <option value="Poteet">Poteet</option>
-                <option value="Poth">Poth</option>
-                <option value="Pottsboro">Pottsboro</option>
-                <option value="Powell">Powell</option>
-                <option value="Poynor">Poynor</option>
-                <option value="Prairie View">Prairie View</option>
-                <option value="Premont">Premont</option>
-                <option value="Presidio">Presidio</option>
-                <option value="Primera">Primera</option>
-                <option value="Princeton">Princeton</option>
-                <option value="Progreso">Progreso</option>
-                <option value="Progreso Lakes">Progreso Lakes</option>
-                <option value="Prosper">Prosper</option>
-                <option value="Providence Village">Providence Village</option>
-                <option value="Putnam">Putnam</option>
-                <option value="Pyote">Pyote</option>
-                <option value="Quanah">Quanah</option>
-                <option value="Queen City">Queen City</option>
-                <option value="Quinlan">Quinlan</option>
-                <option value="Quintana">Quintana</option>
-                <option value="Quitaque">Quitaque</option>
-                <option value="Quitman">Quitman</option>
-                <option value="Ralls">Ralls</option>
-                <option value="Rancho Viejo">Rancho Viejo</option>
-                <option value="Ranger">Ranger</option>
-                <option value="Rangerville">Rangerville</option>
-                <option value="Rankin">Rankin</option>
-                <option value="Ransom Canyon">Ransom Canyon</option>
-                <option value="Ravenna">Ravenna</option>
-                <option value="Raymondville">Raymondville</option>
-                <option value="Red Lick">Red Lick</option>
-                <option value="Red Oak">Red Oak</option>
-                <option value="Redwater">Redwater</option>
-                <option value="Refugio">Refugio</option>
-                <option value="Reklaw">Reklaw</option>
-                <option value="Reno (Lamar)">Reno (Lamar)</option>
-                <option value="Reno (Parker)">Reno (Parker)</option>
-                <option value="Retreat">Retreat</option>
-                <option value="Rhome">Rhome</option>
-                <option value="Rice">Rice</option>
-                <option value="Richardson">Richardson</option>
-                <option value="Richland">Richland</option>
-                <option value="Richland Hills">Richland Hills</option>
-                <option value="Richland Springs">Richland Springs</option>
-                <option value="Richmond">Richmond</option>
-                <option value="Richwood">Richwood</option>
-                <option value="Riesel">Riesel</option>
-                <option value="Rio Bravo">Rio Bravo</option>
-                <option value="Rio Grande City">Rio Grande City</option>
-                <option value="Rio Hondo">Rio Hondo</option>
-                <option value="Rio Vista">Rio Vista</option>
-                <option value="Rising Star">Rising Star</option>
-                <option value="River Oaks">River Oaks</option>
-                <option value="Riverside">Riverside</option>
-                <option value="Roanoke">Roanoke</option>
-                <option value="Roaring Springs">Roaring Springs</option>
-                <option value="Robert Lee">Robert Lee</option>
-                <option value="Robinson">Robinson</option>
-                <option value="Robstown">Robstown</option>
-                <option value="Roby">Roby</option>
-                <option value="Rochester">Rochester</option>
-                <option value="Rockdale">Rockdale</option>
-                <option value="Rockport">Rockport</option>
-                <option value="Rocksprings">Rocksprings</option>
-                <option value="Rockwall">Rockwall</option>
-                <option value="Rocky Mound">Rocky Mound</option>
-                <option value="Rogers">Rogers</option>
-                <option value="Rollingwood">Rollingwood</option>
-                <option value="Roma">Roma</option>
-                <option value="Roman Forest">Roman Forest</option>
-                <option value="Ropesville">Ropesville</option>
-                <option value="Roscoe">Roscoe</option>
-                <option value="Rose City">Rose City</option>
-                <option value="Rose Hill Acres">Rose Hill Acres</option>
-                <option value="Rosebud">Rosebud</option>
-                <option value="Rosenberg">Rosenberg</option>
-                <option value="Ross">Ross</option>
-                <option value="Rosser">Rosser</option>
-                <option value="Rotan">Rotan</option>
-                <option value="Round Mountain">Round Mountain</option>
-                <option value="Round Rock">Round Rock</option>
-                <option value="Round Top">Round Top</option>
-                <option value="Rowlett">Rowlett</option>
-                <option value="Roxton">Roxton</option>
-                <option value="Royse City">Royse City</option>
-                <option value="Rule">Rule</option>
-                <option value="Runaway Bay">Runaway Bay</option>
-                <option value="Runge">Runge</option>
-                <option value="Rusk">Rusk</option>
-                <option value="Sabinal">Sabinal</option>
-                <option value="Sachse">Sachse</option>
-                <option value="Sadler">Sadler</option>
-                <option value="Saginaw">Saginaw</option>
-                <option value="Saint Hedwig">Saint Hedwig</option>
-                <option value="Saint Jo">Saint Jo</option>
-                <option value="Saint Paul">Saint Paul</option>
-                <option value="Salado">Salado</option>
-                <option value="San Angelo">San Angelo</option>
-                <option value="San Antonio">San Antonio</option>
-                <option value="San Augustine">San Augustine</option>
-                <option value="San Benito">San Benito</option>
-                <option value="San Diego">San Diego</option>
-                <option value="San Felipe">San Felipe</option>
-                <option value="San Juan">San Juan</option>
-                <option value="San Leanna">San Leanna</option>
-                <option value="San Marcos">San Marcos</option>
-                <option value="San Patricio">San Patricio</option>
-                <option value="San Perlita">San Perlita</option>
-                <option value="San Saba">San Saba</option>
-                <option value="Sanctuary">Sanctuary</option>
-                <option value="Sandy Point">Sandy Point</option>
-                <option value="Sanford">Sanford</option>
-                <option value="Sanger">Sanger</option>
-                <option value="Sansom Park">Sansom Park</option>
-                <option value="Santa Anna">Santa Anna</option>
-                <option value="Santa Clara">Santa Clara</option>
-                <option value="Santa Fe">Santa Fe</option>
-                <option value="Santa Rosa">Santa Rosa</option>
-                <option value="Savoy">Savoy</option>
-                <option value="Schertz">Schertz</option>
-                <option value="Schulenburg">Schulenburg</option>
-                <option value="Scotland">Scotland</option>
-                <option value="Scottsville">Scottsville</option>
-                <option value="Scurry">Scurry</option>
-                <option value="Seabrook">Seabrook</option>
-                <option value="Seadrift">Seadrift</option>
-                <option value="Seagoville">Seagoville</option>
-                <option value="Seagraves">Seagraves</option>
-                <option value="Sealy">Sealy</option>
-                <option value="Seguin">Seguin</option>
-                <option value="Selma">Selma</option>
-                <option value="Seminole">Seminole</option>
-                <option value="Seven Oaks">Seven Oaks</option>
-                <option value="Seven Points">Seven Points</option>
-                <option value="Seymour">Seymour</option>
-                <option value="Shady Shores">Shady Shores</option>
-                <option value="Shallowater">Shallowater</option>
-                <option value="Shamrock">Shamrock</option>
-                <option value="Shavano Park">Shavano Park</option>
-                <option value="Shenandoah">Shenandoah</option>
-                <option value="Shepherd">Shepherd</option>
-                <option value="Sherman">Sherman</option>
-                <option value="Shiner">Shiner</option>
-                <option value="Shoreacres">Shoreacres</option>
-                <option value="Silsbee">Silsbee</option>
-                <option value="Silverton">Silverton</option>
-                <option value="Simonton">Simonton</option>
-                <option value="Sinton">Sinton</option>
-                <option value="Skellytown">Skellytown</option>
-                <option value="Slaton">Slaton</option>
-                <option value="Smiley">Smiley</option>
-                <option value="Smithville">Smithville</option>
-                <option value="Smyer">Smyer</option>
-                <option value="Snook">Snook</option>
-                <option value="Snyder">Snyder</option>
-                <option value="Socorro">Socorro</option>
-                <option value="Somerset">Somerset</option>
-                <option value="Somerville">Somerville</option>
-                <option value="Sonora">Sonora</option>
-                <option value="Sour Lake">Sour Lake</option>
-                <option value="South Houston">South Houston</option>
-                <option value="South Mountain">South Mountain</option>
-                <option value="South Padre Island">South Padre Island</option>
-                <option value="Southlake">Southlake</option>
-                <option value="Southmayd">Southmayd</option>
-                <option value="Southside Place">Southside Place</option>
-                <option value="Spearman">Spearman</option>
-                <option value="Splendora">Splendora</option>
-                <option value="Spofford">Spofford</option>
-                <option value="Spring Valley">Spring Valley</option>
-                <option value="Springlake">Springlake</option>
-                <option value="Springtown">Springtown</option>
-                <option value="Spur">Spur</option>
-                <option value="Stafford">Stafford</option>
-                <option value="Stagecoach">Stagecoach</option>
-                <option value="Stamford">Stamford</option>
-                <option value="Stanton">Stanton</option>
-                <option value="Staples">Staples</option>
-                <option value="Star Harbor">Star Harbor</option>
-                <option value="Stephenville">Stephenville</option>
-                <option value="Sterling City">Sterling City</option>
-                <option value="Stinnett">Stinnett</option>
-                <option value="Stockdale">Stockdale</option>
-                <option value="Stratford">Stratford</option>
-                <option value="Strawn">Strawn</option>
-                <option value="Streetman">Streetman</option>
-                <option value="Sudan">Sudan</option>
-                <option value="Sugar Land">Sugar Land</option>
-                <option value="Sullivan City">Sullivan City</option>
-                <option value="Sulphur Springs">Sulphur Springs</option>
-                <option value="Sun Valley">Sun Valley</option>
-                <option value="Sundown">Sundown</option>
-                <option value="Sunnyvale">Sunnyvale</option>
-                <option value="Sunray">Sunray</option>
-                <option value="Sunrise Beach Village">Sunrise Beach Village</option>
-                <option value="Sunset Valley">Sunset Valley</option>
-                <option value="Surfside Beach">Surfside Beach</option>
-                <option value="Sweeny">Sweeny</option>
-                <option value="Sweetwater">Sweetwater</option>
-                <option value="Taft">Taft</option>
-                <option value="Tahoka">Tahoka</option>
-                <option value="Talco">Talco</option>
-                <option value="Talty">Talty</option>
-                <option value="Tatum">Tatum</option>
-                <option value="Taylor">Taylor</option>
-                <option value="Taylor Lake Village">Taylor Lake Village</option>
-                <option value="Taylor Landing">Taylor Landing</option>
-                <option value="Teague">Teague</option>
-                <option value="Tehuacana">Tehuacana</option>
-                <option value="Temple">Temple</option>
-                <option value="Tenaha">Tenaha</option>
-                <option value="Terrell">Terrell</option>
-                <option value="Terrell Hills">Terrell Hills</option>
-                <option value="Texarkana">Texarkana</option>
-                <option value="Texas City">Texas City</option>
-                <option value="Texhoma">Texhoma</option>
-                <option value="Texline">Texline</option>
-                <option value="The Colony">The Colony</option>
-                <option value="Thompsons">Thompsons</option>
-                <option value="Thorndale">Thorndale</option>
-                <option value="Thornton">Thornton</option>
-                <option value="Thorntonville">Thorntonville</option>
-                <option value="Thrall">Thrall</option>
-                <option value="Three Rivers">Three Rivers</option>
-                <option value="Throckmorton">Throckmorton</option>
-                <option value="Tiki Island">Tiki Island</option>
-                <option value="Timbercreek Canyon">Timbercreek Canyon</option>
-                <option value="Timpson">Timpson</option>
-                <option value="Tioga">Tioga</option>
-                <option value="Tira">Tira</option>
-                <option value="Toco">Toco</option>
-                <option value="Todd Mission">Todd Mission</option>
-                <option value="Tolar">Tolar</option>
-                <option value="Tom Bean">Tom Bean</option>
-                <option value="Tomball">Tomball</option>
-                <option value="Tool">Tool</option>
-                <option value="Toyah">Toyah</option>
-                <option value="Trent">Trent</option>
-                <option value="Trenton">Trenton</option>
-                <option value="Trinidad">Trinidad</option>
-                <option value="Trinity">Trinity</option>
-                <option value="Trophy Club">Trophy Club</option>
-                <option value="Troup">Troup</option>
-                <option value="Troy">Troy</option>
-                <option value="Tulia">Tulia</option>
-                <option value="Turkey">Turkey</option>
-                <option value="Tuscola">Tuscola</option>
-                <option value="Tye">Tye</option>
-                <option value="Tyler">Tyler</option>
-                <option value="Uhland">Uhland</option>
-                <option value="Uncertain">Uncertain</option>
-                <option value="Union Grove">Union Grove</option>
-                <option value="Union Valley">Union Valley</option>
-                <option value="Universal City">Universal City</option>
-                <option value="University Park">University Park</option>
-                <option value="Uvalde">Uvalde</option>
-                <option value="Valentine">Valentine</option>
-                <option value="Valley Mills">Valley Mills</option>
-                <option value="Valley View">Valley View</option>
-                <option value="Van">Van</option>
-                <option value="Van Alstyne">Van Alstyne</option>
-                <option value="Van Horn">Van Horn</option>
-                <option value="Vega">Vega</option>
-                <option value="Venus">Venus</option>
-                <option value="Vernon">Vernon</option>
-                <option value="Victoria">Victoria</option>
-                <option value="Vidor">Vidor</option>
-                <option value="Village of The Hills">Village of The Hills</option>
-                <option value="Villiage of Volente">Villiage of Volente</option>
-                <option value="Vinton">Vinton</option>
-                <option value="Von Ormy">Von Ormy</option>
-                <option value="Waco">Waco</option>
-                <option value="Waelder">Waelder</option>
-                <option value="Wake Village">Wake Village</option>
-                <option value="Waller">Waller</option>
-                <option value="Wallis">Wallis</option>
-                <option value="Walnut Springs">Walnut Springs</option>
-                <option value="Warren City">Warren City</option>
-                <option value="Waskom">Waskom</option>
-                <option value="Watauga">Watauga</option>
-                <option value="Waxahachie">Waxahachie</option>
-                <option value="Weatherford">Weatherford</option>
-                <option value="Webberville">Webberville</option>
-                <option value="Webster">Webster</option>
-                <option value="Weimar">Weimar</option>
-                <option value="Weinert">Weinert</option>
-                <option value="Weir">Weir</option>
-                <option value="Wellington">Wellington</option>
-                <option value="Wellman">Wellman</option>
-                <option value="Wells">Wells</option>
-                <option value="Weslaco">Weslaco</option>
-                <option value="West">West</option>
-                <option value="West Columbia">West Columbia</option>
-                <option value="West Lake Hills">West Lake Hills</option>
-                <option value="West Orange">West Orange</option>
-                <option value="West Tawakoni">West Tawakoni</option>
-                <option value="West University Place">West University Place</option>
-                <option value="Westbrook">Westbrook</option>
-                <option value="Westlake">Westlake</option>
-                <option value="Weston">Weston</option>
-                <option value="Weston Lakes">Weston Lakes</option>
-                <option value="Westover Hills">Westover Hills</option>
-                <option value="Westworth Village">Westworth Village</option>
-                <option value="Wharton">Wharton</option>
-                <option value="Wheeler">Wheeler</option>
-                <option value="White Deer">White Deer</option>
-                <option value="White Oak">White Oak</option>
-                <option value="White Settlement">White Settlement</option>
-                <option value="Whiteface">Whiteface</option>
-                <option value="Whitehouse">Whitehouse</option>
-                <option value="Whitesboro">Whitesboro</option>
-                <option value="Whitewright">Whitewright</option>
-                <option value="Whitney">Whitney</option>
-                <option value="Wichita Falls">Wichita Falls</option>
-                <option value="Wickett">Wickett</option>
-                <option value="Willis">Willis</option>
-                <option value="Willow Park">Willow Park</option>
-                <option value="Wills Point">Wills Point</option>
-                <option value="Wilmer">Wilmer</option>
-                <option value="Wilson">Wilson</option>
-                <option value="Wimberley">Wimberley</option>
-                <option value="Windcrest">Windcrest</option>
-                <option value="Windom">Windom</option>
-                <option value="Windthorst">Windthorst</option>
-                <option value="Winfield">Winfield</option>
-                <option value="Wink">Wink</option>
-                <option value="Winnsboro">Winnsboro</option>
-                <option value="Winona">Winona</option>
-                <option value="Winters">Winters</option>
-                <option value="Wixon Valley">Wixon Valley</option>
-                <option value="Wolfe City">Wolfe City</option>
-                <option value="Wolfforth">Wolfforth</option>
-                <option value="Woodbranch Village">Woodbranch Village</option>
-                <option value="Woodcreek">Woodcreek</option>
-                <option value="Woodloch">Woodloch</option>
-                <option value="Woodsboro">Woodsboro</option>
-                <option value="Woodson">Woodson</option>
-                <option value="Woodville">Woodville</option>
-                <option value="Woodway">Woodway</option>
-                <option value="Wortham">Wortham</option>
-                <option value="Wylie">Wylie</option>
-                <option value="Yantis">Yantis</option>
-                <option value="Yoakum">Yoakum</option>
-                <option value="Yorktown">Yorktown</option>
-                <option value="Zavalla">Zavalla</option>
+              <select size="1" name="city" id="city" class="form-control" value="Master">
+                <option value="Master">Master</option>
+                
               </select>
               <br />
               <div id="otherValueDiv" class="form-group form-inline" style="display:none">
@@ -2627,9 +1407,9 @@ function makeUnincorpLast(){
               <!--<input type="text" name="city" style="form-control input-sm" />-->
             </div>
             <div class="form-group form-inline" style="display:nonea">
-              <textarea id="cityTmp" name="cityTmp" />
+              <textarea id="cityTmp" name="cityTmp" value="Master"/>
               <br />
-              <textarea id="city2" name="city2"></textarea>
+              <textarea id="city2" name="city2" value="Master"></textarea>
             </div>
             <div class="form-group form-inline">
               <label class="control-label" for="population">Population:</label>
@@ -2725,7 +1505,7 @@ function makeUnincorpLast(){
             </div>
             <br />
             <h1>
-              <span class="label label-default">Individual Assistance</span>
+              <span class="label label-default">Master County Totals - Individual Assistance</span>
             </h1>
             <h3>
               <span class="label label-default">Residential Losses - Primary Residence Only</span>
@@ -2858,7 +1638,7 @@ function makeUnincorpLast(){
             </div>
             <br />
             <h1>
-              <span class="label label-default">Business Losses/Impacts:</span>
+              <span class="label label-default">Master County Totals - Business Losses/Impacts:</span>
             </h1>
             <br />
             <table class="table table-bordered">
@@ -2927,7 +1707,7 @@ function makeUnincorpLast(){
             </div>
             <br />
             <h1>
-              <span class="label label-default">Public Assistance</span>
+              <span class="label label-default">Master County Totals - Public Assistance</span>
             </h1>
             <br />
             <table class="table table-bordered">
@@ -3107,7 +1887,7 @@ function makeUnincorpLast(){
             </div>
             <br />
             <h1>
-              <span class="label label-default">Other Eligible Entities</span>
+              <span class="label label-default">Master County Totals - Other Eligible Entities</span>
             </h1>
             <br />
             <i>(Contact non-profit or governmental, medical, emergency, utility, educational, custodial care facilities, etc.)</i>
@@ -3497,7 +2277,7 @@ This form is for damage assessment reporting purposes only.  In accordance with 
 </div>
             <br />
             <h1>
-              <span class="label label-default">General Notes</span>
+              <span class="label label-default">Master County Totals - General Notes</span>
             </h1>
             <br />
             <div class="form-group form-inline">
@@ -3508,7 +2288,7 @@ This form is for damage assessment reporting purposes only.  In accordance with 
             </div>
             <br />
             <h1>
-              <span class="label label-default">Submitter Information</span>
+              <span class="label label-default">Master County Totals - Submitter Information</span>
             </h1>
             <br />
             <div class="form-group form-inline">
@@ -3529,7 +2309,7 @@ This form is for damage assessment reporting purposes only.  In accordance with 
                      <space/>
                      <input name="submitterEmailHidden" id="submitterEmailHidden" type="text" style="width:300px"/>
                   </div>-->
-            <div style="display:none" id="countyEmailHide" class="form-group form-inline">
+            <div style="display:nonea" id="countyEmailHide" class="form-group form-inline">
               <label class="control-label" for="countyEmail">County Email:</label>
               <space />
               <input name="countyEmail" id="countyEmail" type="text" style="width:300px" onBlur="finalEmailCheck()" />

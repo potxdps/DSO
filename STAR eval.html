@@ -1,0 +1,29 @@
+<script type="text/javascript">
+Evaluation: function() {
+    var a=[];
+    for(var i=0; i &lt; scribe.fields4History.length; i++) {
+      var b=document.getElementsByName(scribe.fields4History[i][0]);
+      for(var k=0; k &lt; b.length; k++) {
+        var result=[];
+        if(b[k].tagName==="SELECT") {
+          if(b[k].options.length&gt;0){
+          result.push(scribe.fields4History[i][1]);
+          result.push(b[k].options[b[k].selectedIndex].text);}
+        } else if (b[k].type==="radio" || b[k].type==="checkbox") {
+          result.push(scribe.fields4History[i][1]);
+          if(b[k].checked===true) {
+            result.push('Selected');
+          } else {
+            result.push('Not Selected');
+          }
+        } else {
+          result.push(scribe.fields4History[i][1]);
+          result.push(b[k].value);
+        }
+        a.push(result);
+      }
+    }
+    return a;
+  },
+
+  </script>

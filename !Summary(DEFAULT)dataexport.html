@@ -1,0 +1,708 @@
+<html>
+  <head>
+    <title>Summary</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap-dialog.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/jquery.js" />
+    <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/bootstrap.min.js" />
+    <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/etn/etn.js" />
+    <script type="text/javascript" src="../boards/board_lib.js" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+    <style type="text/css">
+  body{background-color:#d1d2d4;color:#000;font:normal 0.9em arial;margin:1.0em;}
+  div.container{border:solid 1px #0069aa; width:100%;}
+  div.content{margin:1em;width:99%;}
+  table.heading{border:solid 1px;border-collapse:collapse;empty-cells:show;margin:0;padding:3px;width:100%;}      table.heading td, table.heading th{padding:0.1em 0.5em 0.1em 0.5em;}
+  table.heading th{text-align:center;}
+  #tdFilter{text-align:right;}
+  #tdBoard{text-align:center;}
+  table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
+  table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
+  table.display td{border-top:solid 1px;border-color:#ccc;}
+  .rowYellow {background-color:#ffffb3;}
+  .rowBlue {background-color:#ccebff;}
+  .rowRed {background-color:#FF9999;}
+  .lightRowRed {background-color:#FFb3b3;}
+  .rowGray {background-color: #b7bfc8;}
+.rowReg {}
+.rowGreen{background-color:#00e673;}
+.cellYellow{background-color:#ffff00;}
+.textYellow {color:#ffff99;}
+.cellOrange {background-color:#ff751a;}
+  .fieldsetButtons { 
+    display:inline-block;
+
+   }
+legend {
+   font-size: 10pt;
+}
+.hideA { font-size: 20pt;}
+  /*.tjCount{background-color:#ffffb3;}*/
+}
+.tJ {font-size:14pt;background-color:#BDFFFF;color:black; 
+}
+.smallHeaders {
+  font-size: 10pt;
+}
+
+.tableWords {
+  font-size: 10pt;
+}
+.smallestWords {
+  font-size: 6pt;
+}
+.PDFhide{ 
+display:none; 
+}
+/*.tableFontSize {
+    font-size: 6pt;
+}*/
+
+</style>
+
+  </head>
+  <body>
+  <div class="container">
+    <div class="container agencytemplate_boardbackground">
+      <table class="table heading agencytemplate_boardheader">
+        <tbody>
+          <tr>
+            <td id="tdIncident">
+              <span id="incidentNameSpan">
+                <incidentname />
+              </span>
+            </td>
+            <td id="tdFilter">
+              <filter />
+            </td>
+          </tr>
+          <tr>
+            <td id="tdBoard" colSpan="2" selected="false" align="center">Recovery Summary
+                     
+                     
+                     <br /><h3>(Bubble Inputs)</h3><hr/>
+                     
+                     <span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button><space/><span id="pdfButtons" class="hide"><pdflink id="pdfButton" type="button" class="btn btn-warning" orientation="landscape">PDF</pdflink><space/><button id="fakePdfButton" class="btn btn-danger" orientation="landscape" onclick="pdfFontChangeSize()">Small</button><space/><button id="fakePdfButton2" class="btn btn-danger" orientation="landscape" onclick="pdfFontChangeSize2()">Large</button><space/><viewlink name="!Summary(DEFAULT)_PDF" id="pdfView" type="button" class="btn btn-warning">Get PDF View</viewlink></span>
+                     <span id="dataMan">
+                       <dataexport type="button" filename="DSO Recovery Summary" class="btn btn-warning">
+                       <field name="incidentName" header="Incident Name"></field>
+                        <field name="totalJurisdictions" header="Total Jurisdictions"></field>
+                        <field name="county" header="County"></field>
+                        <field name="city" header="City"></field>
+                        <field name="dateOfDisaster1" header="Date Disaster Start"></field>
+                        <field name="dateOfDisaster2" header="Date Disaster End"></field>
+                        <field name="dateDecRec" header="Dec Rec Date Local"></field>
+                        <field name="dateDecRecState" header="Dec Rec Date State"></field>
+                        <field name="dateDecRecFederal" header="Dec Rec Date Fed"></field>
+                        <field name="ack1" header="ACK Letters Sent 1 Date"></field>
+                        <field name="assistanceRequestedDate" header="Asst Req Date"></field>
+                        <field name="dsoYesNo" header="DSO"></field>
+                        <field name="totalJurisdictions" header="DSO Rec Date"></field>
+                        <field name="ack2" header="ACK Letters Sent 2 Date"></field>
+                        <field name="iaPDAScheduled" header="IA Date PDA SCHED"></field>
+                        <field name="iaPDAComplete" header="IA Date PDA CMPL"></field>
+                        <field name="paPDAScheduled" header="PA Date PDA SCHED"></field>
+                        <field name="paPDAComplete" header="PA Date PDA CMPL"></field>
+
+                       </dataexport>
+                     </span></span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="container">
+
+  
+  <!-- Trigger the modal with a button -->
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          <h4 class="modal-title">Legend / Information</h4>
+        </div>
+        <div class="modal-body">
+        <!--<table id="smallTable" class="table display">
+          <tr><td><div style="text-align:center;" class="rowYellow"><span style="text-align:center;font-size:12pt">County / City Totals</span></div></td><td><div style="text-align:center;" class="rowGray"><span style="text-align:center;font-size:12pt">Grand Totals</span></div></td><td><div style="text-align:center;" class="rowRed"><span style="text-align:center;font-size:12pt">FEMA Vetting</span></div></td><td><div style="text-align:center;" class="rowGreen"><span style="text-align:center;font-size:12pt">Yes</span></div></td><td><div style="text-align:center;" class="cellYellow"><span style="font-size:12pt">No</span></div></td><td><div style="text-align:center;" class="cellOrange"><span style="text-align:center;font-size:12pt">N/A</span></div></td></tr>
+
+        </table>-->
+        <table><tr><h5><!--<br/>-->This page shows only Supplemental Inputs (Bubble Inputs)</h5><hr/><h5>Total Jurisdictions are determined if a yes value is entered for Disaster Declaration, if a date is entered into Acknowledgement Letters Sent 1 or 2 or a date is entered into Date Impacted Counties DSO Rec'd.</h5></tr></table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+
+</div>
+      <div class="content">
+      <div id="buttonsFiltersSearch">
+      <!--<button type="button" class="btn active">View Recovery Summary</button>-->
+        <div>
+         <fieldset class="fieldsetButtons"><legend>Operations</legend>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
+         <space/><space/>
+         <button type="button" class="btn active">View Recovery Summary</button>
+         <!--<viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>-->
+         <space /><space />
+         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+         <space /><space /><space /><space />
+         <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>Recovery</legend>
+        <space/><space/>
+        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        <space /><space />
+        <!--<button type="button" class="btn active">View Recovery PA</button>-->
+        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>DSO</legend>
+        <space/><space/>
+        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
+        </div><hr/>
+        <div class="form-inline" id="resourceFilters" style="display: inline-block;">
+          <span id="countyFilter">
+            <filterdropdown defaulttext="All Counties" class="form-control">
+              <filter name="Anderson">Anderson</filter>
+              <filter name="Andrews">Andrews</filter>
+              <filter name="Angelina">Angelina</filter>
+              <filter name="Aransas">Aransas</filter>
+              <filter name="Archer">Archer</filter>
+              <filter name="Armstrong">Armstrong</filter>
+              <filter name="Atascosa">Atascosa</filter>
+              <filter name="Austin">Austin</filter>
+              <filter name="Bailey">Bailey</filter>
+              <filter name="Bandera">Bandera</filter>
+              <filter name="Bastrop">Bastrop</filter>
+              <filter name="Baylor">Baylor</filter>
+              <filter name="Bee">Bee</filter>
+              <filter name="Bell">Bell</filter>
+              <filter name="Bexar">Bexar</filter>
+              <filter name="Blanco">Blanco</filter>
+              <filter name="Borden">Borden</filter>
+              <filter name="Bosque">Bosque</filter>
+              <filter name="Bowie">Bowie</filter>
+              <filter name="Brazoria">Brazoria</filter>
+              <filter name="Brazos">Brazos</filter>
+              <filter name="Brewster">Brewster</filter>
+              <filter name="Briscoe">Briscoe</filter>
+              <filter name="Brooks">Brooks</filter>
+              <filter name="Brown">Brown</filter>
+              <filter name="Burleson">Burleson</filter>
+              <filter name="Burnet">Burnet</filter>
+              <filter name="Caldwell">Caldwell</filter>
+              <filter name="Calhoun">Calhoun</filter>
+              <filter name="Callahan">Callahan</filter>
+              <filter name="Cameron">Cameron</filter>
+              <filter name="Camp">Camp</filter>
+              <filter name="Carson">Carson</filter>
+              <filter name="Cass">Cass</filter>
+              <filter name="Castro">Castro</filter>
+              <filter name="Chambers">Chambers</filter>
+              <filter name="Cherokee">Cherokee</filter>
+              <filter name="Childress">Childress</filter>
+              <filter name="Clay">Clay</filter>
+              <filter name="Cochran">Cochran</filter>
+              <filter name="Coke">Coke</filter>
+              <filter name="Coleman">Coleman</filter>
+              <filter name="Collin">Collin</filter>
+              <filter name="Collingsworth">Collingsworth</filter>
+              <filter name="Colorado">Colorado</filter>
+              <filter name="Comal">Comal</filter>
+              <filter name="Comanche">Comanche</filter>
+              <filter name="Concho">Concho</filter>
+              <filter name="Cooke">Cooke</filter>
+              <filter name="Coryell">Coryell</filter>
+              <filter name="Cottle">Cottle</filter>
+              <filter name="Crane">Crane</filter>
+              <filter name="Crockett">Crockett</filter>
+              <filter name="Crosby">Crosby</filter>
+              <filter name="Culberson">Culberson</filter>
+              <filter name="Dallam">Dallam</filter>
+              <filter name="Dallas">Dallas</filter>
+              <filter name="Dawson">Dawson</filter>
+              <filter name="Deaf Smith">Deaf Smith</filter>
+              <filter name="Delta">Delta</filter>
+              <filter name="Denton">Denton</filter>
+              <filter name="DeWitt">DeWitt</filter>
+              <filter name="Dickens">Dickens</filter>
+              <filter name="Dimmit">Dimmit</filter>
+              <filter name="Donley">Donley</filter>
+              <filter name="Duval">Duval</filter>
+              <filter name="Eastland">Eastland</filter>
+              <filter name="Ector">Ector</filter>
+              <filter name="Edwards">Edwards</filter>
+              <filter name="Ellis">Ellis</filter>
+              <filter name="El Paso">El Paso</filter>
+              <filter name="Erath">Erath</filter>
+              <filter name="Falls">Falls</filter>
+              <filter name="Fannin">Fannin</filter>
+              <filter name="Fayette">Fayette</filter>
+              <filter name="Fisher">Fisher</filter>
+              <filter name="Floyd">Floyd</filter>
+              <filter name="Foard">Foard</filter>
+              <filter name="Fort Bend">Fort Bend</filter>
+              <filter name="Franklin">Franklin</filter>
+              <filter name="Freestone">Freestone</filter>
+              <filter name="Frio">Frio</filter>
+              <filter name="Gaines">Gaines</filter>
+              <filter name="Galveston">Galveston</filter>
+              <filter name="Garza">Garza</filter>
+              <filter name="Gillespie">Gillespie</filter>
+              <filter name="Glasscock">Glasscock</filter>
+              <filter name="Goliad">Goliad</filter>
+              <filter name="Gonzales">Gonzales</filter>
+              <filter name="Gray">Gray</filter>
+              <filter name="Grayson">Grayson</filter>
+              <filter name="Gregg">Gregg</filter>
+              <filter name="Grimes">Grimes</filter>
+              <filter name="Guadalupe">Guadalupe</filter>
+              <filter name="Hale">Hale</filter>
+              <filter name="Hall">Hall</filter>
+              <filter name="Hamilton">Hamilton</filter>
+              <filter name="Hansford">Hansford</filter>
+              <filter name="Hardeman">Hardeman</filter>
+              <filter name="Hardin">Hardin</filter>
+              <filter name="Harris">Harris</filter>
+              <filter name="Harrison">Harrison</filter>
+              <filter name="Hartley">Hartley</filter>
+              <filter name="Haskell">Haskell</filter>
+              <filter name="Hays">Hays</filter>
+              <filter name="Hemphill">Hemphill</filter>
+              <filter name="Henderson">Henderson</filter>
+              <filter name="Hidalgo">Hidalgo</filter>
+              <filter name="Hill">Hill</filter>
+              <filter name="Hockley">Hockley</filter>
+              <filter name="Hood">Hood</filter>
+              <filter name="Hopkins">Hopkins</filter>
+              <filter name="Houston">Houston</filter>
+              <filter name="Howard">Howard</filter>
+              <filter name="Hudspeth">Hudspeth</filter>
+              <filter name="Hunt">Hunt</filter>
+              <filter name="Hutchinson">Hutchinson</filter>
+              <filter name="Irion">Irion</filter>
+              <filter name="Jack">Jack</filter>
+              <filter name="Jackson">Jackson</filter>
+              <filter name="Jasper">Jasper</filter>
+              <filter name="Jeff Davis">Jeff Davis</filter>
+              <filter name="Jefferson">Jefferson</filter>
+              <filter name="Jim Hogg">Jim Hogg</filter>
+              <filter name="Jim Wells">Jim Wells</filter>
+              <filter name="Johnson">Johnson</filter>
+              <filter name="Jones">Jones</filter>
+              <filter name="Karnes">Karnes</filter>
+              <filter name="Kaufman">Kaufman</filter>
+              <filter name="Kendall">Kendall</filter>
+              <filter name="Kenedy">Kenedy</filter>
+              <filter name="Kent">Kent</filter>
+              <filter name="Kerr">Kerr</filter>
+              <filter name="Kimble">Kimble</filter>
+              <filter name="King">King</filter>
+              <filter name="Kinney">Kinney</filter>
+              <filter name="Kleberg">Kleberg</filter>
+              <filter name="Knox">Knox</filter>
+              <filter name="Lamar">Lamar</filter>
+              <filter name="Lamb">Lamb</filter>
+              <filter name="Lampasas">Lampasas</filter>
+              <filter name="LaSalle">La Salle</filter>
+              <filter name="Lavaca">Lavaca</filter>
+              <filter name="Lee">Lee</filter>
+              <filter name="Leon">Leon</filter>
+              <filter name="Liberty">Liberty</filter>
+              <filter name="Limestone">Limestone</filter>
+              <filter name="Lipscomb">Lipscomb</filter>
+              <filter name="Live Oak">Live Oak</filter>
+              <filter name="Llano">Llano</filter>
+              <filter name="Loving">Loving</filter>
+              <filter name="Lubbock">Lubbock</filter>
+              <filter name="Lynn">Lynn</filter>
+              <filter name="Madison">Madison</filter>
+              <filter name="Marion">Marion</filter>
+              <filter name="Martin">Martin</filter>
+              <filter name="Mason">Mason</filter>
+              <filter name="Matagorda">Matagorda</filter>
+              <filter name="Maverick">Maverick</filter>
+              <filter name="McCulloch">McCulloch</filter>
+              <filter name="McLennan">McLennan</filter>
+              <filter name="McMullen">McMullen</filter>
+              <filter name="Medina">Medina</filter>
+              <filter name="Menard">Menard</filter>
+              <filter name="Midland">Midland</filter>
+              <filter name="Milam">Milam</filter>
+              <filter name="Mills">Mills</filter>
+              <filter name="Mitchell">Mitchell</filter>
+              <filter name="Montague">Montague</filter>
+              <filter name="Montgomery">Montgomery</filter>
+              <filter name="Moore">Moore</filter>
+              <filter name="Morris">Morris</filter>
+              <filter name="Motley">Motley</filter>
+              <filter name="Nacogdoches">Nacogdoches</filter>
+              <filter name="Navarro">Navarro</filter>
+              <filter name="Newton">Newton</filter>
+              <filter name="Nolan">Nolan</filter>
+              <filter name="Nueces">Nueces</filter>
+              <filter name="Ochiltree">Ochiltree</filter>
+              <filter name="Oldham">Oldham</filter>
+              <filter name="Orange">Orange</filter>
+              <filter name="Palo Pinto">Palo Pinto</filter>
+              <filter name="Panola">Panola</filter>
+              <filter name="Parker">Parker</filter>
+              <filter name="Parmer">Parmer</filter>
+              <filter name="Pecos">Pecos</filter>
+              <filter name="Polk">Polk</filter>
+              <filter name="Potter">Potter</filter>
+              <filter name="Presidio">Presidio</filter>
+              <filter name="Rains">Rains</filter>
+              <filter name="Randall">Randall</filter>
+              <filter name="Reagan">Reagan</filter>
+              <filter name="Real">Real</filter>
+              <filter name="Red River">Red River</filter>
+              <filter name="Reeves">Reeves</filter>
+              <filter name="Refugio">Refugio</filter>
+              <filter name="Roberts">Roberts</filter>
+              <filter name="Robertson">Robertson</filter>
+              <filter name="Rockwall">Rockwall</filter>
+              <filter name="Runnels">Runnels</filter>
+              <filter name="Rusk">Rusk</filter>
+              <filter name="Sabine">Sabine</filter>
+              <filter name="San Augustine">San Augustine</filter>
+              <filter name="San Jacinto">San Jacinto</filter>
+              <filter name="San Patricio">San Patricio</filter>
+              <filter name="San Saba">San Saba</filter>
+              <filter name="Schleicher">Schleicher</filter>
+              <filter name="Scurry">Scurry</filter>
+              <filter name="Shackelford">Shackelford</filter>
+              <filter name="Shelby">Shelby</filter>
+              <filter name="Sherman">Sherman</filter>
+              <filter name="Smith">Smith</filter>
+              <filter name="Somervell">Somervell</filter>
+              <filter name="Starr">Starr</filter>
+              <filter name="Stephens">Stephens</filter>
+              <filter name="Sterling">Sterling</filter>
+              <filter name="Stonewall">Stonewall</filter>
+              <filter name="Sutton">Sutton</filter>
+              <filter name="Swisher">Swisher</filter>
+              <filter name="Tarrant">Tarrant</filter>
+              <filter name="Taylor">Taylor</filter>
+              <filter name="Terrell">Terrell</filter>
+              <filter name="Terry">Terry</filter>
+              <filter name="Throckmorton">Throckmorton</filter>
+              <filter name="Titus">Titus</filter>
+              <filter name="Tom Green">Tom Green</filter>
+              <filter name="Travis">Travis</filter>
+              <filter name="Trinity">Trinity</filter>
+              <filter name="Tyler">Tyler</filter>
+              <filter name="Upshur">Upshur</filter>
+              <filter name="Upton">Upton</filter>
+              <filter name="Uvalde">Uvalde</filter>
+              <filter name="Val Verde">Val Verde</filter>
+              <filter name="Van Zandt">Van Zandt</filter>
+              <filter name="Victoria">Victoria</filter>
+              <filter name="Walker">Walker</filter>
+              <filter name="Waller">Waller</filter>
+              <filter name="Ward">Ward</filter>
+              <filter name="Washington">Washington</filter>
+              <filter name="Webb">Webb</filter>
+              <filter name="Wharton">Wharton</filter>
+              <filter name="Wheeler">Wheeler</filter>
+              <filter name="Wichita">Wichita</filter>
+              <filter name="Wilbarger">Wilbarger</filter>
+              <filter name="Willacy">Willacy</filter>
+              <filter name="Williamson">Williamson</filter>
+              <filter name="Wilson">Wilson</filter>
+              <filter name="Winkler">Winkler</filter>
+              <filter name="Wise">Wise</filter>
+              <filter name="Wood">Wood</filter>
+              <filter name="Yoakum">Yoakum</filter>
+              <filter name="Young">Young</filter>
+              <filter name="Zapata">Zapata</filter>
+              <filter name="Zavala">Zavala</filter>
+            </filterdropdown>
+          </span>
+          <space />
+          <space />
+          <space />
+          <space />
+          <space />
+          <space />
+          
+          <div class="form-inline" id="resourceFilters" style="display: inline-block;">
+            <label for="incidentList" class="">
+              <h4>
+                <sub>Incidents:</sub>
+              </h4>
+            </label>
+            <space />
+            <select name="incidentList" id="incidentList" class="form-control" onchange="filterByIncident.incidentListActionOnChange();" />
+          </div>
+          <space />
+          <space />
+          <space />
+          <space />
+          <space />
+          <space />
+          <span id="searchDIV">
+            <search exact="false" range="false" rangetext="false">
+              <field name="county" />
+              <field name="city" />
+            </search>
+            <clearsearchbutton />
+            <span style="display: none;" id="incidentNameSearchSPAN">
+              <search field="incidentName" clearsearch="true" />
+            </span>
+          </span>
+        </div>
+        </div>
+        <div />
+        <br />
+        <div class="table-responsive" style="">
+        <table id="sumTable" class="table display">
+          <tbody>
+            <tr class="agencytemplate_tableheader">
+              <td selected="false" colSpan="1" rowSpan="1" width="" align="center"><span class="tableWords">Total Jurisdictions</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">County / City</span>
+                        
+                        
+                        <br /><span class="tableWords">(Click to Edit)</span>
+                     
+                     
+                     </td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Incident Period</span></td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">Disaster Dec
+                        
+                        
+                        <br />(X)
+                     
+                     
+                     </td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Dec Rec'd Date<br/>Local<br/>State<br/>Fed</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">ACK Letters Sent 1 Date</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Asst Req'd Date</span></td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">DSO</td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">DSO / Rec'd Date</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">ACK Letters Sent 2 Date</span></td>
+              <td selected="false" colSpan="2" width="" rowSpan="1" align="center"><span class="tableWords">IA Dates</span></td>
+              <td selected="false" colSpan="2" width="" rowSpan="1" align="center"><span class="tableWords">PA Dates</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Bubble Audit Log</span></td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">IA PDA FEMA</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PA PDA FEMA</td>-->
+            </tr>
+            <tr class="agencytemplate_tableheader">
+              <td selected="false" align="center" top-align="center" rowSpan="1"><span class="tableWords"><expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0))</expression></span>
+                     
+                     </td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">PDA SCHED</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">PDA CMPL</span></td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">PDA SCHED</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">PDA CMPL</span></td>
+            </tr>
+            <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
+              <if test="1=0">
+              <eocfield name="totalJurisdictions"/>
+                <eocfield name="jurisdictionType" />
+                <eocfield name="county" />
+                <eocfield name="city" />
+                <eocfield name="dateDecRec" />
+                <eocfield name="dateDecRecState" />
+                <eocfield name="dateDecRecFederal" />
+              </if>
+              <tr class="agencytemplate_tableentry">
+              
+                <td colSpan="1" selected="false" align="center"><if test="@totalJurisdictions!='0'">
+                <div><value-of select="@totalJurisdictions"/></div></if></td>
+                <td class="hide"><eocfield name="incidentName"/></td>
+                <td colSpan="1" selected="false" width="">
+                  <viewlink name="Bubble Input (DO NOT ASSIGN)">
+                  <span class="tableWords" style="color:#111111">
+                    <if test="@jurisdictionType='County'">
+                      <div style="text-align:left">
+                        <b>
+                          <value-of select="@county" />
+                        </b> / <value-of select="@city" /></div>
+                    </if>
+                    <if test="@jurisdictionType='City'">
+                      <div style="text-align:right">
+                        <value-of select="@county" /> / <b><value-of select="@city" /></b></div>
+                    </if></span>
+                  </viewlink>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <!--<eocfield name="incidentPeriod" />-->
+                  <span class="tableWords"><eocfield table="Core" name="dateOfDisaster1" />- 
+                           <eocfield table="Core" name="dateOfDisaster2" /></span></td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="declarationIssued" />
+                </td>-->
+                <td colSpan="1" selected="false" width="" align="center">
+                <span class="tableWords"><if test="@dateDecRec!=''"><div>( L <value-of select="@dateDecRec" /> )</div></if><br/><if test="@dateDecRecState!=''">( S <value-of select="@dateDecRecState" /> )</if><br/><if test="@dateDecRecFederal!=''">( F <value-of select="@dateDecRecFederal" /> )</if></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="ack1" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="assistanceRequestedDate" /></span>
+                </td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="dsoYesNo" />
+                </td>-->
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="dsoYesNo" /> / <eocfield name="impactedCountiesDSO" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="ack2" /></span>
+                </td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="iaPdaRequested" />
+                </td>-->
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="iaPDAScheduled" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="iaPDAComplete" /></span>
+                </td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="paPdaRequested" />
+                </td>-->
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="paPDAScheduled" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="paPDAComplete" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <viewlink name="Bubble Audit RelatedList (DO NOT ASSIGN)">
+                    <button class="btn btn-warning btn-xs">Bubble History</button>
+                  </viewlink>
+                </td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="femaCheckboxV1" />
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="femaCheckboxV2" />
+                </td>-->
+              </tr>
+            </eocrepeatallrecords>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+
+  function copyIncidentNameOnChange() {
+
+    $("#incidentList").val($("#filterIncidentCopy").val());
+    alert('copy inc name');
+  }
+
+  
+
+//SCRIPT works at bottom of page, not the top
+//document.getElementById("pdfButton").onclick = function() {pdfFontChangeSize()};
+//document.getElementById("fakePdfButton").onclick = document.getElementById("pdfButton").click;
+
+function pdfFontChangeSize() {
+  alert("resizing");
+  //document.getElementsByClassName("tableWords").removeClass("smallestWords");
+  $(".tableWords").addClass("smallestWords");
+    //document.getElementsByClassName("tableWords").addClass("smallestWords");
+}
+
+function pdfFontChangeSize2() {
+  alert("resizing");
+  //document.getElementsByClassName("tableWords").removeClass("smallestWords");
+  $(".tableWords").removeClass("smallestWords");
+    //document.getElementsByClassName("tableWords").addClass("smallestWords");
+}
+ 
+var dsoPageHelper={
+
+
+    //startOf: identifying what filter is on
+    filterSet: function(arg1,arg2) {
+      if($(arg1).html()==='on'){$(arg2).css('font-weight', 'Bold').css('text-decoration', 'underline');}
+    },
+    
+    
+    //startOf: styling search field
+      styleSearchField: function() {
+         var searchFld=document.getElementById('searchDIV').getElementsByTagName('input');
+         for(var j=0; j &lt; searchFld.length; j++) {
+            if($(searchFld[j]).val()=='Search' || $(searchFld[j]).val()=='Clear Search'){$(searchFld[j]).addClass('btn btn-default');}
+          if(searchFld[j].id.search('searchfield')&gt;=0){$(searchFld[j]).addClass('form-control').prop('placeholder', 'Search');}
+        }     
+      }
+  };
+   
+var incSelList=document.getElementById('incidentList');
+var loopAllInputs=document.getElementsByTagName('input');
+var incVar;
+
+//startOf: filter by incident process method
+var filterByIncident={
+ clearIncidentListSelection: function() {
+   var incSearch=document.getElementById('incidentNameSearchSPAN').getElementsByTagName('input');
+   for(var i=0; i &lt; incSearch.length; i++) {
+     if(incSearch[i].value==='') {
+       window.parent.window.parent.selectedIncident='';
+     } else {
+       $('#incidentList').val(window.parent.window.parent.selectedIncident);
+     //  console.log(window.parent.window.parent.selectedIncident);
+     }      
+   }
+ },
+ searchFieldVariableSet: function() {
+   for(var i=0; i &lt; loopAllInputs.length; i++) {
+     if(loopAllInputs[i].id &amp;&amp; loopAllInputs[i].getAttribute('id').indexOf('searchfield')&gt; -1){incVar=loopAllInputs[i];}
+   }
+ },
+ incidentListOptionsBuild: function() {
+   <for-each select="/data/allincidentlist/incidents">
+     incSelList.options[incSelList.options.length]=new Option('<value-of select="@name" />','<value-of select="@name" />',false,false);
+  </for-each>
+   incSelList.options.selectedIndex=0;
+ },
+ incidentListActionOnChange: function() {
+   incSelList.options[incSelList.options.length]=new Option('','',false,false);
+   incVar.value=incSelList.options[incSelList.options.selectedIndex].text;
+   for(var i=0; i &lt; loopAllInputs.length; i++) {
+     if(loopAllInputs[i].getAttribute('value')=='Search'){$(loopAllInputs[i]).click();copyIncidentNameOnChange()}
+   }
+   window.parent.window.parent.selectedIncident=(incSelList.options[incSelList.options.selectedIndex]).text;
+ }
+};
+
+
+$(document).ready(function(){
+  
+    dsoPageHelper.styleSearchField();
+    var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
+    $(countyFilter).addClass('form-control');
+    filterByIncident.incidentListOptionsBuild();
+    filterByIncident.searchFieldVariableSet();
+    filterByIncident.clearIncidentListSelection();
+    
+  });
+
+
+//window.onload = start;
+
+</script>
+</html>

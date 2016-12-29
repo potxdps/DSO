@@ -1,6 +1,7 @@
-<html>   <head>
+<html>   
+  <head>
       <title>DSO List</title>
-<meta charset="utf-8"/>
+      <meta charset="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
       <link href="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap-dialog.min.css" rel="stylesheet"/>
@@ -27,80 +28,139 @@ var b = a.parentNode.childNodes[4].innerHTML;
   table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
   table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
   table.display td{border-top:solid 1px;border-color:#ccc;}
+  .rowYellow {background-color:#ffffb3;}
+  .rowBlue {background-color:#ccebff;}
+  .rowRed {background-color:#FF9999;}
+  .lightRowRed {background-color:#FFb3b3;}
+  .rowGray {background-color: #b7bfc8;}
+.rowReg {}
+.rowGreen{background-color:#00e673;}
+.cellYellow{background-color:#ffff00;}
+.textYellow {color:#ffff99;}
+.cellOrange {background-color:#ff751a;}
   .fieldsetButtons { 
     display:inline-block;
 
    }
-legend{
+legend {
    font-size: 10pt;
 }
+.tableWords {
+  font-size: 10pt;
+}
+.hideA { font-size: 20pt;}
+  /*.tjCount{background-color:#ffffb3;}*/
+}
+/*.tableFontSize {
+    font-size: 6pt;
+}*/
 
 </style>
 
-   </head>   <body>
+   </head>   
+   <body>
+   <div class="container">
       <div class="container agencytemplate_boardbackground">
-         <table class="heading agencytemplate_boardheader">
+         <table class="table heading agencytemplate_boardheader">
             <tbody>
                <tr>
-                  <td id="tdIncident" colSpan="2">
-                     <incidentname/>
-                  </td>
-                  <td id="tdFilter" selected="false" align="right">
-                     <!--<input type="button" class="btn btn-success" onclick="window.open('https://olympus.soc.texas.gov/services/dso/','_blank')" value="New DSO"/>-->
+                  <td id="tdIncident">
+              <span id="incidentNameSpan">
+                <incidentname />
+              </span>
+            </td>
+                  <td id="tdFilter">
+                     <filter/>
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="3" selected="false" align="center">DSO List</td>
+                  <td id="tdBoard" colSpan="3" selected="false" align="center">DSO List<hr/>
+                     
+                     <span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button><space/><span id="pdfButtons" class="hide"><pdflink type="button" class="btn btn-warning" orientation="landscape">PDF</pdflink></span></span></td>
                </tr>
-               <tr>
-                  <td id="tdBoard" colSpan="1" selected="false" align="left" rowSpan="1"/>
-                  <td id="tdBoard" colSpan="1" selected="" align="center" rowSpan="1" width=""> </td>
-                  <td id="tdBoard" colSpan="1" selected="" align="center" rowSpan="1" width=""> </td>
-               </tr>
+               
+               
+
             </tbody>
          </table>
+         <div class="container">
+
+  
+  <!-- Trigger the modal with a button -->
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          <h4 class="modal-title">Legend / Information</h4>
+        </div>
+        <div class="modal-body">
+        <!--<table id="smallTable" class="table display">
+          <tr><td><div style="text-align:center;" class="rowYellow"><span style="text-align:center;font-size:12pt">County / City Totals</span></div></td><td><div style="text-align:center;" class="rowGray"><span style="text-align:center;font-size:12pt">Grand Totals</span></div></td><td><div style="text-align:center;" class="rowRed"><span style="text-align:center;font-size:12pt">FEMA Vetting</span></div></td><td><div style="text-align:center;" class="rowGreen"><span style="text-align:center;font-size:12pt">Yes</span></div></td><td><div style="text-align:center;" class="cellYellow"><span style="font-size:12pt">No</span></div></td><td><div style="text-align:center;" class="cellOrange"><span style="text-align:center;font-size:12pt">N/A</span></div></td></tr>
+
+        </table>-->
+        <table><tr><h5><!--<br/>-->xxxxx</h5><hr/><h5>xxxxxx</h5></tr></table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+
+</div>
          <div class="content">
-         <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
+         <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">DSO List</viewlink>-->
          <div>
          <fieldset class="fieldsetButtons"><legend>Operations</legend>
          <space/><space/>
-         <button type="button" class="btn active">View DSO List</button>
+         <button type="button" class="btn active">DSO List</button>
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
-            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
+         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">Recovery Summary</viewlink>
+            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">DSO List</viewlink>-->
          <space /><space />
-         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">Housing / IA</viewlink>
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">Infrastructure / PA</viewlink>
          <space /><space /><space /><space />
          <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
         <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
         <fieldset class="fieldsetButtons"><legend>Recovery</legend>
         <space/><space/>
-        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">Recovery IA</viewlink>
         <space /><space />
-        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink></fieldset>
+        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">Recovery PA</viewlink></fieldset>
         <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
         <fieldset class="fieldsetButtons"><legend>DSO</legend>
         <space/><space/>
         <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
         </div><hr/>
-            <table class="display">
+        <div class="table-responsive" style="">
+            <table class="table display">
                <tbody>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false">Number</td>
-                     <td selected="false" colSpan="1" width="">Type</td>
-                     <td selected="false" colSpan="1" width="">County / City</td>
-                     <td selected="false" colSpan="1" width="">Incident</td>
-                     <td selected="false" colSpan="1" width="">SOC Status</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="1">Update Date</td>
-                     <td selected="false" colSpan="1" width="">Action</td>
+                     <td selected="false"><span class="tableWords">Number</span></td>
+                     <td selected="false" colSpan="1" width=""><span class="tableWords">Type</span></td>
+                     <td selected="false" colSpan="1" width=""><span class="tableWords">County / City</span></td>
+                     <td selected="false" colSpan="1" width=""><span class="tableWords">Incident</span></td>
+                     <td selected="false" colSpan="1" width=""><span class="tableWords">SOC Status</span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="1"><span class="tableWords">Update Date</span></td>
+                     <td selected="false" colSpan="1" width=""><span class="tableWords">Action</span></td>
                   </tr>
                   <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
                   <if test="1=0">
                   <eocfield name="jurisdictionType"/>
                   <eocfield name="county"/>
                   <eocfield name="city"/>
+                  <eocfield name="otherValue"/>
+                  <eocfield name="dsoSelected"/>
                   </if>
                      <tr class="agencytemplate_tableentry">
                         <td selected="false" colSpan="1">
@@ -116,7 +176,9 @@ legend{
                            <value-of select="@jurisdictionType"/>
                         </td>
                         <td selected="false" colSpan="1" width="">
-                           <span style="color:#111111"><if test="@jurisdictionType='County'"><div align="left"><b><value-of select="@county"/></b> / <value-of select="@city"/></div></if><if test="@jurisdictionType='City'"><div align="right"><value-of select="@county"/> / <b><value-of select="@city"/></b></div></if></span>
+                           <viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county" /></b> /
+                        <value-of select="@city" /><br/><if test="@otherValue!=''"> / <value-of select="@otherValue" /></if><if test="@dsoSelected!=''"> / <value-of select="@dsoSelected" /></if></if><if test="@jurisdictionType='City'"><value-of select="@county" /> /
+                        <b><value-of select="@city" /></b><br/><if test="@otherValue!=''"> / <value-of select="@otherValue" /></if><if test="@dsoSelected!=''"> / <value-of select="@dsoSelected" /></if></if></span></viewlink>
                         </td>
                         <td selected="false" colSpan="1" width="">
                            <eocfield name="webeocIncident"/>
@@ -142,7 +204,9 @@ legend{
                   </eocrepeatallrecords>
                </tbody>
             </table>
+            </div>
          </div>
+      </div>
       </div>
    </body>
 </html>

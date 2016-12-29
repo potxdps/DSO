@@ -1,0 +1,14 @@
+Updating a field in a parent display view from an embedded input view
+I have a display view board which has an embedded input view.
+The <form> tag has an onsubmit action which doesn't seem to fire.
+I know the input field is being updated because, to debug, I have a second embedview which displays the contents of the field.
+Tried various methods of refreshing the (parent) display view but nothing seems to work	
+
+
+
+
+
+
+To make sure I understand what you are wanting to do. When someone inputs something in the input field and pushes save you would like the main window to refresh? If that is the case, I have successfully implemented this by on the save button point it to a blank view with a javascript function (window.parent.window.parent.window.parent.pageBoard.Refresh();)to run onload. On the reload, your embed view will show the input screen again, with the update and by putting the script in a blank page, you will have ensured the entry is saved before the parent refreshes.
+Hope that helps
+Sam

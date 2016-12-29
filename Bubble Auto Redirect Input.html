@@ -1,5 +1,6 @@
-<html>   <head>
-      <script type="text/javascript">
+<html>
+  <head>
+    <script type="text/javascript">
  var someSaveBttn=function(){};
      var scribe={
   status: 0,
@@ -13,24 +14,39 @@
       for(var k=0; k &lt; b.length; k++) {
         var result=[];
         if(b[k].tagName==="SELECT") {
-          result.push(scribe.fields4History[i][1]);
-          result.push(b[k].options[b[k].selectedIndex].text);
+            var ms=[];
+            for(var msif=0; msif &lt; b[k].options.length; msif++){
+                if(b[k].options[msif].selected==true){ms.push(b[k].options[msif])}
+            }
+            var msr =[];
+            for(var msi=0; msi &lt; ms.length; msi++){
+               msr.push(ms[msi].text); 
+            }
+             result.push(scribe.fields4History[i][1]);
+             result.push(msr.join(','));   
         } else if (b[k].type==="radio" || b[k].type==="checkbox") {
           result.push(scribe.fields4History[i][1]);
+          var r;
           if(b[k].checked===true) {
-            result.push('Yes');
+            
+                r = b[k].value+'(Selected)';
+            
+            result.push(r);
           } else {
-            result.push('No');
+             
+                r = b[k].value+'(Not Selected)';
+            
+            result.push(r);
           }
         } else {
           result.push(scribe.fields4History[i][1]);
           result.push(b[k].value);
         }
         a.push(result);
+        
       }
     }
     return a;
-    
   },
   inicialReview: function(){scribe.baseArray=scribe.Evaluation();},
   postReview: function() {
@@ -61,16 +77,17 @@
   function proxySaveFunction() { //alert('proxy save');
   var a=document.getElementById('historyEmbedView');
   if(a.contentWindow) {
-
+    console.log('AutoSAve contentWindow');
     a.contentWindow.document.getElementById('frameBody').contentWindow.frames.injectHistory(document.getElementsByName('dataid')[0].value,document.getElementById("dateTimeUpdate").value,
-      '<value-of select="/data/@currentUser"/>',
+      '<value-of select="/data/@currentUser" />',
       document.getElementById("currentChangeLog").value);
     //alert("proxySaveFun runs on Auto Redirect");
     
   } else {
+    console.log('AutoSAve contentDocument');
     a.contentDocument.document.getElementById('frameBody').contentDocument.frames.injectHistory(document.getElementsByName('dataid')[0].value,
       document.getElementById("dateTimeUpdate").value,
-      '<value-of select="/data/@currentUser"/>',
+      '<value-of select="/data/@currentUser" />',
       document.getElementById("currentChangeLog").value);
    // alert("ELSE proxySaveFun runs on Auto Redirect");
    
@@ -82,22 +99,28 @@
   
   
   </script>
-      <style type="text/css">
-  body{
-    display: none;
+    <style type="text/css">
+ body{
+ height:1px;
+    width:1px;
+     visibility: hidden;
+ 
   }
 </style>
-   </head>   <body>
-      <div class="container agencytemplate_boardbackground">
-         <form>
-            <div class="content">
-               <input type="text" id="dateTimeUpdate" name="dateTimeUpdate" style="display:none"/>
-               <span style="display: none;">
-                  <textarea name="currentChangeLog" id="currentChangeLog"/>
-                  <embedview id="historyEmbedView" view="Bubble Audit Input (DO NOT ASSIGN)" name="historyEmbedView"/>
-               </span>
-            </div>
-         </form>
-      </div>
-   </body>
+  </head>
+  <body>
+    <!--<div class="container agencytemplate_boardbackground"> uncomment to see-->
+  
+      <form>
+        <div class="small content">
+          <input type="text" id="dateTimeUpdate" name="dateTimeUpdate" style="display:none"/>
+          <span style="display:nonee;">
+          RIGHT HERE
+            <textarea name="currentChangeLog" id="currentChangeLog"/>
+            <embedview id="historyEmbedView" view="Bubble Audit Input (DO NOT ASSIGN)" name="historyEmbedView"/>
+          </span>
+        </div>
+      </form>
+  
+  </body>
 </html>

@@ -1,0 +1,421 @@
+<html>
+  <head>
+    <title>Summary</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://olympus.soc.texas.gov/services/DSO/Scripts/bootstrap-dialog.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/jquery.js" />
+    <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/bootstrap.min.js" />
+    <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/etn/etn.js" />
+    <script type="text/javascript" src="../boards/board_lib.js" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+    <style type="text/css">
+  body{background-color:#d1d2d4;color:#000;font:normal 0.5em arial;margin:1.0em;}
+  div.container{border:solid 1px #0069aa; width:100%;}
+  div.content{margin:1em;width:99%;}
+  table.heading{border:solid 1px;border-collapse:collapse;empty-cells:show;margin:0;padding:3px;width:100%;}      table.heading td, table.heading th{padding:0.1em 0.5em 0.1em 0.5em;}
+  table.heading th{text-align:center;}
+  #tdFilter{text-align:right;}
+  #tdBoard{text-align:center;}
+  table.display{border-collapse:collapse;border:solid 1px;width:70%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
+  table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
+  table.display td{border-top:solid 1px;border-color:#ccc;}
+  .rowYellow {background-color:#ffffb3;}
+  .rowBlue {background-color:#ccebff;}
+  .rowRed {background-color:#FF9999;}
+  .lightRowRed {background-color:#FFb3b3;}
+  .rowGray {background-color: #b7bfc8;}
+.rowReg {}
+.rowGreen{background-color:#00e673;}
+.cellYellow{background-color:#ffff00;}
+.textYellow {color:#ffff99;}
+.cellOrange {background-color:#ff751a;}
+  .fieldsetButtons { 
+    display:inline-block;
+
+   }
+legend {
+   font-size: 10pt;
+}
+
+.tJ {font-size:8pt;background-color:#BDFFFF;color:black; 
+}
+.smallHeaders {
+  font-size: 10pt;
+}
+
+.tableWords {
+  font-size: 8pt;
+}
+.smallestWords {
+  font-size: 6pt;
+}
+.PDFhide{ 
+display:none; 
+}
+/*.tableFontSize {
+    font-size: 6pt;
+}*/
+
+</style>
+
+  </head>
+  <body>
+  <div class="container">
+    <div class="container agencytemplate_boardbackground">
+      <table class="PDFhide table heading agencytemplate_boardheader">
+        <tbody>
+          <tr>
+            <td id="tdIncident">
+              <span id="incidentNameSpan">
+                <incidentname />
+              </span>
+            </td>
+            <td id="tdFilter">
+              <filter />
+            </td>
+          </tr>
+          <tr>
+            <td id="tdBoard" colSpan="2" selected="false" align="center">Recovery Summary
+                     
+                     
+                     <br /><h3>(Bubble Inputs)</h3><hr/>
+                     
+                     <span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button><space/><pdflink id="pdfButton" type="button" class="btn btn-warning" orientation="landscape">PDF</pdflink><space/><button id="fakePdfButton" class="btn btn-danger" orientation="landscape" onclick="pdfFontChangeSize()">Small</button><space/><button id="fakePdfButton2" class="btn btn-danger" orientation="landscape" onclick="pdfFontChangeSize2()">Large</button></span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="container">
+
+  
+  <!-- Trigger the modal with a button -->
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          <h4 class="modal-title">Legend / Information</h4>
+        </div>
+        <div class="modal-body">
+        <!--<table id="smallTable" class="table display">
+          <tr><td><div style="text-align:center;" class="rowYellow"><span style="text-align:center;font-size:12pt">County / City Totals</span></div></td><td><div style="text-align:center;" class="rowGray"><span style="text-align:center;font-size:12pt">Grand Totals</span></div></td><td><div style="text-align:center;" class="rowRed"><span style="text-align:center;font-size:12pt">FEMA Vetting</span></div></td><td><div style="text-align:center;" class="rowGreen"><span style="text-align:center;font-size:12pt">Yes</span></div></td><td><div style="text-align:center;" class="cellYellow"><span style="font-size:12pt">No</span></div></td><td><div style="text-align:center;" class="cellOrange"><span style="text-align:center;font-size:12pt">N/A</span></div></td></tr>
+
+        </table>-->
+        <table><tr><h5><!--<br/>-->This page shows only Supplemental Inputs (Bubble Inputs)</h5><hr/><h5>Total Jurisdictions are determined if a yes value is entered for Disaster Declaration, if a date is entered into Acknowledgement Letters Sent 1 or 2 or a date is entered into Date Impacted Counties DSO Rec'd.</h5></tr></table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+
+</div>
+      <div class="content">
+      <div id="buttonsFiltersSearch">
+      <!--<button type="button" class="btn active">View Recovery Summary</button>-->
+        <div class="PDFhide">
+         <fieldset class="fieldsetButtons"><legend>Operations</legend>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
+         <space/><space/>
+         <button type="button" class="btn active">View Recovery Summary</button>
+         <!--<viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>-->
+         <space /><space />
+         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+         <space/><space/>
+         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+         <space /><space /><space /><space />
+         <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>Recovery</legend>
+        <space/><space/>
+        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        <space /><space />
+        <!--<button type="button" class="btn active">View Recovery PA</button>-->
+        <viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink></fieldset>
+        <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
+        <fieldset class="fieldsetButtons"><legend>DSO</legend>
+        <space/><space/>
+        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
+        </div><hr/>
+        <h2>Recovery Summary</h2>
+        <div><viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">Back</viewlink><space/><pdflink id="pdfButton" type="button" class="btn btn-warning" orientation="landscape">PDF</pdflink></div>
+        <hr/>
+        <div class="form-inline" id="resourceFilters" style="display: inline-block;">
+          <filterlistdropdown field="county" list="Counties - Texas" defaulttext="All Counties" class="form-control"/>
+          <space />
+          <space />
+          <space />
+          <space />
+          <space />
+          <space />
+          
+          <div class="form-inline" id="resourceFilters" style="display: inline-block;">
+            <label for="incidentList" class="">
+              <h4>
+                <sub>Incidents:</sub>
+              </h4>
+            </label>
+            <space />
+            <select name="incidentList" id="incidentList" class="form-control" onchange="filterByIncident.incidentListActionOnChange();" />
+          </div>
+          <space />
+          <space />
+          <space />
+          <space />
+          <space />
+          <space />
+          <span id="searchDIV">
+            <search exact="false" range="false" rangetext="false">
+              <field name="county" />
+              <field name="city" />
+            </search>
+            <clearsearchbutton />
+            <span style="display: none;" id="incidentNameSearchSPAN">
+              <search field="incidentName" clearsearch="true" />
+            </span>
+          </span>
+        </div>
+        </div>
+        <div />
+        <br />
+        <div class="table-responsive" style="">
+        <table id="sumTable" class="table display">
+          <tbody>
+            <tr class="agencytemplate_tableheader">
+              <td selected="false" colSpan="1" rowSpan="1" width="" align="center"><span class="tableWords">Total Jurisdictions</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">County / City</span>
+                        
+                        
+                        <br /><span class="tableWords">(Click to Edit)</span>
+                     
+                     
+                     </td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Incident<br/>Period</span></td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">Disaster Dec
+                        
+                        
+                        <br />(X)
+                     
+                     
+                     </td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Local Dec Rec'd Date</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">State Dec Rec'd Date</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Fed Dec Rec'd Date</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">ACK Letters Sent 1 Date</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">Asst Req'd Date</span></td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">DSO</td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">DSO / Rec'd Date</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center"><span class="tableWords">ACK Letters Sent 2 Date</span></td>
+              <td selected="false" colSpan="2" width="" rowSpan="1" align="center"><span class="tableWords">IA Dates</span></td>
+              <td selected="false" colSpan="2" width="" rowSpan="1" align="center"><span class="tableWords">PA Dates</span></td>
+              
+              <!--<td selected="false" colSpan="1" width="" rowSpan="2" align="center">IA PDA FEMA</td>
+              <td selected="false" colSpan="1" width="" rowSpan="2" align="center">PA PDA FEMA</td>-->
+            </tr>
+            <tr class="agencytemplate_tableheader">
+              <td selected="false" align="center" top-align="center" rowSpan="1"><span class="tableWords"><expression useboardlevelfilters="true" name="totalJurisictionsexpression2">sum(isnull(totalJurisdictions,0))</expression></span>
+                     
+                     </td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">PDA SCHED</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">PDA CMPL</span></td>
+              <!--<td selected="false" colSpan="1" width="" rowSpan="1" align="center" style="font-weight: normal; font-size: 10pt;">PDA Requested</td>-->
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">PDA SCHED</span></td>
+              <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">PDA CMPL</span></td>
+            </tr>
+            <eocrepeatallrecords rowcount="0" sort=" cast(sortCountyOrder as int) asc, cast(sortCityOrder as int) asc">
+              <if test="1=0">
+              <eocfield name="totalJurisdictions"/>
+                <eocfield name="jurisdictionType" />
+                <eocfield name="county" />
+                <eocfield name="city" />
+              </if>
+              <tr class="agencytemplate_tableentry">
+                <td colSpan="1" selected="false" align="center"><if test="@totalJurisdictions!='0'">
+                <div><value-of select="@totalJurisdictions"/></div></if></td>
+
+                <td colSpan="1" selected="false" width="">
+                  <viewlink name="Bubble Input (DO NOT ASSIGN)">
+                  <span class="tableWords" style="color:#111111">
+                    <if test="@jurisdictionType='County'">
+                      <div style="text-align:left">
+                        <b>
+                          <value-of select="@county" />
+                        </b> / <value-of select="@city" /></div>
+                    </if>
+                    <if test="@jurisdictionType='City'">
+                      <div style="text-align:right">
+                        <value-of select="@county" /> / <b><value-of select="@city" /></b></div>
+                    </if></span>
+                  </viewlink>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <!--<eocfield name="incidentPeriod" />-->
+                  <span class="tableWords"><eocfield table="Core" name="dateOfDisaster1" />- 
+                           <eocfield table="Core" name="dateOfDisaster2" /></span></td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="declarationIssued" />
+                </td>-->
+                <td colSpan="1" selected="false" width="" align="center">
+                <span class="tableWords"><eocfield name="dateDecRec" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                <span class="tableWords"><eocfield name="dateDecRecState" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                <span class="tableWords"><eocfield name="dateDecRecFederal" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="ack1" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="assistanceRequestedDate" /></span>
+                </td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="dsoYesNo" />
+                </td>-->
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="dsoYesNo" /> / <eocfield name="impactedCountiesDSO" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="ack2" /></span>
+                </td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="iaPdaRequested" />
+                </td>-->
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="iaPDAScheduled" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="iaPDAComplete" /></span>
+                </td>
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="paPdaRequested" />
+                </td>-->
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="paPDAScheduled" /></span>
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <span class="tableWords"><eocfield name="paPDAComplete" /></span>
+                </td>
+    
+                <!--<td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="femaCheckboxV1" />
+                </td>
+                <td colSpan="1" selected="false" width="" align="center">
+                  <eocfield name="femaCheckboxV2" />
+                </td>-->
+              </tr>
+            </eocrepeatallrecords>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+
+//SCRIPT works at bottom of page, not the top
+//document.getElementById("pdfButton").onclick = function() {pdfFontChangeSize()};
+//document.getElementById("fakePdfButton").onclick = document.getElementById("pdfButton").click;
+
+function pdfFontChangeSize() {
+  alert("resizing");
+  //document.getElementsByClassName("tableWords").removeClass("smallestWords");
+  $(".tableWords").addClass("smallestWords");
+    //document.getElementsByClassName("tableWords").addClass("smallestWords");
+}
+
+function pdfFontChangeSize2() {
+  alert("resizing");
+  //document.getElementsByClassName("tableWords").removeClass("smallestWords");
+  $(".tableWords").removeClass("smallestWords");
+    //document.getElementsByClassName("tableWords").addClass("smallestWords");
+}
+ 
+var dsoPageHelper={
+
+
+    //startOf: identifying what filter is on
+    filterSet: function(arg1,arg2) {
+      if($(arg1).html()==='on'){$(arg2).css('font-weight', 'Bold').css('text-decoration', 'underline');}
+    },
+    
+    
+    //startOf: styling search field
+      styleSearchField: function() {
+         var searchFld=document.getElementById('searchDIV').getElementsByTagName('input');
+         for(var j=0; j &lt; searchFld.length; j++) {
+            if($(searchFld[j]).val()=='Search' || $(searchFld[j]).val()=='Clear Search'){$(searchFld[j]).addClass('btn btn-default');}
+          if(searchFld[j].id.search('searchfield')&gt;=0){$(searchFld[j]).addClass('form-control').prop('placeholder', 'Search');}
+        }     
+      }
+  };
+   
+var incSelList=document.getElementById('incidentList');
+var loopAllInputs=document.getElementsByTagName('input');
+var incVar;
+
+//startOf: filter by incident process method
+var filterByIncident={
+ clearIncidentListSelection: function() {
+   var incSearch=document.getElementById('incidentNameSearchSPAN').getElementsByTagName('input');
+   for(var i=0; i &lt; incSearch.length; i++) {
+     if(incSearch[i].value==='') {
+       window.parent.window.parent.selectedIncident='';
+     } else {
+       $('#incidentList').val(window.parent.window.parent.selectedIncident);
+     //  console.log(window.parent.window.parent.selectedIncident);
+     }      
+   }
+ },
+ searchFieldVariableSet: function() {
+   for(var i=0; i &lt; loopAllInputs.length; i++) {
+     if(loopAllInputs[i].id &amp;&amp; loopAllInputs[i].getAttribute('id').indexOf('searchfield')&gt; -1){incVar=loopAllInputs[i];}
+   }
+ },
+ incidentListOptionsBuild: function() {
+   <for-each select="/data/allincidentlist/incidents">
+     incSelList.options[incSelList.options.length]=new Option('<value-of select="@name" />','<value-of select="@name" />',false,false);
+  </for-each>
+   incSelList.options.selectedIndex=0;
+ },
+ incidentListActionOnChange: function() {
+   incSelList.options[incSelList.options.length]=new Option('','',false,false);
+   incVar.value=incSelList.options[incSelList.options.selectedIndex].text;
+   for(var i=0; i &lt; loopAllInputs.length; i++) {
+     if(loopAllInputs[i].getAttribute('value')=='Search'){$(loopAllInputs[i]).click();}
+   }
+   window.parent.window.parent.selectedIncident=(incSelList.options[incSelList.options.selectedIndex]).text;
+ }
+};
+
+
+$(document).ready(function(){
+  
+    dsoPageHelper.styleSearchField();
+    var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
+    $(countyFilter).addClass('form-control');
+    filterByIncident.incidentListOptionsBuild();
+    filterByIncident.searchFieldVariableSet();
+    filterByIncident.clearIncidentListSelection();
+    
+  });
+
+
+//window.onload = start;
+
+</script>
+</html>

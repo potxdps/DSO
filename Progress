@@ -1,3 +1,44 @@
+//startOf: something that jo placed in here
+
+
+[i].innerHTML.split('|');
+
+
+
+
+
+<if test="@declarationIssued='Yes'">
+    <span class="greenCell">Local / </span>
+</if>
+
+
+<if test="@declarationIssuedStateTest='State'">
+    <span class="greenCell">
+        <relatedexpression name="declarationIssuedStateTest" table="Supplemental">(case when declarationIssuedState='Yes' then 'State' else '' end)</relatedexpression>
+    </span>
+</if>
+
+<if test="@declarationIssuedFederalTest=' / Fed'">
+    <span class="greenCell">
+        <relatedexpression name="declarationIssuedFederalTest" table="Supplemental">(case when declarationIssuedFederal='Yes' then ' / Fed' else '' end)</relatedexpression>
+    </span>
+</if>
+
+
+
+
+<if test="@declarationIssuedFederalTest=' / Fed'"><span class="greenCell"><relatedexpression name="declarationIssuedFederalTest" table="Supplemental">(case when declarationIssuedFederal='Yes' then ' / Fed' else '' end)</relatedexpression></span></if>
+
+
+
+
+
+
+<if test="@declarationIssuedStateTest='State'"><span class="greenCell"><relatedexpression name="declarationIssuedStateTest" table="Supplemental">(case when declarationIssuedState='Yes' then 'State' else '' end)</relatedexpression></span></if><if test="@declarationIssuedFederalTest=' / Fed'"><span class="greenCell"><relatedexpression name="declarationIssuedFederalTest" table="Supplemental">(case when declarationIssuedFederal='Yes' then ' / Fed' else '' end)</relatedexpression></span></if>
+
+<!--<if test="dsoSelected!='Yes'">-->
+https://www.youtube.com/playlist?list=PL37267205DD0CCE5B
+
 10-18-2106
 Insurance totals Yes/No working
 
@@ -16,7 +57,7 @@ In the WebEOC Configuration tool window, select the Date and Time tab.
 
 Are you in the right time zone?
 
-
+test from genesis after change of mailgun host and port
 
 --------------------------------------------
 
@@ -49,3 +90,32 @@ document.getElementById('county').onchange = function () {
             }
 
             ------------------------------------
+
+
+            <div class="form-group form-inline">
+                     <label class="control-label" for="paPDAComplete">PA PDA Complete Date:</label>
+                     <space/>
+                     <br/><textarea name="paPDAComplete" id="paPDAComplete" placeholder="XX/XX/XXXX check femaCheckboxV2 when date entered here" style="form-control input-sm"/>
+                     <br/>
+                  </div>
+</fieldset>
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="femaCheckboxV2">Infrastructure PDAs have been completed and numbers have been vetted between PA and FEMA:</label>
+                     <space/>
+                     <input name="femaCheckboxV2" id="femaCheckboxV2" type="checkbox" value="Yes" style="form-control input-sm"/>
+                  </div>
+
+
+                  <span class="tableWords">L <eocfield name="dateDecRec" /><br/>S <eocfield name="dateDecRecState" /><br/>F <eocfield name="dateDecRecFederal" />
+
+
+                  <eocfield table="Supplemental" name="dateDecRecState" /> 
+
+
+
+<if test="@dateDecRecState!=''"><div class=""><value-of select="@declarationIssuedState" table="Supplemental"/></div></if><if test="@dateDecRecState=''" table="Supplemental"><div class="">Z</div></if>
+
+      <if test="@dateDecRecFederal!=''"><div class=""><value-of select="@declarationIssuedFederal" table="Supplemental"/></div></if><if test="@dateDecRecState=''" table="Supplemental"><div class="">X</div></if> 
+
+
+      <h4>PDF not sized correctly yet</h4>

@@ -13,7 +13,6 @@
 .form-controlLG{width:100px;}
     </style>
       <script type="text/javascript">
-      var countyArrayCopy = [];
       var cityArrayCopy = [];
     var currentStatus;
     var sortSelectLists=function() {
@@ -70,35 +69,24 @@
 };
 
 function selectOptionsIfExistsInArray() {
-                    var textAreaValueCO = $("#countyTmp").val();
                     var textAreaValue = $("#cityTmp").val();
-                    var textAreaValueSplitCO = textAreaValueCO.split(",");
                     var textAreaValueSplit = textAreaValue.split(",");
-                    countyArrayCopy = textAreaValueSplitCO;
                     cityArrayCopy = textAreaValueSplit;
                     //console.log(cityArrayCopy);
                     //console.log("selectOptionsIfExistsInArray");
-                    $("#county").val("");
                     $("#city").val("");
-                    for(var i = 0; i &lt; countyArrayCopy.length; i++) {
-
-                        $("[name = county] option").filter(function() {
-                            return($(this).text() === countyArrayCopy[i]);
-                        }).prop("selected", true);
                     for(var i = 0; i &lt; cityArrayCopy.length; i++) {
 
                         $("[name = city] option").filter(function() {
                             return($(this).text() === cityArrayCopy[i]);
                         }).prop("selected", true);
 
-                        $("#county").val("");
                         $("#cityTmp").val("");
                         $("#city").focus();
                     }
                 }
 
                 function copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray() {
-                    document.getElementById("countyTmp").value += $("#county").val();
                     document.getElementById("cityTmp").value += $("#city").val();
                     console.log("citycounty choices recorded for edit");
                 }
@@ -108,6 +96,7 @@ function alphabetizeDSOdrop(){
     return a.text == b.text ? 0 : a.text &lt; b.text ? -1 : 1
 }))
 }
+/*Need to remove selected DSO or make work. When two bubble inputs are linked to the same DSO, this breaks the Infrastructure and Rec PA pages. The expressions concerning the disaster decs break it*/
 
 function rebuildingCityCountyOptionsOnJTypeCheck(a) {
             $(a).on("click", function () {
@@ -181,15 +170,47 @@ scribe.fields4History=[
   $("#city").prop("disabled", true);
   if ('<xsl:value-of select="/data/@dataid"/>'!=0){
      $("#county").prop("disabled", false);
-      $("#city").prop("disabled", false);
+                $("#city").prop("disabled", false);
+
+                //startOf: doing stuff on update/edit
+                var countySelectListOnUpdate = document.getElementById("county");
+                sortOrderCounty(countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text);
+                var cityList = document.getElementById("city");
+                if (countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text == 'Select One') {
+                  console.log('doing stuff on update/edit');
+                    removeOptions(cityList);
+                    addOption(cityList, "Select One", false);
+                    addOption(cityList, "Unincorporated Areas", true);
+                    for (var k = 0; k &lt; cityMatrix.length; k++) {
+                        addOption(cityList, cityMatrix[k][1], false);
+                    }
+                } else {
+                  console.log('else doing stuff on update/edit');
+                    removeOptions(cityList);
+                    addOption(cityList, "Select One", false);
+                    addOption(cityList, "Unincorporated Areas", true);
+                    for (var k = 0; k &lt; cityMatrix.length; k++) {
+
+                        if (cityMatrix[k][0] === countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text) {
+                            addOption(cityList, cityMatrix[k][1], false);
+                        }
+                    }
+                }
+
+
+                setTimeout(function() {
+                  
+                    selectOptionsIfExistsInArray();
+                }, 1000);
+                console.log('timeout runs');
   }
 
 //if data is not equal to 0
 if (document.getElementsByName('dataid')[0].value!=''){
-  setTimeout(function() {
+  /*setTimeout(function() {
                   
                     selectOptionsIfExistsInArray();
-                }, 1000);
+                }, 1000);*/
  
   updateDateTime();
  
@@ -340,6 +361,7 @@ $("#saveBtn2").click(function() {
         function hideDSOdrop() {
             if (document.getElementById('dsoYesNo1').checked==true) {
                 document.getElementById('dsoDropdown').style.display="";
+                document.getElementById('dsoRecDate').style.display="";
                 var fk = document.getElementById('fk').getElementsByTagName('select')[0];
                 for (var i=0; i&lt; fk.options.length; i++){
                 if(fk.options[i].value===''){
@@ -349,6 +371,7 @@ $("#saveBtn2").click(function() {
 
             } else {
                 document.getElementById('dsoDropdown').style.display="none";
+                document.getElementById('dsoRecDate').style.display="none";
                 CreateOrphanLink();
             }
         }
@@ -501,6 +524,45 @@ else {
 
 }
 
+function checkFemaBoxV1OnDateEntry(){
+    if (document.getElementById('iaPDAComplete').value!=''){
+        document.getElementById('femaCheckboxV1').checked=true;
+    } else {
+        document.getElementById('femaCheckboxV1').checked=false;
+    }
+}
+
+function checkFemaBoxV2OnDateEntry(){
+    if (document.getElementById('paPDAComplete').value!=''){
+        document.getElementById('femaCheckboxV2').checked=true;
+    } else {
+        document.getElementById('femaCheckboxV2').checked=false;
+    }
+}
+
+function localDec(){
+    if (document.getElementById('dateDecRec').value!=''){
+        document.getElementById('declarationIssued1').checked=true;
+    } else {
+        document.getElementById('declarationIssued1').checked=false;
+    }
+}
+
+function stateDec(){
+    if (document.getElementById('dateDecRecState').value!=''){
+        document.getElementById('declarationIssuedState1').checked=true;
+    } else {
+        document.getElementById('declarationIssuedState1').checked=false;
+    }
+}
+
+function federalDec(){
+    if (document.getElementById('dateDecRecFederal').value!=''){
+        document.getElementById('declarationIssuedFederal1').checked=true;
+    } else {
+        document.getElementById('declarationIssuedFederal1').checked=false;
+    }
+}
 
 function checkIncidentNameValueWithIncidentListText() {
 
@@ -514,6 +576,7 @@ return($(this).text() == document.getElementById("incidentName").value);
 }).prop("selected", true);
 
 }
+
 
 var incVar;
 var incSelList;
@@ -588,32 +651,7 @@ $(document).ready(function(){
                      <space/>
                      <select name="incidentList" id="incidentList" onchange="copyIncidentNameFirst();" class="form-control"/>
                   </div>
-                  <div class="form-group required form-inline">
-                     <label class="control-label" for="dsoYesNo">DSO:</label>
-        Yes 
-                     
-                     
-                     
-                     <input id="dsoYesNo1" type="radio" style="form-control input-sm" name="dsoYesNo" value="Yes" onclick="hideDSOdrop();alphabetizeDSOdrop()"/>
-        No 
-                     
-                     
-                     
-                     <input id="dsoYesNo2" type="radio" style="form-control input-sm" name="dsoYesNo" value="No" onclick="hideDSOdrop();"/>
-                  </div>
-                  <div style="display:none" id="dsoDropdown" class="form-group form-inline">
-                     <label class="control-label" name="pickDSO" for="pickDSO">Pick DSO:</label>
-                     <space/>
-                     <span id="fk">
-                        <foreignkey table="Core" type="select">
-                           <eocfield type="fk" table="Core" name="county"/> /
-                           
-                           
-                           
-                           <eocfield type="fk" table="Core" name="city"/>
-                        </foreignkey>
-                     </span>
-                  </div>
+                  
                   <div class="form-group required form-inline">
                      <label class="control-label" for="jurisdictionType">Jurisdiction Type:</label>
         City 
@@ -2112,84 +2150,107 @@ $(document).ready(function(){
                         <option value="Zavalla">Zavalla</option>
                      </select>
                      <br/>
-                     <div class="form-group form-inline" style="display:nonea">
+                     <div class="form-group form-inline" style="display:none">
               <textarea id="cityTmp" name="cityTmp" />
             </div>
-            <div class="form-group form-inline" style="display:nonea">
-              <textarea id="countyTmp" name="countyTmp" />
-            </div>
-                   _______________________________
                   </div>
-                  <div class="form-group form-inline">
+                  <div class="form-group required form-inline">
+                     <label class="control-label" for="dsoYesNo">DSO:</label>
+        Yes 
+                     
+                     
+                     
+                     <input id="dsoYesNo1" type="radio" style="form-control input-sm" name="dsoYesNo" value="Yes" onclick="hideDSOdrop();alphabetizeDSOdrop()"/>
+        No 
+                     
+                     
+                     
+                     <input id="dsoYesNo2" type="radio" style="form-control input-sm" name="dsoYesNo" value="No" onclick="hideDSOdrop();"/>
+                  </div>
+                  <div style="display:none" id="dsoDropdown" class="form-group form-inline">
+                     <label class="control-label" name="pickDSO" for="pickDSO">Pick DSO:</label>
+                     <space/>
+                     <!--expression that if a check box on dso is checked, dont show here. When DSO choosen here, check a  box on that DSO. Epression here Would weed out yeses and cause them not to display. Neeed to make this list only show DSOs for County in above selected -->  
+                     <span id="fk">
+                        <foreignkey table="Core" type="select" >
+                           <eocfield type="fk" table="Core" name="county" /> /
+                           
+                           
+                           
+                           <eocfield type="fk" table="Core" name="city"/>
+                        </foreignkey>
+                     </span>
+                  </div>
+                  
+                  <div style="display:none" id="dsoRecDate" class="form-group form-inline">
+                     <label class="control-label" for="impactedCountiesDSO">DSO Rec'd Date:</label>
+                     <space/>
+                     <br/><textarea name="impactedCountiesDSO" id="impactedCountiesDSO" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/>
+                  </div>
+                  <fieldset>
+                  <h3>
+                     <span class="label label-default">Disaster Declarations Dates</span>
+                  </h3>
+                  <div class="hide form-group form-inline">
                      <label class="control-label" for="declarationIssued">Was a Local Disaster Declaration Issued?:</label>
-       Yes 
-                     
-                     
-                     
-                     <input id="declarationIssued1" type="radio" style="form-control input-sm" name="declarationIssued" value="Yes"/>
-       No 
-                     
-                     
-                     
-                     <input id="declarationIssued2" type="radio" style="form-control input-sm" name="declarationIssued" value="No"/>
+                        Yes<input id="declarationIssued1" type="radio" style="form-control input-sm" name="declarationIssued" value="Yes"/>
+                        No<input id="declarationIssued2" type="radio" style="form-control input-sm" name="declarationIssued" value="No"/>
                   </div>
 
+                  
                   <div class="form-group form-inline">
-                     <label class="control-label" for="dateDecRec">Date Local Disaster Declared Issued Rec'd:</label>
+                     <label class="control-label" for="dateDecRec">Local Disaster Declared Issued Rec'd Date:</label>
                      <space/>
-                     <textarea name="dateDecRec" id="dateDecRec" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="dateDecRec" id="dateDecRec" placeholder="XX/XX/XXXX" style="form-control input-sm" onchange="localDec()"/>
                      <br/>
-                   _______________________________
                   </div>
+                  </fieldset>
                   
                   
 
-
-                  <div class="form-group form-inline">
+                  <fieldset>
+                  <!--<h3>
+                     <span class="label label-default">State Disaster Declared</span>
+                  </h3>-->
+                  <div class="hide form-group form-inline">
                      <label class="control-label" for="declarationIssuedState">Was a State Disaster Declaration Issued?:</label>
-       Yes 
-                     
-                     
-                     
-                     <input id="declarationIssuedState1" type="radio" style="form-control input-sm" name="declarationIssuedState" value="Yes"/>
-       No 
-                     
-                     
-                     
-                     <input id="declarationIssuedState2" type="radio" style="form-control input-sm" name="declarationIssuedState" value="No"/>
+                     Yes<input id="declarationIssuedState1" type="radio" style="form-control input-sm" name="declarationIssuedState" value="Yes"/>
+                     No<input id="declarationIssuedState2" type="radio" style="form-control input-sm" name="declarationIssuedState" value="No"/>
                   </div>
+                  
                   <div class="form-group form-inline">
-                     <label class="control-label" for="dateDecRecState">Date State Disaster Declared Issued Rec'd:</label>
+                     <label class="control-label" for="dateDecRecState">State Disaster Declared Issued Rec'd Date:</label>
                      <space/>
-                     <textarea name="dateDecRecState" id="dateDecRecState" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="dateDecRecState" id="dateDecRecState" placeholder="XX/XX/XXXX" style="form-control input-sm" onchange="stateDec()"/>
                      <br/>
-                  _______________________________
                   </div>
+                  </fieldset>
+
 
                    
+                  <fieldset>
+                  <!--<h3>
+                     <span class="label label-default">Federal Disaster Declaration</span>
+                  </h3>-->
                   
-                  <div class="form-group form-inline">
+                  <div class="hide form-group form-inline">
                      <label class="control-label" for="declarationIssuedFederal">Was a Federal Disaster Declaration Issued?:</label>
-       Yes 
-                     
-                     
-                     
-                     <input id="declarationIssuedFederal1" type="radio" style="form-control input-sm" name="declarationIssuedFederal" value="Yes"/>
-       No 
-                     
-                     
-                     
-                     <input id="declarationIssuedFederal2" type="radio" style="form-control input-sm" name="declarationIssuedFederal" value="No"/>
+                     Yes<input id="declarationIssuedFederal1" type="radio" style="form-control input-sm" name="declarationIssuedFederal" value="Yes"/>
+                     No<input id="declarationIssuedFederal2" type="radio" style="form-control input-sm" name="declarationIssuedFederal" value="No"/>
                   </div>
-                  <div class="form-group form-inline">
-                     <label class="control-label" for="dateDecRecFederal">Date Federal Disaster Declared Issued Rec'd:</label>
-                     <space/>
-                     <textarea name="dateDecRecFederal" id="dateDecRecFederal" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
-                     <br/>
-                  _______________________________
-                  </div>
+                  
 
-                  <div class="form-group form-inline hide">
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="dateDecRecFederal">Federal Disaster Declared Issued Rec'd Date:</label>
+                     <space/>
+                     <br/><textarea name="dateDecRecFederal" id="dateDecRecFederal" placeholder="XX/XX/XXXX" style="form-control input-sm" onchange="federalDec()"/>
+                     <br/>
+                  </div>
+                  </fieldset>
+
+
+                  <!--hidden--><div class="form-group form-inline hide">
                      <label class="control-label" for="countyLetter">Letter to the Gov:</label>
                      <space/>
         Yes 
@@ -2202,86 +2263,116 @@ $(document).ready(function(){
                      
                      <input type="radio" style="form-control input-sm" name="countyLetter" value="No"/>
                      <br/>
-                  _______________________________
                   </div>
+                  <h3>
+                     <span class="label label-default">Other</span>
+                  </h3>
+
                   <div class="form-group form-inline">
-                     <label class="control-label" for="ack1">Date Acknowledge Letter Sent 1:</label>
+                     <label class="control-label" for="ack1">Acknowledge Letter Sent 1 Date:</label>
                      <space/>
-                     <textarea name="ack1" id="ack1" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="ack1" id="ack1" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                      <br/>
-                  _______________________________
                   </div>
                   <div class="form-group form-inline hide">
-                     <label class="control-label" for="assistanceRequested">Date Assistance Requested on DSO or Letter to Governor:</label>
+                     <label class="control-label" for="assistanceRequested">Assistance Req'd on DSO or Letter to Governor Date:</label>
                      <space/>
-                     <textarea name="assistanceRequested" id="assistanceRequested" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="assistanceRequested" id="assistanceRequested" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                      <br/>
-                  _______________________________
                   </div>
                   <div class="form-group form-inline">
-                     <label class="control-label" for="assistanceRequestedDate">Date Assistance Requested:</label>
+                     <label class="control-label" for="assistanceRequestedDate">Assistance Req'd Date:</label>
                      <space/>
-                     <textarea name="assistanceRequestedDate" id="assistanceRequestedDate" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="assistanceRequestedDate" id="assistanceRequestedDate" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                      <br/>
-                  _______________________________
                   </div>
+                  
                   <div class="form-group form-inline">
-                     <label class="control-label" for="impactedCountiesDSO">Date DSO Rec'd:</label>
+                     <label class="control-label" for="ack2">Acknowledge Letter Sent 2 Date:</label>
                      <space/>
-                     <textarea name="impactedCountiesDSO" id="impactedCountiesDSO" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="ack2" id="ack2" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                      <br/>
-                  _______________________________
                   </div>
+
+                  <h3>
+                     <span class="label label-default">PDA Initial Contact</span>
+                  </h3>
                   <div class="form-group form-inline">
-                     <label class="control-label" for="ack2">Date Acknowledge Letter Sent 2:</label>
+                     <label class="control-label" for="iaInitialContactDate">PDA Initial Contact Date:</label>
                      <space/>
-                     <textarea name="ack2" id="ack2" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="iaInitialContactDate" id="iaInitialContactDate" placeholder="XX/XX/XXXX Not in Recovery Sum Display" style="form-control input-sm"/>
                      <br/>
-                  _______________________________
-                  </div>
-                  <div class="form-group form-inline">
-                     <label class="control-label" for="iaInitialContactDate">Date of PDA Initial Contact:</label>
-                     <space/>
-                     <textarea name="iaInitialContactDate" id="iaInitialContactDate" placeholder="XX/XX/XXXX Not in Recovery Sum Display" style="form-control input-sm"/>
-                     <br/>
-                  _______________________________
                   </div>
                   <!--<div class="form-group form-inline">
                      <label class="control-label" for="iaPdaRequested">Date PDA Requested:</label>
                      <space/>
                      <textarea name="iaPdaRequested" id="iaPdaRequested" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                   </div>-->
+                  
+                  <fieldset>
+                  <h3>
+                     <span class="label label-default">IA FEMA Vetting</span>
+                  </h3>
                   <div class="form-group form-inline">
-                     <label class="control-label" for="iaPDAScheduled">Date IA PDA Scheduled:</label>
+                     <label class="control-label" for="iaPDAScheduled">IA PDA Scheduled Date:</label>
                      <space/>
-                     <textarea name="iaPDAScheduled" id="iaPDAScheduled" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="iaPDAScheduled" id="iaPDAScheduled" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
-                     <label class="control-label" for="iaPDAComplete">Date IA PDA Complete:</label>
+                     <label class="control-label" for="iaPDAComplete">IA PDA Complete Date:</label>
                      <space/>
-                     <textarea name="iaPDAComplete" id="iaPDAComplete" placeholder="XX/XX/XXXX check femaCheckboxV1 when date entered here" style="form-control input-sm"/>
+                     <br/><textarea name="iaPDAComplete" id="iaPDAComplete" placeholder="XX/XX/XXXX" style="form-control input-sm" onchange="checkFemaBoxV1OnDateEntry()"/>
                      <br/>
-                  _______________________________
                   </div>
+
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="femaCheckboxV1">Housing PDAs have been completed and numbers have been vetted between IA and FEMA:</label>
+                     <space/>
+                     <input name="femaCheckboxV1" id="femaCheckboxV1" type="checkbox" value="Yes" style="form-control input-sm"/>
+                  </div>
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="IAComments">IA Commments:</label>
+                     <space/>
+                     <br/><textarea name="IAComments" id="IAComments" style="form-control input-sm"/>
+                     <br/>
+                  </div>
+                  
+                  </fieldset>
                   <!--<div class="form-group form-inline">
                      <label class="control-label" for="paPdaRequested">Date PA PDA Requested:</label>
                      <space/>
                      <textarea name="paPdaRequested" id="paPdaRequested" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                   </div>-->
+                  <fieldset>
+                  <h3>
+                     <span class="label label-default">PA FEMA Vetting</span>
+                  </h3>
                   <div class="form-group form-inline">
-                     <label class="control-label" for="paPDAScheduled">Date PA PDA Scheduled:</label>
+                     <label class="control-label" for="paPDAScheduled">PA PDA Scheduled Date:</label>
                      <space/>
-                     <textarea name="paPDAScheduled" id="paPDAScheduled" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
+                     <br/><textarea name="paPDAScheduled" id="paPDAScheduled" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
                   </div>
                   <div class="form-group form-inline">
-                     <label class="control-label" for="paPDAComplete">Date PA PDA Complete:</label>
+                     <label class="control-label" for="paPDAComplete">PA PDA Complete Date:</label>
                      <space/>
-                     <textarea name="paPDAComplete" id="paPDAComplete" placeholder="XX/XX/XXXX check femaCheckboxV2 when date entered here" style="form-control input-sm"/>
+                     <br/><textarea name="paPDAComplete" id="paPDAComplete" placeholder="XX/XX/XXXX" style="form-control input-sm" onchange="checkFemaBoxV2OnDateEntry()" />
                      <br/>
-                   _______________________________
+                  </div>
+</fieldset>
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="femaCheckboxV2">Infrastructure PDAs have been completed and numbers have been vetted between PA and FEMA:</label>
+                     <space/>
+                     <input name="femaCheckboxV2" id="femaCheckboxV2" type="checkbox" value="Yes" style="form-control input-sm"/>
+                  </div>
+                  
+                  <div class="form-group form-inline">
+                     <label class="control-label" for="PAComments">PA Commments:</label>
+                     <space/>
+                     <br/><textarea name="PAComments" id="PAComments" style="form-control input-sm"/>
+                     <br/>
                   </div>
                </fieldset>
-                  <br/>
+                  
                <fieldset>
                   <h3>
                      <span class="label label-default">Attachments</span>
@@ -2298,45 +2389,13 @@ $(document).ready(function(){
                      <label class="control-label" for="otherAttachment">Other Attachment:</label>
                      <input type="file" name="otherAttachment" id="otherAttachment" style="form-control input-sm"/>
                      <br/>
-                   _______________________________
                   </div>
-                  <input type="text" id="dateTimeUpdate" name="dateTimeUpdate" style="display:none"/>
+                  
                </fieldset>
-                  <br/>
-               <fieldset>
-                  <h3>
-                     <span class="label label-default">IA FEMA Vetting</span>
-                  </h3>
-                  <div class="form-group form-inline">
-                     <label class="control-label" for="femaCheckboxV1">Housing PDAs have been completed and numbers have been vetted between IA and FEMA:</label>
-                     <space/>
-                     <input name="femaCheckboxV1" id="femaCheckboxV1" type="checkbox" value="Yes" style="form-control input-sm"/>
-                  </div>
-                  <div class="form-group form-inline">
-                     <label class="control-label" for="IAComments">IA Commments:</label>
-                     <space/>
-                     <textarea name="IAComments" id="IAComments" style="form-control input-sm"/>
-                     <br/>
-                   _______________________________
-                  </div>
-                  <br/>
-                  <h3>
-                     <span class="label label-default">PA FEMA Vetting</span>
-                  </h3>
-                  <div class="form-group form-inline">
-                     <label class="control-label" for="femaCheckboxV2">Infrastructure PDAs have been completed and numbers have been vetted between PA and FEMA:</label>
-                     <space/>
-                     <input name="femaCheckboxV2" id="femaCheckboxV2" type="checkbox" value="Yes" style="form-control input-sm"/>
-                  </div>
-                  <br/>
-                  <div class="form-group form-inline">
-                     <label class="control-label" for="PAComments">PA Commments:</label>
-                     <space/>
-                     <textarea name="PAComments" id="PAComments" style="form-control input-sm"/>
-                     <br/>
-                   _______________________________
-                  </div>
-                  <br/>
+                  
+
+                  
+                <fieldset>
                   <h3>
                      <span class="label label-default">Hide</span>
                   </h3>
@@ -2346,7 +2405,8 @@ $(document).ready(function(){
                      <input name="hide" id="hide" type="checkbox" value="Yes" style="form-control input-sm"/>
                   </div>
                   <div/>
-                  <br/>
+                  <input type="text" id="dateTimeUpdate" name="dateTimeUpdate" style="display:none"/>
+                  <br/></fieldset>
 
                   <div id="buttons">
                      <savebutton id="saveBtn" class="hide"/>
@@ -2361,8 +2421,10 @@ $(document).ready(function(){
                      <incidentname/>
                   </div>
                   <space/>
+                  <div style="display:none"><!--I hid this, it was showing since 11-22 webeoc problems-->
                   <dataimport/>
-               </fieldset>
+                  </div>
+               
             </div>
             <span style="display:none;" width="900px">
                <textarea name="currentChangeLog" id="currentChangeLog"/>

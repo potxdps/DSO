@@ -1,0 +1,27 @@
+<!DOCType html>
+
+<html>
+   <body>
+       <form>
+           <select id="cityList">
+               <option>Select</option>
+               <option value="City1">City1</option>
+               <option value="City2">City2</option>
+               <option value="City3">City3</option>
+               <option value="City4">City4</option>
+               <option value="City5">City5</option>
+               <option value="City6">City6</option>
+           </select><br/>
+           <button type="button" class="goButton">Go</button>
+       </form>
+   </body>
+   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+   <script type="text/javascript">
+     $(document).ready(function() {
+         $("#city").append('<option value="Other">Other</option>');
+         $(".goButton").click(function() {
+             $("#city option[value = Other]").insertAfter($("#cityList option:last"));
+         });
+     });
+   </script>
+</html>

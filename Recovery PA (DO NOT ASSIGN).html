@@ -29,15 +29,17 @@
   table.display td{border-top:solid 1px;border-color:#ccc;}
   .rowYellow {background-color:#ffffb3;}
   .rowBlue {background-color:#ccebff;}
-  .rowRed {background-color:#FF9999;}
+  .rowRed {background-color:#FFCCCC;}
   .lightRowRed {background-color:#FFb3b3;}
   .rowGray {background-color: #b7bfc8;}
 .rowReg {}
+.rowRedExclude{display: none;}
 .rowGreen{background-color:#00e673;}
 .cellYellow{background-color:#ffff66;}
 .textYellow {color:#ffff99;}
 .cellOrange {background-color:#ff751a;}
 .hideValues {display: none;}
+.hideValuesRed {display: none;}
 .hideValuesNoInsurance {display: none;}
 .fieldsetButtons { 
     display:inline-block;
@@ -45,6 +47,9 @@
    }
 legend{
    font-size: 10pt;
+}
+.tableWords {
+  font-size: 10pt;
 }
 </style>
    </head>   
@@ -63,7 +68,26 @@ legend{
                   </td>
                </tr>
                <tr>
-                  <td id="tdBoard" colSpan="2" selected="false">Local Estimate of Damage to Public Property By Category<br /><h3>(Infrastructure / PA)</h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button></span></td>
+                  <td id="tdBoard" colSpan="2" selected="false"><strong><i>UNVETTED</i></strong> - Local Estimate of Damage to Public Property By Category - <strong><i>UNVETTED</i></strong><br /><h3>(Infrastructure / PA)</h3><hr/><span style="float:left"><button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#myModal">Legend</button><space/><span id="pdfButtons" class="hide"><pdflink type="button" class="btn btn-warning" orientation="landscape">PDF</pdflink><space/></span>
+                  <span id="dataManRecPA">
+                       <dataexport type="button" filename="Recovery PA" class="btn btn-warning">
+                       <field name="incidentName" header="Incident Name"></field>
+                       <field name="totalJurisictionsexpressionInfra2" header="Grand Total Jurisdictions"></field>
+                        <field name="totalJurisictionsexpressionInfra1" header="Total Jurisdictions"></field>
+                        <field name="jurisdictionType" header="Jurisdiction Type"></field>
+                        <field name="county" header="County"></field>
+                        <field name="city" header="City"></field>
+                        
+                       
+                        <field name="catASum" header="Debris Removal Ignore Anticipated Insurance if not entered for Totals"></field>
+                        <field name="catASumWithInsurance" header="Debris Removal Must Enter Anticipated Insurance for Totals or will be Zero"></field>
+                        
+                        
+
+                       </dataexport>
+                     </span>
+
+                  </span></td>
                </tr>
                
             </tbody>
@@ -105,28 +129,33 @@ legend{
               <div>
          <fieldset class="fieldsetButtons"><legend>Operations</legend>
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>
-         <!--<button type="button" class="btn active">View DSO List</button>-->
+         <viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">DSO List</viewlink>
+         <!--<button type="button" class="btn active">DSO List</button>-->
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">View Recovery Summary</viewlink>
-            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">View DSO List</viewlink>-->
+         <viewlink class="btn btn-info" type="button" name="!Summary(DEFAULT)">Recovery Summary</viewlink>
+            <!--<viewlink class="btn btn-info" type="button" name="DSO List (DO NOT ASSIGN)">DSO List</viewlink>-->
          <space /><space />
-         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">View Housing / IA</viewlink>
+         <viewlink class="btn btn-info" type="button" name="Housing (DO NOT ASSIGN)">Housing / IA</viewlink>
          <space/><space/>
-         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">View Infrastructure / PA</viewlink>
+         <viewlink class="btn btn-info" type="button" name="Infrastructure (DO NOT ASSIGN)">Infrastructure / PA</viewlink>
          <space /><space /><space /><space />
          <viewlink class="btn btn-success" type="button" name="Bubble Input (DO NOT ASSIGN)">+ New Bubble Input</viewlink></fieldset>
         <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
         <fieldset class="fieldsetButtons"><legend>Recovery</legend>
         <space/><space/>
-        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">View Recovery IA</viewlink>
+        <viewlink class="btn btn-info" type="button" name="Recovery IA (DO NOT ASSIGN)">Recovery IA</viewlink>
         <space /><space />
-        <button type="button" class="btn active">View Recovery PA</button>
-        <!--<viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">View Recovery PA</viewlink>--></fieldset>
+        <viewlink class="btn btn-info" type="button" name="Vetted Recovery IA (DO NOT ASSIGN)">Vetted Recovery IA</viewlink>
+        <space /><space />
+        <button type="button" class="btn active">Recovery PA</button>
+        <space/><space/>
+        <viewlink class="btn btn-info" type="button" name="Vetted Recovery PA (DO NOT ASSIGN)">Vetted Recovery PA</viewlink>
+        <!--<viewlink class="btn btn-info" type="button" name="Recovery PA (DO NOT ASSIGN)">Recovery PA</viewlink>--></fieldset>
         <space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space /><space />
         <fieldset class="fieldsetButtons"><legend>DSO</legend>
         <space/><space/>
-        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink></fieldset>
+        <viewlink class="btn btn-success" type="button" name="Input (DO NOT ASSIGN)">+ New DSO for Testing</viewlink><space/><space/>
+        <viewlink class="btn btn-warning" type="button" name="Master Input (DO NOT ASSIGN)">+ Master County Totals</viewlink></fieldset>
         </div><hr/>
             <div class="form-inline" id="resourceFilters" style="display: inline-block;">
                <filterlistdropdown field="county" list="Counties - Texas" defaulttext="All Counties" class="form-control"/>
@@ -146,6 +175,7 @@ legend{
                   <search exact="false" range="false" rangetext="false">
                      <field name="county"/>
                      <field name="city"/>
+                     <field name="otherValue"/>
                   </search>
                   <clearsearchbutton/>
                   <span style="display: none;" id="incidentNameSearchSPAN">
@@ -157,9 +187,9 @@ legend{
             <table id="mainTable" class="table display">
                <tbody>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center">Total Jurisdictions</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">County / City
-                        <br/>(Click to Edit DSO)
+                     <td selected="false" colSpan="1" width="" rowSpan="1" align="center"><span class="tableWords">Total Jurisdictions</span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center"><span class="tableWords">County / City
+                        <br/>(Click to Edit DSO)</span>
                      </td>
                      <td selected="false" colSpan="8" width="" rowSpan="1" align="center" top-align="center" style="background-color:#003366;">
 
@@ -173,15 +203,15 @@ legend{
                      </div>
 
                      </td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">County Threshold / is this grand total needed here?</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">Met?</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">Local Dec</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">DSO Audit Log</td>
-                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center">Related Info</td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center"><span style="color:#E8E8E8"><span class="tableWords">$$'s towards State Threshold in gray</span><br/>--------------<br/><span style="color:white"><span class="tableWords">$$'s towards County Threshold in yellow or red</span></span></span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center"><span class="tableWords">Met?</span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center"><span class="tableWords">Disaster Dec</span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center"><span class="tableWords">DSO Audit Log</span></td>
+                     <td selected="false" colSpan="1" width="" rowSpan="2" align="center" top-align="center"><span class="tableWords">Related Info</span></td>
 
                   </tr>
                   <tr class="agencytemplate_tableheader">
-                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression></td>
+                     <td selected="false" align="center" top-align="center" style="font-weight: normal; font-size: 14pt; background-color:#BDFFFF; color:black" rowSpan="1"><span class="tableWords"><expression useboardlevelfilters="true" name="totalJurisictionsexpressionInfra2">sum(case when repairCostTotals!='' and repairCostTotals!='0' and repairCostTotals!='0.00' and repairCostTotals!='0.0000' then 1 else 0 end)</expression></span></td>
 
                      
                      <td selected="false" colSpan="1" width="" rowSpan="1" align="center" top-align="center" style="font-size: 10pt;"><strong style="font-size: 12pt;">A</strong><br/>Debris Removal</td>
@@ -203,6 +233,8 @@ legend{
                   <eocfield name="jurisdictionType"/>
                   <eocfield name="county"/>
                   <eocfield name="city"/>
+                  <eocfield name="otherValue"/>
+                  <eocfield name="dsoSelected" />
                   <eocfield name="repairCostDebrisClearance"/>
                   <eocfield name="insuranceDebrisClearance"/>
                   <eocfield name="repairCostEmergency"/>
@@ -264,10 +296,17 @@ legend{
                   <eocfield name="insurance14"/>
                   <eocfield name="insurance15"/>
                   <eocfield name="declarationIssued"/>
-                  
-
+                  <eocfield name="masterDSOThisIs"/>
                   
                </if>
+               <relatedlist table="Supplemental">
+               <if test="1=0">
+                      <eocfield table="Supplemental" type="rl" name="dateDecRecState"/>
+                      <eocfield table="Supplemental" type="rl" name="dateDecRecFederal"/>
+                      <eocfield table="Supplemental" type="rl" name="declarationIssuedFederal"/>
+                      <eocfield table="Supplemental" type="rl" name="declarationIssuedState"/>
+                      </if>
+               </relatedlist>
                <span style="display:none;font-weight: normal; font-size: 10pt;" class="data" name="data" id="data">
                <span id="catSumsSpan" style="display:none;"><expression useboardlevelfilters="true" name="catASum">
       ((case when cat01 = 'A' then isNull(cast(repairCost01 as money),0) else 0 end)-(case when cat01 = 'A' then isNull(cast(insurance01 as money),0) else 0 end))+
@@ -737,7 +776,7 @@ legend{
       (((case when insuranceOther != '' then isNull(cast(repairCostOther as money),0) else 0 end))-(cast(insuranceOther as money)))
       </expression>  
 
-      </span>
+      </span><span id="masterExpression" style="display:none;"><expression name="masterTestRecPA">(case when masterDSOThisIs='masterDSO' then 1 else 0 end)</expression></span><span id="masterFields"></span>
 
 
       <value-of select="@sortCountyOrder"/>
@@ -749,7 +788,14 @@ legend{
       
       |<value-of select="@jurisdictionType"/>
 
-      |<viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county"/></b> / <value-of select="@city"/></if><if test="@jurisdictionType='City'"><value-of select="@county"/> / <b><value-of select="@city"/></b></if></span></viewlink><space/>
+      |<if test="@masterDSOThisIs!='masterDSO'"><viewlink name="Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county" /></b> /
+                        <value-of select="@city" /><br/><if test="@otherValue!=''"> / <value-of select="@otherValue" /></if><if test="@dsoSelected!=''"> / <value-of select="@dsoSelected" /></if></if><if test="@jurisdictionType='City'"><value-of select="@county" /> /
+                        <b><value-of select="@city" /></b><br/><if test="@otherValue!=''"> / <value-of select="@otherValue" /></if><if test="@dsoSelected!=''"> / <value-of select="@dsoSelected" /></if></if></span></viewlink></if>
+
+                        <if test="@masterDSOThisIs='masterDSO'"><viewlink name="Master Input (DO NOT ASSIGN)"><span style="color:#111111"><if test="@jurisdictionType='County'"><b><value-of select="@county" /></b> /
+                        <value-of select="@city" /><br/><if test="@otherValue!=''"> / <value-of select="@otherValue" /></if><if test="@dsoSelected!=''"> / <value-of select="@dsoSelected" /></if></if><if test="@jurisdictionType='City'"><value-of select="@county" /> /
+                        <b><value-of select="@city" /></b><br/><if test="@otherValue!=''"> / <value-of select="@otherValue" /></if><if test="@dsoSelected!=''"> / <value-of select="@dsoSelected" /></if></if></span></viewlink></if>
+                        <!--<br/>CO: <value-of select="@sortCountyOrder"/> / CI: <value-of select="@sortCityOrder"/>-->
 
       |<value-of select="@county"/>|<value-of select="@city"/>
 
@@ -773,13 +819,42 @@ legend{
       
       |<value-of select="format-number(@catSumTotal, '###0.00')"></value-of><space/>
 
-      |<if test="@declarationIssued='Yes'"><div class="greenCell"><value-of select="@declarationIssued"/></div></if><if test="@declarationIssued='No'"><div class="yellowCell"><value-of select="@declarationIssued"/></div></if>
+      |
+
+
+
+
+
+
+    
+        <span style="display: none;">
+          <relatedexpression name="declarationIssuedStateTest" table="Supplemental">sum(case when declarationIssuedState='Yes' then 1 else 0 end)</relatedexpression>
+          <relatedexpression name="declarationIssuedFederalTest" table="Supplemental">sum(case when declarationIssuedFederal='Yes' then 1 else 0 end)</relatedexpression>
+        </span>
+
+        <if test="@declarationIssued='Yes'">
+            <span class="greenCell">Local<br/></span>
+        </if>
+
+        <if test="@declarationIssuedStateTest > '0'" table="Supplemental">
+            <span class="greenCell">State</span>
+        </if>
+
+        <if test="@declarationIssuedFederalTest > '0'" table="Supplemental">
+            <span class="greenCell"><br/>Federal</span>
+        </if>        
+
+
+
+
+
+
 
       |NomNom16
 
       |<viewlink name="DSO Audit RelatedList (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">DSO History</button></viewlink>
 
-      |EXTRA
+      |EXTRA18
 
       |<relatedexpression name="femaTest2" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>
       |<viewlink name="Inbetween (DO NOT ASSIGN)"><button class="btn btn-warning btn-xs">Supplemental Info</button></viewlink>
@@ -809,15 +884,59 @@ legend{
 
       |<value-of select="format-number(@catSumTotalWithInsurance, '###0.00')"></value-of>
 
-      |
+      |30
 
-      |EXTRA
+      |<value-of select="@masterTestRecPA"/>
 
-      |
+      |<value-of select="@repairCostDebrisClearanceMasterDSO"/>
 
-      |
+      |<value-of select="@repairCostEmergencyMasterDSO"/>
 
-      |
+      |<value-of select="@repairCostRoadPavedMasterDSO"/>
+
+      |<value-of select="@repairCostWaterControlFacilitiesMasterDSO"/>
+
+      |<value-of select="@repairCostBuildingsEquipmentMasterDSO"/>
+
+      |<value-of select="@repairCostUtilitySystemsMasterDSO"/>
+
+      |<value-of select="@repairCostOtherMasterDSO"/>
+
+      |<value-of select="@repairCostTotalsMasterDSO"/>
+
+      |<value-of select="@repairCost01MasterDSO"/>
+
+      |<value-of select="@repairCost02MasterDSO"/>
+
+      |<value-of select="@repairCost03MasterDSO"/>
+
+      |<value-of select="@repairCost04MasterDSO"/>
+
+      |<value-of select="@repairCost05MasterDSO"/>
+
+      |<value-of select="@repairCost06MasterDSO"/>
+
+      |<value-of select="@repairCost07MasterDSO"/>
+
+      |<value-of select="@repairCost08MasterDSO"/>
+
+      |<value-of select="@repairCost09MasterDSO"/>
+
+      |<value-of select="@repairCost10MasterDSO"/>
+
+      |<value-of select="@repairCost11MasterDSO"/>
+
+      |<value-of select="@repairCost12MasterDSO"/>
+
+      |<value-of select="@repairCost12MasterDSO"/>
+
+      |<value-of select="@repairCost13MasterDSO"/>
+
+      |<value-of select="@repairCost14MasterDSO"/>
+
+      |<value-of select="@repairCost15MasterDSO"/>
+      
+      |<value-of select="@repairCostTotalMasterDSO"/>
 
       |<!--DONT write Comments here in the array spots That will stop the totals from happening!-->
       </span><!--and this and that and this and that whole row--> <!--then another-->
@@ -849,8 +968,9 @@ align='right'
    data[16]='(N/A)';
   }
   
-  //row.className('agencytemplate_tableentry');
-    row.innerHTML = '<td>'+data[0]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td class="'+metClass+'">'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'+'<td>'+comma(data[19])+'</td>'/*+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'*/;//view femaCheck total cell[20] here, Below in row array in spot masterData[i][19]in comment area "adds regular row"
+  //row.className('agencytemplate_tableentry');//here
+    row.innerHTML = '<td>'+data[0]+'</td>'+'<td align="'+align+'">'+data[4]+'</td>'+'<td>'+comma(data[7])+'</td>'+'<td>'+comma(data[8])+'</td>'+'<td>'+comma(data[9])+'</td>'+'<td>'+comma(data[10])+'</td>'+'<td>'+comma(data[11])+'</td>'+'<td>'+comma(data[12])+'</td>'+'<td>'+comma(data[13])+'</td>'+'<td>'+comma(data[14])+'</td>'+'<td>'+comma(data[15])+'</td>'+'<td class="'+metClass+'">'+comma(data[16])+'</td>'+'<td>'+comma(data[17])+'</td>'+'<td>'+comma(data[18])+'</td>'+'<td>'+comma(data[19])+'</td>'+'<td>'+comma(data[20])+'</td>'+'<td>'+comma(data[21])+'</td>'/*+'<td>'+comma(data[22])+'</td>'+'<td>'+comma(data[23])+'</td>'+'<td>'+comma(data[24])+'</td>'+'<td>'+comma(data[25])+'</td>'+'<td>'+comma(data[26])+'</td>'+'<td>'+comma(data[27])+'</td>'+'<td>'+comma(data[28])+'</td>'+'<td>'+comma(data[29])+'</td>'+'<td>'+comma(data[30])+'</td>'*/+'<td>'+comma(data[31])+'</td>';//view femaCheck total cell[20] here, Below in row array in spot masterData[i][19]in comment area "adds regular row"
+    //data[31] is masterDSO 1 or 0
     var rowColorClass =''
     if (((position/2) - Math.floor(position/2)) === 0) {rowColorClass='agencytemplate_tableroweven'} else {rowColorClass='agencytemplate_tablerowodd'};
 
@@ -899,6 +1019,7 @@ function trim(a) {
   return a.replace(/^\s+|\s+$|\&amp;nbsp;+$/g, '');
 }
 //this populates the table - t is main table itself, b is for the total row turning yellow
+//no selected - Must Use AI
 function popluateTable(){
 var t = document.getElementById('mainTable');
 
@@ -907,24 +1028,27 @@ var totalRowVar=function(i){
    var b = "rowYellow";
    var NaCount = parseFloat(a[12]) &gt; (0)?'Yes':'No';
    if(document.getElementById('AnticipatedInsurance1').checked==true){
-    //alert("2 hiding yellow");
+    //hide total lines with N/A values
     b = "rowYellow hideValues";
   } else {
-    //alert("2 showing yellow");
-     b = "rowYellow";
+    //this will happen since no is selected
+    //show or hide unvetted total lines on false
+     b = a[10]===true?"rowYellow":"hideValues";
   }
-
-
+  /*if(a[31]==1){
+    //hide total lines with N/A values
+    b = "hideValues";
+  } */
       var thresholdResult = threshold(masterData[i][5]);
-      var a = getTotalsFor(masterData[i][5]);
-      threshold.TotalOnPage+=parseInt(thresholdResult);
-      var Mets2 = parseFloat(a[8]) &gt;= parseFloat(thresholdResult)?'Yes':'No';
-      var Mets = (NaCount=='Yes')?'(N/A)':Mets2;
-      //var thresholdResultWithDecimals = ((thresholdResult).toFixed(2));
+      var a = getTotalsFor(masterData[i][5]); //Get the total of a county
+      threshold.TotalOnPage+=parseInt(thresholdResult); //totals all thresholds, not needed on page
+      var Mets2 = parseFloat(a[8]) &gt;= parseFloat(thresholdResult)?'Yes':'No'; //is county total greater than or equal to county threshold
+      var Mets = (NaCount=='Yes')?'(N/A)':Mets2; //are there N/As present
       var thresholdResultWithCommas = thresholdResult.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-      var Mets3 = "$ "+((thresholdResult-(a[8])).toFixed(2))+" MORE to REACH THRESHOLD ";
-      var Mets33 = "$ "+(((a[8])-thresholdResult).toFixed(2))+" OVER the THRESHOLD ";
+//Below determines whether or not more is needed to reach county threshold or if reached and by how much over
+      var Mets3 = "$ "+((thresholdResult-(a[8])).toFixed(2))+" MORE to REACH (CO) THRESHOLD ";
+      var Mets33 = "$ "+(((a[8])-thresholdResult).toFixed(2))+" OVER the (CO) THRESHOLD ";
       var Mets4 = 0;
       //var totalsAccurate = true;
       
@@ -936,18 +1060,6 @@ var totalRowVar=function(i){
 
       var Mets5 = Mets4.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-      //var ACT = a[8];
-      //var AIN = a[8];
-      //var yellowAreaTotal = a[8];
-
-      /*if(Mets=='(N/A)'){
-        //AIN = 'N/A';
-  
-   Mets5='(Anticipated Insurance Needed) ';
-   //yellowAreaTotal = a[8]+" (N/A)";
-   //totalsAccurate = false;
-
-  }*/
 
   var yellowA = (a[1]).toFixed(2);
   var yellowB = (a[2]).toFixed(2);
@@ -957,16 +1069,23 @@ var totalRowVar=function(i){
   var yellowF = (a[6]).toFixed(2);
   var yellowG = (a[7]).toFixed(2);
   var yellowAT = (a[8]).toFixed(2);
+  //var MDSOnumbs = (a[31]).toFixed(2); //didnt work, table stops
 
-  //define 
-  
-    
-      //yellow total rows
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],yellowA,yellowB,yellowC,yellowD,yellowE,yellowF,yellowG,yellowAT,Mets5+"$ "+thresholdResultWithCommas,Mets2,a[15],"",a[19],"FEMA",NaCount],b);
+  //yellow total rows
+      
+      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],yellowA,yellowB,yellowC,yellowD,yellowE,yellowF,yellowG,yellowAT,Mets5+"$ "+thresholdResultWithCommas,Mets2,a[15],"",a[19],"FEMAS "+a[10],"NAS "+NaCount,"","","","","","","","","","MDSO "+a[31]],b);
+
+
+
 };
+
+
+
+//no selected - Must Use AI
+
   for(var i=0; i &lt; masterData.length;i++){
 
-   // if (document.getElementById('AnticipatedInsurance1').checked == false){ //this happen after page is built, thats why it didnt work -- maybe onclick rebuild table? not really
+  
           var wootA = masterData[i][7].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootB = masterData[i][8].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootC = masterData[i][9].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1008,43 +1127,61 @@ var totalRowVar=function(i){
     //masterData[i][20] is Supplemental Info Button,
     //masterData[i][19] is FEMA count,
     //masterData[i][21] is 1 for Insurance NA COUNT,
-    //masterData[i][22], A Yes Insurance factored
-    //masterData[i][23], B Yes Insurance factored
-    //masterData[i][24], C Yes Insurance factored
-    //masterData[i][25], D Yes Insurance factored
-    //masterData[i][26], E Yes Insurance factored
-    //masterData[i][27], F Yes Insurance factored
-    //masterData[i][28], G Yes Insurance factored
-    //masterData[i][29], Area Totals Yes Insurance factored
+    //var wootAA is A, masterData[i][22] Yes Insurance factored
+    //var wootBB is B, masterData[i][23] Yes Insurance factored
+    //var wootCC is C, masterData[i][24] Yes Insurance factored
+    //var wootDD is D, masterData[i][25] Yes Insurance factored
+    //var wootEE is E, masterData[i][26] Yes Insurance factored
+    //var wootFF is F, masterData[i][27] Yes Insurance factored
+    //var wootGG is G, masterData[i][28] Yes Insurance factored
+    //var wootAreaTotals2 is Area Totals masterData[i][29] Yes Insurance factored
     //masterData[i][30], extra for now
     //masterData[i][31] extra for now 
     //end of data],
     //start of class
-    //masterData[i][19]=='1'?"rowRed":"rowReg"); changes row to red if fema check is checked on supplemental 
+    //rrrr changes row to red if fema check is checked on supplemental, hides it with rowRegExclude or hide values
     //end of class
     //----------------------------------------------------------------------------------------------------
     //adds regular row
+    //no selected - Must Use AI
     var rr = 0;
 
 if(masterData[i][19]&gt;='1'){
-  //alert("rowRed! 1031");
-  var rr = "rowRed";
+ //hides rows red based on femaCheckboxV2 linked to DSO
+  var rr = "rowRedExclude"; // change to rowRed to see
 } else {
-  var rr = "rowReg";
+  var rr = "rowReg"; 
 }
-//masterData[i][19]=='1'?"rowRed":"rowReg"
+
 
 
 if(document.getElementById('AnticipatedInsurance1').checked==true){
-
+  //hide rows with N/A values
     rrrr = "hideValues";
   } else {
-
+    //show rows without N/A values
      rrrr = rr;
   }
+
+  /* This works, here but screws other pages total rows
+  if(masterData[i][31]&gt;='1'){
+    rrrr = "rowBlue"; //makes blue - change to hideValues to hide rows with 1 in masterDSO
+  } else {
+    //show rows without 1 in masterDSO
+     rrrr = rr;
+  }*/
   
-    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],rrrr);
+  //start of new row
+  //no selected - Must Use AI
+
+/*if(masterData[i][31]&lt;'1'){*/ //alerts, just does not hide row
+    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootA,wootB,wootC,wootD,wootE,wootF,wootG,wootAreaTotals,"","",masterData[i][15],masterData[i][17],masterData[i][20],"FEMA "+masterData[i][19],"NA "+masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],rrrr);
+    //19 FEMA check
+    //21 NA check
+    //31 MasterDSO check (MDSO)
+  /*} else { alert('hide row');}*/  //alerts, just does not hide row
     if(i==masterData.length-1){//if not the last row
+ 
  totalRowVar(i);
  console.log("reg");
     }
@@ -1063,6 +1200,8 @@ if(document.getElementById('AnticipatedInsurance1').checked==true){
   }
   //grand totals row and class of rowGray
 
+  //no selected - Must Use AI
+
   var a = getTotalsForAll();
 
   //This works to make 0 into 0.00 in the gray rows. Not too important...but looks nice and like other fields
@@ -1078,21 +1217,85 @@ if(document.getElementById('AnticipatedInsurance1').checked==true){
   var grayCT = (a[9]).toFixed(2); 
 
   if(document.getElementById('AnticipatedInsurance1').checked==true){
-    //alert("2 hiding yellow");
+    //hides grand total rows with N/A values
     g = "rowGray hideValues";
   } else {
-    //alert("2 showing yellow");
+    //shows grand total rows with N/A values
      g = "rowGray";
   }
-   
+
+  var stateTxThreshold = 40000000;
+      //var thresholdResult = threshold(masterData[i][5]);
+      //var a = getTotalsFor(masterData[i][5]); //Get the total of a county
+      //threshold.TotalOnPage+=parseInt(thresholdResult); //totals all thresholds, not needed on page
+      var TXMets2 = parseFloat(grayAT) &gt;= parseFloat(stateTxThreshold)?'Yes':'No'; //is county total greater than or equal to county threshold
+      //var TXMets = (NaCount=='Yes')?'(N/A)':TXMets2;
+      //var Mets = (NaCount=='Yes')?'(N/A)':Mets2; //are there N/As present
+      var TXthresholdResultWithCommas = stateTxThreshold.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+//Below determines whether or not more is needed to reach county threshold or if reached and by how much over
+      var TXMets3 = "$ "+((stateTxThreshold-(grayAT)).toFixed(2))+" MORE to REACH (TX) THRESHOLD ";
+      var TXMets33 = "$ "+(((grayAT)-stateTxThreshold).toFixed(2))+" OVER the (TX) THRESHOLD ";
+      var TXMets4 = 0;
+      //var totalsAccurate = true;
+      
+      if((grayAT) &gt; stateTxThreshold){
+        TXMets4 = TXMets33;
+      } else {
+        TXMets4 = TXMets3;
+      }
+
+      var TXMets5 = TXMets4.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 //trying to add $'s here with "$ "+a[X] or "$ "+grayA makes the commas and decimals disappear. Boo!
-      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],g)
-      newRow(t,2,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],g)
+      newRow(t,t.rows.length,["","","","","Unvetted Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,TXMets5+"$ "+TXthresholdResultWithCommas,TXMets2],g)
+      newRow(t,2,["","","","","Unvetted Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,TXMets5+"$ "+TXthresholdResultWithCommas,TXMets2],g)
 }
 
-//this will get totals for the county totals row, for more spots, O's nned to added to var a as well as the parseFloat statements below
+//no selected - Must Use AI
+
+//this will get totals for the county totals row, for more spots, 0's nned to added to var a as well as the parseFloat statements below
 function getTotalsFor(c){
-  var a =[0,0,0,0,0,0,0,0,0,0,true,0,0];
+  var a =[0,0,0,0,0,0,0,0,0,0,0,false,false];//13
+  var isNull = function(b){
+    if(b==''||b==' ' ||b==0){return 0;}
+    else return b;
+  };
+for(var i=0; i&lt;masterData.length;i++){
+  if(masterData[i][5]==c){
+//Below - parseFloat cuts off the first character if a number, otherwise NaN is returned ------------ the [19] spot is where the total is stored from femaCheckboxes , a[10] makes them true by counting 1's in a[19] if greater than or equal to 1 show, false ones are hidden
+
+    if(masterData[i][19]&lt;'1'){ //this removes redRows values with femaCheckboxV2's from the total count
+    a[1]+=parseFloat(isNull(masterData[i][7]));
+    a[2]+=parseFloat(isNull(masterData[i][8]));
+    a[3]+=parseFloat(isNull(masterData[i][9]));
+    a[4]+=parseFloat(isNull(masterData[i][10]));
+    a[5]+=parseFloat(isNull(masterData[i][11])); //5
+    a[6]+=parseFloat(isNull(masterData[i][12]));
+    a[7]+=parseFloat(isNull(masterData[i][13]));
+    a[8]+=parseFloat(isNull(masterData[i][14]));
+    a[9]+=parseFloat(isNull(masterData[i][19]));
+    a[12]+=parseFloat(isNull(masterData[i][21]));//10 NaCount
+    a[31]+=parseFloat(isNull(masterData[i][31])); // 11 MDSO Count
+    } 
+    if(masterData[i][19]&lt;"1"){
+      a[10]=true; //12
+    } else {
+      a[10]=false;
+    }
+     
+    if(masterData[i][31]&gt;="1"){
+      a[31]=true;                                 //13  
+    } 
+    
+  }
+}
+console.log(a);
+return a;
+
+}
+/*function getTotalsFor2(c){
+  var a =[0,0,0,0,0,0,0,0,0,0,false,0,0];
   var isNull = function(b){
     if(b==''||b==' ' ||b==0){return 0;}
     else return b;
@@ -1101,21 +1304,22 @@ for(var i=0; i&lt;masterData.length;i++){
   if(masterData[i][5]==c){
 //parseFloat cuts off the first character if a number, otherwise NaN is returned ------------ the [19] spot is where the total is stored from femaCheckboxes
     //a[0]+=parseFloat(isNull(masterData[i][6]));
-    a[1]+=parseFloat(isNull(masterData[i][7]));
-    a[2]+=parseFloat(isNull(masterData[i][8]));
-    a[3]+=parseFloat(isNull(masterData[i][9]));
-    a[4]+=parseFloat(isNull(masterData[i][10]));
-    a[5]+=parseFloat(isNull(masterData[i][11]));
-    a[6]+=parseFloat(isNull(masterData[i][12]));
-    a[7]+=parseFloat(isNull(masterData[i][13]));
-    a[8]+=parseFloat(isNull(masterData[i][14]));
+    if(masterData[i][19]&lt;'1'){ //this removes redRows and values with femaCheckboxV2's from the count
+    a[1]+=parseFloat(isNull(masterData[i][22]));
+    a[2]+=parseFloat(isNull(masterData[i][23]));
+    a[3]+=parseFloat(isNull(masterData[i][24]));
+    a[4]+=parseFloat(isNull(masterData[i][25]));
+    a[5]+=parseFloat(isNull(masterData[i][26]));
+    a[6]+=parseFloat(isNull(masterData[i][27]));
+    a[7]+=parseFloat(isNull(masterData[i][28]));
+    a[8]+=parseFloat(isNull(masterData[i][29]));
     a[9]+=parseFloat(isNull(masterData[i][19]));
-    a[12]+=parseFloat(isNull(masterData[i][21]));
-    /*if(masterData[i][19]!="1"){
-      a[10]=false;
+    a[12]+=parseFloat(isNull(masterData[i][21]));}
+    if(masterData[i][19]&lt;"1"){ //this would turn county rows red if all vetted, but rows are removed from count above in if statement
+      a[10]=true;
       a[11]+=parseFloat(isNull(masterData[i][20]));
       
-    }*/
+    }
     
     //a[10]+=parseFloat(isNull(masterData[i][19]));
   }
@@ -1123,8 +1327,9 @@ for(var i=0; i&lt;masterData.length;i++){
 console.log(a);
 return a;
 
-}
-//Grand totals 
+}*/
+//Grand totals
+//no selected - Must Use AI 
 function getTotalsForAll(){
   var a =[0,0,0,0,0,0,0,0,0,0];
   var isNull = function(b){
@@ -1133,6 +1338,7 @@ function getTotalsForAll(){
   };
 for(var i=0; i&lt;masterData.length;i++){
     //a[0]+=parseFloat(isNull(masterData[i][6]));
+    if(masterData[i][19]&lt;'1'){ //this removes redRows values with femaCheckboxV2's from the grand total count
     a[1]+=parseFloat(isNull(masterData[i][7]));
     a[2]+=parseFloat(isNull(masterData[i][8]));
     a[3]+=parseFloat(isNull(masterData[i][9]));
@@ -1140,16 +1346,18 @@ for(var i=0; i&lt;masterData.length;i++){
     a[5]+=parseFloat(isNull(masterData[i][11]));
     a[6]+=parseFloat(isNull(masterData[i][12]));
     a[7]+=parseFloat(isNull(masterData[i][13]));
-    a[8]+=parseFloat(isNull(masterData[i][14]));
+    a[8]+=parseFloat(isNull(masterData[i][14]));}
    
 }
- a[9]=parseFloat(threshold.TotalOnPage);
+ a[9]=parseFloat(threshold.TotalOnPage); //this should be A-G totals vs State threshold
 console.log(a);
 return a;
 
 }
-//------Start of popluateTable2 for Insurance---------------------------------------------------------------------------------------------------------------
 
+//------Start of popluateTable2 for Insurance--------------------------------------------------------------------------
+//see above function popluateTable for breakdown of everything, same fields and JS just reversed to hide/show values with NAs
+//yes selected - Must Use AI
 function popluateTable2(){
 var t = document.getElementById('mainTable');
 
@@ -1159,10 +1367,15 @@ var totalRowVar2=function(i){
    var NaCount = parseFloat(a[12]) &gt; (0)?'Yes':'No';
 
    if(document.getElementById('AnticipatedInsurance1').checked==true){
-    b = "rowYellow";
+    b = a[10]===true?"rowYellow":"hideValues";
   } else {
-     b = "rowYellow hideValuesNoInsurance";
+     b = "hideValuesNoInsurance";
   }
+
+  /*if(a[31]==1){
+    //hide total lines with N/A values
+    b = "rowBlue";
+  } */
 
 
       var thresholdResult = threshold(masterData[i][5]);
@@ -1173,8 +1386,8 @@ var totalRowVar2=function(i){
       //var thresholdResultWithDecimals = ((thresholdResult).toFixed(2));
       var thresholdResultWithCommas = thresholdResult.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-      var Mets3 = "$ "+((thresholdResult-(a[8])).toFixed(2))+" MORE to REACH THRESHOLD ";
-      var Mets33 = "$ "+(((a[8])-thresholdResult).toFixed(2))+" OVER the THRESHOLD ";
+      var Mets3 = "$ "+((thresholdResult-(a[8])).toFixed(2))+" MORE to REACH (CO) THRESHOLD ";
+      var Mets33 = "$ "+(((a[8])-thresholdResult).toFixed(2))+" OVER the (CO) THRESHOLD ";
       var Mets4 = 0;
       //var totalsAccurate = true;
       
@@ -1186,16 +1399,10 @@ var totalRowVar2=function(i){
 
       var Mets5 = Mets4.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-      //var ACT = a[8];
-      //var AIN = a[8];
-      //var yellowAreaTotal = a[8];
 
       if(Mets=='(N/A)'){
-        //AIN = 'N/A';
   
    Mets5='(Anticipated Insurance Needed) ';
-   //yellowAreaTotal = a[8]+" (N/A)";
-   //totalsAccurate = false;
 
   }
 
@@ -1212,11 +1419,12 @@ var totalRowVar2=function(i){
   
     
       //yellow total rows
-      newRow(t,t.rows.length,["","","","","Totals for "+masterData[i][5],"",a[0],yellowA,yellowB,yellowC,yellowD,yellowE,yellowF,yellowG,a[8],Mets5+"$ "+thresholdResultWithCommas,Mets,a[15],"",a[19],"FEMA",NaCount],b);
+      //yes selected - Must Use AI
+      newRow(t,t.rows.length,["","","","","Must use AI - Totals for "+masterData[i][5],"",a[0],yellowA,yellowB,yellowC,yellowD,yellowE,yellowF,yellowG,a[8],Mets5+"$ "+thresholdResultWithCommas,Mets,a[15],"",a[19],"FEMAS ","NAS "+NaCount],b);
 };
   for(var i=0; i &lt; masterData.length;i++){
 
-   // if (document.getElementById('AnticipatedInsurance1').checked == false){ //this happen after page is built, thats why it didnt work -- maybe onclick rebuild table? not really
+
           var wootA = masterData[i][7].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootB = masterData[i][8].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootC = masterData[i][9].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1225,7 +1433,7 @@ var totalRowVar2=function(i){
           var wootF = masterData[i][12].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootG = masterData[i][13].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootAreaTotals = masterData[i][14].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-       /* } else {*/
+
           var wootAA = masterData[i][22].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootBB = masterData[i][23].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootCC = masterData[i][24].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1235,49 +1443,12 @@ var totalRowVar2=function(i){
           var wootGG = masterData[i][28].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           var wootAreaTotals2 = masterData[i][29].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
        
-    //---------------------------------------------------------------------------------------------
-    //newRow below explained 
-    //start of data
-    //masterData[i][2] is Total Jurisdictions
-    //,"","", two blanks
-    //masterData[i][3] is unknown to me,
-    //masterData[i][4] is county and city,
-    //masterData[i][5] is unknown to me,
-    //masterData[i][6] is unknown to me,
-    //wootA is A, masterData[i][7] No Insurance factored
-    //wootB is B, masterData[i][8] No Insurance factored
-    //wootC is C, masterData[i][9] No Insurance factored
-    //wootD is D, masterData[i][10] No Insurance factored
-    //wootE is E, masterData[i][11] No Insurance factored
-    //wootF is F, masterData[i][12] No Insurance factored
-    //wootG is G, masterData[i][13] No Insurance factored
-    //wootAreaTotals is Area Totals, masterData[i][14] No Insurance factored
-    //"","", two blanks
-    //masterData[i][15] is Local Dec,
-    //masterData[i][17] is DSO History Button,
-    //masterData[i][20] is Supplemental Info Button,
-    //masterData[i][19] is FEMA count,
-    //masterData[i][21] is 1 for Insurance NA COUNT,
-    //masterData[i][22], A Yes Insurance factored
-    //masterData[i][23], B Yes Insurance factored
-    //masterData[i][24], C Yes Insurance factored
-    //masterData[i][25], D Yes Insurance factored
-    //masterData[i][26], E Yes Insurance factored
-    //masterData[i][27], F Yes Insurance factored
-    //masterData[i][28], G Yes Insurance factored
-    //masterData[i][29], Area Totals Yes Insurance factored
-    //masterData[i][30], extra for now
-    //masterData[i][31] extra for now 
-    //end of data],
-    //start of class
-    //masterData[i][19]=='1'?"rowRed":"rowReg"); changes row to red if fema check is checked on supplemental 
-    //end of class
-    //----------------------------------------------------------------------------------------------------
+    
     //adds regular row
 var rgr = 0;
 
 if(masterData[i][19]&gt;='1'){
-  var rgr = "rowRed";
+  var rgr = "rowRedExclude";
 } else {
   var rgr = "rowReg";
 }
@@ -1292,7 +1463,10 @@ if(document.getElementById('AnticipatedInsurance1').checked==true){
      rrr = "hideValuesNoInsurance";
   }
 
-    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootAA,wootBB,wootCC,wootDD,wootEE,wootFF,wootGG,wootAreaTotals2,"","",masterData[i][15],masterData[i][17],masterData[i][20],masterData[i][19],masterData[i][21],masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],masterData[i][31]],rrr);
+    newRow(t,(t.rows.length),[masterData[i][2],"","",masterData[i][3],masterData[i][4],masterData[i][5],masterData[i][6],wootAA,wootBB,wootCC,wootDD,wootEE,wootFF,wootGG,wootAreaTotals2,"","",masterData[i][15],masterData[i][17],masterData[i][20],"FEMA "+masterData[i][19],"NA "+masterData[i][21],"22 "+masterData[i][22],masterData[i][23],masterData[i][24],masterData[i][25],masterData[i][26],masterData[i][27],masterData[i][28],masterData[i][29],masterData[i][30],"MDSO "+masterData[i][31]],rrr);
+    //19 FEMA check
+    //21 NA check
+    //31 MasterDSO check (MDSO)
     if(i==masterData.length-1){//if not the last row
  totalRowVar2(i);
  console.log("reg");
@@ -1311,6 +1485,8 @@ if(document.getElementById('AnticipatedInsurance1').checked==true){
     }
   }
   //grand totals row and class of rowGray
+
+  //yes selected - Must Use AI
 
   var a = getTotalsFor2All();
 
@@ -1333,14 +1509,40 @@ if(document.getElementById('AnticipatedInsurance1').checked==true){
      g = "rowGray hideValuesNoInsurance";
   }
    
+   var stateTxThreshold = 40000000;
+      //var thresholdResult = threshold(masterData[i][5]);
+      //var a = getTotalsFor(masterData[i][5]); //Get the total of a county
+      //threshold.TotalOnPage+=parseInt(thresholdResult); //totals all thresholds, not needed on page
+      var TXMets2 = parseFloat(grayAT) &gt;= parseFloat(stateTxThreshold)?'Yes':'No'; //is county total greater than or equal to county threshold
+      //var TXMets = (NaCount=='Yes')?'(N/A)':TXMets2;
+      //var Mets = (NaCount=='Yes')?'(N/A)':Mets2; //are there N/As present
+      var TXthresholdResultWithCommas = stateTxThreshold.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+//Below determines whether or not more is needed to reach county threshold or if reached and by how much over
+      var TXMets3 = "$ "+((stateTxThreshold-(grayAT)).toFixed(2))+" MORE to REACH (TX) THRESHOLD ";
+      var TXMets33 = "$ "+(((grayAT)-stateTxThreshold).toFixed(2))+" OVER the (TX) THRESHOLD ";
+      var TXMets4 = 0;
+      //var totalsAccurate = true;
+      
+      if((grayAT) &gt; stateTxThreshold){
+        TXMets4 = TXMets33;
+      } else {
+        TXMets4 = TXMets3;
+      }
+
+      var TXMets5 = TXMets4.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 //trying to add $'s here with "$ "+a[X] or "$ "+grayA makes the commas and decimals disappear. Boo!
-      newRow(t,t.rows.length,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],g)
-      newRow(t,2,["","","","","Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,grayCT],g)
+      newRow(t,t.rows.length,["","","","","Unvetted Must use AI Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,TXMets5+"$ "+TXthresholdResultWithCommas,TXMets2],g)
+      newRow(t,2,["","","","","Unvetted Must use AI Grand Totals","",a[0],grayA,grayB,grayC,grayD,grayE,grayF,grayG,grayAT,TXMets5+"$ "+TXthresholdResultWithCommas,TXMets2],g)
 }
 
 //this will get totals for the county totals row, for more spots, O's nned to added to var a as well as the parseFloat statements below
+
+//yes selected - Must Use AI
+
 function getTotalsFor2(c){
-  var a =[0,0,0,0,0,0,0,0,0,0,true,0,0];
+  var a =[0,0,0,0,0,0,0,0,0,0,false,0,0];
   var isNull = function(b){
     if(b==''||b==' ' ||b==0){return 0;}
     else return b;
@@ -1349,6 +1551,7 @@ for(var i=0; i&lt;masterData.length;i++){
   if(masterData[i][5]==c){
 //parseFloat cuts off the first character if a number, otherwise NaN is returned ------------ the [19] spot is where the total is stored from femaCheckboxes
     //a[0]+=parseFloat(isNull(masterData[i][6]));
+    if(masterData[i][19]&lt;'1'){ //this removes redRows and values with femaCheckboxV2's from the count
     a[1]+=parseFloat(isNull(masterData[i][22]));
     a[2]+=parseFloat(isNull(masterData[i][23]));
     a[3]+=parseFloat(isNull(masterData[i][24]));
@@ -1358,9 +1561,9 @@ for(var i=0; i&lt;masterData.length;i++){
     a[7]+=parseFloat(isNull(masterData[i][28]));
     a[8]+=parseFloat(isNull(masterData[i][29]));
     a[9]+=parseFloat(isNull(masterData[i][19]));
-    a[12]+=parseFloat(isNull(masterData[i][21]));
-    if(masterData[i][19]!="1"){
-      a[10]=false;
+    a[12]+=parseFloat(isNull(masterData[i][21]));}
+    if(masterData[i][19]&lt;"1"){ //this would turn county rows red if all vetted, but rows are removed from count above in if statement
+      a[10]=true;
       a[11]+=parseFloat(isNull(masterData[i][20]));
       
     }
@@ -1373,6 +1576,8 @@ return a;
 
 }
 //Grand totals 
+
+//yes selected - Must Use AI
 function getTotalsFor2All(){
   var a =[0,0,0,0,0,0,0,0,0,0];
   var isNull = function(b){
@@ -1381,6 +1586,7 @@ function getTotalsFor2All(){
   };
 for(var i=0; i&lt;masterData.length;i++){
     //a[0]+=parseFloat(isNull(masterData[i][6]));
+    if(masterData[i][19]&lt;'1'){
     a[1]+=parseFloat(isNull(masterData[i][22]));
     a[2]+=parseFloat(isNull(masterData[i][23]));
     a[3]+=parseFloat(isNull(masterData[i][24]));
@@ -1388,7 +1594,7 @@ for(var i=0; i&lt;masterData.length;i++){
     a[5]+=parseFloat(isNull(masterData[i][26]));
     a[6]+=parseFloat(isNull(masterData[i][27]));
     a[7]+=parseFloat(isNull(masterData[i][28]));
-    a[8]+=parseFloat(isNull(masterData[i][29]));
+    a[8]+=parseFloat(isNull(masterData[i][29]));}
    
 }
  a[9]=parseFloat(threshold.TotalOnPage);
@@ -1397,20 +1603,7 @@ return a;
 
 }
 
-//------------------------------------------------------------------------------------------------------------------
- 
- /*function reloadTableNoIns() {
-  $("#AnticipatedInsurance2").prop("checked", true);
-  //$("#data").load(location.href + " #data");
-  populateMasterData();
-      popluateTable();
- }
-
- function reloadTableYesIns() {
-  //$("#data").load(location.href + " #data");
-  populateMasterData();
-      popluateTable2();
- }*/
+//-------------------------------------------------end of AI functions-----------------------------
 
  function reloadPage() {
   location.reload(true/false);

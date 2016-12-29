@@ -1,0 +1,142 @@
+<span class="tableWords">
+
+
+.tableWords {
+  font-size: 10pt;
+}
+
+
+
+//-------------------------------------------------------------
+
+<style type="text/css">
+
+
+
+.lookHere{
+  font-size:14pt;
+  font-weight:bold;
+  color:#CD0101
+}
+
+
+
+
+</style>
+
+
+............<span class="tableWords" style="color:#111111">
+
+<if test="@county = '' "><span class="lookHere">ADD COUNTY</span></if><if test="@city = '' "><span class="lookHere">ADD CITY</span></if>
+
+
+//-----------------------------------------------------------------------
+
+
+<select multiple="multiple" name="dummyList" class="dummyList">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+</select>
+
+
+
+a.replace(/[,]+/g,', ').trim(); replace all commas with a comma and a space
+
+
+
+
+
+
+
+<div id="billdesc">
+    <select id="test">
+      <option class="non" value="option1">Option1</option>
+      <option class="non" value="option2">Option2</option>
+      <option class="editable" value="other">Other</option>
+    </select>
+    <input class="editOption" style="display:none;"></input>
+</div>
+CSS
+
+body{
+    background: blue;
+}
+#billdesc{
+    padding-top: 50px;
+}
+#test{
+    width: 100%;
+    height: 30px;
+}
+option {
+    height: 30px;
+    line-height: 30px;
+}
+
+.editOption{
+    width: 90%;
+    height: 24px;
+    position: relative;
+    top: -30px
+
+}
+jQuery
+
+var initialText = $('.editable').val();
+$('.editOption').val(initialText);
+
+$('#test').change(function(){
+var selected = $('option:selected', this).attr('class');
+var optionText = $('.editable').text();
+
+if(selected == "editable"){
+  $('.editOption').show();
+
+
+  $('.editOption').keyup(function(){
+      var editText = $('.editOption').val();
+      $('.editable').val(editText);
+      $('.editable').html(editText);
+  });
+
+}else{
+  $('.editOption').hide();
+}
+});
+
+
+
+------------------------------------------
+//was going to sep dates if needed, would need to edit this
+function validateSpaces(datebox) {
+            var strg = datebox.replace(/\s/g, '');
+//var ret = /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/g;
+            /*return*/ return test(strg);
+        }
+
+function finalSpacingCheck() {
+            var checkSpace = function (a) {
+                for (var i = 0; i &lt; a.length; i++) {
+                    if (a[i] != '' &amp;&amp; validateSpaces(a[i]) == false) {alert('Please check your datebox format. Incomplete or extra characters may exist.');
+                        return false;
+                        
+                    }
+                }
+            };
+            var e = document.getElementById('impactedCountiesDSO').value.split(/[ ,;]+/);
+            if(checkSpace(e) != false){
+                document.getElementById('impactedCountiesDSO').value=e.join(', ');
+            };
+        }
+
+            /*<eocfield name="impactedCountiesDSO" />
+                <eocfield name="dateDecRec" />
+                <eocfield name="dateDecRecState" />
+                ack1
+                ack2
+                <eocfield name="dateDecRecFederal" />*/

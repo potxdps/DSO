@@ -1,0 +1,65 @@
+<html version="6" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <head>
+    <title></title>
+    <style type="text/css">
+  body{background-color:#d1d2d4;color:#000;font:normal 0.9em arial;margin:1.0em;}
+  div.container{border:solid 1px #0069aa;}
+  div.content{margin:1em;}
+  table.heading{border:solid 1px;border-collapse:collapse;empty-cells:show;margin:0;padding:3px;width:100%;}      table.heading td, table.heading th{padding:0.1em 0.5em 0.1em 0.5em;}
+  table.heading th{text-align:center;}
+  #tdFilter{text-align:right;}
+  #tdBoard{text-align:center;}
+  table.display{border-collapse:collapse;border:solid 1px;width:100%;border-color:#808080;background-color:#fff;empty-cells:show;margin-bottom:0.2em;}
+  table.display td, table.display th{border-right:solid 1px;padding:0.1em 0.3em 0.1em 0.3em;}
+  table.display td{border-top:solid 1px;border-color:#ccc;}
+</style>
+  </head>
+  <body>
+    <eocrepeatallrecords>
+      <div class="container agencytemplate_boardbackground">
+        <table class="heading agencytemplate_boardheader">
+          <tbody>
+            <tr>
+              <td id="tdIncident">
+                <incidentname />
+              </td>
+              <td id="tdFilter">
+                <filter />
+              </td>
+            </tr>
+            <tr>
+              <td id="tdBoard" colSpan="2">
+                <boardname />
+                <br />
+                <eocfield name="cardPanel" />
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <returnbutton>Return</returnbutton>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <relatedlist table="DSO Audit">
+          <div class="content">
+            <table class="display">
+              <tbody>
+                <tr class="agencytemplate_tableheader"></tr>
+                <tr class="agencytemplate_tableentry">
+                  <td>
+                    <eocfield table="History Audit table" type="rl" name="saveDateTime" />
+                    <br />
+                    <eocfield table="History Audit table" type="rl" name="currentUser" />
+                    <br />
+                    <eocfield table="History Audit table" type="rl" name="msg" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </relatedlist>
+      </div>
+    </eocrepeatallrecords>
+  </body>
+</html>

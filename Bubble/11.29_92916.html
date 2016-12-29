@@ -11,13 +11,6 @@
       <style type="text/css">
 .hide{display:none;}
 .form-controlLG{width:100px;}
-
-.hideForFF {
-   height:1px;
-    width:1px;
-     visibility: hidden;
-}
-
     </style>
       <script type="text/javascript">
       var cityArrayCopy = [];
@@ -89,38 +82,20 @@ function selectOptionsIfExistsInArray() {
                         }).prop("selected", true);
 
                         $("#cityTmp").val("");
-                        $("#city2").val("");
-                        //$("#city3").val("");
                         $("#city").focus();
                     }
                 }
 
                 function copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray() {
                     document.getElementById("cityTmp").value += $("#city").val();
-                    //document.getElementById("city2").value += $("#city").val();
-                    
-                    
-
-                    //console.log("citycounty choices recorded for edit");
-                }
-
-                function copySelectedOptionsToTextAreaAgain() {
-                    var ccc =  document.getElementById("cityTmp").value;
-                    document.getElementById("city2").value += ccc.replace(/[,]+/g,', ').trim();
-                 
+                    console.log("citycounty choices recorded for edit");
                 }
 
 function alphabetizeDSOdrop(){
-  
- /* $("#fkID").html($("#fkID option").sort(function (a, b) {
+  $("#fkID").html($("#fkID option").sort(function (a, b) {
     return a.text == b.text ? 0 : a.text &lt; b.text ? -1 : 1
-}));*/
-  
-  alert('alphabetizeDSOdrop runs Full');
+}))
 }
-
-
-
 /*Need to remove selected DSO or make work. When two bubble inputs are linked to the same DSO, this breaks the Infrastructure and Rec PA pages. The expressions concerning the disaster decs break it*/
 
 function rebuildingCityCountyOptionsOnJTypeCheck(a) {
@@ -138,117 +113,42 @@ function rebuildingCityCountyOptionsOnJTypeCheck(a) {
                 for (var k = 0; k &lt; cityMatrix.length; k++) {
                     addOption(cityList, cityMatrix[k][1], false);
                 }
-
                 $("#sortCountyOrder").val(0);
                 $("#sortCityOrder").val(0);
                 $("#county").prop("disabled", false);
                 $("#city").prop("disabled", false);
-                addOption(cityList, "Other", false);
             });
         }
 
-        function commandInfoWindow(clickedId, title, message) {
-            $('#' + clickedId).click(function () {
-                BootstrapDialog.show({
-                    title: title,
-                    message: function (dialog) {
-                        var $content = $(message);
-                        return $content;
-                    },
-
-                });
-            })
-
-        }
-
-    function requireJuirsCountyCity() {
-        if(!$(".jTypeCLASS").is(":checked")) {
-                  alert("Please fill in the missing required field, Jurisdiction Type. Pick one City or County.");
-                  $("#jurisdictionType1").focus().select();
-      
-                  e.preventDefault();
-
-              } else if($("#county").val() === "Select One"){
-                alert("Please make a choice in the missing required field, County.");
-                  $("#county").focus().select();
-      
-                  e.preventDefault();
-
-              } else if($("#city").val() === "Select One"){
-                alert("Please make a choice in the missing required field, City.");
-                  $("#city").focus().select();
-      
-                  e.preventDefault();
-              } else{
-                console.log('WINNING!');
-              }
-    }
-
     function start(){
-        document.forms[0].onsubmit=totalJurisdictions;
-        incSelList=document.getElementById('incidentList');
-        loopAllInputs=document.getElementsByTagName('input');
-        filterByIncident.incidentListOptionsBuild();
-      //matchCounties();
-      //filterOptionsByCounty();
-
-
-      $("#deselectDSOValue").click(function() {
-        $('#DSOisSelected').val("");
-        $('#DSOisSelected').attr('value', '');
-        $('#DSOisSelected2').val("DESELECTED_Almost");
-        $('#dsoYesNo1').prop('checked', false);
-        $('#dsoYesNo2').prop('checked', false);
-        alert('Blanked Value and Save');
-        $("#saveBtn2").click();
-
-  
-  });
-
-      $("#disableDrop").click(function() {
-          $('#fkID').prop('disabled', true);
-
-  
-  });
-      $("#ableDrop").click(function() {
-          $('#fkID').prop('disabled', false);
-
-  
-  });
-
-      
-      
-      hideOtherTextField();
       //give the span an ID 71-72 then manipulate the ID 74-76
       var fkSPAN = document.getElementById('fk').getElementsByTagName('select')[0];
       $(fkSPAN).prop("id", "fkID");
         $('.datepicker').datepicker();
-
-        commandInfoWindow('cityInfo', 'City Options', '<div><ul><li>Multiple cities can be selected when reporting for the County by holding down the Ctrl while clicking on the city names.</li><li>If Other and multiple cities are needed, please choose Other first to reveal the Other text box. Fill in the State Park, Agency, Etc in the text field provided. Multiple cites can then be added on as needed.</li><li>Only a single city is allowed to be selected when filling the DSO out for a City.</li></ul></div>');
         //sortSelectLists
         rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType1");
-        rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType2");
-        document.getElementById('jurisdictionType1').onchange=TypeJurisdiciton;
+          rebuildingCityCountyOptionsOnJTypeCheck("#jurisdictionType2");
+      document.getElementById('jurisdictionType1').onchange=TypeJurisdiciton;
         document.getElementById('jurisdictionType2').onchange=TypeJurisdiciton;
         //HI();
-        touchTheDSOisSelectedTextBox();
-        //hideDSOdrop();
-        clearDSOdrop();
+        hideDSOdrop();
         
 scribe.fields4History=[
-    ["otherAttachment","Other Attachment"],
-    ["letterAttachment","Letter Attachment"],
-    ["decAttachment","Dec Attachment"],
     ["PAComments","PA Comments"],
     ["femaCheckboxV2","Infrastructure PDAs have been completed and Numbers have been vetted between PA and FEMA"],
     ["IAComments","IA Comments"],
     ["femaCheckboxV1","Housing PDAs have been completed and Numbers have been vetted between IA and FEMA"],
+    ["otherAttachment","Other Attachment"],
+    ["letterAttachment","Letter Attachment"],
+    ["decAttachment","Dec Attachment"],
     ["paPDAComplete","Date PA PDA Complete"],
     ["paPDAScheduled","Date PA PDA Scheduled"],
     ["iaPDAComplete","Date IA PDA Complete"],
     ["iaPDAScheduled","Date IA PDA Scheduled"],
     ["iaInitialContactDate","Date of PDA Initial Contact"], 
     ["ack2","ACK Letter Sent 2"],
+    ["impactedCountiesDSO","Date DSO Rec'd"],
+    ["dsoYesNo","DSO"],
     ["assistanceRequestedDate","Date Asst Requested"],
     ["ack1","ACK Letter Sent 1"],
     ["dateDecRecFederal","Date Federal Disaster Declared Issued Rec'd"],
@@ -257,10 +157,6 @@ scribe.fields4History=[
     ["declarationIssuedState","Was a State Disaster Dec Issued?"],
     ["dateDecRec","Date Disaster Declared Issued Rec'd"],
     ["declarationIssued","Was a Local Disaster Dec Issued?"],
-    ["impactedCountiesDSO","Date DSO Rec'd"],
-    ["copyFK","SelectedDSO"],
-    ["dsoYesNo","DSO"],
-    ["otherValue","Other"],
     ["city","City"],
     ["county","County"],
     ["jurisdictionType","Jurisdiction Type"],
@@ -275,11 +171,6 @@ scribe.fields4History=[
   if ('<xsl:value-of select="/data/@dataid"/>'!=0){
      $("#county").prop("disabled", false);
                 $("#city").prop("disabled", false);
-                if (document.getElementById('dsoYesNo1').checked==true) {
-              $('#fkID').prop('disabled', true);
-            } else{
-              $('#fkID').prop('disabled', false);
-            }
 
                 //startOf: doing stuff on update/edit
                 var countySelectListOnUpdate = document.getElementById("county");
@@ -290,22 +181,20 @@ scribe.fields4History=[
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     addOption(cityList, "Unincorporated Areas", true);
-                    //needs to be false so its not selected to begin with
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
                         addOption(cityList, cityMatrix[k][1], false);
-                    }addOption(cityList, "Other", false);
+                    }
                 } else {
                   console.log('else doing stuff on update/edit');
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     addOption(cityList, "Unincorporated Areas", true);
-
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
 
                         if (cityMatrix[k][0] === countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text) {
                             addOption(cityList, cityMatrix[k][1], false);
                         }
-                    }addOption(cityList, "Other", false);
+                    }
                 }
 
 
@@ -324,27 +213,11 @@ if (document.getElementsByName('dataid')[0].value!=''){
                 }, 1000);*/
  
   updateDateTime();
-  //filterSelectList();
-  /*if($('#DSOisSelected').val("")){
-    CreateOrphanLink();
-    alert("orphan created since DESELECTED_Almost was present");
-    $('#dsoYesNo1').prop('checked', false);
-    //$('#dsoYesNo').val("");
-  //$('#dsoYesNo').attr('value', '');
-  alert("dsoYesNo clears");
-  $('#DSOisSelected2').val("");
-  $('#DSOisSelected2').attr('value', '');
-  //$("#saveBtn2").trigger('click');
-  
-  }*/
  
 
   $("#saveBtn2").click(function() {
-    requireJuirsCountyCity();
      someSaveBttn=function(){
       copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
-      copySelectedOptionsToTextAreaAgain();
-      makeUnincorpLast();
         document.getElementsByName('cmdSave')[0].click();
     
  
@@ -357,10 +230,7 @@ if (document.getElementsByName('dataid')[0].value!=''){
   //first record
  
 $("#saveBtn2").click(function() {
-    requireJuirsCountyCity();
   copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
-  copySelectedOptionsToTextAreaAgain();
-  makeUnincorpLast();
     updateDateTime();
     document.getElementById('currentChangeLog').value = scribe.postReview();
     //alert("Changelog="+document.getElementById('currentChangeLog').value);
@@ -380,7 +250,6 @@ $("#saveBtn2").click(function() {
        document.getElementById('city').onchange = function () {
                 sortOrderCity(this.options[this.selectedIndex].text);
                 var coList = document.getElementById("county");
-
                 var coSelected = coList.options[coList.selectedIndex].text;
                 if (this.options[this.selectedIndex].text == 'Select One') {
                     removeOptions(coList);
@@ -390,21 +259,9 @@ $("#saveBtn2").click(function() {
                         //alert("city sort order onchange");
                     }
                     // sortSelect(this);
-                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='99998';
-                        //document.getElementById("otherValueDiv").style.display = "none";
-                 } else if (this.options[this.selectedIndex].text == 'Other') {document.getElementById('sortCityOrder').value='99999';
-
-                        document.getElementById("otherValueDiv").style.display = "";
-                        $('#otherValue').focus();
-                /*} else if ((this.options[this.selectedIndex].text == 'Other') &amp;&amp; (this.options[this.selectedIndex]) ) {document.getElementById('sortCityOrder').value='99999';
-
-                        document.getElementById("otherValueDiv").style.display = "";
-                        $('#otherValue').focus();*/ 
-
-                    } else {
+                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='0'; } else {
                     removeOptions(coList);
                     addOption(coList, 'Select One', false);
-                    //document.getElementById("otherValueDiv").style.display = "none";
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
                         if (cityMatrix[k][1] === this.options[this.selectedIndex].text) {
                             var selected = false;
@@ -425,33 +282,23 @@ $("#saveBtn2").click(function() {
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     addOption(cityList, "Unincorporated Areas", true);
-                    //addOption(cityList, "Other", false);// might need if filing from city for other
-                    //$("#city option[text = Other]").insertAfter($("#city option:last"));
-
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
                         addOption(cityList, cityMatrix[k][1], false);
                     }
-                    addOption(cityList, "Other", false);
                 } else {
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     if(document.getElementById('jurisdictionType2').checked ==true){
                       addOption(cityList, "Unincorporated Areas", true);
-
                     } else {
                      //do nothing
                     }
-                    //addOption(cityList, 'Other', false);
-                    //$("#city option[text = Other]").insertAfter($("#city option:last"));
-
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
 
                         if (cityMatrix[k][0] === this.options[this.selectedIndex].text) {
                             addOption(cityList, cityMatrix[k][1], false);
-
                         }
                     }
-                    addOption(cityList, "Other", false);
                 }
                 
             }
@@ -485,7 +332,7 @@ $("#saveBtn2").click(function() {
                 if (co == countyList[i]) {
                     document.getElementById('sortCountyOrder').value = i;
                     if (document.getElementById('jurisdictionType1').checked == false) {
-                        //document.getElementById('sortCityOrder').value = '';
+                        document.getElementById('sortCityOrder').value = '';
                        
                     }
                     return;
@@ -511,11 +358,10 @@ $("#saveBtn2").click(function() {
                 }
             }
         }
-       function hideDSOdrop() {console.log('hideDSOdrop runs but some of it is still commented for testing purposes');
+        function hideDSOdrop() {
             if (document.getElementById('dsoYesNo1').checked==true) {
-              //$('#fkID').prop('disabled', true);
-                //document.getElementById('dsoDropdown').style.display="";
-                //document.getElementById('dsoRecDate').style.display="";
+                document.getElementById('dsoDropdown').style.display="";
+                document.getElementById('dsoRecDate').style.display="";
                 var fk = document.getElementById('fk').getElementsByTagName('select')[0];
                 for (var i=0; i&lt; fk.options.length; i++){
                 if(fk.options[i].value===''){
@@ -523,43 +369,19 @@ $("#saveBtn2").click(function() {
                 }
                 }
 
-            } else {console.log('hideDSOdrop ELSE runs (CreateOrphanLink) but other parts of it is still commented for testing purposes');
-                //$('#DSOisSelected').val('');
-                //document.getElementById('dsoDropdown').style.display="none";
-                //document.getElementById('dsoRecDate').style.display="none";
+            } else {
+                document.getElementById('dsoDropdown').style.display="none";
+                document.getElementById('dsoRecDate').style.display="none";
                 CreateOrphanLink();
             }
         }
-
-         function clearDSOdrop() {console.log('clearDSOdrop runs but some of it is still commented for testing purposes');
-            if (document.getElementById('dsoYesNo1').checked==true) {
-              alert('yes checked but do nothing')
-                //document.getElementById('dsoDropdown').style.display="";
-                //document.getElementById('dsoRecDate').style.display="";
-                /*var fk = document.getElementById('fk').getElementsByTagName('select')[0];
-                for (var i=0; i&lt; fk.options.length; i++){
-                if(fk.options[i].value===''){
-                    fk.remove(fk.options[i]);
-                }
-                }*/
-
-            } else {console.log('hideDSOdrop ELSE runs (CreateOrphanLink) but other parts of it is still commented for testing purposes');
-                //$('#DSOisSelected').val('');
-                //document.getElementById('dsoDropdown').style.display="none";
-                //document.getElementById('dsoRecDate').style.display="none";
-                CreateOrphanLink();
-            }
-        }
-        function CreateOrphanLink(){console.log('CreateOrphanLink runs full strenght');
+        function CreateOrphanLink(){
             var fk = document.getElementById('fk').getElementsByTagName('select')[0];
             var a = document.createElement('option');
             a.value='0';
             a.text='Please Select';
             fk.appendChild(a);
             fk.selectedIndex=fk.options.length-1;
-            //these below blank out the field and removes the value respectively - both needed to remove value from Parent record as well on Save
-            $('#DSOisSelected').val(''); 
-            $('#DSOisSelected').attr('value', ''); 
         }
         
   var someSaveBttn=function(){
@@ -577,12 +399,9 @@ $("#saveBtn2").click(function() {
       for(var k=0; k &lt; b.length; k++) {
         var result=[];
         if(b[k].tagName==="SELECT") {
-            var ms=[];
-            for(var msif=0; msif &lt; b[k].options.length; msif++){
-                if(b[k].options[msif].selected==true){ms.push(b[k].options[msif])}
-            }
+            var ms = b[k].selectedOptions;
             var msr =[];
-            for(var msi=0; msi &lt; ms.length; msi++){
+            for(var msi=0; msi &lt; ms.length; ms++){
                msr.push(ms[msi].text); 
             }
              result.push(scribe.fields4History[i][1]);
@@ -613,28 +432,19 @@ $("#saveBtn2").click(function() {
   },
   inicialReview: function(){scribe.baseArray=scribe.Evaluation();},
   postReview: function() {
-    console.log('start post review');
     var p=[];
     var f=scribe.Evaluation();
     for(var i=0; i &lt; f.length; i++) {
       if(f[i][1] !== scribe.baseArray[i][1]) {
         p.push(f[i][0] + ': ' + f[i][1]);
-        console.log('start post review2');
       }
     }
     p=p.join('\r\n');
     if(p.length &gt; 0) {
-        console.log('start post review3');
       scribe.changesMade=true;
       
     }
-    console.log('start post review4'); // gets to here
-    console.log('p from here');
-    console.log(p);
-    console.log('to here');
     return p;
-    console.log('start post review5'); //gets stuck on embed loop on Bubble Audit  input start
-
   }
 };
 //part of history
@@ -661,14 +471,13 @@ var updateDateTime=function() {
 var proxySaveFunction=function() {//alert('ProxySave');
   var a=document.getElementById('historyEmbedView');
   if(a.contentWindow) {
-  console.log('contentWindow');
+  
     a.contentWindow.document.getElementById('frameBody').contentWindow.frames.injectHistory(document.getElementsByName('dataid')[0].value,document.getElementById("dateTimeUpdate").value,
       '<value-of select="/data/@currentUser"/>',
       scribe.postReview());
     
     
   } else {
-     console.log('contentDocument');
     a.contentDocument.document.getElementById('frameBody').contentDocument.frames.injectHistory(document.getElementsByName('dataid')[0].value,
       document.getElementById("dateTimeUpdate").value,
       '<value-of select="/data/@currentUser"/>',
@@ -706,7 +515,7 @@ second1.value = first1.value;
 }
 function totalJurisdictions(){
 
-if(document.getElementById('dateDecRec').value!='' || document.getElementById('dateDecRecState').value!='' || document.getElementById('dateDecRecFederal').value!='' || document.getElementsByName('ack1')[0].value!='' || document.getElementsByName('ack2')[0].value!='' || document.getElementsByName('impactedCountiesDSO')[0].value!='' || document.getElementById('dsoYesNo1').checked==true){
+if(document.getElementById('dateDecRec').value!='' || document.getElementById('dateDecRecState').value!='' || document.getElementById('dateDecRecFederal').value!='' || document.getElementsByName('ack1')[0].value!='' || document.getElementsByName('ack2')[0].value!='' || document.getElementsByName('impactedCountiesDSO')[0].value!=''){
   document.getElementsByName('totalJurisdictions')[0].value=1;
 }
 else {
@@ -768,73 +577,10 @@ return($(this).text() == document.getElementById("incidentName").value);
 
 }
 
-function copyFKValues(){
-   var firstFK = document.getElementById('fkID'),//get from
-   secondFK = document.getElementById('copyFK');//put here
-//alert('FK ran1');
-secondFK.value = firstFK.options[firstFK.selectedIndex].text;
-//copyFKValuesAgain();
-//alert('FK ran2');
+function selectDSO(){
+    alert('check the box');
+     document.getElementById('dsoSelected').checked=true;
 }
-
-/*function filterOptionsByCounty(){
-   $('#fkID').filterByText($('#county'), true);
-//alert('FK ran2');
-}*/
-
-
-function touchTheDSOisSelectedTextBox(){
-   if($('#fkID').selectedIndex != 'Please Select'){
-        $('#DSOisSelected').val("SELECTED");
-        $('#DSOisSelected2').val("");
-        $('#DSOisSelected2').attr('value', '');
-        
-    }  console.log('touchTheDSOisSelectedTextBox runs full for testing purposes');
-}
-
-function hideOtherTextField(){
-    if($('#otherValue').val()!=''){
-        document.getElementById("otherValueDiv").style.display = "";
-    }
-}
-//this function needs to add a check or text value to another text field, remove SELECTED from DSOisSELECTED, SAVE and reopen automatically, it will see the value there and then run CreateOrphanLink. Having the DSO linked to 2 reecords without actually delinking it from the first may cause issues. If this does not work , an embed view may the way. See TCARD tracker for save and continue. 
-function deselectTheDSOValue(){
-  $('#DSOisSelected').val("");
-  $('#DSOisSelected').attr('value', '');
-  $('#fkID').prop('disabled', false);
-
-
-}
-
-function deselectTheDSO2Value(){
-  $('#DSOisSelected2').val("");
-  $('#DSOisSelected2').attr('value', '');
-  $('#fkID').prop('disabled', false);
-
-
-}
-
-function filterSelectList(){
-var myOpts = document.getElementById('fkID').options;
-
-for (var i=0; i &lt; myOpts.length; i++){
-
-  if(myOpts[i].text == ""){
-    $(myOpts[i]).hide();
-    alert('Winning filters');
-  }
-}
-}
-
-function makeUnincorpLast(){
- if($('#city').val()=='Unincorporated Areas') {
-              //alert('woohoo');
-              document.getElementById('sortCityOrder').value='99998';
-            }
-}
-
-
-
 
 var incVar;
 var incSelList;
@@ -860,13 +606,13 @@ var filterByIncident={
 };
 
 $(document).ready(function(){
-  //document.forms[0].onsubmit=totalJurisdictions;
-    //incSelList=document.getElementById('incidentList');
-    //loopAllInputs=document.getElementsByTagName('input');
+  document.forms[0].onsubmit=totalJurisdictions;
+    incSelList=document.getElementById('incidentList');
+    loopAllInputs=document.getElementsByTagName('input');
    // etnPageHelper.styleSearchField();
     //var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
     //$(countyFilter).addClass('form-control');
-    //filterByIncident.incidentListOptionsBuild();
+    filterByIncident.incidentListOptionsBuild();
    // filterByIncident.searchFieldVariableSet();
   //  filterByIncident.clearIncidentListSelection();
     //filterByIncident.incidentListActionOnChange();
@@ -880,7 +626,7 @@ $(document).ready(function(){
    </head>   <body>
       <div class="container agencytemplate_boardbackground">
          <form id="input1" role="form">
-            <div style="display:nonea">
+            <div style="display:none">
                <div class="form-group form-inline">
                   <label class="control-label" for="sortCountyOrder">Sort County Order:</label>
                   <input name="sortCountyOrder" id="sortCountyOrder" type="text" style="form-control input-sm"/>
@@ -916,12 +662,12 @@ $(document).ready(function(){
                      
                      
                      
-                     <input id="jurisdictionType1" type="radio" class="jTypeCLASS" style="form-control input-sm" name="jurisdictionType" value="City" onclick="removeUniAreas()"/>
+                     <input id="jurisdictionType1" type="radio" style="form-control input-sm" name="jurisdictionType" value="City" onclick="removeUniAreas()"/>
         County 
                      
                      
                      
-                     <input id="jurisdictionType2" type="radio" class="jTypeCLASS" style="form-control input-sm" name="jurisdictionType" value="County"/>
+                     <input id="jurisdictionType2" type="radio" style="form-control input-sm" name="jurisdictionType" value="County"/>
                   </div>
                   <div class="form-group form-inline">
                      <label class="control-label" for="County">County:</label>
@@ -2407,20 +2153,9 @@ $(document).ready(function(){
                         <option value="Yorktown">Yorktown</option>
                         <option value="Zavalla">Zavalla</option>
                      </select>
-
                      <br/>
-
-                     <div id="otherValueDiv" class="form-group form-inline" style="display:none">
-                     <br/><label class="editOption control-label" for="otherValue">Please Write in State Park, Agency, Etc: </label><space/>
-                     <br/>
-                     <input type="text" name="otherValue" id="otherValue" style="form-control input-sm"/>
-                     </div>
                      <div class="form-group form-inline" style="display:none">
               <textarea id="cityTmp" name="cityTmp" />
-              <br/>
-              <textarea id="city2" name="city2"></textarea>
-              <br/>
-              <!--<textarea id="city3" name="city3"></textarea>-->
             </div>
                   </div>
                   <div class="form-group required form-inline">
@@ -2429,78 +2164,30 @@ $(document).ready(function(){
                      
                      
                      
-                     <input id="dsoYesNo1" type="radio" style="form-control input-sm" name="dsoYesNo" value="Yes" onclick="hideDSOdrop();alphabetizeDSOdrop();deselectTheDSO2Value()"/><!--";filterSelectList()"might need to move this (alphabetizeDSOdrop) somewhere else tried onclick on dropdown, added another Please Select-->
-        No (Clears Pick DSO, need this not to do that)
+                     <input id="dsoYesNo1" type="radio" style="form-control input-sm" name="dsoYesNo" value="Yes" onclick="hideDSOdrop();alphabetizeDSOdrop()"/>
+        No 
                      
                      
                      
-                     <input id="dsoYesNo2" type="radio" style="form-control input-sm" name="dsoYesNo" value="No" onclick="CreateOrphanLink();hideDSOdrop()"/>
+                     <input id="dsoYesNo2" type="radio" style="form-control input-sm" name="dsoYesNo" value="No" onclick="hideDSOdrop();"/>
                   </div>
-                  <div style="display:nonea" id="dsoDropdown" class="form-group form-inline">
+                  <div style="display:none" id="dsoDropdown" class="form-group form-inline">
                      <label class="control-label" name="pickDSO" for="pickDSO">Pick DSO:</label>
                      <space/>
-                     
-                     <!--expression that if a check box on dso is checked, dont show here. When DSO choosen here, check a  box on that DSO. Epression here Would weed out yeses and cause them not to display. Neeed to make this list only show DSOs for County in above selected -->
-                     <!--<span id="fk" onchange="touchTheDSOisSelectedTextBox()">-->  
-                     <span id="fk" name="fk" onchange="touchTheDSOisSelectedTextBox()">
-                    
-                        <foreignkey table="Core" type="select">
- <!--<if test="@countyCopyDSO = @county">-->
-                        <!--<if test="@DSOisSelected = '' ">-->
-                        <eocfield type="fk" table="Core" name="countyCopyDSO"/> / 
-                        <dataid/> / <eocfield type="fk" table="Core" name="county"/> / <eocfield type="fk" table="Core" name="city"/> / <eocfield type="fk" table="Core" name="otherValue"/> / <eocfield type="fk" table="Core" name="DSOisSelected"/> / <externalexpression name="totalcountDSO" table="Core">sum(case when dsoSelected!='' then 1 else 0 end)</externalexpression> / <dataid table="Supplemental"/> / <relatedexpression name="dsoSelectedTestExp" table="Supplemental">case when dsoYesNo='Yes' then 1 else 0 end</relatedexpression><!--COUNTS - take out if needed, from here<externalexpression name="extExpr" table="Core">count(*)</externalexpression> this externalexpression here needs to be below outside of the foreignkey or it will not work / <externalexpression name="totalcountDSO" table="Core">sum(case when dsoSelected!='' then 1 else 0 end)</externalexpression>COUNTS - take out if needed, to here--><!--</if>--><!--</if>-->
+                     <!--expression that if a check box on dso is checked, dont show here. When DSO choosen here, check a  box on that DSO. Epression here Would weed out yeses and cause them not to display. Neeed to make this list only show DSOs for County in above selected -->  
+                     <span id="fk">
+                        <foreignkey table="Core" type="select" >
+                           <eocfield type="fk" table="Core" name="county" /> /
+                           
+                           
+                           
+                           <eocfield type="fk" table="Core" name="city"/> /
+                           <eocfield type="fk" table="Core" name="dsoSelected"/>
                         </foreignkey>
-                        
-                        <!--<eocfield type="fk" table="Core" name="dsoSelected"/> must be in foreign keys to work with if statement-->
-
-                     </span><space/><button id="disableDrop" name="disableDrop">DIS</button><space/><button id="ableDrop" name="ableDrop">ABLE</button>
-                     <br/>
-                     
-                     <br/>
-
-                     DSO<space/><input type="text" table="Core" name="DSOisSelected" id="DSOisSelected" value=""/>
-                     <br/>
-                     DSO2<space/><input type="text" name="DSOisSelected2" id="DSOisSelected2" value=""/>
-
-                     <span id="copyForeignKeyValues">
-                        <div style="display:nonea">
-                        <textarea name="copyFK" id="copyFK" style="form-control input-sm"/>
-                        </div>
-                     </span>
-
-                     <span id="copyForeignKeyValuesCounty">
-                        <div style="display:nonea">
-                        <textarea name="copyFKCounty" id="copyFKCounty" style="form-control input-sm"/>
-                        </div>
                      </span>
                   </div>
-                  <hr/>
                   
-                  
-                  <!--<if test="1=0">
-                       <eocfield type="fk" table="Core" name="county"/>
-                       <eocfield type="fk" table="Core" name="city"/>
-
-                  </if> no dice-->
-                  <!--///////////////////////////////////NEED/////////////////////////////////////-->
-                  <div id="dsoIsPicked" name="dsoIsPicked" style="display:nonea"><eocrepeatallrecords>
-                  <dataid table="Supplemental"/>
-                  <label class="control-label" for="dsoYesNo">DSO Picked:</label><space/>(this is the Bubble city and county until dso is chosen)<div id="linkToDSO" style="display:nonea"><viewlink name="Input (DO NOT ASSIGN)"><value-of select="@county"/> / <value-of select="@city"/></viewlink></div>
-                  </eocrepeatallrecords>
-                  <br/>
-                     <button type="button" id="deselectDSOValue" name="deselectDSOValue">DESELECT DSO</button>
-                     <br/>
-                  <!--this externalexpression below needs to be here or the one in the foreignkey will not work-->
-                  <div id="totalDSOsandLinkedDSOs" style="display:nonea">
-                  Total DSOs: <externalexpression name="extExpr" table="Core">count(*)</externalexpression>
-                  <br/>
-                  DSOs linked up already: <externalexpression name="totalcountDSO" table="Core">sum(case when DSOisSelected!='' then 1 else 0 end)</externalexpression></div>
-                  <hr/>
-                  Bubbles <expression name="dsoSelectedTestExp" table="Supplemental">case when dsoYesNo='Yes' then 1 else 0 end</expression><!--<externalexpression name="totalcountDSOforBubble" table="Core">sum(case when dsoSelectedTest!='' then 1 else 0 end)</externalexpression>-->
-                  </div>
-                  <!--///////////////////////////////////NEED/////////////////////////////////////-->
-                  
-                  <div style="display:nonea" id="dsoRecDate" class="form-group form-inline">
+                  <div style="display:none" id="dsoRecDate" class="form-group form-inline">
                      <label class="control-label" for="impactedCountiesDSO">DSO Rec'd Date:</label>
                      <space/>
                      <br/><textarea name="impactedCountiesDSO" id="impactedCountiesDSO" placeholder="XX/XX/XXXX" style="form-control input-sm"/>
@@ -2728,7 +2415,7 @@ $(document).ready(function(){
 
                   <div id="buttons">
                      <savebutton id="saveBtn" class="hide"/>
-                     <button id="saveBtn2" type="button" class="btn btn-info" onclick="copyFKValues()">Save</button>
+                     <button id="saveBtn2" type="button" class="btn btn-info" onclick="selectDSO();">Save</button>
                      <space/>
                      <cancelbutton class="btn btn-danger"/>
                      <space/>
@@ -2744,13 +2431,9 @@ $(document).ready(function(){
                   </div>
                
             </div>
-            <span class="hideForFF" style="display:nonea;" width="900px">
+            <span style="display:none;" width="900px">
                <textarea name="currentChangeLog" id="currentChangeLog"/>
                <embedview id="historyEmbedView" view="Bubble Audit Input (DO NOT ASSIGN)" name="historyEmbedView"/>
-            </span>
-            <span style="display:width:900px;height:400px">
-               
-               <embedview id="selectedWordView" view="Bubble Input 2 (DO NOT ASSIGN)" name="selectedWordView"/>
             </span>
          </form>
       </div>

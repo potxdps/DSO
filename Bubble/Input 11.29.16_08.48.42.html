@@ -1,5 +1,4 @@
-<html version="6" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <head>
+<html xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="6">   <head>
     <title>DSO Form</title>
     <!--this works-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,7 +16,6 @@
   content:"*";
   color:red;
 }
-
     </style>
     <script type="text/javascript">
                 var cityArrayCopy = [];
@@ -344,7 +342,6 @@ function finalEmailCheck() {
                 $("#sortCityOrder").val(0);
                 $("#county").prop("disabled", false);
                 $("#city").prop("disabled", false);
-                addOption(cityList, "Other", false);
             });
         }
 
@@ -374,12 +371,6 @@ function finalEmailCheck() {
                     }
                 }
 
-        function copySelectedOptionsToTextAreaAgain() {
-                    var ccc =  document.getElementById("cityTmp").value;
-                    document.getElementById("city2").value += ccc.replace(/[,]+/g,', ').trim();
-              
-                }
-
         function start() {
 
 
@@ -400,7 +391,6 @@ function finalEmailCheck() {
           
           countyEmailHideReveal();
           $("#notRealSave").click(function() {
-            makeUnincorpLast();
 
           if($("#repairCost01").val() !== ""){
             validatingCatSelectOptionIfEstimatedIsNotEmpty("#repairCost01", "#cat01", "#cat01");
@@ -527,7 +517,6 @@ function finalEmailCheck() {
               } else {
                 if (cats === true){
                   copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
-                  copySelectedOptionsToTextAreaAgain();
                   updateOrFirstTime();
                   sendEmails();
                   fakeSubmit();
@@ -551,8 +540,6 @@ function finalEmailCheck() {
     if ('<xsl:value-of select="/data/@dataid" />'!=0){
             disableInputsIA();
             disableInputsPA();
-            selectDSO();
-            $("#city2").val("");
     }
            
             var counties = window.parent.window.parent.counties;
@@ -567,22 +554,15 @@ function finalEmailCheck() {
                 if (this.options[this.selectedIndex].text == 'Select One') {
                     removeOptions(coList);
                     addOption(coList, 'Select One', true);
-                    //document.getElementById("otherValueDiv").style.display = "none";
                     for (var k = 0; k &lt; countyList.length; k++) {
                         addOption(coList, countyList[k], false);
 
                     }
-                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='99998';
-                        //document.getElementById("otherValueDiv").style.display = "none";
-                 } else if (this.options[this.selectedIndex].text == 'Other') {document.getElementById('sortCityOrder').value='99999';
-
-                        document.getElementById("otherValueDiv").style.display = "";
-                        $('#otherValue').focus();
+                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='0';
  
                 } else {
                     removeOptions(coList);
                     addOption(coList, 'Select One', false);
-                   // document.getElementById("otherValueDiv").style.display = "none";
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
                         if (cityMatrix[k][1] === this.options[this.selectedIndex].text) {
                             var selected = false;
@@ -606,7 +586,6 @@ function finalEmailCheck() {
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
                         addOption(cityList, cityMatrix[k][1], false);
                     }
-                    addOption(cityList, "Other", false);
                 } else {
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
@@ -621,7 +600,6 @@ function finalEmailCheck() {
                             addOption(cityList, cityMatrix[k][1], false);
                         }
                     }
-                    addOption(cityList, "Other", false);
                 }
             }
           
@@ -637,7 +615,7 @@ function finalEmailCheck() {
             commandInfoWindow('businessesEconomicInjuryInfo', 'Business Economic Injury', '<div>SBA makes an economic injury declaration in reliance on a state certification that at least five small business concerns in a disaster area have suffered substantial economic injury as a result of the disaster and are in need of financial assistance not otherwise available on reasonable terms.<ul><li>Does not cover lost income</li><li>Businesses claiming the loss would have to provide financials and accounting records to prove the loss</li><li>Businesses compensated with insurance would have to prove their injury is substantial after insurance claims are paid</li></ul></div>')
             commandInfoWindow('emergencyProtectiveMeasuresInfo', 'Emergency Protective Measures', '<div>Includes response costs, protection of life &amp; property, and then um temporary repairs as examples</div>');
             commandInfoWindow('buildingEquipmentInfo', 'Building &amp; Equipment', '<div>Also includes vehicles and contents of buildings</div>');
-            commandInfoWindow('cityInfo', 'City Options', '<div><ul><li>Multiple cities can be selected when reporting for the County by holding down the Ctrl while clicking on the city names.</li><li>If Other and multiple cities are needed, please choose Other first to reveal the Other text box. Fill in the State Park, Agency, Etc in the text field provided. Multiple cites can then be added on as needed.</li><li>Only a single city is allowed to be selected when filling the DSO out for a City.</li></ul></div>');
+            commandInfoWindow('cityInfo', 'City Options', '<div><ul><li>Multiple cities can be selected when reporting for the County by holding down the Ctrl whild clicking on the city names.</li><li>Only a single city is allowed to be selected when filling the DSO out for a City</li></ul></div>');
             commandInfoWindow('catAInfo','Category A: Debris Removal','<div>Clearance of trees and woody debris; certain building wreckage; damaged/ destroyed building contents; sand, mud, silt, and gravel; vehicles; and other disaster-related material deposited on public and, in very limited cases, private property.</div>');
             commandInfoWindow('catBInfo','Category B: Emergency Protective Measures','<div>Measures taken before, during, and after a disaster to eliminate/reduce an immediate threat to life, public health, or safety, or to eliminate/reduce an immediate threat of significant damage to improved public and private property through cost-effective measures.</div>');
             commandInfoWindow('catCInfo','Category C: Roads and Bridges','<div>Repair of roads, bridges, and associated features, such as shoulders, ditches, culverts, lighting, and signs.</div>');
@@ -816,10 +794,9 @@ function finalEmailCheck() {
             $("#county").prop("disabled", true);
             $("#city").prop("disabled", true);
             if ('<xsl:value-of select="/data/@dataid" />'!=0){
-
                $("#county").prop("disabled", false);
                 $("#city").prop("disabled", false);
-                copyCountyValueDSO();
+
                 //startOf: doing stuff on update/edit
                 var countySelectListOnUpdate = document.getElementById("county");
                 sortOrderCounty(countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text);
@@ -830,7 +807,7 @@ function finalEmailCheck() {
                     addOption(cityList, "Unincorporated Areas", true);
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
                         addOption(cityList, cityMatrix[k][1], false);
-                    }addOption(cityList, "Other", false);
+                    }
                 } else {
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
@@ -840,7 +817,7 @@ function finalEmailCheck() {
                         if (cityMatrix[k][0] === countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text) {
                             addOption(cityList, cityMatrix[k][1], false);
                         }
-                    }addOption(cityList, "Other", false);
+                    }
                 }
 
 
@@ -850,9 +827,6 @@ function finalEmailCheck() {
                 }, 1000);
             } 
             
-            if($('#otherValue').val()!=''){
-        document.getElementById("otherValueDiv").style.display = "";
-    }
             
         }
 
@@ -891,7 +865,7 @@ function finalEmailCheck() {
           document.getElementById('city').size=1;
         } else {
           document.getElementById('city').multiple=true;
-          document.getElementById('city').size=6;
+          document.getElementById('city').size=4;
           document.getElementById('sortCityOrder').value='0';
         }
 
@@ -936,6 +910,15 @@ function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
     }
 }
 
+/*function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c, e) {
+   var catSelectList = document.getElementById(b).selectedIndex;
+   if($(a).val() != "" &amp;&amp; catSelectList === 0) {
+       $(c).focus().select();
+       alert("Please select a value for Cat A-G");
+       e.preventDefault();
+  }
+}*/
+
 Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
     get: (function() {
         try {
@@ -964,10 +947,12 @@ function saveButtonRuns(){
   console.log("real save button is clicked");
 }
 
+ /*function disableInputsIA(){
+  $('input.lockTheseIA').attr('disabled', 'disabled');
+}*/
 
-//add to webform? only on update
 function disableInputsIA(){
-  var a = document.getElementById('femaTestIA').textContent;
+  var a = document.getElementById('femaTestIA').innerText;
 if (a[0]=='1'){
   $('input.lockTheseIA').attr('disabled', 'disabled');
 } else {
@@ -976,42 +961,21 @@ if (a[0]=='1'){
 }
 
 function disableInputsPA(){
-  var a = document.getElementById('femaTestPA').textContent;
+  var a = document.getElementById('femaTestPA').innerText;
 if (a[0]=='1'){
   $('input.lockThesePA').attr('disabled', 'disabled');
 } else {
   $('input.lockThesePA').removeAttr('disabled');
 }
 }
-
-function selectDSO(){
-    var aaa = document.getElementById('dsoSelectedTest').textContent;
-    if (aaa[0]=='1'){
-     $("#dsoSelected").prop("checked", true);
-     $('#testTestTextField').val('Wootee');
-     //alert('User must update something else by hand and save to save dsoSelected');     
-    } else {
-      $("#dsoSelected").prop("checked", false);
-      //alert('User may or may not have to update something else by hand and save to save the unselecting of dsoSelected');
-    }
+/*function disableInputsIA(){
+  var a = document.getElementById('femaTestIA').innerText.split('|'); //split was removed since divs were split up
+if (a[0]=='1'){
+  $('input.lockTheseIA').attr('disabled', 'disabled');
+} else {
+  $('input.lockTheseIA').removeAttr('disabled');
 }
-
-function copyCountyValueDSO(){
-   var firstCounty = document.getElementById('county'),//get from
-   secondC = document.getElementById('countyCopyDSO');//put here
-
-secondC.value = firstCounty.options[firstCounty.selectedIndex].text;
-
-}
-
-function makeUnincorpLast(){
- if($('#city').val()=='Unincorporated Areas') {
-              //alert('woohoo');
-              document.getElementById('sortCityOrder').value='99998';
-            }
-}
-//this works like 9 times out of ten and then 1 time you need to edit the record manually and save and then it saves the checked and wootee value
-//add to webform? only on update
+}*/
 
 
         window.onload = start;
@@ -1021,25 +985,15 @@ function makeUnincorpLast(){
     <div class="container agencytemplate_boardbackground">
       <form role="form">
         <div class="content">
-          <span style="display:none">
-            <div id="femaTestIA">
-              <relatedexpression name="femaIACheckTest" table="Supplemental">sum(case when femaCheckboxV1='Yes' then 1 else 0 end)
-        </relatedexpression>
-            </div>
-            <div id="femaTestPA">
-              <relatedexpression name="femaPACheckTest" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)
-        </relatedexpression>
-            </div>
-          </span>
+        <span style="display:none">
+        <div id="femaTestIA">
+        <relatedexpression name="femaIACheckTest" table="Supplemental">sum(case when femaCheckboxV1='Yes' then 1 else 0 end)
+        </relatedexpression></div>|
+        <div id="femaTestPA">  
+        <relatedexpression name="femaPACheckTest" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>
+        </div></span>
+       
           <div id="hidden" style="display:nonea">
-          <!--<div class="form-group form-inline">
-              <label class="control-label" for="stateThreshold">stateThreshold:</label>
-              <input name="stateThreshold" id="stateThreshold" type="text" style="form-control input-sm" value="40000000"/>
-            </div>-->
-          <div class="form-group form-inline">
-              <label class="control-label" for="masterDSOThisIs">masterDSOThisIs:</label>
-              <input name="masterDSOThisIs" id="masterDSOThisIs" type="text" style="form-control input-sm" value=""/>
-            </div>
             <div class="form-group form-inline">
               <label class="control-label" for="sortCountyOrder">Sort County Order:</label>
               <input name="sortCountyOrder" id="sortCountyOrder" type="text" style="form-control input-sm" />
@@ -1068,30 +1022,14 @@ function makeUnincorpLast(){
               <label class="control-label" for="editKey">editKey:</label>
               <input name="editKey" id="editKey" type="text" style="form-control input-sm" />
             </div>
+            <span id="dataidSpan">
+              <dataid />
+            </span>
             <div class="form-group form-inline">
               <label class="control-label" for="dsoSelected">dsoSelected:</label>
-              <input name="dsoSelected" id="dsoSelected" type="checkbox" value="dsoSelected" style="form-control input-sm" />
+              <input name="dsoSelected" id="dsoSelected" type="checkbox" style="form-control input-sm" value="Yes"/>
             </div>
-
-            DSO Yes/No's
-            <div id="dsoSelectedTest">
-              <relatedexpression name="dsoSelectedTestExp" table="Supplemental">case when dsoYesNo='Yes' then 1 else 0 end</relatedexpression>
-            </div>
-            <div id="testTestText">
-              <input name="testTestTextField" id="testTestTextField" type="text" />
-            </div>
-            <div class="form-group form-inline">
-              <label class="control-label" for="DSOisSelected">DSOisSelected:</label>
-              <input type="text" name="DSOisSelected" value="" />
-            </div>
-            <!--<div id="dsoSelectedTestBubble">
-            <relatedexpression name="dsoSelectedTestBubbleExp" table="Supplemental">sum(case when fkID='Yes' then 1 else 0 end)</relatedexpression></div>-->
-            <span id="dataidSpan">
-              <dataid table="Core"/>
-              
-            </span>
           </div>
-          <!--bb<foreignkey><dataid table="Supplemental"/></foreignkey>-->
           <div id="container">
             <h1>
               <span class="label label-default">Incident</span>
@@ -1131,7 +1069,7 @@ function makeUnincorpLast(){
             <div class="form-group form-inline">
               <label class="control-label" for="county">County:</label>
               <space />
-              <select id="county" name="county" onblur="copyCountyValueDSO()">
+              <select id="county" name="county">
                 <option value="">Please Select:</option>
                 <option value="Anderson">Anderson</option>
                 <option value="Andrews">Andrews</option>
@@ -1389,9 +1327,6 @@ function makeUnincorpLast(){
                 <option value="Zavala">Zavala</option>
               </select>
               <!-- </select>-->
-            </div>
-            <div class="form-group form-inline">
-              <input id="countyCopyDSO" name="countyCopyDSO" />
             </div>
             <div class="form-group form-inline">
               <label class="control-label" for="city">City:</label>
@@ -2616,20 +2551,11 @@ function makeUnincorpLast(){
                 <option value="Yorktown">Yorktown</option>
                 <option value="Zavalla">Zavalla</option>
               </select>
-              <br />
-              <div id="otherValueDiv" class="form-group form-inline" style="display:none">
-                <br />
-                <label class="editOption control-label" for="otherValue">Please Write in State Park, Agency, Etc: </label>
-                <space />
-                <br />
-                <input type="text" name="otherValue" id="otherValue" style="form-control input-sm" />
-              </div>
+
               <!--<input type="text" name="city" style="form-control input-sm" />-->
             </div>
-            <div class="form-group form-inline" style="display:nonea">
+            <div class="form-group form-inline" style="display:none">
               <textarea id="cityTmp" name="cityTmp" />
-              <br />
-              <textarea id="city2" name="city2"></textarea>
             </div>
             <div class="form-group form-inline">
               <label class="control-label" for="population">Population:</label>
@@ -2727,10 +2653,46 @@ function makeUnincorpLast(){
             <h1>
               <span class="label label-default">Individual Assistance</span>
             </h1>
+
+            <!-- <h3><span class="label label-default"> Casualties:</span></h3>                   
+ <div class="form-group form-inline">
+      <label class="control-label" for="fatalities">Number of Fatalities:</label>
+       <input name="fatalities" id="fatalities" type="text" placeholder="0" style="form-control input-sm"/>
+    </div>        
+  <div class="form-group form-inline">
+      <label class="control-label" for="injuries">Number of Injuries:</label>
+       <input name="injuries" id="injuries" type="text" placeholder="0" style="form-control input-sm"/>
+    </div>
+          <div class="form-group form-inline">
+      <label class="control-label" for="hospitalized">Number of Hospitalized:</label>
+       <input name="hospitalized" id="hospitalized" type="text" placeholder="0" style="form-control input-sm"/>
+    </div>  -->
+            <!--                      
+<h3><span class="label label-default">Agricultural Losses:</span>
+</h3>
+            <h4><i>Contact the Farm Service Agency in your county</i></h4>
+<div class="form-group form-inline">
+      <label class="control-label" for="agricultural">Is agricultural assistance needed?:</label>
+       Yes <input id="agricultural1" type="radio" style="form-control input-sm" name="declarationIssued" value="Yes" />
+       No <input id="agricultural2" type="radio" style="form-control input-sm" name="declarationIssued" value="No" />
+<br />
+    <i> If yes, please attach USDA flash situation report.</i>    
+</div>
+            <div class="form-group form-inline">
+      <label class="control-label" for="usdaFlashReport">USDA Flash Report:</label>
+               <input type="file" name="usdaFlashReport" />
+</div>
+-->
             <h3>
               <span class="label label-default">Residential Losses - Primary Residence Only</span>
             </h3>
             <br />
+            <!--<div class="form-group form-inline">
+              <label class="control-label" for="femaCheckboxV1temp">IA PDA Complete</label>
+              <space />
+              <input name="femaCheckboxV1temp" id="femaCheckboxV1temp" type="checkbox" style="form-control input-sm" onchange="disableInputsIA()"/>
+            </div>
+            <br/>-->
             <table class="table table-bordered">
               <tr>
                 <td>Type of Homes</td>
@@ -2773,7 +2735,7 @@ function makeUnincorpLast(){
               <tr>
                 <td>Single Family Homes</td>
                 <td>
-                  <input name="sfhAffected" id="sfhAffected" type="text" placeholder="0" class="totalsAffected lockTheseIA" style="form-control input-sm totalsAffected" />
+                  <input name="sfhAffected" id="sfhAffected" type="text" placeholder="0" class="totalsAffected lockTheseIA" style="form-control input-sm totalsAffected"/>
                 </td>
                 <td>
                   <input name="sfhMinorDamage" id="sfhMinorDamage" type="text" placeholder="0" class="totalsMinorDamage lockTheseIA" style="form-control input-sm totalsMinorDamage" />
@@ -2830,19 +2792,19 @@ function makeUnincorpLast(){
               <tr>
                 <td>Totals</td>
                 <td>
-                  <input name="totalsAffected" id="totalsAffected" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA" />
+                  <input name="totalsAffected" id="totalsAffected" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
                   <input name="totalsMinorDamage" id="totalsMinorDamage" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA" />
                 </td>
                 <td>
-                  <input name="totalsMajorDamage" id="totalsMajorDamage" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA" />
+                  <input name="totalsMajorDamage" id="totalsMajorDamage" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                  <input name="totalsDestroyed" id="totalsDestroyed" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA" />
+                  <input name="totalsDestroyed" id="totalsDestroyed" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                  <input name="totalsCovByInsurance" id="totalsCovByInsurance" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA" />
+                  <input name="totalsCovByInsurance" id="totalsCovByInsurance" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>%</td>
                 <!--<td>
@@ -2854,9 +2816,28 @@ function makeUnincorpLast(){
             <div class="form-group form-inline">
               <label class="control-label" for="homesIsolated">Number of homes isolated due to road closure (high water, etc.): </label>
               <space />
-              <input name="homesIsolated" id="homesIsolated" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA" />
+              <input name="homesIsolated" id="homesIsolated" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
             </div>
+             
             <br />
+            <!--
+<div class="form-group form-inline">
+      <label class="control-label" for="numNotSatisfiedByVolunteers">Estimated number of persons whose situation will not be satisfied by volunteer organizations (Contact local volunteer organizations):</label>
+       <input name="numNotSatisfiedByVolunteers" id="numNotSatisfiedByVolunteers" type="text" style="form-control input-sm"/>
+    </div>-->
+            <!--<div class="form-group form-inline">
+      <label class="control-label" for="sheltersOpen">Are shelters opened?:</label>
+      Yes  <input id="sheltersOpen1" type="radio" style="form-control input-sm" name="sheltersOpen" value="Yes" />
+       No <input id="sheltersOpen2" type="radio" style="form-control input-sm" name="sheltersOpen" value="No" />
+    </div>
+<div class="form-group form-inline">
+      <label class="control-label" for="sheltersHowMany">How many shelters are open?:</label>
+       <input name="sheltersHowMany" id="sheltersHowMany" type="text" style="form-control input-sm"/>
+    </div>
+<div class="form-group form-inline">
+      <label class="control-label" for="shelterDetails">Name, location, capacity, and current occupancy of shelters:</label>
+       <input name="shelterDetails" id="shelterDetails" type="text" style="form-control" TextMode="MultiLine" Rows="5"/>
+    </div>-->
             <h1>
               <span class="label label-default">Business Losses/Impacts:</span>
             </h1>
@@ -2866,46 +2847,46 @@ function makeUnincorpLast(){
                 <td />
                 <td># of Businesses</td>
                 <td># Covered by Adequate Insurance</td>
-                <td>$ Total Estimated Repair Cost</td>
+                <td>$ Total estimated repair cost</td>
               </tr>
               <tr>
                 <td>Minor Damage (less than 40%)</td>
                 <td>
-                  <input name="numberMinorDamage" id="numberMinorDamage" type="text" placeholder="0" class="numberTotal lockTheseIA" style="form-control input-sm numberTotal" />
+                  <input name="numberMinorDamage" id="numberMinorDamage" type="text" placeholder="0" class="numberTotal lockTheseIA" style="form-control input-sm numberTotal"/>
                 </td>
                 <td>
-                  <input name="coveredMinorDamage" id="coveredMinorDamage" type="text" placeholder="0" class="coveredTotal lockTheseIA" style="form-control input-sm coveredTotal" />
+                  <input name="coveredMinorDamage" id="coveredMinorDamage" type="text" placeholder="0" class="coveredTotal lockTheseIA" style="form-control input-sm coveredTotal"/>
                 </td>
                 <td>
-                           $ <input name="totalMinorDamage" id="totalMinorDamage" type="text" placeholder="0" class="totalTotal lockTheseIA" style="form-control input-sm totalTotal" /></td>
+                           $ <input name="totalMinorDamage" id="totalMinorDamage" type="text" placeholder="0" class="totalTotal lockTheseIA" style="form-control input-sm totalTotal"/></td>
               </tr>
               <tr>
                 <td>Major Damage (greater than 40%)</td>
                 <td>
-                  <input name="numberMajorDamage" id="numberMajorDamage" type="text" placeholder="0" class="numberTotal lockTheseIA" style="form-control input-sm numberTotal" />
+                  <input name="numberMajorDamage" id="numberMajorDamage" type="text" placeholder="0" class="numberTotal lockTheseIA" style="form-control input-sm numberTotal"/>
                 </td>
                 <td>
-                  <input name="coveredMajorDamage" id="coveredMajorDamage" type="text" placeholder="0" class="coveredTotal lockTheseIA" style="form-control input-sm coveredTotal" />
+                  <input name="coveredMajorDamage" id="coveredMajorDamage" type="text" placeholder="0" class="coveredTotal lockTheseIA" style="form-control input-sm coveredTotal"/>
                 </td>
                 <td>
-                           $ <input name="totalMajorDamage" id="totalMajorDamage" type="text" placeholder="0" class="totalTotal lockTheseIA" style="form-control input-sm totalTotal" /></td>
+                           $ <input name="totalMajorDamage" id="totalMajorDamage" type="text" placeholder="0" class="totalTotal lockTheseIA" style="form-control input-sm totalTotal"/></td>
               </tr>
               <tr>
                 <td>Totals</td>
                 <td>
-                  <input name="numberTotal" id="numberTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA" />
+                  <input name="numberTotal" id="numberTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                  <input name="coveredTotal" id="coveredTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA" />
+                  <input name="coveredTotal" id="coveredTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                 $ <input name="totalTotal" id="totalTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA" /></td>
+                 $ <input name="totalTotal" id="totalTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/></td>
               </tr>
             </table>
             <div class="form-group form-inline">
               <label class="control-label" for="businessesCeased">How many businesses have ceased operations?: </label>
               <space />
-              <input name="businessesCeased" id="businessesCeased" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA" />
+              <input name="businessesCeased" id="businessesCeased" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
             </div>
             <div class="form-group form-inline">
               <label class="control-label" for="businessesEconomicInjury">How many businesses have experienced economic injury?: 
@@ -2916,20 +2897,27 @@ function makeUnincorpLast(){
                         
                         <span id="businessesEconomicInjuryInfo" class="label label-info">i</span></label>
               <space />
-              <input name="businessesEconomicInjury" id="businessesEconomicInjury" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA" />
+              <input name="businessesEconomicInjury" id="businessesEconomicInjury" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
             </div>
             <div class="form-group form-inline">
               <label class="control-label" for="numberUnemployed">Estimated number of persons unemployed because of this disaster: </label>
               <space />
-              <input name="numberUnemployed" id="numberUnemployed" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA" />
+              <input name="numberUnemployed" id="numberUnemployed" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
               <space />
               <i>(Contact affected businesses and the local Texas Workforce Commission Office)</i>
             </div>
             <br />
             <h1>
-              <span class="label label-default">Public Assistance</span>
+              <span class="label label-default">PUBLIC ASSISTANCE</span>
             </h1>
             <br />
+            <!--<div class="form-group form-inline">
+              <label class="control-label" for="femaCheckboxV2temp">PA PDA Complete</label>
+              <space />
+              <input name="femaCheckboxV2temp" id="femaCheckboxV2temp" type="checkbox" style="form-control input-sm" onchange="disableInputsPA()"/>
+            </div>
+            <br/>-->
+            
             <table class="table table-bordered">
               <tr>
                 <td>Category</td>
@@ -3084,12 +3072,12 @@ function makeUnincorpLast(){
                 <td>Totals
 </td>
                 <td>
-                  <input name="sitesTotals" id="sitesTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA" />
+                  <input name="sitesTotals" id="sitesTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                           $ <input name="repairCostTotals" id="repairCostTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA" /></td>
+                           $ <input name="repairCostTotals" id="repairCostTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></td>
                 <td>
-                           $ <input name="insuranceTotals" id="insuranceTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA" /></td>
+                           $ <input name="insuranceTotals" id="insuranceTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></td>
               </tr>
             </table>
             <i>* Anticipated insurance is normally calculated by subtracting any deductible, depreciation or 
@@ -3099,11 +3087,11 @@ function makeUnincorpLast(){
             <div class="form-group form-inline">
               <label class="control-label" for="annualMaintenanceBudget">Total annual maintenance budget (i.e. Public Works, Road &amp; Bridge):</label>
               <space />
-                     $ <input name="annualMaintenanceBudget" id="annualMaintenanceBudget" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA" /></div>
+                     $ <input name="annualMaintenanceBudget" id="annualMaintenanceBudget" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></div>
             <div class="form-group form-inline">
               <label class="control-label" for="startOfFiscalYear">Start of Fiscal Year(Month):</label>
               <space />
-              <input name="startOfFiscalYear" id="startOfFiscalYear" type="text" style="form-control input-sm" class="lockThesePA" />
+              <input name="startOfFiscalYear" id="startOfFiscalYear" type="text" style="form-control input-sm" class="lockThesePA"/>
             </div>
             <br />
             <h1>
@@ -3122,7 +3110,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility01" id="orgFacility01" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility01" id="orgFacility01" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat01" id="cat01" style="form-control input-sm" class="lockThesePA">
@@ -3137,7 +3125,7 @@ function makeUnincorpLast(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites01" id="sites01" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites01" id="sites01" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal"/>
                 </td>
                 <td>
                            $ <input name="repairCost01" id="repairCost01" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
@@ -3146,7 +3134,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility02" id="orgFacility02" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility02" id="orgFacility02" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat02" id="cat02" style="form-control input-sm" class="lockThesePA">
@@ -3170,7 +3158,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility03" id="orgFacility03" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility03" id="orgFacility03" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat03" id="cat03" style="form-control input-sm" class="lockThesePA">
@@ -3194,7 +3182,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility04" id="orgFacility04" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility04" id="orgFacility04" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat04" id="cat04" style="form-control input-sm" class="lockThesePA">
@@ -3218,7 +3206,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility05" id="orgFacility05" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility05" id="orgFacility05" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat05" id="cat05" style="form-control input-sm" class="lockThesePA">
@@ -3242,7 +3230,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility06" id="orgFacility06" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility06" id="orgFacility06" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat06" id="cat06" style="form-control input-sm" class="lockThesePA">
@@ -3266,7 +3254,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility07" id="orgFacility07" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility07" id="orgFacility07" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat07" id="cat07" style="form-control input-sm" class="lockThesePA">
@@ -3290,7 +3278,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility08" id="orgFacility08" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility08" id="orgFacility08" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat08" id="cat08" style="form-control input-sm" class="lockThesePA">
@@ -3314,7 +3302,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility09" id="orgFacility09" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility09" id="orgFacility09" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat09" id="cat09" style="form-control input-sm" class="lockThesePA">
@@ -3338,7 +3326,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility10" id="orgFacility10" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility10" id="orgFacility10" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat10" id="cat10" style="form-control input-sm" class="lockThesePA">
@@ -3362,7 +3350,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility11" id="orgFacility11" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility11" id="orgFacility11" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat11" id="cat11" style="form-control input-sm" class="lockThesePA">
@@ -3386,7 +3374,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility12" id="orgFacility12" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility12" id="orgFacility12" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat12" id="cat12" style="form-control input-sm" class="lockThesePA">
@@ -3410,7 +3398,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility13" id="orgFacility13" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility13" id="orgFacility13" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat13" id="cat13" style="form-control input-sm" class="lockThesePA">
@@ -3434,7 +3422,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility14" id="orgFacility14" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility14" id="orgFacility14" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat14" id="cat14" style="form-control input-sm" class="lockThesePA">
@@ -3458,7 +3446,7 @@ function makeUnincorpLast(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility15" id="orgFacility15" type="text" style="form-control input-sm" class="lockThesePA" />
+                  <input name="orgFacility15" id="orgFacility15" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
                   <select name="cat15" id="cat15" style="form-control input-sm" class="lockThesePA">
@@ -3484,12 +3472,12 @@ function makeUnincorpLast(){
                 <td>Totals</td>
                 <td />
                 <td>
-                  <input name="sitesOtherTotal" id="sitesOtherTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA" />
+                  <input name="sitesOtherTotal" id="sitesOtherTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                           $ <input name="repairCostTotal" id="repairCostTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA" /></td>
+                           $ <input name="repairCostTotal" id="repairCostTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></td>
                 <td>
-                           $ <input name="insuranceCostTotal" id="insuranceCostTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA" /></td>
+                           $ <input name="insuranceCostTotal" id="insuranceCostTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></td>
               </tr>
             </table>
             <div>
@@ -3608,14 +3596,13 @@ This form is for damage assessment reporting purposes only.  In accordance with 
             <cancelbutton id="cancelbtn" class="btn btn-danger" />
             <space />
             <pdflink type="button" class="btn btn-warning">PDF</pdflink>
-            <space />
-            <span><a href="javascript:window.print()"><button type="button" class="btn btn-info btn">Print</button></a></span>
+            <space/>
             <div style="display:none" id="saveButton">
               <savebutton />
             </div>
+            
             <div style="border-style:none;background-color:white">
-              <embedview style="display:nonea;border-style:none" width="0.1px" height="0.1px" id="auditEmbed" view="DSO Audit Input (DO NOT ASSIGN)" />
-            </div>
+            <embedview style="display:nonea;border-style:none" width="0.1px" height="0.1px" id="auditEmbed" view="DSO Audit Input (DO NOT ASSIGN)" /></div>
           </div>
         </fieldset>
       </form>

@@ -185,12 +185,10 @@ function rebuildingCityCountyOptionsOnJTypeCheck(a) {
     }
 
     function start(){
-        document.forms[0].onsubmit=totalJurisdictions;
-        incSelList=document.getElementById('incidentList');
-        loopAllInputs=document.getElementsByTagName('input');
-        filterByIncident.incidentListOptionsBuild();
-      //matchCounties();
-      //filterOptionsByCounty();
+        //document.forms[0].onsubmit=totalJurisdictions;
+        //incSelList=document.getElementById('incidentList');
+        //loopAllInputs=document.getElementsByTagName('input');
+        //filterByIncident.incidentListOptionsBuild();
 
 
       $("#deselectDSOValue").click(function() {
@@ -341,10 +339,10 @@ if (document.getElementsByName('dataid')[0].value!=''){
 
   $("#saveBtn2").click(function() {
     requireJuirsCountyCity();
+
      someSaveBttn=function(){
       copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
       copySelectedOptionsToTextAreaAgain();
-      makeUnincorpLast();
         document.getElementsByName('cmdSave')[0].click();
     
  
@@ -360,7 +358,6 @@ $("#saveBtn2").click(function() {
     requireJuirsCountyCity();
   copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
   copySelectedOptionsToTextAreaAgain();
-  makeUnincorpLast();
     updateDateTime();
     document.getElementById('currentChangeLog').value = scribe.postReview();
     //alert("Changelog="+document.getElementById('currentChangeLog').value);
@@ -390,7 +387,7 @@ $("#saveBtn2").click(function() {
                         //alert("city sort order onchange");
                     }
                     // sortSelect(this);
-                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='99998';
+                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='0';
                         //document.getElementById("otherValueDiv").style.display = "none";
                  } else if (this.options[this.selectedIndex].text == 'Other') {document.getElementById('sortCityOrder').value='99999';
 
@@ -485,7 +482,7 @@ $("#saveBtn2").click(function() {
                 if (co == countyList[i]) {
                     document.getElementById('sortCountyOrder').value = i;
                     if (document.getElementById('jurisdictionType1').checked == false) {
-                        //document.getElementById('sortCityOrder').value = '';
+                        document.getElementById('sortCityOrder').value = '';
                        
                     }
                     return;
@@ -777,8 +774,11 @@ secondFK.value = firstFK.options[firstFK.selectedIndex].text;
 //alert('FK ran2');
 }
 
-/*function filterOptionsByCounty(){
-   $('#fkID').filterByText($('#county'), true);
+/*function copyFKValuesAgain(){
+   var firstFKAgain = document.getElementById('copyFK'),//get from
+   secondFKAgain = document.getElementById('copyFK2');//put here
+//alert('FK ran1');
+secondFKAgain.value = firstFKAgain.options[firstFKAgain.selectedIndex].text;
 //alert('FK ran2');
 }*/
 
@@ -826,15 +826,6 @@ for (var i=0; i &lt; myOpts.length; i++){
 }
 }
 
-function makeUnincorpLast(){
- if($('#city').val()=='Unincorporated Areas') {
-              //alert('woohoo');
-              document.getElementById('sortCityOrder').value='99998';
-            }
-}
-
-
-
 
 var incVar;
 var incSelList;
@@ -860,27 +851,41 @@ var filterByIncident={
 };
 
 $(document).ready(function(){
-  //document.forms[0].onsubmit=totalJurisdictions;
-    //incSelList=document.getElementById('incidentList');
-    //loopAllInputs=document.getElementsByTagName('input');
+  document.forms[0].onsubmit=totalJurisdictions;
+    incSelList=document.getElementById('incidentList');
+    loopAllInputs=document.getElementsByTagName('input');
    // etnPageHelper.styleSearchField();
     //var countyFilter=document.getElementById('countyFilter').getElementsByTagName('select')[0];
     //$(countyFilter).addClass('form-control');
-    //filterByIncident.incidentListOptionsBuild();
+    filterByIncident.incidentListOptionsBuild();
    // filterByIncident.searchFieldVariableSet();
   //  filterByIncident.clearIncidentListSelection();
     //filterByIncident.incidentListActionOnChange();
     
    /* var ddcFilter=document.getElementById('ddcFilter').getElementsByTagName('select')[0];
     $(ddcFilter).addClass('form-control');*/
+
+$(".goButton").click(function() {
+    $("#DSOisSelected").val("").prop("value", "");
+    $("#fkID").prop("disabled", false);
+});
+
+
   });
 
     window.onload=start;
+
+//fkID
+
+//goButton
+
+
+
 </script>
    </head>   <body>
       <div class="container agencytemplate_boardbackground">
          <form id="input1" role="form">
-            <div style="display:nonea">
+            <div style="display:none">
                <div class="form-group form-inline">
                   <label class="control-label" for="sortCountyOrder">Sort County Order:</label>
                   <input name="sortCountyOrder" id="sortCountyOrder" type="text" style="form-control input-sm"/>
@@ -2443,17 +2448,19 @@ $(document).ready(function(){
                      <!--expression that if a check box on dso is checked, dont show here. When DSO choosen here, check a  box on that DSO. Epression here Would weed out yeses and cause them not to display. Neeed to make this list only show DSOs for County in above selected -->
                      <!--<span id="fk" onchange="touchTheDSOisSelectedTextBox()">-->  
                      <span id="fk" name="fk" onchange="touchTheDSOisSelectedTextBox()">
-                    
                         <foreignkey table="Core" type="select">
- <!--<if test="@countyCopyDSO = @county">-->
+
                         <!--<if test="@DSOisSelected = '' ">-->
-                        <eocfield type="fk" table="Core" name="countyCopyDSO"/> / 
-                        <dataid/> / <eocfield type="fk" table="Core" name="county"/> / <eocfield type="fk" table="Core" name="city"/> / <eocfield type="fk" table="Core" name="otherValue"/> / <eocfield type="fk" table="Core" name="DSOisSelected"/> / <externalexpression name="totalcountDSO" table="Core">sum(case when dsoSelected!='' then 1 else 0 end)</externalexpression> / <dataid table="Supplemental"/> / <relatedexpression name="dsoSelectedTestExp" table="Supplemental">case when dsoYesNo='Yes' then 1 else 0 end</relatedexpression><!--COUNTS - take out if needed, from here<externalexpression name="extExpr" table="Core">count(*)</externalexpression> this externalexpression here needs to be below outside of the foreignkey or it will not work / <externalexpression name="totalcountDSO" table="Core">sum(case when dsoSelected!='' then 1 else 0 end)</externalexpression>COUNTS - take out if needed, to here--><!--</if>--><!--</if>-->
+                        <dataid/><eocfield type="fk" table="Core" name="county"/> / <eocfield type="fk" table="Core" name="city"/> / <eocfield type="fk" table="Core" name="otherValue"/><if test="@DSOisSelected = 'SELECTED' "> / <eocfield type="fk" table="Core" name="DSOisSelected"/></if><!--COUNTS - take out if needed, from here<externalexpression name="extExpr" table="Core">count(*)</externalexpression> this externalexpression here needs to be below outside of the foreignkey or it will not work / <externalexpression name="totalcountDSO" table="Core">sum(case when dsoSelected!='' then 1 else 0 end)</externalexpression>COUNTS - take out if needed, to here--><!--</if>-->
                         </foreignkey>
                         
                         <!--<eocfield type="fk" table="Core" name="dsoSelected"/> must be in foreign keys to work with if statement-->
 
-                     </span><space/><button id="disableDrop" name="disableDrop">DIS</button><space/><button id="ableDrop" name="ableDrop">ABLE</button>
+                     </span><space/>
+
+                     <button type="button" class="goButton">Go</button>
+
+                     <br/><button id="disableDrop" name="disableDrop">DIS</button><space/><button id="ableDrop" name="ableDrop">ABLE</button>
                      <br/>
                      
                      <br/>
@@ -2467,12 +2474,6 @@ $(document).ready(function(){
                         <textarea name="copyFK" id="copyFK" style="form-control input-sm"/>
                         </div>
                      </span>
-
-                     <span id="copyForeignKeyValuesCounty">
-                        <div style="display:nonea">
-                        <textarea name="copyFKCounty" id="copyFKCounty" style="form-control input-sm"/>
-                        </div>
-                     </span>
                   </div>
                   <hr/>
                   
@@ -2484,7 +2485,7 @@ $(document).ready(function(){
                   </if> no dice-->
                   <!--///////////////////////////////////NEED/////////////////////////////////////-->
                   <div id="dsoIsPicked" name="dsoIsPicked" style="display:nonea"><eocrepeatallrecords>
-                  <dataid table="Supplemental"/>
+                  <dataid/>
                   <label class="control-label" for="dsoYesNo">DSO Picked:</label><space/>(this is the Bubble city and county until dso is chosen)<div id="linkToDSO" style="display:nonea"><viewlink name="Input (DO NOT ASSIGN)"><value-of select="@county"/> / <value-of select="@city"/></viewlink></div>
                   </eocrepeatallrecords>
                   <br/>
@@ -2496,7 +2497,6 @@ $(document).ready(function(){
                   <br/>
                   DSOs linked up already: <externalexpression name="totalcountDSO" table="Core">sum(case when DSOisSelected!='' then 1 else 0 end)</externalexpression></div>
                   <hr/>
-                  Bubbles <expression name="dsoSelectedTestExp" table="Supplemental">case when dsoYesNo='Yes' then 1 else 0 end</expression><!--<externalexpression name="totalcountDSOforBubble" table="Core">sum(case when dsoSelectedTest!='' then 1 else 0 end)</externalexpression>-->
                   </div>
                   <!--///////////////////////////////////NEED/////////////////////////////////////-->
                   

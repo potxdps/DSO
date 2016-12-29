@@ -1,0 +1,19 @@
+How do I do an if statement to show text if a record exists in a child table?
+I am trying to do an if statement on a field in a child table, however, if no child record exists then I want to show certain text. It is not working by doing <if test="@field = ''"> because the field does not exist. I have also tried <if test="@parishProviding"> and that doesn't work either.
+Kristie Loupe  March 30, 2012 10:55  Share
+Avatar	
+2 comments
+
+0  
+ Avatar	
+<if test="1=0"><relatedexpression name="attach\_null\_test" table="DAS Update Table" where="">isnull(sum(attachmentFile),0)</relatedexpression></if>
+The related expression will test at (attachmentFile), in the DAS Update Table (a child table)
+If there is no attachment (or no data, i dont know what you are testing for) <if __test="number(@update\_null\_test)=0">Detail Only</if>
+ 
+if the number is greater than 0 , someone has added an attachment and i can alert the user that a briefing note has been added.<if test="number(@update_null_test)>0"><if test="number(@attach\_null\_test)&gt;0">Detail with Briefing Note</if>
+Hope this gives you an idea!
+ 
+SWARBRICK Gordon [PD07972]  5 years ago  0 votes  Share
+0  
+ Avatar	
+I will try that, thank you so much for the help!

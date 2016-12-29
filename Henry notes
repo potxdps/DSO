@@ -1,0 +1,35 @@
+IE:
+	City filter not working	
+	
+
+
+
+CHROME, ms length = 1
+
+IE, ms undefined
+
+
+~~selectedOptions only works in chrome
+
+~~saveBtn2
+	('cmdSave')[0].click();
+	('cmdSave')[1].click();
+
+1. Determine if works properly in Chrome
+
+
+copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray();
+        //default save
+        document.getElementsByName('cmdSave')[0].click();
+
+
+function copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray() {
+                    document.getElementById("cityTmp").value += $("#city").val();
+                    console.log("citycounty choices recorded for edit");
+                }
+
+!!click save button and call two different functions,
+not clear what the order of these functions is supposed to be
+~~copySelectedOptionsToTextAreaThenCopyTextAreaValueToArray 
+
+only called if editing Input (on reopen)

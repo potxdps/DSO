@@ -1,5 +1,4 @@
-<html version="6" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <head>
+<html xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="6">   <head>
     <title>DSO Form</title>
     <!--this works-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -138,6 +137,7 @@
                             }
                         }
                         document.getElementById(this.idByClass).value = comma(t);
+                        console.log('sums run');
                     };
                 }
             }
@@ -203,7 +203,7 @@
                 if (co == countyList[i]) {
                     document.getElementById('sortCountyOrder').value = i;
                     if (document.getElementById('jurisdictionType1').checked == false) {
-                        document.getElementById('sortCityOrder').value = '';
+                        //document.getElementById('sortCityOrder').value = '';  //commented out 11/07/16 to stop city field from being blanked out on update
                     }
                     return;
                     
@@ -282,22 +282,18 @@ function finalEmailCheck() {
             var e = document.getElementById('submitterEmail').value.split(/[ ,;]+/);
             if(checkEmail(e) != false){
                 document.getElementById('submitterEmail').value=e.join(',');
-                //console.log('submitteremail final emailcheck');
             };
             var b = document.getElementById('additionalEmails').value.split(/[ ,;]+/);
             if(checkEmail(b) != false){
                 document.getElementById('additionalEmails').value=b.join(',');
-                //console.log('additional final emailcheck');
             };
             var c = document.getElementById('countyEmail').value.split(/[ ,;]+/);
             if(checkEmail(c) != false){
                 document.getElementById('countyEmail').value=c.join(',');
-                //console.log('county final emailcheck');
             };
             var d = document.getElementById('ddcEmail').value.split(/[ ,;]+/);
             if(checkEmail(d) != false){
                 document.getElementById('ddcEmail').value=d.join(',');
-                //console.log('ddc final emailcheck');
             };
 
         }
@@ -328,7 +324,6 @@ function finalEmailCheck() {
 }
 
       function rebuildingCityCountyOptionsOnJTypeCheck(a) {
-        //alert('rebuilding list runs');
             $(a).on("click", function () {
                 var coList = document.getElementById("county");
                 removeOptions(coList);
@@ -364,7 +359,6 @@ function finalEmailCheck() {
                     var textAreaValue = $("#cityTmp").val();
                     var textAreaValueSplit = textAreaValue.split(",");
                     cityArrayCopy = textAreaValueSplit;
-                    console.log(cityArrayCopy);
                     $("#city").val("");
                     for(var i = 0; i &lt; cityArrayCopy.length; i++) {
 
@@ -378,12 +372,13 @@ function finalEmailCheck() {
                 }
 
         function start() {
+
+
          
           if (document.getElementsByName('datalinkid')[0]){
             document.getElementsByName('datalinkid')[0].checked=true;
       } else { alert('The data links are not configured correctly. Please contact your local WebEOC Admin.');
 }
-         
 //startOf: event actions
 
 
@@ -530,7 +525,7 @@ function finalEmailCheck() {
                   
               } 
           }
-              
+             
           });
           //end of notRealSave click
 
@@ -542,6 +537,11 @@ function finalEmailCheck() {
         document.getElementById('jurisdictionType2').onchange=TypeJurisdiciton;
             
             autoSum();
+    if ('<xsl:value-of select="/data/@dataid" />'!=0){
+            disableInputsIA();
+            disableInputsPA();
+    }
+           
             var counties = window.parent.window.parent.counties;
         var countieslist= document.getElementById('county');
         
@@ -556,8 +556,10 @@ function finalEmailCheck() {
                     addOption(coList, 'Select One', true);
                     for (var k = 0; k &lt; countyList.length; k++) {
                         addOption(coList, countyList[k], false);
+
                     }
-                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='0'; 
+                } else if (this.options[this.selectedIndex].text == 'Unincorporated Areas') {document.getElementById('sortCityOrder').value='0';
+ 
                 } else {
                     removeOptions(coList);
                     addOption(coList, 'Select One', false);
@@ -566,6 +568,7 @@ function finalEmailCheck() {
                             var selected = false;
                             if (cityMatrix[k][0] == coSelected) { selected = true; }
                             addOption(coList, cityMatrix[k][0], selected);
+
                         }
                     }
                 }
@@ -589,7 +592,7 @@ function finalEmailCheck() {
                     if(document.getElementById('jurisdictionType2').checked ==true){
                       addOption(cityList, "Unincorporated Areas", true);
                     } else {
-                     //alert("remove it");
+                     //do nothing
                     }
                     for (var k = 0; k &lt; cityMatrix.length; k++) {
 
@@ -788,7 +791,6 @@ function finalEmailCheck() {
               ["socProcessed","SOC Processed"]
             ];
             scribe.inicialReview();
-            //console.log("Audit list");
             $("#county").prop("disabled", true);
             $("#city").prop("disabled", true);
             if ('<xsl:value-of select="/data/@dataid" />'!=0){
@@ -800,7 +802,6 @@ function finalEmailCheck() {
                 sortOrderCounty(countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text);
                 var cityList = document.getElementById("city");
                 if (countySelectListOnUpdate.options[countySelectListOnUpdate.selectedIndex].text == 'Select One') {
-                  //console.log('750');
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     addOption(cityList, "Unincorporated Areas", true);
@@ -808,7 +809,6 @@ function finalEmailCheck() {
                         addOption(cityList, cityMatrix[k][1], false);
                     }
                 } else {
-                  //console.log('758')
                     removeOptions(cityList);
                     addOption(cityList, "Select One", false);
                     addOption(cityList, "Unincorporated Areas", true);
@@ -822,10 +822,11 @@ function finalEmailCheck() {
 
 
                 setTimeout(function() {
-                  //console.log('timeout 772');
+                  
                     selectOptionsIfExistsInArray();
-                }, 1000); 
+                }, 1000);
             } 
+            
             
         }
 
@@ -888,52 +889,24 @@ function finalEmailCheck() {
 }
 
 
-    /*function makeCatDropdownRequired(a,b){
-      if($(a).value!='');
-      alert('added value');{
-        $(b).prop('required',true);
-        alert('made required');
-      } else {
-        $(b).prop('required',false);
-      }
-    }*/
-
-/*   
-   function cat01DropRequired() {
-      document.getElementById("repairCost01").value!=''{
-    document.getElementById("cat01").required = true;
-    alert("Please select a value for Cat A-G");
-    document.getElementById('cat01').focus();
-  } else {
-    document.getElementById("repairCost01").value=''{
-    document.getElementById("cat01").required = false;
-  }
-
-}
-}*/
-
-
-/*
-function cat01DropRequired() {
-    if(document.getElementById("repairCost01").value != '') {
-        document.getElementById("cat01").required = true;
-        alert("Please select a value for Cat A-G");
-        document.getElementById('cat01').focus();
-    } else {
-        document.getElementById("cat01").required = false;
-    }
-}
-*/
-
 function validatingCatSelectOptionIfEstimatedIsNotEmpty(a, b, c) {
     if($(a).val() != "" &amp;&amp; $(b).val() === "") {
         alert("Please select a value for Cat A-G");
         $(c).focus().select();
-        e.preventDefault();
+        event.preventDefault();
+        //maybe not in IE / safari ------NEEDS TEST
+        //event.stopPropagation(); //this does not work in firefox, maybe not in IE / safari ------NEEDS TEST
         cats = false;
+        console.log(cats);
+        console.log("cats false above");
+        console.log("validatingCatSelectOptionIfEstimatedIsNotEmpty runs and stops form");
 
     } else {
         cats = true;
+         console.log(cats);
+        console.log("cats true above");
+
+        console.log("validatingCatSelectOptionIfEstimatedIsNotEmpty else finishes");
     }
 }
 
@@ -962,22 +935,48 @@ Object.defineProperty(HTMLSelectElement.prototype, "selectedOptions", {
                 for (var i = 0, a = []; i &lt; this.options.length; i++)
                     if (this.options[i].selected) a.push(this.options[i]);
                 return a;
+                console.log(a);
+                console.log("Object.defineProperty(HTMLSelectElement.prototype a ABOVE");
             };
         }
     })()
 });
 
-/*function copyValue(){
-    
-    $("#city option:selected").each(function(){
-        $("#copyCity").val($("#copyCity").val() + $(this).text() + "\n"); // Add its innerhtml to the textarea
-    });
 
-  }
+function saveButtonRuns(){
+  console.log("real save button is clicked");
+}
 
-function clearValues(){
-  document.getElementById('copyCity').value='';
+ /*function disableInputsIA(){
+  $('input.lockTheseIA').attr('disabled', 'disabled');
 }*/
+
+function disableInputsIA(){
+  var a = document.getElementById('femaTestIA').innerText;
+if (a[0]=='1'){
+  $('input.lockTheseIA').attr('disabled', 'disabled');
+} else {
+  $('input.lockTheseIA').removeAttr('disabled');
+}
+}
+
+function disableInputsPA(){
+  var a = document.getElementById('femaTestPA').innerText;
+if (a[0]=='1'){
+  $('input.lockThesePA').attr('disabled', 'disabled');
+} else {
+  $('input.lockThesePA').removeAttr('disabled');
+}
+}
+/*function disableInputsIA(){
+  var a = document.getElementById('femaTestIA').innerText.split('|'); //split was removed since divs were split up
+if (a[0]=='1'){
+  $('input.lockTheseIA').attr('disabled', 'disabled');
+} else {
+  $('input.lockTheseIA').removeAttr('disabled');
+}
+}*/
+
 
         window.onload = start;
     </script>
@@ -986,7 +985,15 @@ function clearValues(){
     <div class="container agencytemplate_boardbackground">
       <form role="form">
         <div class="content">
-          <div id="hidden" style="display:none">
+        <span style="display:none">
+        <div id="femaTestIA">
+        <relatedexpression name="femaIACheckTest" table="Supplemental">sum(case when femaCheckboxV1='Yes' then 1 else 0 end)
+        </relatedexpression></div>|
+        <div id="femaTestPA">  
+        <relatedexpression name="femaPACheckTest" table="Supplemental">sum(case when femaCheckboxV2='Yes' then 1 else 0 end)</relatedexpression>
+        </div></span>
+       
+          <div id="hidden" style="display:nonea">
             <div class="form-group form-inline">
               <label class="control-label" for="sortCountyOrder">Sort County Order:</label>
               <input name="sortCountyOrder" id="sortCountyOrder" type="text" style="form-control input-sm" />
@@ -1018,6 +1025,10 @@ function clearValues(){
             <span id="dataidSpan">
               <dataid />
             </span>
+            <div class="form-group form-inline">
+              <label class="control-label" for="dsoSelected">dsoSelected:</label>
+              <input type="checkbox" name="dsoSelected" id="dsoSelected" style="form-control input-sm" value="dsoSelected"/>
+            </div>
           </div>
           <div id="container">
             <h1>
@@ -2642,6 +2653,7 @@ function clearValues(){
             <h1>
               <span class="label label-default">Individual Assistance</span>
             </h1>
+
             <!-- <h3><span class="label label-default"> Casualties:</span></h3>                   
  <div class="form-group form-inline">
       <label class="control-label" for="fatalities">Number of Fatalities:</label>
@@ -2675,6 +2687,12 @@ function clearValues(){
               <span class="label label-default">Residential Losses - Primary Residence Only</span>
             </h3>
             <br />
+            <!--<div class="form-group form-inline">
+              <label class="control-label" for="femaCheckboxV1temp">IA PDA Complete</label>
+              <space />
+              <input name="femaCheckboxV1temp" id="femaCheckboxV1temp" type="checkbox" style="form-control input-sm" onchange="disableInputsIA()"/>
+            </div>
+            <br/>-->
             <table class="table table-bordered">
               <tr>
                 <td>Type of Homes</td>
@@ -2717,76 +2735,76 @@ function clearValues(){
               <tr>
                 <td>Single Family Homes</td>
                 <td>
-                  <input name="sfhAffected" id="sfhAffected" type="text" placeholder="0" class="totalsAffected" style="form-control input-sm totalsAffected" />
+                  <input name="sfhAffected" id="sfhAffected" type="text" placeholder="0" class="totalsAffected lockTheseIA" style="form-control input-sm totalsAffected"/>
                 </td>
                 <td>
-                  <input name="sfhMinorDamage" id="sfhMinorDamage" type="text" placeholder="0" class="totalsMinorDamage" style="form-control input-sm totalsMinorDamage" />
+                  <input name="sfhMinorDamage" id="sfhMinorDamage" type="text" placeholder="0" class="totalsMinorDamage lockTheseIA" style="form-control input-sm totalsMinorDamage" />
                 </td>
                 <td>
-                  <input name="sfhMajorDamage" id="sfhMajorDamage" type="text" placeholder="0" class="totalsMajorDamage" style="form-control input-sm totalsMajorDamage" />
+                  <input name="sfhMajorDamage" id="sfhMajorDamage" type="text" placeholder="0" class="totalsMajorDamage lockTheseIA" style="form-control input-sm totalsMajorDamage" />
                 </td>
                 <td>
-                  <input name="sfhDestroyed" id="sfhDestroyed" type="text" placeholder="0" class="totalsDestroyed" style="form-control input-sm totalsDestroyed" />
+                  <input name="sfhDestroyed" id="sfhDestroyed" type="text" placeholder="0" class="totalsDestroyed lockTheseIA" style="form-control input-sm totalsDestroyed" />
                 </td>
                 <td>
-                  <input name="sfhCovByInsurance" id="sfhCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()" />
+                  <input name="sfhCovByInsurance" id="sfhCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance lockTheseIA" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()" />
                 </td>
                 <td>%</td>
               </tr>
               <tr>
                 <td>Mobile Homes</td>
                 <td>
-                  <input name="mhAffected" id="mhAffected" type="text" placeholder="0" class="totalsAffected" style="form-control input-sm totalsAffected" />
+                  <input name="mhAffected" id="mhAffected" type="text" placeholder="0" class="totalsAffected lockTheseIA" style="form-control input-sm totalsAffected" />
                 </td>
                 <td>
-                  <input name="mhMinorDamage" id="mhMinorDamage" type="text" placeholder="0" class="totalsMinorDamage" style="form-control input-sm totalsMinorDamage" />
+                  <input name="mhMinorDamage" id="mhMinorDamage" type="text" placeholder="0" class="totalsMinorDamage lockTheseIA" style="form-control input-sm totalsMinorDamage" />
                 </td>
                 <td>
-                  <input name="mhMajorDamage" id="mhMajorDamage" type="text" placeholder="0" class="totalsMajorDamage" style="form-control input-sm totalsMajorDamage" />
+                  <input name="mhMajorDamage" id="mhMajorDamage" type="text" placeholder="0" class="totalsMajorDamage lockTheseIA" style="form-control input-sm totalsMajorDamage" />
                 </td>
                 <td>
-                  <input name="mhDestroyed" id="mhDestroyed" type="text" placeholder="0" class="totalsDestroyed" style="form-control input-sm totalsDestroyed" />
+                  <input name="mhDestroyed" id="mhDestroyed" type="text" placeholder="0" class="totalsDestroyed lockTheseIA" style="form-control input-sm totalsDestroyed" />
                 </td>
                 <td>
-                  <input name="mhCovByInsurance" id="mhCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()" />
+                  <input name="mhCovByInsurance" id="mhCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance lockTheseIA" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()" />
                 </td>
                 <td>%</td>
               </tr>
               <tr>
                 <td>Multi-Family Units</td>
                 <td>
-                  <input name="mfuAffected" id="mfuAffected" type="text" placeholder="0" class="totalsAffected" style="form-control input-sm totalsAffected" />
+                  <input name="mfuAffected" id="mfuAffected" type="text" placeholder="0" class="totalsAffected lockTheseIA" style="form-control input-sm totalsAffected" />
                 </td>
                 <td>
-                  <input name="mfuMinorDamage" id="mfuMinorDamage" type="text" placeholder="0" class="totalsMinorDamage" style="form-control input-sm totalsMinorDamage" />
+                  <input name="mfuMinorDamage" id="mfuMinorDamage" type="text" placeholder="0" class="totalsMinorDamage lockTheseIA" style="form-control input-sm totalsMinorDamage" />
                 </td>
                 <td>
-                  <input name="mfuMajorDamage" id="mfuMajorDamage" type="text" placeholder="0" class="totalsMajorDamage" style="form-control input-sm totalsMajorDamage" />
+                  <input name="mfuMajorDamage" id="mfuMajorDamage" type="text" placeholder="0" class="totalsMajorDamage lockTheseIA" style="form-control input-sm totalsMajorDamage" />
                 </td>
                 <td>
-                  <input name="mfuDestroyed" id="mfuDestroyed" type="text" placeholder="0" class="totalsDestroyed" style="form-control input-sm totalsDestroyed" />
+                  <input name="mfuDestroyed" id="mfuDestroyed" type="text" placeholder="0" class="totalsDestroyed lockTheseIA" style="form-control input-sm totalsDestroyed" />
                 </td>
                 <td>
-                  <input name="mfuCovByInsurance" id="mfuCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()" />
+                  <input name="mfuCovByInsurance" id="mfuCovByInsurance" type="text" placeholder="0" class="totalsCovByInsurance lockTheseIA" style="form-control input-sm totalsCovByInsurance" onBlur="iaAverage()" />
                 </td>
                 <td>%</td>
               </tr>
               <tr>
                 <td>Totals</td>
                 <td>
-                  <input name="totalsAffected" id="totalsAffected" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" />
+                  <input name="totalsAffected" id="totalsAffected" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                  <input name="totalsMinorDamage" id="totalsMinorDamage" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" />
+                  <input name="totalsMinorDamage" id="totalsMinorDamage" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA" />
                 </td>
                 <td>
-                  <input name="totalsMajorDamage" id="totalsMajorDamage" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" />
+                  <input name="totalsMajorDamage" id="totalsMajorDamage" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                  <input name="totalsDestroyed" id="totalsDestroyed" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" />
+                  <input name="totalsDestroyed" id="totalsDestroyed" type="text" value="0.00" placeholder="0.00" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                  <input name="totalsCovByInsurance" id="totalsCovByInsurance" type="text" placeholder="0" style="form-control input-sm" />
+                  <input name="totalsCovByInsurance" id="totalsCovByInsurance" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>%</td>
                 <!--<td>
@@ -2798,8 +2816,9 @@ function clearValues(){
             <div class="form-group form-inline">
               <label class="control-label" for="homesIsolated">Number of homes isolated due to road closure (high water, etc.): </label>
               <space />
-              <input name="homesIsolated" id="homesIsolated" type="text" placeholder="0" style="form-control input-sm" />
+              <input name="homesIsolated" id="homesIsolated" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
             </div>
+             
             <br />
             <!--
 <div class="form-group form-inline">
@@ -2833,41 +2852,41 @@ function clearValues(){
               <tr>
                 <td>Minor Damage (less than 40%)</td>
                 <td>
-                  <input name="numberMinorDamage" id="numberMinorDamage" type="text" placeholder="0" class="numberTotal" style="form-control input-sm numberTotal" />
+                  <input name="numberMinorDamage" id="numberMinorDamage" type="text" placeholder="0" class="numberTotal lockTheseIA" style="form-control input-sm numberTotal"/>
                 </td>
                 <td>
-                  <input name="coveredMinorDamage" id="coveredMinorDamage" type="text" placeholder="0" class="coveredTotal" style="form-control input-sm coveredTotal" />
+                  <input name="coveredMinorDamage" id="coveredMinorDamage" type="text" placeholder="0" class="coveredTotal lockTheseIA" style="form-control input-sm coveredTotal"/>
                 </td>
                 <td>
-                           $ <input name="totalMinorDamage" id="totalMinorDamage" type="text" placeholder="0" class="totalTotal" style="form-control input-sm totalTotal" /></td>
+                           $ <input name="totalMinorDamage" id="totalMinorDamage" type="text" placeholder="0" class="totalTotal lockTheseIA" style="form-control input-sm totalTotal"/></td>
               </tr>
               <tr>
                 <td>Major Damage (greater than 40%)</td>
                 <td>
-                  <input name="numberMajorDamage" id="numberMajorDamage" type="text" placeholder="0" class="numberTotal" style="form-control input-sm numberTotal" />
+                  <input name="numberMajorDamage" id="numberMajorDamage" type="text" placeholder="0" class="numberTotal lockTheseIA" style="form-control input-sm numberTotal"/>
                 </td>
                 <td>
-                  <input name="coveredMajorDamage" id="coveredMajorDamage" type="text" placeholder="0" class="coveredTotal" style="form-control input-sm coveredTotal" />
+                  <input name="coveredMajorDamage" id="coveredMajorDamage" type="text" placeholder="0" class="coveredTotal lockTheseIA" style="form-control input-sm coveredTotal"/>
                 </td>
                 <td>
-                           $ <input name="totalMajorDamage" id="totalMajorDamage" type="text" placeholder="0" class="totalTotal" style="form-control input-sm totalTotal" /></td>
+                           $ <input name="totalMajorDamage" id="totalMajorDamage" type="text" placeholder="0" class="totalTotal lockTheseIA" style="form-control input-sm totalTotal"/></td>
               </tr>
               <tr>
                 <td>Totals</td>
                 <td>
-                  <input name="numberTotal" id="numberTotal" type="text" placeholder="0" style="form-control input-sm" />
+                  <input name="numberTotal" id="numberTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                  <input name="coveredTotal" id="coveredTotal" type="text" placeholder="0" style="form-control input-sm" />
+                  <input name="coveredTotal" id="coveredTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
                 </td>
                 <td>
-                           $ <input name="totalTotal" id="totalTotal" type="text" placeholder="0" style="form-control input-sm" /></td>
+                 $ <input name="totalTotal" id="totalTotal" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/></td>
               </tr>
             </table>
             <div class="form-group form-inline">
               <label class="control-label" for="businessesCeased">How many businesses have ceased operations?: </label>
               <space />
-              <input name="businessesCeased" id="businessesCeased" type="text" placeholder="0" style="form-control input-sm" />
+              <input name="businessesCeased" id="businessesCeased" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
             </div>
             <div class="form-group form-inline">
               <label class="control-label" for="businessesEconomicInjury">How many businesses have experienced economic injury?: 
@@ -2878,12 +2897,12 @@ function clearValues(){
                         
                         <span id="businessesEconomicInjuryInfo" class="label label-info">i</span></label>
               <space />
-              <input name="businessesEconomicInjury" id="businessesEconomicInjury" type="text" placeholder="0" style="form-control input-sm" />
+              <input name="businessesEconomicInjury" id="businessesEconomicInjury" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
             </div>
             <div class="form-group form-inline">
               <label class="control-label" for="numberUnemployed">Estimated number of persons unemployed because of this disaster: </label>
               <space />
-              <input name="numberUnemployed" id="numberUnemployed" type="text" placeholder="0" style="form-control input-sm" />
+              <input name="numberUnemployed" id="numberUnemployed" type="text" placeholder="0" style="form-control input-sm" class="lockTheseIA"/>
               <space />
               <i>(Contact affected businesses and the local Texas Workforce Commission Office)</i>
             </div>
@@ -2892,6 +2911,13 @@ function clearValues(){
               <span class="label label-default">PUBLIC ASSISTANCE</span>
             </h1>
             <br />
+            <!--<div class="form-group form-inline">
+              <label class="control-label" for="femaCheckboxV2temp">PA PDA Complete</label>
+              <space />
+              <input name="femaCheckboxV2temp" id="femaCheckboxV2temp" type="checkbox" style="form-control input-sm" onchange="disableInputsPA()"/>
+            </div>
+            <br/>-->
+            
             <table class="table table-bordered">
               <tr>
                 <td>Category</td>
@@ -2909,12 +2935,12 @@ function clearValues(){
                         
                         </td>
                 <td>
-                  <input name="sitesDebrisClearance" id="sitesDebrisClearance" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals" />
+                  <input name="sitesDebrisClearance" id="sitesDebrisClearance" type="text" placeholder="0" class="sitesTotals lockThesePA" style="form-control input-sm sitesTotals" />
                 </td>
                 <td>
-                           $ <input name="repairCostDebrisClearance" id="repairCostDebrisClearance" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals" /></td>
+                           $ <input name="repairCostDebrisClearance" id="repairCostDebrisClearance" type="text" placeholder="0" class="repairCostTotals lockThesePA" style="form-control input-sm repairCostTotals" /></td>
                 <td>
-                           $ <input name="insuranceDebrisClearance" id="insuranceDebrisClearance" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals" /></td>
+                           $ <input name="insuranceDebrisClearance" id="insuranceDebrisClearance" type="text" placeholder="0" class="insuranceTotals lockThesePA" style="form-control input-sm insuranceTotals" /></td>
               </tr>
               <tr>
                 <td>
@@ -2926,12 +2952,12 @@ function clearValues(){
                            
                            <span id="emergencyProtectiveMeasuresInfo" class="label label-info">i</span></td>
                 <td>
-                  <input name="sitesEmergency" id="sitesEmergency" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals" />
+                  <input name="sitesEmergency" id="sitesEmergency" type="text" placeholder="0" class="sitesTotals lockThesePA" style="form-control input-sm sitesTotals" />
                 </td>
                 <td>
-                           $ <input name="repairCostEmergency" id="repairCostEmergency" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals" /></td>
+                           $ <input name="repairCostEmergency" id="repairCostEmergency" type="text" placeholder="0" class="repairCostTotals lockThesePA" style="form-control input-sm repairCostTotals" /></td>
                 <td>
-                           $ <input name="insuranceEmergency" id="insuranceEmergency" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals" /></td>
+                           $ <input name="insuranceEmergency" id="insuranceEmergency" type="text" placeholder="0" class="insuranceTotals lockThesePA" style="form-control input-sm insuranceTotals" /></td>
               </tr>
               <tr>
                 <td>
@@ -2943,12 +2969,12 @@ function clearValues(){
                         
                         </td>
                 <td>
-                  <input name="sitesRoadPaved" id="sitesRoadPaved" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals" />
+                  <input name="sitesRoadPaved" id="sitesRoadPaved" type="text" placeholder="0" class="sitesTotals lockThesePA" style="form-control input-sm sitesTotals" />
                 </td>
                 <td>
-                           $ <input name="repairCostRoadPaved" id="repairCostRoadPaved" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals" /></td>
+                           $ <input name="repairCostRoadPaved" id="repairCostRoadPaved" type="text" placeholder="0" class="repairCostTotals lockThesePA" style="form-control input-sm repairCostTotals" /></td>
                 <td>
-                           $ <input name="insuranceRoadPaved" id="insuranceRoadPaved" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals" /></td>
+                           $ <input name="insuranceRoadPaved" id="insuranceRoadPaved" type="text" placeholder="0" class="insuranceTotals lockThesePA" style="form-control input-sm insuranceTotals" /></td>
               </tr>
               <tr>
                 <td>
@@ -2967,12 +2993,12 @@ function clearValues(){
                         
                         </td>
                 <td>
-                  <input name="sitesWaterControlFacilities" id="sitesWaterControlFacilities" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals" />
+                  <input name="sitesWaterControlFacilities" id="sitesWaterControlFacilities" type="text" placeholder="0" class="sitesTotals lockThesePA" style="form-control input-sm sitesTotals" />
                 </td>
                 <td>
-                           $ <input name="repairCostWaterControlFacilities" id="repairCostWaterControlFacilities" type="text" class="repairCostTotals" placeholder="0" style="form-control input-sm repairCostTotals" /></td>
+                           $ <input name="repairCostWaterControlFacilities" id="repairCostWaterControlFacilities" type="text" class="repairCostTotals lockThesePA" placeholder="0" style="form-control input-sm repairCostTotals" /></td>
                 <td>
-                           $ <input name="insuranceWaterControlFacilities" id="insuranceWaterControlFacilities" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals" /></td>
+                           $ <input name="insuranceWaterControlFacilities" id="insuranceWaterControlFacilities" type="text" placeholder="0" class="insuranceTotals lockThesePA" style="form-control input-sm insuranceTotals" /></td>
               </tr>
               <tr>
                 <td>
@@ -2984,12 +3010,12 @@ function clearValues(){
                            
                            <span id="buildingEquipmentInfo" class="label label-info">i</span></td>
                 <td>
-                  <input name="sitesBuildingsEquipment" id="sitesBuildingsEquipment" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals" />
+                  <input name="sitesBuildingsEquipment" id="sitesBuildingsEquipment" type="text" placeholder="0" class="sitesTotals lockThesePA" style="form-control input-sm sitesTotals" />
                 </td>
                 <td>
-                           $ <input name="repairCostBuildingsEquipment" id="repairCostBuildingsEquipment" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals" /></td>
+                           $ <input name="repairCostBuildingsEquipment" id="repairCostBuildingsEquipment" type="text" placeholder="0" class="repairCostTotals lockThesePA" style="form-control input-sm repairCostTotals" /></td>
                 <td>
-                           $ <input name="insuranceBuildingsEquipment" id="insuranceBuildingsEquipment" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals" /></td>
+                           $ <input name="insuranceBuildingsEquipment" id="insuranceBuildingsEquipment" type="text" placeholder="0" class="insuranceTotals lockThesePA" style="form-control input-sm insuranceTotals" /></td>
               </tr>
               <tr>
                 <td>
@@ -3009,12 +3035,12 @@ function clearValues(){
                         
                         </td>
                 <td>
-                  <input name="sitesUtilitySystems" id="sitesUtilitySystems" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals" />
+                  <input name="sitesUtilitySystems" id="sitesUtilitySystems" type="text" placeholder="0" class="sitesTotals lockThesePA" style="form-control input-sm sitesTotals" />
                 </td>
                 <td>
-                           $ <input name="repairCostUtilitySystems" id="repairCostUtilitySystems" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals" /></td>
+                           $ <input name="repairCostUtilitySystems" id="repairCostUtilitySystems" type="text" placeholder="0" class="repairCostTotals lockThesePA" style="form-control input-sm repairCostTotals" /></td>
                 <td>
-                           $ <input name="insuranceUtilitySystems" id="insuranceUtilitySystems" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals" /></td>
+                           $ <input name="insuranceUtilitySystems" id="insuranceUtilitySystems" type="text" placeholder="0" class="insuranceTotals lockThesePA" style="form-control input-sm insuranceTotals" /></td>
               </tr>
               <tr>
                 <td>
@@ -3035,23 +3061,23 @@ function clearValues(){
                         
                         </td>
                 <td>
-                  <input name="sitesOther" id="sitesOther" type="text" placeholder="0" class="sitesTotals" style="form-control input-sm sitesTotals" />
+                  <input name="sitesOther" id="sitesOther" type="text" placeholder="0" class="sitesTotals lockThesePA" style="form-control input-sm sitesTotals" />
                 </td>
                 <td>
-                           $ <input name="repairCostOther" id="repairCostOther" type="text" placeholder="0" class="repairCostTotals" style="form-control input-sm repairCostTotals" /></td>
+                           $ <input name="repairCostOther" id="repairCostOther" type="text" placeholder="0" class="repairCostTotals lockThesePA" style="form-control input-sm repairCostTotals" /></td>
                 <td>
-                           $ <input name="insuranceOther" id="insuranceOther" type="text" placeholder="0" class="insuranceTotals" style="form-control input-sm insuranceTotals" /></td>
+                           $ <input name="insuranceOther" id="insuranceOther" type="text" placeholder="0" class="insuranceTotals lockThesePA" style="form-control input-sm insuranceTotals" /></td>
               </tr>
               <tr>
                 <td>Totals
 </td>
                 <td>
-                  <input name="sitesTotals" id="sitesTotals" type="text" placeholder="0" style="form-control input-sm" />
+                  <input name="sitesTotals" id="sitesTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                           $ <input name="repairCostTotals" id="repairCostTotals" type="text" placeholder="0" style="form-control input-sm" /></td>
+                           $ <input name="repairCostTotals" id="repairCostTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></td>
                 <td>
-                           $ <input name="insuranceTotals" id="insuranceTotals" type="text" placeholder="0" style="form-control input-sm" /></td>
+                           $ <input name="insuranceTotals" id="insuranceTotals" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></td>
               </tr>
             </table>
             <i>* Anticipated insurance is normally calculated by subtracting any deductible, depreciation or 
@@ -3061,11 +3087,11 @@ function clearValues(){
             <div class="form-group form-inline">
               <label class="control-label" for="annualMaintenanceBudget">Total annual maintenance budget (i.e. Public Works, Road &amp; Bridge):</label>
               <space />
-                     $ <input name="annualMaintenanceBudget" id="annualMaintenanceBudget" type="text" placeholder="0" style="form-control input-sm" /></div>
+                     $ <input name="annualMaintenanceBudget" id="annualMaintenanceBudget" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></div>
             <div class="form-group form-inline">
               <label class="control-label" for="startOfFiscalYear">Start of Fiscal Year(Month):</label>
               <space />
-              <input name="startOfFiscalYear" id="startOfFiscalYear" type="text" style="form-control input-sm" />
+              <input name="startOfFiscalYear" id="startOfFiscalYear" type="text" style="form-control input-sm" class="lockThesePA"/>
             </div>
             <br />
             <h1>
@@ -3084,10 +3110,10 @@ function clearValues(){
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility01" id="orgFacility01" type="text" style="form-control input-sm" />
+                  <input name="orgFacility01" id="orgFacility01" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat01" id="cat01" style="form-control input-sm">
+                  <select name="cat01" id="cat01" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3099,19 +3125,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites01" id="sites01" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites01" id="sites01" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal"/>
                 </td>
                 <td>
-                           $ <input name="repairCost01" id="repairCost01" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost01" id="repairCost01" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance01" id="insurance01" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance01" id="insurance01" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility02" id="orgFacility02" type="text" style="form-control input-sm" />
+                  <input name="orgFacility02" id="orgFacility02" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat02" id="cat02" style="form-control input-sm">
+                  <select name="cat02" id="cat02" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3123,19 +3149,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites02" id="sites02" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites02" id="sites02" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost02" id="repairCost02" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost02" id="repairCost02" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance02" id="insurance02" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance02" id="insurance02" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility03" id="orgFacility03" type="text" style="form-control input-sm" />
+                  <input name="orgFacility03" id="orgFacility03" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat03" id="cat03" style="form-control input-sm">
+                  <select name="cat03" id="cat03" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3147,19 +3173,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites03" id="sites03" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites03" id="sites03" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost03" id="repairCost03" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost03" id="repairCost03" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance03" id="insurance03" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance03" id="insurance03" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility04" id="orgFacility04" type="text" style="form-control input-sm" />
+                  <input name="orgFacility04" id="orgFacility04" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat04" id="cat04" style="form-control input-sm">
+                  <select name="cat04" id="cat04" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3171,19 +3197,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites04" id="sites04" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites04" id="sites04" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost04" id="repairCost04" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost04" id="repairCost04" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance04" id="insurance04" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance04" id="insurance04" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility05" id="orgFacility05" type="text" style="form-control input-sm" />
+                  <input name="orgFacility05" id="orgFacility05" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat05" id="cat05" style="form-control input-sm">
+                  <select name="cat05" id="cat05" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3195,19 +3221,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites05" id="sites05" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites05" id="sites05" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost05" id="repairCost05" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost05" id="repairCost05" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance05" id="insurance05" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance05" id="insurance05" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility06" id="orgFacility06" type="text" style="form-control input-sm" />
+                  <input name="orgFacility06" id="orgFacility06" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat06" id="cat06" style="form-control input-sm">
+                  <select name="cat06" id="cat06" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3219,19 +3245,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites06" id="sites06" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites06" id="sites06" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost06" id="repairCost06" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost06" id="repairCost06" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance06" id="insurance06" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance06" id="insurance06" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility07" id="orgFacility07" type="text" style="form-control input-sm" />
+                  <input name="orgFacility07" id="orgFacility07" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat07" id="cat07" style="form-control input-sm">
+                  <select name="cat07" id="cat07" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3243,19 +3269,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites07" id="sites07" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites07" id="sites07" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost07" id="repairCost07" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost07" id="repairCost07" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance07" id="insurance07" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance07" id="insurance07" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility08" id="orgFacility08" type="text" style="form-control input-sm" />
+                  <input name="orgFacility08" id="orgFacility08" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat08" id="cat08" style="form-control input-sm">
+                  <select name="cat08" id="cat08" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3267,19 +3293,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites08" id="sites08" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites08" id="sites08" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost08" id="repairCost08" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost08" id="repairCost08" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance08" id="insurance08" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance08" id="insurance08" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility09" id="orgFacility09" type="text" style="form-control input-sm" />
+                  <input name="orgFacility09" id="orgFacility09" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat09" id="cat09" style="form-control input-sm">
+                  <select name="cat09" id="cat09" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3291,19 +3317,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites09" id="sites09" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites09" id="sites09" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost09" id="repairCost09" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost09" id="repairCost09" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance09" id="insurance09" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance09" id="insurance09" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility10" id="orgFacility10" type="text" style="form-control input-sm" />
+                  <input name="orgFacility10" id="orgFacility10" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat10" id="cat10" style="form-control input-sm">
+                  <select name="cat10" id="cat10" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3315,19 +3341,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites10" id="sites10" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites10" id="sites10" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost10" id="repairCost10" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost10" id="repairCost10" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance10" id="insurance10" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance10" id="insurance10" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility11" id="orgFacility11" type="text" style="form-control input-sm" />
+                  <input name="orgFacility11" id="orgFacility11" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat11" id="cat11" style="form-control input-sm">
+                  <select name="cat11" id="cat11" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3339,19 +3365,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites11" id="sites11" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites11" id="sites11" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost11" id="repairCost11" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost11" id="repairCost11" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance11" id="insurance11" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance11" id="insurance11" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility12" id="orgFacility12" type="text" style="form-control input-sm" />
+                  <input name="orgFacility12" id="orgFacility12" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat12" id="cat12" style="form-control input-sm">
+                  <select name="cat12" id="cat12" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3363,19 +3389,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites12" id="sites12" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites12" id="sites12" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost12" id="repairCost12" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost12" id="repairCost12" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance12" id="insurance12" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance12" id="insurance12" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility13" id="orgFacility13" type="text" style="form-control input-sm" />
+                  <input name="orgFacility13" id="orgFacility13" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat13" id="cat13" style="form-control input-sm">
+                  <select name="cat13" id="cat13" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3387,19 +3413,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites13" id="sites13" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites13" id="sites13" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost13" id="repairCost13" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost13" id="repairCost13" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance13" id="insurance13" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance13" id="insurance13" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility14" id="orgFacility14" type="text" style="form-control input-sm" />
+                  <input name="orgFacility14" id="orgFacility14" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat14" id="cat14" style="form-control input-sm">
+                  <select name="cat14" id="cat14" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3411,19 +3437,19 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites14" id="sites14" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites14" id="sites14" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost14" id="repairCost14" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost14" id="repairCost14" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance14" id="insurance14" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance14" id="insurance14" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>
-                  <input name="orgFacility15" id="orgFacility15" type="text" style="form-control input-sm" />
+                  <input name="orgFacility15" id="orgFacility15" type="text" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                  <select name="cat15" id="cat15" style="form-control input-sm">
+                  <select name="cat15" id="cat15" style="form-control input-sm" class="lockThesePA">
                     <option />
                     <option>A</option>
                     <option>B</option>
@@ -3435,23 +3461,23 @@ function clearValues(){
                   </select>
                 </td>
                 <td>
-                  <input name="sites15" id="sites15" type="text" placeholder="0" class="sitesOtherTotal" style="form-control input-sm sitesOtherTotal" />
+                  <input name="sites15" id="sites15" type="text" placeholder="0" class="sitesOtherTotal lockThesePA" style="form-control input-sm sitesOtherTotal" />
                 </td>
                 <td>
-                           $ <input name="repairCost15" id="repairCost15" type="text" placeholder="0" class="repairCostTotal" style="form-control input-sm repairCostTotal" /></td>
+                           $ <input name="repairCost15" id="repairCost15" type="text" placeholder="0" class="repairCostTotal lockThesePA" style="form-control input-sm repairCostTotal" /></td>
                 <td>
-                           $ <input name="insurance15" id="insurance15" type="text" placeholder="0" class="insuranceCostTotal" style="form-control input-sm insuranceCostTotal" /></td>
+                           $ <input name="insurance15" id="insurance15" type="text" placeholder="0" class="insuranceCostTotal lockThesePA" style="form-control input-sm insuranceCostTotal" /></td>
               </tr>
               <tr>
                 <td>Totals</td>
                 <td />
                 <td>
-                  <input name="sitesOtherTotal" id="sitesOtherTotal" type="text" placeholder="0" style="form-control input-sm" />
+                  <input name="sitesOtherTotal" id="sitesOtherTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/>
                 </td>
                 <td>
-                           $ <input name="repairCostTotal" id="repairCostTotal" type="text" placeholder="0" style="form-control input-sm" /></td>
+                           $ <input name="repairCostTotal" id="repairCostTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></td>
                 <td>
-                           $ <input name="insuranceCostTotal" id="insuranceCostTotal" type="text" placeholder="0" style="form-control input-sm" /></td>
+                           $ <input name="insuranceCostTotal" id="insuranceCostTotal" type="text" placeholder="0" style="form-control input-sm" class="lockThesePA"/></td>
               </tr>
             </table>
             <div>
@@ -3569,10 +3595,14 @@ This form is for damage assessment reporting purposes only.  In accordance with 
             <space />
             <cancelbutton id="cancelbtn" class="btn btn-danger" />
             <space />
+            <pdflink type="button" class="btn btn-warning">PDF</pdflink>
+            <space/>
             <div style="display:none" id="saveButton">
               <savebutton />
             </div>
-            <embedview style="display:none" width="0px" height="0px" id="auditEmbed" view="DSO Audit Input (DO NOT ASSIGN)" />
+            
+            <div style="border-style:none;background-color:white">
+            <embedview style="display:nonea;border-style:none" width="0.1px" height="0.1px" id="auditEmbed" view="DSO Audit Input (DO NOT ASSIGN)" /></div>
           </div>
         </fieldset>
       </form>
